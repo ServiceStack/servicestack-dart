@@ -1,10 +1,10 @@
 part of client;
 
-class TimeSpanConverter implements IConverter
+class DurationConverter implements IConverter
 {
-  T fromJson<T>(value, T factory()) {
+  dynamic fromJson(value, ConverterContext context) {
     Duration duration = value is Duration ? value : null;
-    if (duration != null) return duration as T;
+    if (duration != null) return duration;
 
     var str = value as String;
     if (str == null)     
@@ -59,10 +59,10 @@ class TimeSpanConverter implements IConverter
       hours: hours,
       minutes: minutes,
       seconds: seconds,
-      milliseconds: (ms * 1000).toInt()) as T;
+      milliseconds: (ms * 1000).toInt());
   }
 
-  toJson(dynamic value) {
+  toJson(dynamic value, ConverterContext context) {
     Duration duration = value is Duration ? value : null;
     if (duration == null)
       return null;

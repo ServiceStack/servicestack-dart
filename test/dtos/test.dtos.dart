@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-10 04:32:11
+Date: 2018-04-11 07:15:22
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -17,41 +17,6 @@ DefaultImports: ../../lib/client.dart,dart:collection,dart:typed_data
 import '../../lib/client.dart';
 import 'dart:collection';
 import 'dart:typed_data';
-
-abstract class IReturn<T>
-{
-    String getTypeName();
-}
-
-abstract class IReturnVoid
-{
-    String getTypeName();
-}
-
-abstract class IMeta
-{
-    Map<String,String> meta;
-}
-
-abstract class IGet
-{
-}
-
-abstract class IPost
-{
-}
-
-abstract class IPut
-{
-}
-
-abstract class IDelete
-{
-}
-
-abstract class IPatch
-{
-}
 
 // @DataContract
 class ResponseError
@@ -71,17 +36,18 @@ class ResponseError
     ResponseError({this.errorCode,this.fieldName,this.message,this.meta});
 
     ResponseError fromMap(Map<String, dynamic> map) => new ResponseError.fromJson(map);
-    ResponseError.fromJson(Map<String, dynamic> json) :
-        errorCode = json['errorCode'],
-        fieldName = json['fieldName'],
-        message = json['message'],
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>());
+    ResponseError.fromJson(Map<String, dynamic> json) {
+        errorCode = json['errorCode'];
+        fieldName = json['fieldName'];
+        message = json['message'];
+        meta = json['meta'];
+    }
 
     Map<String, dynamic> toJson() => {
         'errorCode': errorCode,
         'fieldName': fieldName,
         'message': message,
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta)
+        'meta': meta
     };
 
 }
@@ -107,19 +73,20 @@ class ResponseStatus
     ResponseStatus({this.errorCode,this.message,this.stackTrace,this.errors,this.meta});
 
     ResponseStatus fromMap(Map<String, dynamic> map) => new ResponseStatus.fromJson(map);
-    ResponseStatus.fromJson(Map<String, dynamic> json) :
-        errorCode = json['errorCode'],
-        message = json['message'],
-        stackTrace = json['stackTrace'],
-        errors = JsonConverters.get('List<ResponseError>').fromJson(json['errors'], () => new List<ResponseError>()),
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>());
+    ResponseStatus.fromJson(Map<String, dynamic> json) {
+        errorCode = json['errorCode'];
+        message = json['message'];
+        stackTrace = json['stackTrace'];
+        errors = JsonConverters.fromJson(json['errors'],'List<ResponseError>',_types);
+        meta = json['meta'];
+    }
 
     Map<String, dynamic> toJson() => {
         'errorCode': errorCode,
         'message': message,
         'stackTrace': stackTrace,
-        'errors': JsonConverters.get('List<ResponseError>').toJson(errors),
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta)
+        'errors': JsonConverters.toJson(errors,'List<ResponseError>',_types),
+        'meta': meta
     };
 
 }
@@ -145,11 +112,12 @@ class ExternalType
     ExternalType({this.externalEnum2});
 
     ExternalType fromMap(Map<String, dynamic> map) => new ExternalType.fromJson(map);
-    ExternalType.fromJson(Map<String, dynamic> json) :
-        externalEnum2 = JsonConverters.getEnum(ExternalEnum2.values).fromJson(json['externalEnum2'], null);
+    ExternalType.fromJson(Map<String, dynamic> json) {
+        externalEnum2 = JsonConverters.fromJson(json['externalEnum2'],'ExternalEnum2',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'externalEnum2': JsonConverters.get('ExternalEnum2').toJson(externalEnum2)
+        'externalEnum2': JsonConverters.toJson(externalEnum2,'ExternalEnum2',_types)
     };
 
 }
@@ -312,51 +280,52 @@ class AuthUserSession
     AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta});
 
     AuthUserSession fromMap(Map<String, dynamic> map) => new AuthUserSession.fromJson(map);
-    AuthUserSession.fromJson(Map<String, dynamic> json) :
-        referrerUrl = json['referrerUrl'],
-        id = json['id'],
-        userAuthId = json['userAuthId'],
-        userAuthName = json['userAuthName'],
-        userName = json['userName'],
-        twitterUserId = json['twitterUserId'],
-        twitterScreenName = json['twitterScreenName'],
-        facebookUserId = json['facebookUserId'],
-        facebookUserName = json['facebookUserName'],
-        firstName = json['firstName'],
-        lastName = json['lastName'],
-        displayName = json['displayName'],
-        company = json['company'],
-        email = json['email'],
-        primaryEmail = json['primaryEmail'],
-        phoneNumber = json['phoneNumber'],
-        birthDate = JsonConverters.get('DateTime').fromJson(json['birthDate'], () => new DateTime(0)),
-        birthDateRaw = json['birthDateRaw'],
-        address = json['address'],
-        address2 = json['address2'],
-        city = json['city'],
-        state = json['state'],
-        country = json['country'],
-        culture = json['culture'],
-        fullName = json['fullName'],
-        gender = json['gender'],
-        language = json['language'],
-        mailAddress = json['mailAddress'],
-        nickname = json['nickname'],
-        postalCode = json['postalCode'],
-        timeZone = json['timeZone'],
-        requestTokenSecret = json['requestTokenSecret'],
-        createdAt = JsonConverters.get('DateTime').fromJson(json['createdAt'], () => new DateTime(0)),
-        lastModified = JsonConverters.get('DateTime').fromJson(json['lastModified'], () => new DateTime(0)),
-        roles = JsonConverters.get('List<String>').fromJson(json['roles'], () => new List<String>()),
-        permissions = JsonConverters.get('List<String>').fromJson(json['permissions'], () => new List<String>()),
-        isAuthenticated = json['isAuthenticated'],
-        fromToken = json['fromToken'],
-        profileUrl = json['profileUrl'],
-        sequence = json['sequence'],
-        tag = json['tag'],
-        authProvider = json['authProvider'],
-        providerOAuthAccess = JsonConverters.get('List<IAuthTokens>').fromJson(json['providerOAuthAccess'], () => new List<IAuthTokens>()),
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>());
+    AuthUserSession.fromJson(Map<String, dynamic> json) {
+        referrerUrl = json['referrerUrl'];
+        id = json['id'];
+        userAuthId = json['userAuthId'];
+        userAuthName = json['userAuthName'];
+        userName = json['userName'];
+        twitterUserId = json['twitterUserId'];
+        twitterScreenName = json['twitterScreenName'];
+        facebookUserId = json['facebookUserId'];
+        facebookUserName = json['facebookUserName'];
+        firstName = json['firstName'];
+        lastName = json['lastName'];
+        displayName = json['displayName'];
+        company = json['company'];
+        email = json['email'];
+        primaryEmail = json['primaryEmail'];
+        phoneNumber = json['phoneNumber'];
+        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',_types);
+        birthDateRaw = json['birthDateRaw'];
+        address = json['address'];
+        address2 = json['address2'];
+        city = json['city'];
+        state = json['state'];
+        country = json['country'];
+        culture = json['culture'];
+        fullName = json['fullName'];
+        gender = json['gender'];
+        language = json['language'];
+        mailAddress = json['mailAddress'];
+        nickname = json['nickname'];
+        postalCode = json['postalCode'];
+        timeZone = json['timeZone'];
+        requestTokenSecret = json['requestTokenSecret'];
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',_types);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',_types);
+        roles = JsonConverters.fromJson(json['roles'],'List<String>',_types);
+        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',_types);
+        isAuthenticated = json['isAuthenticated'];
+        fromToken = json['fromToken'];
+        profileUrl = json['profileUrl'];
+        sequence = json['sequence'];
+        tag = json['tag'];
+        authProvider = json['authProvider'];
+        providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',_types);
+        meta = json['meta'];
+    }
 
     Map<String, dynamic> toJson() => {
         'referrerUrl': referrerUrl,
@@ -375,7 +344,7 @@ class AuthUserSession
         'email': email,
         'primaryEmail': primaryEmail,
         'phoneNumber': phoneNumber,
-        'birthDate': JsonConverters.get('DateTime').toJson(birthDate),
+        'birthDate': JsonConverters.toJson(birthDate,'DateTime',_types),
         'birthDateRaw': birthDateRaw,
         'address': address,
         'address2': address2,
@@ -391,18 +360,18 @@ class AuthUserSession
         'postalCode': postalCode,
         'timeZone': timeZone,
         'requestTokenSecret': requestTokenSecret,
-        'createdAt': JsonConverters.get('DateTime').toJson(createdAt),
-        'lastModified': JsonConverters.get('DateTime').toJson(lastModified),
-        'roles': JsonConverters.get('List<String>').toJson(roles),
-        'permissions': JsonConverters.get('List<String>').toJson(permissions),
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',_types),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',_types),
+        'roles': JsonConverters.toJson(roles,'List<String>',_types),
+        'permissions': JsonConverters.toJson(permissions,'List<String>',_types),
         'isAuthenticated': isAuthenticated,
         'fromToken': fromToken,
         'profileUrl': profileUrl,
         'sequence': sequence,
         'tag': tag,
         'authProvider': authProvider,
-        'providerOAuthAccess': JsonConverters.get('List<IAuthTokens>').toJson(providerOAuthAccess),
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta)
+        'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',_types),
+        'meta': meta
     };
 
 }
@@ -414,8 +383,9 @@ class MetadataTestNestedChild
     MetadataTestNestedChild({this.name});
 
     MetadataTestNestedChild fromMap(Map<String, dynamic> map) => new MetadataTestNestedChild.fromJson(map);
-    MetadataTestNestedChild.fromJson(Map<String, dynamic> json) :
+    MetadataTestNestedChild.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
@@ -431,13 +401,14 @@ class MetadataTestChild
     MetadataTestChild({this.name,this.results});
 
     MetadataTestChild fromMap(Map<String, dynamic> map) => new MetadataTestChild.fromJson(map);
-    MetadataTestChild.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
-        results = JsonConverters.get('List<MetadataTestNestedChild>').fromJson(json['results'], () => new List<MetadataTestNestedChild>());
+    MetadataTestChild.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        results = JsonConverters.fromJson(json['results'],'List<MetadataTestNestedChild>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'results': JsonConverters.get('List<MetadataTestNestedChild>').toJson(results)
+        'results': JsonConverters.toJson(results,'List<MetadataTestNestedChild>',_types)
     };
 
 }
@@ -451,8 +422,9 @@ class MenuItemExampleItem
     MenuItemExampleItem({this.name1});
 
     MenuItemExampleItem fromMap(Map<String, dynamic> map) => new MenuItemExampleItem.fromJson(map);
-    MenuItemExampleItem.fromJson(Map<String, dynamic> json) :
+    MenuItemExampleItem.fromJson(Map<String, dynamic> json) {
         name1 = json['name1'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name1': name1
@@ -471,13 +443,14 @@ class MenuItemExample
     MenuItemExample({this.name1,this.menuItemExampleItem});
 
     MenuItemExample fromMap(Map<String, dynamic> map) => new MenuItemExample.fromJson(map);
-    MenuItemExample.fromJson(Map<String, dynamic> json) :
-        name1 = json['name1'],
-        menuItemExampleItem = JsonConverters.get('MenuItemExampleItem').fromJson(json['menuItemExampleItem'], () => new MenuItemExampleItem());
+    MenuItemExample.fromJson(Map<String, dynamic> json) {
+        name1 = json['name1'];
+        menuItemExampleItem = JsonConverters.fromJson(json['menuItemExampleItem'],'MenuItemExampleItem',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'name1': name1,
-        'menuItemExampleItem': JsonConverters.get('MenuItemExampleItem').toJson(menuItemExampleItem)
+        'menuItemExampleItem': JsonConverters.toJson(menuItemExampleItem,'MenuItemExampleItem',_types)
     };
 
 }
@@ -492,11 +465,12 @@ class MenuExample
     MenuExample({this.menuItemExample1});
 
     MenuExample fromMap(Map<String, dynamic> map) => new MenuExample.fromJson(map);
-    MenuExample.fromJson(Map<String, dynamic> json) :
-        menuItemExample1 = JsonConverters.get('MenuItemExample').fromJson(json['menuItemExample1'], () => new MenuItemExample());
+    MenuExample.fromJson(Map<String, dynamic> json) {
+        menuItemExample1 = JsonConverters.fromJson(json['menuItemExample1'],'MenuItemExample',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'menuItemExample1': JsonConverters.get('MenuItemExample').toJson(menuItemExample1)
+        'menuItemExample1': JsonConverters.toJson(menuItemExample1,'MenuItemExample',_types)
     };
 
 }
@@ -508,8 +482,9 @@ class NestedClass
     NestedClass({this.value});
 
     NestedClass fromMap(Map<String, dynamic> map) => new NestedClass.fromJson(map);
-    NestedClass.fromJson(Map<String, dynamic> json) :
+    NestedClass.fromJson(Map<String, dynamic> json) {
         value = json['value'];
+    }
 
     Map<String, dynamic> toJson() => {
         'value': value
@@ -524,8 +499,9 @@ class ListResult
     ListResult({this.result});
 
     ListResult fromMap(Map<String, dynamic> map) => new ListResult.fromJson(map);
-    ListResult.fromJson(Map<String, dynamic> json) :
+    ListResult.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -540,8 +516,9 @@ class ArrayResult
     ArrayResult({this.result});
 
     ArrayResult fromMap(Map<String, dynamic> map) => new ArrayResult.fromJson(map);
-    ArrayResult.fromJson(Map<String, dynamic> json) :
+    ArrayResult.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -576,9 +553,10 @@ class SubType
     SubType({this.id,this.name});
 
     SubType fromMap(Map<String, dynamic> map) => new SubType.fromJson(map);
-    SubType.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
+    SubType.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -587,15 +565,15 @@ class SubType
 
 }
 
-class HelloBase
+abstract class HelloBase
 {
     int id;
 
     HelloBase({this.id});
 
-    HelloBase fromMap(Map<String, dynamic> map) => new HelloBase.fromJson(map);
-    HelloBase.fromJson(Map<String, dynamic> json) :
+    HelloBase.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
@@ -603,15 +581,15 @@ class HelloBase
 
 }
 
-class HelloResponseBase
+abstract class HelloResponseBase
 {
     int refId;
 
     HelloResponseBase({this.refId});
 
-    HelloResponseBase fromMap(Map<String, dynamic> map) => new HelloResponseBase.fromJson(map);
-    HelloResponseBase.fromJson(Map<String, dynamic> json) :
+    HelloResponseBase.fromJson(Map<String, dynamic> json) {
         refId = json['refId'];
+    }
 
     Map<String, dynamic> toJson() => {
         'refId': refId
@@ -626,8 +604,9 @@ class Poco
     Poco({this.name});
 
     Poco fromMap(Map<String, dynamic> map) => new Poco.fromJson(map);
-    Poco.fromJson(Map<String, dynamic> json) :
+    Poco.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
@@ -635,21 +614,21 @@ class Poco
 
 }
 
-class HelloBase1<T>
+abstract class HelloBase1<T>
 {
     List<T> items;
     List<int> counts;
 
     HelloBase1({this.items,this.counts});
 
-    HelloBase1 fromMap(Map<String, dynamic> map) => new HelloBase1.fromJson(map);
-    HelloBase1.fromJson(Map<String, dynamic> json) :
-        items = JsonConverters.get('List<T>').fromJson(json['items'], () => new List<T>()),
-        counts = JsonConverters.get('List<Int32>').fromJson(json['counts'], () => new List<int>());
+    HelloBase1.fromJson(Map<String, dynamic> json) {
+        items = JsonConverters.fromJson(json['items'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',_types);
+        counts = JsonConverters.fromJson(json['counts'],'List<int>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'items': JsonConverters.get('List<T>').toJson(items),
-        'counts': JsonConverters.get('List<Int32>').toJson(counts)
+        'items': JsonConverters.toJson(items,'List<T>',_types),
+        'counts': JsonConverters.toJson(counts,'List<int>',_types)
     };
 
 }
@@ -661,8 +640,9 @@ class Item
     Item({this.value});
 
     Item fromMap(Map<String, dynamic> map) => new Item.fromJson(map);
-    Item.fromJson(Map<String, dynamic> json) :
+    Item.fromJson(Map<String, dynamic> json) {
         value = json['value'];
+    }
 
     Map<String, dynamic> toJson() => {
         'value': value
@@ -670,15 +650,15 @@ class Item
 
 }
 
-class HelloWithReturnResponse
+abstract class HelloWithReturnResponse
 {
     String result;
 
     HelloWithReturnResponse({this.result});
 
-    HelloWithReturnResponse fromMap(Map<String, dynamic> map) => new HelloWithReturnResponse.fromJson(map);
-    HelloWithReturnResponse.fromJson(Map<String, dynamic> json) :
+    HelloWithReturnResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -693,8 +673,9 @@ class HelloType
     HelloType({this.result});
 
     HelloType fromMap(Map<String, dynamic> map) => new HelloType.fromJson(map);
-    HelloType.fromJson(Map<String, dynamic> json) :
+    HelloType.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -727,9 +708,10 @@ class InnerType
     InnerType({this.id,this.name});
 
     InnerType fromMap(Map<String, dynamic> map) => new InnerType.fromJson(map);
-    InnerType.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
+    InnerType.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -778,8 +760,9 @@ class ReturnedDto
     ReturnedDto({this.id});
 
     ReturnedDto fromMap(Map<String, dynamic> map) => new ReturnedDto.fromJson(map);
-    ReturnedDto.fromJson(Map<String, dynamic> json) :
+    ReturnedDto.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
@@ -798,10 +781,10 @@ class CustomUserSession extends AuthUserSession
     CustomUserSession({this.customName,this.customInfo});
 
     CustomUserSession fromMap(Map<String, dynamic> map) => new CustomUserSession.fromJson(map);
-    CustomUserSession.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
-        customName = json['customName'],
+    CustomUserSession.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+        customName = json['customName'];
         customInfo = json['customInfo'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'customName': customName,
@@ -817,8 +800,9 @@ class UnAuthInfo
     UnAuthInfo({this.customInfo});
 
     UnAuthInfo fromMap(Map<String, dynamic> map) => new UnAuthInfo.fromJson(map);
-    UnAuthInfo.fromJson(Map<String, dynamic> json) :
+    UnAuthInfo.fromJson(Map<String, dynamic> json) {
         customInfo = json['customInfo'];
+    }
 
     Map<String, dynamic> toJson() => {
         'customInfo': customInfo
@@ -834,9 +818,10 @@ class Channel
     Channel({this.name,this.value});
 
     Channel fromMap(Map<String, dynamic> map) => new Channel.fromJson(map);
-    Channel.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
+    Channel.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
         value = json['value'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
@@ -855,17 +840,18 @@ class Device
     Device({this.id,this.type,this.timeStamp,this.channels});
 
     Device fromMap(Map<String, dynamic> map) => new Device.fromJson(map);
-    Device.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        type = json['type'],
-        timeStamp = json['timeStamp'],
-        channels = JsonConverters.get('List<Channel>').fromJson(json['channels'], () => new List<Channel>());
+    Device.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        type = json['type'];
+        timeStamp = json['timeStamp'];
+        channels = JsonConverters.fromJson(json['channels'],'List<Channel>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'type': type,
         'timeStamp': timeStamp,
-        'channels': JsonConverters.get('List<Channel>').toJson(channels)
+        'channels': JsonConverters.toJson(channels,'List<Channel>',_types)
     };
 
 }
@@ -878,13 +864,14 @@ class Logger
     Logger({this.id,this.devices});
 
     Logger fromMap(Map<String, dynamic> map) => new Logger.fromJson(map);
-    Logger.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        devices = JsonConverters.get('List<Device>').fromJson(json['devices'], () => new List<Device>());
+    Logger.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        devices = JsonConverters.fromJson(json['devices'],'List<Device>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'devices': JsonConverters.get('List<Device>').toJson(devices)
+        'devices': JsonConverters.toJson(devices,'List<Device>',_types)
     };
 
 }
@@ -899,11 +886,12 @@ class Rockstar
     Rockstar({this.id,this.firstName,this.lastName,this.age});
 
     Rockstar fromMap(Map<String, dynamic> map) => new Rockstar.fromJson(map);
-    Rockstar.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        firstName = json['firstName'],
-        lastName = json['lastName'],
+    Rockstar.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        firstName = json['firstName'];
+        lastName = json['lastName'];
         age = json['age'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -914,61 +902,6 @@ class Rockstar
 
 }
 
-class QueryBase
-{
-    // @DataMember(Order=1)
-    int skip;
-
-    // @DataMember(Order=2)
-    int take;
-
-    // @DataMember(Order=3)
-    String orderBy;
-
-    // @DataMember(Order=4)
-    String orderByDesc;
-
-    // @DataMember(Order=5)
-    String include;
-
-    // @DataMember(Order=6)
-    String fields;
-
-    // @DataMember(Order=7)
-    Map<String,String> meta;
-
-    QueryBase({this.skip,this.take,this.orderBy,this.orderByDesc,this.include,this.fields,this.meta});
-
-    QueryBase fromMap(Map<String, dynamic> map) => new QueryBase.fromJson(map);
-    QueryBase.fromJson(Map<String, dynamic> json) :
-        skip = json['skip'],
-        take = json['take'],
-        orderBy = json['orderBy'],
-        orderByDesc = json['orderByDesc'],
-        include = json['include'],
-        fields = json['fields'],
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>());
-
-    Map<String, dynamic> toJson() => {
-        'skip': skip,
-        'take': take,
-        'orderBy': orderBy,
-        'orderByDesc': orderByDesc,
-        'include': include,
-        'fields': fields,
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta)
-    };
-
-}
-
-class QueryDb1<T> extends QueryBase
-{
-    QueryDb1();
-    QueryDb1 fromMap(Map<String, dynamic> map) => new QueryDb1.fromJson(map);
-    QueryDb1.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-    Map<String, dynamic> toJson() => super.toJson();
-}
-
 class OnlyDefinedInGenericType
 {
     int id;
@@ -977,23 +910,16 @@ class OnlyDefinedInGenericType
     OnlyDefinedInGenericType({this.id,this.name});
 
     OnlyDefinedInGenericType fromMap(Map<String, dynamic> map) => new OnlyDefinedInGenericType.fromJson(map);
-    OnlyDefinedInGenericType.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
+    OnlyDefinedInGenericType.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name
     };
 
-}
-
-class QueryDb2<From, Into> extends QueryBase
-{
-    QueryDb2();
-    QueryDb2 fromMap(Map<String, dynamic> map) => new QueryDb2.fromJson(map);
-    QueryDb2.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-    Map<String, dynamic> toJson() => super.toJson();
 }
 
 class OnlyDefinedInGenericTypeFrom
@@ -1004,9 +930,10 @@ class OnlyDefinedInGenericTypeFrom
     OnlyDefinedInGenericTypeFrom({this.id,this.name});
 
     OnlyDefinedInGenericTypeFrom fromMap(Map<String, dynamic> map) => new OnlyDefinedInGenericTypeFrom.fromJson(map);
-    OnlyDefinedInGenericTypeFrom.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
+    OnlyDefinedInGenericTypeFrom.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -1023,9 +950,10 @@ class OnlyDefinedInGenericTypeInto
     OnlyDefinedInGenericTypeInto({this.id,this.name});
 
     OnlyDefinedInGenericTypeInto fromMap(Map<String, dynamic> map) => new OnlyDefinedInGenericTypeInto.fromJson(map);
-    OnlyDefinedInGenericTypeInto.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
+    OnlyDefinedInGenericTypeInto.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -1050,13 +978,14 @@ class CustomHttpErrorResponse
     CustomHttpErrorResponse({this.custom,this.responseStatus});
 
     CustomHttpErrorResponse fromMap(Map<String, dynamic> map) => new CustomHttpErrorResponse.fromJson(map);
-    CustomHttpErrorResponse.fromJson(Map<String, dynamic> json) :
-        custom = json['custom'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    CustomHttpErrorResponse.fromJson(Map<String, dynamic> json) {
+        custom = json['custom'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'custom': custom,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1068,11 +997,12 @@ class ThrowTypeResponse
     ThrowTypeResponse({this.responseStatus});
 
     ThrowTypeResponse fromMap(Map<String, dynamic> map) => new ThrowTypeResponse.fromJson(map);
-    ThrowTypeResponse.fromJson(Map<String, dynamic> json) :
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    ThrowTypeResponse.fromJson(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1087,17 +1017,18 @@ class ThrowValidationResponse
     ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
 
     ThrowValidationResponse fromMap(Map<String, dynamic> map) => new ThrowValidationResponse.fromJson(map);
-    ThrowValidationResponse.fromJson(Map<String, dynamic> json) :
-        age = json['age'],
-        required = json['required'],
-        email = json['email'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    ThrowValidationResponse.fromJson(Map<String, dynamic> json) {
+        age = json['age'];
+        required = json['required'];
+        email = json['email'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'age': age,
         'required': required,
         'email': email,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1109,11 +1040,12 @@ class ThrowBusinessErrorResponse
     ThrowBusinessErrorResponse({this.responseStatus});
 
     ThrowBusinessErrorResponse fromMap(Map<String, dynamic> map) => new ThrowBusinessErrorResponse.fromJson(map);
-    ThrowBusinessErrorResponse.fromJson(Map<String, dynamic> json) :
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    ThrowBusinessErrorResponse.fromJson(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1125,8 +1057,9 @@ class ExternalOperationResponse
     ExternalOperationResponse({this.result});
 
     ExternalOperationResponse fromMap(Map<String, dynamic> map) => new ExternalOperationResponse.fromJson(map);
-    ExternalOperationResponse.fromJson(Map<String, dynamic> json) :
+    ExternalOperationResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1141,11 +1074,12 @@ class ExternalOperation2Response
     ExternalOperation2Response({this.externalType});
 
     ExternalOperation2Response fromMap(Map<String, dynamic> map) => new ExternalOperation2Response.fromJson(map);
-    ExternalOperation2Response.fromJson(Map<String, dynamic> json) :
-        externalType = JsonConverters.get('ExternalType').fromJson(json['externalType'], () => new ExternalType());
+    ExternalOperation2Response.fromJson(Map<String, dynamic> json) {
+        externalType = JsonConverters.fromJson(json['externalType'],'ExternalType',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'externalType': JsonConverters.get('ExternalType').toJson(externalType)
+        'externalType': JsonConverters.toJson(externalType,'ExternalType',_types)
     };
 
 }
@@ -1157,11 +1091,12 @@ class ExternalReturnTypeResponse
     ExternalReturnTypeResponse({this.externalEnum3});
 
     ExternalReturnTypeResponse fromMap(Map<String, dynamic> map) => new ExternalReturnTypeResponse.fromJson(map);
-    ExternalReturnTypeResponse.fromJson(Map<String, dynamic> json) :
-        externalEnum3 = JsonConverters.getEnum(ExternalEnum3.values).fromJson(json['externalEnum3'], null);
+    ExternalReturnTypeResponse.fromJson(Map<String, dynamic> json) {
+        externalEnum3 = JsonConverters.fromJson(json['externalEnum3'],'ExternalEnum3',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'externalEnum3': JsonConverters.get('ExternalEnum3').toJson(externalEnum3)
+        'externalEnum3': JsonConverters.toJson(externalEnum3,'ExternalEnum3',_types)
     };
 
 }
@@ -1173,8 +1108,9 @@ class Account
     Account({this.name});
 
     Account fromMap(Map<String, dynamic> map) => new Account.fromJson(map);
-    Account.fromJson(Map<String, dynamic> json) :
+    Account.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
@@ -1190,9 +1126,10 @@ class Project
     Project({this.account,this.name});
 
     Project fromMap(Map<String, dynamic> map) => new Project.fromJson(map);
-    Project.fromJson(Map<String, dynamic> json) :
-        account = json['account'],
+    Project.fromJson(Map<String, dynamic> json) {
+        account = json['account'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'account': account,
@@ -1209,13 +1146,14 @@ class CreateJwtResponse
     CreateJwtResponse({this.token,this.responseStatus});
 
     CreateJwtResponse fromMap(Map<String, dynamic> map) => new CreateJwtResponse.fromJson(map);
-    CreateJwtResponse.fromJson(Map<String, dynamic> json) :
-        token = json['token'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    CreateJwtResponse.fromJson(Map<String, dynamic> json) {
+        token = json['token'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'token': token,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1228,13 +1166,14 @@ class CreateRefreshJwtResponse
     CreateRefreshJwtResponse({this.token,this.responseStatus});
 
     CreateRefreshJwtResponse fromMap(Map<String, dynamic> map) => new CreateRefreshJwtResponse.fromJson(map);
-    CreateRefreshJwtResponse.fromJson(Map<String, dynamic> json) :
-        token = json['token'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    CreateRefreshJwtResponse.fromJson(Map<String, dynamic> json) {
+        token = json['token'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'token': token,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1247,13 +1186,14 @@ class MetadataTestResponse
     MetadataTestResponse({this.id,this.results});
 
     MetadataTestResponse fromMap(Map<String, dynamic> map) => new MetadataTestResponse.fromJson(map);
-    MetadataTestResponse.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        results = JsonConverters.get('List<MetadataTestChild>').fromJson(json['results'], () => new List<MetadataTestChild>());
+    MetadataTestResponse.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        results = JsonConverters.fromJson(json['results'],'List<MetadataTestChild>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'results': JsonConverters.get('List<MetadataTestChild>').toJson(results)
+        'results': JsonConverters.toJson(results,'List<MetadataTestChild>',_types)
     };
 
 }
@@ -1271,13 +1211,14 @@ class GetExampleResponse
     GetExampleResponse({this.responseStatus,this.menuExample1});
 
     GetExampleResponse fromMap(Map<String, dynamic> map) => new GetExampleResponse.fromJson(map);
-    GetExampleResponse.fromJson(Map<String, dynamic> json) :
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus()),
-        menuExample1 = JsonConverters.get('MenuExample').fromJson(json['menuExample1'], () => new MenuExample());
+    GetExampleResponse.fromJson(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        menuExample1 = JsonConverters.fromJson(json['menuExample1'],'MenuExample',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus),
-        'menuExample1': JsonConverters.get('MenuExample').toJson(menuExample1)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types),
+        'menuExample1': JsonConverters.toJson(menuExample1,'MenuExample',_types)
     };
 
 }
@@ -1289,11 +1230,12 @@ class GetRandomIdsResponse
     GetRandomIdsResponse({this.results});
 
     GetRandomIdsResponse fromMap(Map<String, dynamic> map) => new GetRandomIdsResponse.fromJson(map);
-    GetRandomIdsResponse.fromJson(Map<String, dynamic> json) :
-        results = JsonConverters.get('List<String>').fromJson(json['results'], () => new List<String>());
+    GetRandomIdsResponse.fromJson(Map<String, dynamic> json) {
+        results = JsonConverters.fromJson(json['results'],'List<String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.get('List<String>').toJson(results)
+        'results': JsonConverters.toJson(results,'List<String>',_types)
     };
 
 }
@@ -1305,8 +1247,9 @@ class HelloResponse
     HelloResponse({this.result});
 
     HelloResponse fromMap(Map<String, dynamic> map) => new HelloResponse.fromJson(map);
-    HelloResponse.fromJson(Map<String, dynamic> json) :
+    HelloResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1346,33 +1289,34 @@ class AllTypes
     AllTypes({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
 
     AllTypes fromMap(Map<String, dynamic> map) => new AllTypes.fromJson(map);
-    AllTypes.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        nullableId = json['nullableId'],
-        byte = json['byte'],
-        short = json['short'],
-        Int = json['int'],
-        long = json['long'],
-        uShort = json['uShort'],
-        uInt = json['uInt'],
-        uLong = json['uLong'],
-        float = json['float'],
-        Double = json['double'],
-        decimal = json['decimal'],
-        string = json['string'],
-        dateTime = JsonConverters.get('DateTime').fromJson(json['dateTime'], () => new DateTime(0)),
-        timeSpan = JsonConverters.get('TimeSpan').fromJson(json['timeSpan'], () => new Duration()),
-        dateTimeOffset = JsonConverters.get('DateTimeOffset').fromJson(json['dateTimeOffset'], () => new DateTime(0)),
-        guid = json['guid'],
-        char = json['char'],
-        keyValuePair = JsonConverters.get('KeyValuePair<String,String>').fromJson(json['keyValuePair'], () => new KeyValuePair<String, String>()),
-        nullableDateTime = JsonConverters.get('DateTime').fromJson(json['nullableDateTime'], () => new DateTime(0)),
-        nullableTimeSpan = JsonConverters.get('TimeSpan').fromJson(json['nullableTimeSpan'], () => new Duration()),
-        stringList = JsonConverters.get('List<String>').fromJson(json['stringList'], () => new List<String>()),
-        stringArray = JsonConverters.get('String[]').fromJson(json['stringArray'], () => new List<String>()),
-        stringMap = JsonConverters.get('Dictionary<String,String>').fromJson(json['stringMap'], () => new Map<String,String>()),
-        intStringMap = JsonConverters.get('Dictionary<Int32,String>').fromJson(json['intStringMap'], () => new Map<int,String>()),
-        subType = JsonConverters.get('SubType').fromJson(json['subType'], () => new SubType());
+    AllTypes.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        nullableId = json['nullableId'];
+        byte = json['byte'];
+        short = json['short'];
+        Int = json['int'];
+        long = json['long'];
+        uShort = json['uShort'];
+        uInt = json['uInt'];
+        uLong = json['uLong'];
+        float = json['float'];
+        Double = json['double'];
+        decimal = json['decimal'];
+        string = json['string'];
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',_types);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',_types);
+        guid = json['guid'];
+        char = json['char'];
+        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String, String>',_types);
+        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',_types);
+        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',_types);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
+        stringMap = json['stringMap'];
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',_types);
+        subType = JsonConverters.fromJson(json['subType'],'SubType',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -1388,19 +1332,19 @@ class AllTypes
         'double': Double,
         'decimal': decimal,
         'string': string,
-        'dateTime': JsonConverters.get('DateTime').toJson(dateTime),
-        'timeSpan': JsonConverters.get('TimeSpan').toJson(timeSpan),
-        'dateTimeOffset': JsonConverters.get('DateTimeOffset').toJson(dateTimeOffset),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',_types),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',_types),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',_types),
         'guid': guid,
         'char': char,
-        'keyValuePair': JsonConverters.get('KeyValuePair<String,String>').toJson(keyValuePair),
-        'nullableDateTime': JsonConverters.get('DateTime').toJson(nullableDateTime),
-        'nullableTimeSpan': JsonConverters.get('TimeSpan').toJson(nullableTimeSpan),
-        'stringList': JsonConverters.get('List<String>').toJson(stringList),
-        'stringArray': JsonConverters.get('String[]').toJson(stringArray),
-        'stringMap': JsonConverters.get('Dictionary<String,String>').toJson(stringMap),
-        'intStringMap': JsonConverters.get('Dictionary<Int32,String>').toJson(intStringMap),
-        'subType': JsonConverters.get('SubType').toJson(subType)
+        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String, String>',_types),
+        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',_types),
+        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',_types),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',_types),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',_types),
+        'stringMap': stringMap,
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',_types),
+        'subType': JsonConverters.toJson(subType,'SubType',_types)
     };
 
 }
@@ -1419,25 +1363,26 @@ class AllCollectionTypes
     AllCollectionTypes({this.intArray,this.intList,this.stringArray,this.stringList,this.pocoArray,this.pocoList,this.pocoLookup,this.pocoLookupMap});
 
     AllCollectionTypes fromMap(Map<String, dynamic> map) => new AllCollectionTypes.fromJson(map);
-    AllCollectionTypes.fromJson(Map<String, dynamic> json) :
-        intArray = JsonConverters.get('Int32[]').fromJson(json['intArray'], () => new List<int>()),
-        intList = JsonConverters.get('List<Int32>').fromJson(json['intList'], () => new List<int>()),
-        stringArray = JsonConverters.get('String[]').fromJson(json['stringArray'], () => new List<String>()),
-        stringList = JsonConverters.get('List<String>').fromJson(json['stringList'], () => new List<String>()),
-        pocoArray = JsonConverters.get('Poco[]').fromJson(json['pocoArray'], () => new List<Poco>()),
-        pocoList = JsonConverters.get('List<Poco>').fromJson(json['pocoList'], () => new List<Poco>()),
-        pocoLookup = JsonConverters.get('Dictionary<String,List<Poco>>').fromJson(json['pocoLookup'], () => new Map<String,List<Poco>>()),
-        pocoLookupMap = JsonConverters.get('Dictionary<String,List<Dictionary<String,Poco>>>').fromJson(json['pocoLookupMap'], () => new Map<String,List<Map<String,Poco>>>());
+    AllCollectionTypes.fromJson(Map<String, dynamic> json) {
+        intArray = JsonConverters.fromJson(json['intArray'],'List<int>',_types);
+        intList = JsonConverters.fromJson(json['intList'],'List<int>',_types);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
+        pocoArray = JsonConverters.fromJson(json['pocoArray'],'List<Poco>',_types);
+        pocoList = JsonConverters.fromJson(json['pocoList'],'List<Poco>',_types);
+        pocoLookup = JsonConverters.fromJson(json['pocoLookup'],'Map<String,List<Poco>>',_types);
+        pocoLookupMap = JsonConverters.fromJson(json['pocoLookupMap'],'Map<String,List<Map<String,Poco>>>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'intArray': JsonConverters.get('Int32[]').toJson(intArray),
-        'intList': JsonConverters.get('List<Int32>').toJson(intList),
-        'stringArray': JsonConverters.get('String[]').toJson(stringArray),
-        'stringList': JsonConverters.get('List<String>').toJson(stringList),
-        'pocoArray': JsonConverters.get('Poco[]').toJson(pocoArray),
-        'pocoList': JsonConverters.get('List<Poco>').toJson(pocoList),
-        'pocoLookup': JsonConverters.get('Dictionary<String,List<Poco>>').toJson(pocoLookup),
-        'pocoLookupMap': JsonConverters.get('Dictionary<String,List<Dictionary<String,Poco>>>').toJson(pocoLookupMap)
+        'intArray': JsonConverters.toJson(intArray,'List<int>',_types),
+        'intList': JsonConverters.toJson(intList,'List<int>',_types),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',_types),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',_types),
+        'pocoArray': JsonConverters.toJson(pocoArray,'List<Poco>',_types),
+        'pocoList': JsonConverters.toJson(pocoList,'List<Poco>',_types),
+        'pocoLookup': JsonConverters.toJson(pocoLookup,'Map<String,List<Poco>>',_types),
+        'pocoLookupMap': JsonConverters.toJson(pocoLookupMap,'Map<String,List<Map<String,Poco>>>',_types)
     };
 
 }
@@ -1451,15 +1396,16 @@ class HelloAllTypesResponse
     HelloAllTypesResponse({this.result,this.allTypes,this.allCollectionTypes});
 
     HelloAllTypesResponse fromMap(Map<String, dynamic> map) => new HelloAllTypesResponse.fromJson(map);
-    HelloAllTypesResponse.fromJson(Map<String, dynamic> json) :
-        result = json['result'],
-        allTypes = JsonConverters.get('AllTypes').fromJson(json['allTypes'], () => new AllTypes()),
-        allCollectionTypes = JsonConverters.get('AllCollectionTypes').fromJson(json['allCollectionTypes'], () => new AllCollectionTypes());
+    HelloAllTypesResponse.fromJson(Map<String, dynamic> json) {
+        result = json['result'];
+        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',_types);
+        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'allTypes': JsonConverters.get('AllTypes').toJson(allTypes),
-        'allCollectionTypes': JsonConverters.get('AllCollectionTypes').toJson(allCollectionTypes)
+        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',_types),
+        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',_types)
     };
 
 }
@@ -1471,13 +1417,15 @@ class HelloDateTime implements IReturn<HelloDateTime>
     HelloDateTime({this.dateTime});
 
     HelloDateTime fromMap(Map<String, dynamic> map) => new HelloDateTime.fromJson(map);
-    HelloDateTime.fromJson(Map<String, dynamic> json) :
-        dateTime = JsonConverters.get('DateTime').fromJson(json['dateTime'], () => new DateTime(0));
+    HelloDateTime.fromJson(Map<String, dynamic> json) {
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'dateTime': JsonConverters.get('DateTime').toJson(dateTime)
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',_types)
     };
 
+    createResponse() { return new HelloDateTime(); }
     String getTypeName() { return "HelloDateTime"; }
 }
 
@@ -1490,8 +1438,9 @@ class HelloWithDataContractResponse
     HelloWithDataContractResponse({this.result});
 
     HelloWithDataContractResponse fromMap(Map<String, dynamic> map) => new HelloWithDataContractResponse.fromJson(map);
-    HelloWithDataContractResponse.fromJson(Map<String, dynamic> json) :
+    HelloWithDataContractResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1509,8 +1458,9 @@ class HelloWithDescriptionResponse
     HelloWithDescriptionResponse({this.result});
 
     HelloWithDescriptionResponse fromMap(Map<String, dynamic> map) => new HelloWithDescriptionResponse.fromJson(map);
-    HelloWithDescriptionResponse.fromJson(Map<String, dynamic> json) :
+    HelloWithDescriptionResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1525,9 +1475,9 @@ class HelloWithInheritanceResponse extends HelloResponseBase
     HelloWithInheritanceResponse({this.result});
 
     HelloWithInheritanceResponse fromMap(Map<String, dynamic> map) => new HelloWithInheritanceResponse.fromJson(map);
-    HelloWithInheritanceResponse.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    HelloWithInheritanceResponse.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'result': result
@@ -1542,9 +1492,9 @@ class HelloWithAlternateReturnResponse extends HelloWithReturnResponse
     HelloWithAlternateReturnResponse({this.altResult});
 
     HelloWithAlternateReturnResponse fromMap(Map<String, dynamic> map) => new HelloWithAlternateReturnResponse.fromJson(map);
-    HelloWithAlternateReturnResponse.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    HelloWithAlternateReturnResponse.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         altResult = json['altResult'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'altResult': altResult
@@ -1559,8 +1509,9 @@ class HelloWithRouteResponse
     HelloWithRouteResponse({this.result});
 
     HelloWithRouteResponse fromMap(Map<String, dynamic> map) => new HelloWithRouteResponse.fromJson(map);
-    HelloWithRouteResponse.fromJson(Map<String, dynamic> json) :
+    HelloWithRouteResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1575,11 +1526,12 @@ class HelloWithTypeResponse
     HelloWithTypeResponse({this.result});
 
     HelloWithTypeResponse fromMap(Map<String, dynamic> map) => new HelloWithTypeResponse.fromJson(map);
-    HelloWithTypeResponse.fromJson(Map<String, dynamic> json) :
-        result = JsonConverters.get('HelloType').fromJson(json['result'], () => new HelloType());
+    HelloWithTypeResponse.fromJson(Map<String, dynamic> json) {
+        result = JsonConverters.fromJson(json['result'],'HelloType',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.get('HelloType').toJson(result)
+        'result': JsonConverters.toJson(result,'HelloType',_types)
     };
 
 }
@@ -1592,13 +1544,14 @@ class HelloInnerTypesResponse
     HelloInnerTypesResponse({this.innerType,this.innerEnum});
 
     HelloInnerTypesResponse fromMap(Map<String, dynamic> map) => new HelloInnerTypesResponse.fromJson(map);
-    HelloInnerTypesResponse.fromJson(Map<String, dynamic> json) :
-        innerType = JsonConverters.get('TypesGroup.InnerType').fromJson(json['innerType'], () => new InnerType()),
-        innerEnum = JsonConverters.getEnum(InnerEnum.values).fromJson(json['innerEnum'], null);
+    HelloInnerTypesResponse.fromJson(Map<String, dynamic> json) {
+        innerType = JsonConverters.fromJson(json['innerType'],'InnerType',_types);
+        innerEnum = JsonConverters.fromJson(json['innerEnum'],'InnerEnum',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'innerType': JsonConverters.get('TypesGroup.InnerType').toJson(innerType),
-        'innerEnum': JsonConverters.get('TypesGroup.InnerEnum').toJson(innerEnum)
+        'innerType': JsonConverters.toJson(innerType,'InnerType',_types),
+        'innerEnum': JsonConverters.toJson(innerEnum,'InnerEnum',_types)
     };
 
 }
@@ -1610,8 +1563,9 @@ class HelloVerbResponse
     HelloVerbResponse({this.result});
 
     HelloVerbResponse fromMap(Map<String, dynamic> map) => new HelloVerbResponse.fromJson(map);
-    HelloVerbResponse.fromJson(Map<String, dynamic> json) :
+    HelloVerbResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1626,11 +1580,12 @@ class EnumResponse
     EnumResponse({this.Operator});
 
     EnumResponse fromMap(Map<String, dynamic> map) => new EnumResponse.fromJson(map);
-    EnumResponse.fromJson(Map<String, dynamic> json) :
-        Operator = JsonConverters.getEnum(ScopeType.values).fromJson(json['operator'], null);
+    EnumResponse.fromJson(Map<String, dynamic> json) {
+        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'operator': JsonConverters.get('ScopeType').toJson(Operator)
+        'operator': JsonConverters.toJson(Operator,'ScopeType',_types)
     };
 
 }
@@ -1645,10 +1600,11 @@ class HelloTypes implements IReturn<HelloTypes>
     HelloTypes({this.string,this.Bool,this.Int});
 
     HelloTypes fromMap(Map<String, dynamic> map) => new HelloTypes.fromJson(map);
-    HelloTypes.fromJson(Map<String, dynamic> json) :
-        string = json['string'],
-        Bool = json['bool'],
+    HelloTypes.fromJson(Map<String, dynamic> json) {
+        string = json['string'];
+        Bool = json['bool'];
         Int = json['int'];
+    }
 
     Map<String, dynamic> toJson() => {
         'string': string,
@@ -1656,6 +1612,7 @@ class HelloTypes implements IReturn<HelloTypes>
         'int': Int
     };
 
+    createResponse() { return new HelloTypes(); }
     String getTypeName() { return "HelloTypes"; }
 }
 
@@ -1668,8 +1625,9 @@ class HelloZipResponse
     HelloZipResponse({this.result});
 
     HelloZipResponse fromMap(Map<String, dynamic> map) => new HelloZipResponse.fromJson(map);
-    HelloZipResponse.fromJson(Map<String, dynamic> json) :
+    HelloZipResponse.fromJson(Map<String, dynamic> json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result
@@ -1685,13 +1643,14 @@ class PingResponse
     PingResponse({this.responses,this.responseStatus});
 
     PingResponse fromMap(Map<String, dynamic> map) => new PingResponse.fromJson(map);
-    PingResponse.fromJson(Map<String, dynamic> json) :
-        responses = JsonConverters.get('Dictionary<String,ResponseStatus>').fromJson(json['responses'], () => new Map<String,ResponseStatus>()),
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    PingResponse.fromJson(Map<String, dynamic> json) {
+        responses = JsonConverters.fromJson(json['responses'],'Map<String,ResponseStatus>',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'responses': JsonConverters.get('Dictionary<String,ResponseStatus>').toJson(responses),
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responses': JsonConverters.toJson(responses,'Map<String,ResponseStatus>',_types),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1704,13 +1663,14 @@ class RequiresRoleResponse
     RequiresRoleResponse({this.result,this.responseStatus});
 
     RequiresRoleResponse fromMap(Map<String, dynamic> map) => new RequiresRoleResponse.fromJson(map);
-    RequiresRoleResponse.fromJson(Map<String, dynamic> json) :
-        result = json['result'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    RequiresRoleResponse.fromJson(Map<String, dynamic> json) {
+        result = json['result'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1724,10 +1684,11 @@ class SendVerbResponse
     SendVerbResponse({this.id,this.pathInfo,this.requestMethod});
 
     SendVerbResponse fromMap(Map<String, dynamic> map) => new SendVerbResponse.fromJson(map);
-    SendVerbResponse.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        pathInfo = json['pathInfo'],
+    SendVerbResponse.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        pathInfo = json['pathInfo'];
         requestMethod = json['requestMethod'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -1746,15 +1707,16 @@ class GetSessionResponse
     GetSessionResponse({this.result,this.unAuthInfo,this.responseStatus});
 
     GetSessionResponse fromMap(Map<String, dynamic> map) => new GetSessionResponse.fromJson(map);
-    GetSessionResponse.fromJson(Map<String, dynamic> json) :
-        result = JsonConverters.get('CustomUserSession').fromJson(json['result'], () => new CustomUserSession()),
-        unAuthInfo = JsonConverters.get('UnAuthInfo').fromJson(json['unAuthInfo'], () => new UnAuthInfo()),
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    GetSessionResponse.fromJson(Map<String, dynamic> json) {
+        result = JsonConverters.fromJson(json['result'],'CustomUserSession',_types);
+        unAuthInfo = JsonConverters.fromJson(json['unAuthInfo'],'UnAuthInfo',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.get('CustomUserSession').toJson(result),
-        'unAuthInfo': JsonConverters.get('UnAuthInfo').toJson(unAuthInfo),
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'result': JsonConverters.toJson(result,'CustomUserSession',_types),
+        'unAuthInfo': JsonConverters.toJson(unAuthInfo,'UnAuthInfo',_types),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1767,13 +1729,14 @@ class StoreLogsResponse
     StoreLogsResponse({this.existingLogs,this.responseStatus});
 
     StoreLogsResponse fromMap(Map<String, dynamic> map) => new StoreLogsResponse.fromJson(map);
-    StoreLogsResponse.fromJson(Map<String, dynamic> json) :
-        existingLogs = JsonConverters.get('List<Logger>').fromJson(json['existingLogs'], () => new List<Logger>()),
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    StoreLogsResponse.fromJson(Map<String, dynamic> json) {
+        existingLogs = JsonConverters.fromJson(json['existingLogs'],'List<Logger>',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'existingLogs': JsonConverters.get('List<Logger>').toJson(existingLogs),
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'existingLogs': JsonConverters.toJson(existingLogs,'List<Logger>',_types),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1789,19 +1752,20 @@ class TestAuthResponse
     TestAuthResponse({this.userId,this.sessionId,this.userName,this.displayName,this.responseStatus});
 
     TestAuthResponse fromMap(Map<String, dynamic> map) => new TestAuthResponse.fromJson(map);
-    TestAuthResponse.fromJson(Map<String, dynamic> json) :
-        userId = json['userId'],
-        sessionId = json['sessionId'],
-        userName = json['userName'],
-        displayName = json['displayName'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    TestAuthResponse.fromJson(Map<String, dynamic> json) {
+        userId = json['userId'];
+        sessionId = json['sessionId'];
+        userName = json['userName'];
+        displayName = json['displayName'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'userId': userId,
         'sessionId': sessionId,
         'userName': userName,
         'displayName': displayName,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -1814,13 +1778,15 @@ class Wait implements IReturn<Wait>
     Wait({this.forMs});
 
     Wait fromMap(Map<String, dynamic> map) => new Wait.fromJson(map);
-    Wait.fromJson(Map<String, dynamic> json) :
+    Wait.fromJson(Map<String, dynamic> json) {
         forMs = json['forMs'];
+    }
 
     Map<String, dynamic> toJson() => {
         'forMs': forMs
     };
 
+    createResponse() { return new Wait(); }
     String getTypeName() { return "Wait"; }
 }
 
@@ -1847,23 +1813,24 @@ class EchoTypes implements IReturn<EchoTypes>
     EchoTypes({this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char});
 
     EchoTypes fromMap(Map<String, dynamic> map) => new EchoTypes.fromJson(map);
-    EchoTypes.fromJson(Map<String, dynamic> json) :
-        byte = json['byte'],
-        short = json['short'],
-        Int = json['int'],
-        long = json['long'],
-        uShort = json['uShort'],
-        uInt = json['uInt'],
-        uLong = json['uLong'],
-        float = json['float'],
-        Double = json['double'],
-        decimal = json['decimal'],
-        string = json['string'],
-        dateTime = JsonConverters.get('DateTime').fromJson(json['dateTime'], () => new DateTime(0)),
-        timeSpan = JsonConverters.get('TimeSpan').fromJson(json['timeSpan'], () => new Duration()),
-        dateTimeOffset = JsonConverters.get('DateTimeOffset').fromJson(json['dateTimeOffset'], () => new DateTime(0)),
-        guid = json['guid'],
+    EchoTypes.fromJson(Map<String, dynamic> json) {
+        byte = json['byte'];
+        short = json['short'];
+        Int = json['int'];
+        long = json['long'];
+        uShort = json['uShort'];
+        uInt = json['uInt'];
+        uLong = json['uLong'];
+        float = json['float'];
+        Double = json['double'];
+        decimal = json['decimal'];
+        string = json['string'];
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',_types);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',_types);
+        guid = json['guid'];
         char = json['char'];
+    }
 
     Map<String, dynamic> toJson() => {
         'byte': byte,
@@ -1877,13 +1844,14 @@ class EchoTypes implements IReturn<EchoTypes>
         'double': Double,
         'decimal': decimal,
         'string': string,
-        'dateTime': JsonConverters.get('DateTime').toJson(dateTime),
-        'timeSpan': JsonConverters.get('TimeSpan').toJson(timeSpan),
-        'dateTimeOffset': JsonConverters.get('DateTimeOffset').toJson(dateTimeOffset),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',_types),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',_types),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',_types),
         'guid': guid,
         'char': char
     };
 
+    createResponse() { return new EchoTypes(); }
     String getTypeName() { return "EchoTypes"; }
 }
 
@@ -1898,19 +1866,21 @@ class EchoCollections implements IReturn<EchoCollections>
     EchoCollections({this.stringList,this.stringArray,this.stringMap,this.intStringMap});
 
     EchoCollections fromMap(Map<String, dynamic> map) => new EchoCollections.fromJson(map);
-    EchoCollections.fromJson(Map<String, dynamic> json) :
-        stringList = JsonConverters.get('List<String>').fromJson(json['stringList'], () => new List<String>()),
-        stringArray = JsonConverters.get('String[]').fromJson(json['stringArray'], () => new List<String>()),
-        stringMap = JsonConverters.get('Dictionary<String,String>').fromJson(json['stringMap'], () => new Map<String,String>()),
-        intStringMap = JsonConverters.get('Dictionary<Int32,String>').fromJson(json['intStringMap'], () => new Map<int,String>());
+    EchoCollections.fromJson(Map<String, dynamic> json) {
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
+        stringMap = json['stringMap'];
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'stringList': JsonConverters.get('List<String>').toJson(stringList),
-        'stringArray': JsonConverters.get('String[]').toJson(stringArray),
-        'stringMap': JsonConverters.get('Dictionary<String,String>').toJson(stringMap),
-        'intStringMap': JsonConverters.get('Dictionary<Int32,String>').toJson(intStringMap)
+        'stringList': JsonConverters.toJson(stringList,'List<String>',_types),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',_types),
+        'stringMap': stringMap,
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',_types)
     };
 
+    createResponse() { return new EchoCollections(); }
     String getTypeName() { return "EchoCollections"; }
 }
 
@@ -1921,13 +1891,15 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>
     EchoComplexTypes({this.subType});
 
     EchoComplexTypes fromMap(Map<String, dynamic> map) => new EchoComplexTypes.fromJson(map);
-    EchoComplexTypes.fromJson(Map<String, dynamic> json) :
-        subType = JsonConverters.get('SubType').fromJson(json['subType'], () => new SubType());
+    EchoComplexTypes.fromJson(Map<String, dynamic> json) {
+        subType = JsonConverters.fromJson(json['subType'],'SubType',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'subType': JsonConverters.get('SubType').toJson(subType)
+        'subType': JsonConverters.toJson(subType,'SubType',_types)
     };
 
+    createResponse() { return new EchoComplexTypes(); }
     String getTypeName() { return "EchoComplexTypes"; }
 }
 
@@ -1943,6 +1915,7 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     StoreRockstars fromMap(Map<String, dynamic> map) => new StoreRockstars.fromJson(map);
     StoreRockstars.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new StoreRockstars(); }
     String getTypeName() { return "StoreRockstars"; }
 }
 
@@ -1979,16 +1952,17 @@ class AuthenticateResponse
     AuthenticateResponse({this.userId,this.sessionId,this.userName,this.displayName,this.referrerUrl,this.bearerToken,this.refreshToken,this.responseStatus,this.meta});
 
     AuthenticateResponse fromMap(Map<String, dynamic> map) => new AuthenticateResponse.fromJson(map);
-    AuthenticateResponse.fromJson(Map<String, dynamic> json) :
-        userId = json['userId'],
-        sessionId = json['sessionId'],
-        userName = json['userName'],
-        displayName = json['displayName'],
-        referrerUrl = json['referrerUrl'],
-        bearerToken = json['bearerToken'],
-        refreshToken = json['refreshToken'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus()),
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>());
+    AuthenticateResponse.fromJson(Map<String, dynamic> json) {
+        userId = json['userId'];
+        sessionId = json['sessionId'];
+        userName = json['userName'];
+        displayName = json['displayName'];
+        referrerUrl = json['referrerUrl'];
+        bearerToken = json['bearerToken'];
+        refreshToken = json['refreshToken'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        meta = json['meta'];
+    }
 
     Map<String, dynamic> toJson() => {
         'userId': userId,
@@ -1998,8 +1972,8 @@ class AuthenticateResponse
         'referrerUrl': referrerUrl,
         'bearerToken': bearerToken,
         'refreshToken': refreshToken,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus),
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types),
+        'meta': meta
     };
 
 }
@@ -2019,15 +1993,16 @@ class AssignRolesResponse
     AssignRolesResponse({this.allRoles,this.allPermissions,this.responseStatus});
 
     AssignRolesResponse fromMap(Map<String, dynamic> map) => new AssignRolesResponse.fromJson(map);
-    AssignRolesResponse.fromJson(Map<String, dynamic> json) :
-        allRoles = JsonConverters.get('List<String>').fromJson(json['allRoles'], () => new List<String>()),
-        allPermissions = JsonConverters.get('List<String>').fromJson(json['allPermissions'], () => new List<String>()),
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    AssignRolesResponse.fromJson(Map<String, dynamic> json) {
+        allRoles = JsonConverters.fromJson(json['allRoles'],'List<String>',_types);
+        allPermissions = JsonConverters.fromJson(json['allPermissions'],'List<String>',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'allRoles': JsonConverters.get('List<String>').toJson(allRoles),
-        'allPermissions': JsonConverters.get('List<String>').toJson(allPermissions),
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'allRoles': JsonConverters.toJson(allRoles,'List<String>',_types),
+        'allPermissions': JsonConverters.toJson(allPermissions,'List<String>',_types),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -2047,15 +2022,16 @@ class UnAssignRolesResponse
     UnAssignRolesResponse({this.allRoles,this.allPermissions,this.responseStatus});
 
     UnAssignRolesResponse fromMap(Map<String, dynamic> map) => new UnAssignRolesResponse.fromJson(map);
-    UnAssignRolesResponse.fromJson(Map<String, dynamic> json) :
-        allRoles = JsonConverters.get('List<String>').fromJson(json['allRoles'], () => new List<String>()),
-        allPermissions = JsonConverters.get('List<String>').fromJson(json['allPermissions'], () => new List<String>()),
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    UnAssignRolesResponse.fromJson(Map<String, dynamic> json) {
+        allRoles = JsonConverters.fromJson(json['allRoles'],'List<String>',_types);
+        allPermissions = JsonConverters.fromJson(json['allPermissions'],'List<String>',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'allRoles': JsonConverters.get('List<String>').toJson(allRoles),
-        'allPermissions': JsonConverters.get('List<String>').toJson(allPermissions),
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'allRoles': JsonConverters.toJson(allRoles,'List<String>',_types),
+        'allPermissions': JsonConverters.toJson(allPermissions,'List<String>',_types),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -2075,15 +2051,16 @@ class ConvertSessionToTokenResponse
     ConvertSessionToTokenResponse({this.meta,this.accessToken,this.responseStatus});
 
     ConvertSessionToTokenResponse fromMap(Map<String, dynamic> map) => new ConvertSessionToTokenResponse.fromJson(map);
-    ConvertSessionToTokenResponse.fromJson(Map<String, dynamic> json) :
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>()),
-        accessToken = json['accessToken'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    ConvertSessionToTokenResponse.fromJson(Map<String, dynamic> json) {
+        meta = json['meta'];
+        accessToken = json['accessToken'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta),
+        'meta': meta,
         'accessToken': accessToken,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -2100,13 +2077,14 @@ class GetAccessTokenResponse
     GetAccessTokenResponse({this.accessToken,this.responseStatus});
 
     GetAccessTokenResponse fromMap(Map<String, dynamic> map) => new GetAccessTokenResponse.fromJson(map);
-    GetAccessTokenResponse.fromJson(Map<String, dynamic> json) :
-        accessToken = json['accessToken'],
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    GetAccessTokenResponse.fromJson(Map<String, dynamic> json) {
+        accessToken = json['accessToken'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'accessToken': accessToken,
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -2132,19 +2110,20 @@ class QueryResponse<T>
     QueryResponse({this.offset,this.total,this.results,this.meta,this.responseStatus});
 
     QueryResponse fromMap(Map<String, dynamic> map) => new QueryResponse.fromJson(map);
-    QueryResponse.fromJson(Map<String, dynamic> json) :
-        offset = json['offset'],
-        total = json['total'],
-        results = JsonConverters.get('List<T>').fromJson(json['results'], () => new List<T>()),
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>()),
-        responseStatus = JsonConverters.get('ResponseStatus').fromJson(json['responseStatus'], () => new ResponseStatus());
+    QueryResponse.fromJson(Map<String, dynamic> json) {
+        offset = json['offset'];
+        total = json['total'];
+        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',_types);
+        meta = json['meta'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'offset': offset,
         'total': total,
-        'results': JsonConverters.get('List<T>').toJson(results),
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta),
-        'responseStatus': JsonConverters.get('ResponseStatus').toJson(responseStatus)
+        'results': JsonConverters.toJson(results,'List<T>',_types),
+        'meta': meta,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
 }
@@ -2157,15 +2136,17 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>
     CustomHttpError({this.statusCode,this.statusDescription});
 
     CustomHttpError fromMap(Map<String, dynamic> map) => new CustomHttpError.fromJson(map);
-    CustomHttpError.fromJson(Map<String, dynamic> json) :
-        statusCode = json['statusCode'],
+    CustomHttpError.fromJson(Map<String, dynamic> json) {
+        statusCode = json['statusCode'];
         statusDescription = json['statusDescription'];
+    }
 
     Map<String, dynamic> toJson() => {
         'statusCode': statusCode,
         'statusDescription': statusDescription
     };
 
+    createResponse() { return new CustomHttpErrorResponse(); }
     String getTypeName() { return "CustomHttpError"; }
 }
 
@@ -2178,9 +2159,10 @@ class ThrowHttpError
     ThrowHttpError({this.status,this.message});
 
     ThrowHttpError fromMap(Map<String, dynamic> map) => new ThrowHttpError.fromJson(map);
-    ThrowHttpError.fromJson(Map<String, dynamic> json) :
-        status = json['status'],
+    ThrowHttpError.fromJson(Map<String, dynamic> json) {
+        status = json['status'];
         message = json['message'];
+    }
 
     Map<String, dynamic> toJson() => {
         'status': status,
@@ -2198,8 +2180,9 @@ class Throw404
     Throw404({this.message});
 
     Throw404 fromMap(Map<String, dynamic> map) => new Throw404.fromJson(map);
-    Throw404.fromJson(Map<String, dynamic> json) :
+    Throw404.fromJson(Map<String, dynamic> json) {
         message = json['message'];
+    }
 
     Map<String, dynamic> toJson() => {
         'message': message
@@ -2216,8 +2199,9 @@ class ThrowCustom400
     ThrowCustom400({this.message});
 
     ThrowCustom400 fromMap(Map<String, dynamic> map) => new ThrowCustom400.fromJson(map);
-    ThrowCustom400.fromJson(Map<String, dynamic> json) :
+    ThrowCustom400.fromJson(Map<String, dynamic> json) {
         message = json['message'];
+    }
 
     Map<String, dynamic> toJson() => {
         'message': message
@@ -2234,15 +2218,17 @@ class ThrowType implements IReturn<ThrowTypeResponse>
     ThrowType({this.type,this.message});
 
     ThrowType fromMap(Map<String, dynamic> map) => new ThrowType.fromJson(map);
-    ThrowType.fromJson(Map<String, dynamic> json) :
-        type = json['type'],
+    ThrowType.fromJson(Map<String, dynamic> json) {
+        type = json['type'];
         message = json['message'];
+    }
 
     Map<String, dynamic> toJson() => {
         'type': type,
         'message': message
     };
 
+    createResponse() { return new ThrowTypeResponse(); }
     String getTypeName() { return "ThrowType"; }
 }
 
@@ -2256,10 +2242,11 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>
     ThrowValidation({this.age,this.required,this.email});
 
     ThrowValidation fromMap(Map<String, dynamic> map) => new ThrowValidation.fromJson(map);
-    ThrowValidation.fromJson(Map<String, dynamic> json) :
-        age = json['age'],
-        required = json['required'],
+    ThrowValidation.fromJson(Map<String, dynamic> json) {
+        age = json['age'];
+        required = json['required'];
         email = json['email'];
+    }
 
     Map<String, dynamic> toJson() => {
         'age': age,
@@ -2267,6 +2254,7 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>
         'email': email
     };
 
+    createResponse() { return new ThrowValidationResponse(); }
     String getTypeName() { return "ThrowValidation"; }
 }
 
@@ -2277,6 +2265,7 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>
     ThrowBusinessError fromMap(Map<String, dynamic> map) => new ThrowBusinessError.fromJson(map);
     ThrowBusinessError.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new ThrowBusinessErrorResponse(); }
     String getTypeName() { return "ThrowBusinessError"; }
 }
 
@@ -2289,17 +2278,19 @@ class ExternalOperation implements IReturn<ExternalOperationResponse>
     ExternalOperation({this.id,this.name,this.externalEnum});
 
     ExternalOperation fromMap(Map<String, dynamic> map) => new ExternalOperation.fromJson(map);
-    ExternalOperation.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        name = json['name'],
-        externalEnum = JsonConverters.getEnum(ExternalEnum.values).fromJson(json['externalEnum'], null);
+    ExternalOperation.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        externalEnum = JsonConverters.fromJson(json['externalEnum'],'ExternalEnum',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'externalEnum': JsonConverters.get('ExternalEnum').toJson(externalEnum)
+        'externalEnum': JsonConverters.toJson(externalEnum,'ExternalEnum',_types)
     };
 
+    createResponse() { return new ExternalOperationResponse(); }
     String getTypeName() { return "ExternalOperation"; }
 }
 
@@ -2310,13 +2301,15 @@ class ExternalOperation2 implements IReturn<ExternalOperation2Response>
     ExternalOperation2({this.id});
 
     ExternalOperation2 fromMap(Map<String, dynamic> map) => new ExternalOperation2.fromJson(map);
-    ExternalOperation2.fromJson(Map<String, dynamic> json) :
+    ExternalOperation2.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new ExternalOperation2Response(); }
     String getTypeName() { return "ExternalOperation2"; }
 }
 
@@ -2327,13 +2320,15 @@ class ExternalOperation3 implements IReturn<ExternalReturnTypeResponse>
     ExternalOperation3({this.id});
 
     ExternalOperation3 fromMap(Map<String, dynamic> map) => new ExternalOperation3.fromJson(map);
-    ExternalOperation3.fromJson(Map<String, dynamic> json) :
+    ExternalOperation3.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new ExternalReturnTypeResponse(); }
     String getTypeName() { return "ExternalOperation3"; }
 }
 
@@ -2344,8 +2339,9 @@ class ExternalOperation4
     ExternalOperation4({this.id});
 
     ExternalOperation4 fromMap(Map<String, dynamic> map) => new ExternalOperation4.fromJson(map);
-    ExternalOperation4.fromJson(Map<String, dynamic> json) :
+    ExternalOperation4.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
@@ -2360,8 +2356,9 @@ class RootPathRoutes
     RootPathRoutes({this.path});
 
     RootPathRoutes fromMap(Map<String, dynamic> map) => new RootPathRoutes.fromJson(map);
-    RootPathRoutes.fromJson(Map<String, dynamic> json) :
+    RootPathRoutes.fromJson(Map<String, dynamic> json) {
         path = json['path'];
+    }
 
     Map<String, dynamic> toJson() => {
         'path': path
@@ -2376,13 +2373,15 @@ class GetAccount implements IReturn<Account>
     GetAccount({this.account});
 
     GetAccount fromMap(Map<String, dynamic> map) => new GetAccount.fromJson(map);
-    GetAccount.fromJson(Map<String, dynamic> json) :
+    GetAccount.fromJson(Map<String, dynamic> json) {
         account = json['account'];
+    }
 
     Map<String, dynamic> toJson() => {
         'account': account
     };
 
+    createResponse() { return new Account(); }
     String getTypeName() { return "GetAccount"; }
 }
 
@@ -2394,15 +2393,17 @@ class GetProject implements IReturn<Project>
     GetProject({this.account,this.project});
 
     GetProject fromMap(Map<String, dynamic> map) => new GetProject.fromJson(map);
-    GetProject.fromJson(Map<String, dynamic> json) :
-        account = json['account'],
+    GetProject.fromJson(Map<String, dynamic> json) {
+        account = json['account'];
         project = json['project'];
+    }
 
     Map<String, dynamic> toJson() => {
         'account': account,
         'project': project
     };
 
+    createResponse() { return new Project(); }
     String getTypeName() { return "GetProject"; }
 }
 
@@ -2414,8 +2415,9 @@ class ImageAsStream
     ImageAsStream({this.format});
 
     ImageAsStream fromMap(Map<String, dynamic> map) => new ImageAsStream.fromJson(map);
-    ImageAsStream.fromJson(Map<String, dynamic> json) :
+    ImageAsStream.fromJson(Map<String, dynamic> json) {
         format = json['format'];
+    }
 
     Map<String, dynamic> toJson() => {
         'format': format
@@ -2431,8 +2433,9 @@ class ImageAsBytes
     ImageAsBytes({this.format});
 
     ImageAsBytes fromMap(Map<String, dynamic> map) => new ImageAsBytes.fromJson(map);
-    ImageAsBytes.fromJson(Map<String, dynamic> json) :
+    ImageAsBytes.fromJson(Map<String, dynamic> json) {
         format = json['format'];
+    }
 
     Map<String, dynamic> toJson() => {
         'format': format
@@ -2448,8 +2451,9 @@ class ImageAsCustomResult
     ImageAsCustomResult({this.format});
 
     ImageAsCustomResult fromMap(Map<String, dynamic> map) => new ImageAsCustomResult.fromJson(map);
-    ImageAsCustomResult.fromJson(Map<String, dynamic> json) :
+    ImageAsCustomResult.fromJson(Map<String, dynamic> json) {
         format = json['format'];
+    }
 
     Map<String, dynamic> toJson() => {
         'format': format
@@ -2465,8 +2469,9 @@ class ImageWriteToResponse
     ImageWriteToResponse({this.format});
 
     ImageWriteToResponse fromMap(Map<String, dynamic> map) => new ImageWriteToResponse.fromJson(map);
-    ImageWriteToResponse.fromJson(Map<String, dynamic> json) :
+    ImageWriteToResponse.fromJson(Map<String, dynamic> json) {
         format = json['format'];
+    }
 
     Map<String, dynamic> toJson() => {
         'format': format
@@ -2482,8 +2487,9 @@ class ImageAsFile
     ImageAsFile({this.format});
 
     ImageAsFile fromMap(Map<String, dynamic> map) => new ImageAsFile.fromJson(map);
-    ImageAsFile.fromJson(Map<String, dynamic> json) :
+    ImageAsFile.fromJson(Map<String, dynamic> json) {
         format = json['format'];
+    }
 
     Map<String, dynamic> toJson() => {
         'format': format
@@ -2499,8 +2505,9 @@ class ImageAsRedirect
     ImageAsRedirect({this.format});
 
     ImageAsRedirect fromMap(Map<String, dynamic> map) => new ImageAsRedirect.fromJson(map);
-    ImageAsRedirect.fromJson(Map<String, dynamic> json) :
+    ImageAsRedirect.fromJson(Map<String, dynamic> json) {
         format = json['format'];
+    }
 
     Map<String, dynamic> toJson() => {
         'format': format
@@ -2522,14 +2529,15 @@ class DrawImage
     DrawImage({this.name,this.format,this.width,this.height,this.fontSize,this.foreground,this.background});
 
     DrawImage fromMap(Map<String, dynamic> map) => new DrawImage.fromJson(map);
-    DrawImage.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
-        format = json['format'],
-        width = json['width'],
-        height = json['height'],
-        fontSize = json['fontSize'],
-        foreground = json['foreground'],
+    DrawImage.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        format = json['format'];
+        width = json['width'];
+        height = json['height'];
+        fontSize = json['fontSize'];
+        foreground = json['foreground'];
         background = json['background'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
@@ -2551,14 +2559,15 @@ class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, I
     CreateJwt({this.jwtExpiry});
 
     CreateJwt fromMap(Map<String, dynamic> map) => new CreateJwt.fromJson(map);
-    CreateJwt.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
-        jwtExpiry = JsonConverters.get('DateTime').fromJson(json['jwtExpiry'], () => new DateTime(0));
+    CreateJwt.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',_types);
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'jwtExpiry': JsonConverters.get('DateTime').toJson(jwtExpiry)
+        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',_types)
     });
 
+    createResponse() { return new CreateJwtResponse(); }
     String getTypeName() { return "CreateJwt"; }
 }
 
@@ -2571,15 +2580,17 @@ class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>
     CreateRefreshJwt({this.userAuthId,this.jwtExpiry});
 
     CreateRefreshJwt fromMap(Map<String, dynamic> map) => new CreateRefreshJwt.fromJson(map);
-    CreateRefreshJwt.fromJson(Map<String, dynamic> json) :
-        userAuthId = json['userAuthId'],
-        jwtExpiry = JsonConverters.get('DateTime').fromJson(json['jwtExpiry'], () => new DateTime(0));
+    CreateRefreshJwt.fromJson(Map<String, dynamic> json) {
+        userAuthId = json['userAuthId'];
+        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'userAuthId': userAuthId,
-        'jwtExpiry': JsonConverters.get('DateTime').toJson(jwtExpiry)
+        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',_types)
     };
 
+    createResponse() { return new CreateRefreshJwtResponse(); }
     String getTypeName() { return "CreateRefreshJwt"; }
 }
 
@@ -2591,13 +2602,15 @@ class ViewLogs implements IReturn<String>
     ViewLogs({this.clear});
 
     ViewLogs fromMap(Map<String, dynamic> map) => new ViewLogs.fromJson(map);
-    ViewLogs.fromJson(Map<String, dynamic> json) :
+    ViewLogs.fromJson(Map<String, dynamic> json) {
         clear = json['clear'];
+    }
 
     Map<String, dynamic> toJson() => {
         'clear': clear
     };
 
+    createResponse() { return ""; }
     String getTypeName() { return "ViewLogs"; }
 }
 
@@ -2609,13 +2622,15 @@ class MetadataTest implements IReturn<MetadataTestResponse>
     MetadataTest({this.id});
 
     MetadataTest fromMap(Map<String, dynamic> map) => new MetadataTest.fromJson(map);
-    MetadataTest.fromJson(Map<String, dynamic> json) :
+    MetadataTest.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new MetadataTestResponse(); }
     String getTypeName() { return "MetadataTest"; }
 }
 
@@ -2627,13 +2642,15 @@ class MetadataTestArray implements IReturn<List<MetadataTestChild>>
     MetadataTestArray({this.id});
 
     MetadataTestArray fromMap(Map<String, dynamic> map) => new MetadataTestArray.fromJson(map);
-    MetadataTestArray.fromJson(Map<String, dynamic> json) :
+    MetadataTestArray.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new List<MetadataTestChild>(); }
     String getTypeName() { return "MetadataTestArray"; }
 }
 
@@ -2645,6 +2662,7 @@ class GetExample implements IReturn<GetExampleResponse>
     GetExample fromMap(Map<String, dynamic> map) => new GetExample.fromJson(map);
     GetExample.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new GetExampleResponse(); }
     String getTypeName() { return "GetExample"; }
 }
 
@@ -2656,13 +2674,15 @@ class GetRandomIds implements IReturn<GetRandomIdsResponse>
     GetRandomIds({this.take});
 
     GetRandomIds fromMap(Map<String, dynamic> map) => new GetRandomIds.fromJson(map);
-    GetRandomIds.fromJson(Map<String, dynamic> json) :
+    GetRandomIds.fromJson(Map<String, dynamic> json) {
         take = json['take'];
+    }
 
     Map<String, dynamic> toJson() => {
         'take': take
     };
 
+    createResponse() { return new GetRandomIdsResponse(); }
     String getTypeName() { return "GetRandomIds"; }
 }
 
@@ -2674,8 +2694,9 @@ class TextFileTest
     TextFileTest({this.asAttachment});
 
     TextFileTest fromMap(Map<String, dynamic> map) => new TextFileTest.fromJson(map);
-    TextFileTest.fromJson(Map<String, dynamic> json) :
+    TextFileTest.fromJson(Map<String, dynamic> json) {
         asAttachment = json['asAttachment'];
+    }
 
     Map<String, dynamic> toJson() => {
         'asAttachment': asAttachment
@@ -2691,8 +2712,9 @@ class ReturnText
     ReturnText({this.text});
 
     ReturnText fromMap(Map<String, dynamic> map) => new ReturnText.fromJson(map);
-    ReturnText.fromJson(Map<String, dynamic> json) :
+    ReturnText.fromJson(Map<String, dynamic> json) {
         text = json['text'];
+    }
 
     Map<String, dynamic> toJson() => {
         'text': text
@@ -2708,8 +2730,9 @@ class ReturnHtml
     ReturnHtml({this.text});
 
     ReturnHtml fromMap(Map<String, dynamic> map) => new ReturnHtml.fromJson(map);
-    ReturnHtml.fromJson(Map<String, dynamic> json) :
+    ReturnHtml.fromJson(Map<String, dynamic> json) {
         text = json['text'];
+    }
 
     Map<String, dynamic> toJson() => {
         'text': text
@@ -2729,15 +2752,17 @@ class Hello implements IReturn<HelloResponse>
     Hello({this.name,this.title});
 
     Hello fromMap(Map<String, dynamic> map) => new Hello.fromJson(map);
-    Hello.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
+    Hello.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
         title = json['title'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
         'title': title
     };
 
+    createResponse() { return new HelloResponse(); }
     String getTypeName() { return "Hello"; }
 }
 
@@ -2749,15 +2774,17 @@ class HelloWithNestedClass implements IReturn<HelloResponse>
     HelloWithNestedClass({this.name,this.nestedClassProp});
 
     HelloWithNestedClass fromMap(Map<String, dynamic> map) => new HelloWithNestedClass.fromJson(map);
-    HelloWithNestedClass.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
-        nestedClassProp = JsonConverters.get('HelloWithNestedClass.NestedClass').fromJson(json['nestedClassProp'], () => new NestedClass());
+    HelloWithNestedClass.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        nestedClassProp = JsonConverters.fromJson(json['nestedClassProp'],'NestedClass',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'nestedClassProp': JsonConverters.get('HelloWithNestedClass.NestedClass').toJson(nestedClassProp)
+        'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',_types)
     };
 
+    createResponse() { return new HelloResponse(); }
     String getTypeName() { return "HelloWithNestedClass"; }
 }
 
@@ -2768,13 +2795,15 @@ class HelloList implements IReturn<List<ListResult>>
     HelloList({this.names});
 
     HelloList fromMap(Map<String, dynamic> map) => new HelloList.fromJson(map);
-    HelloList.fromJson(Map<String, dynamic> json) :
-        names = JsonConverters.get('List<String>').fromJson(json['names'], () => new List<String>());
+    HelloList.fromJson(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.get('List<String>').toJson(names)
+        'names': JsonConverters.toJson(names,'List<String>',_types)
     };
 
+    createResponse() { return new List<ListResult>(); }
     String getTypeName() { return "HelloList"; }
 }
 
@@ -2785,13 +2814,15 @@ class HelloArray implements IReturn<List<ArrayResult>>
     HelloArray({this.names});
 
     HelloArray fromMap(Map<String, dynamic> map) => new HelloArray.fromJson(map);
-    HelloArray.fromJson(Map<String, dynamic> json) :
-        names = JsonConverters.get('List<String>').fromJson(json['names'], () => new List<String>());
+    HelloArray.fromJson(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.get('List<String>').toJson(names)
+        'names': JsonConverters.toJson(names,'List<String>',_types)
     };
 
+    createResponse() { return new List<ArrayResult>(); }
     String getTypeName() { return "HelloArray"; }
 }
 
@@ -2804,15 +2835,16 @@ class HelloWithEnum
     HelloWithEnum({this.enumProp,this.nullableEnumProp,this.enumFlags});
 
     HelloWithEnum fromMap(Map<String, dynamic> map) => new HelloWithEnum.fromJson(map);
-    HelloWithEnum.fromJson(Map<String, dynamic> json) :
-        enumProp = JsonConverters.getEnum(EnumType.values).fromJson(json['enumProp'], null),
-        nullableEnumProp = JsonConverters.getEnum(EnumType.values).fromJson(json['nullableEnumProp'], null),
-        enumFlags = JsonConverters.getEnum(EnumFlags.values).fromJson(json['enumFlags'], null);
+    HelloWithEnum.fromJson(Map<String, dynamic> json) {
+        enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',_types);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',_types);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'enumProp': JsonConverters.get('EnumType').toJson(enumProp),
-        'nullableEnumProp': JsonConverters.get('EnumType').toJson(nullableEnumProp),
-        'enumFlags': JsonConverters.get('EnumFlags').toJson(enumFlags)
+        'enumProp': JsonConverters.toJson(enumProp,'EnumType',_types),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',_types),
+        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',_types)
     };
 
 }
@@ -2824,8 +2856,9 @@ class HelloExternal
     HelloExternal({this.name});
 
     HelloExternal fromMap(Map<String, dynamic> map) => new HelloExternal.fromJson(map);
-    HelloExternal.fromJson(Map<String, dynamic> json) :
+    HelloExternal.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
@@ -2852,8 +2885,9 @@ class AllowedAttributes
     AllowedAttributes({this.range});
 
     AllowedAttributes fromMap(Map<String, dynamic> map) => new AllowedAttributes.fromJson(map);
-    AllowedAttributes.fromJson(Map<String, dynamic> json) :
+    AllowedAttributes.fromJson(Map<String, dynamic> json) {
         range = json['range'];
+    }
 
     Map<String, dynamic> toJson() => {
         'range': range
@@ -2871,17 +2905,19 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>
     HelloAllTypes({this.name,this.allTypes,this.allCollectionTypes});
 
     HelloAllTypes fromMap(Map<String, dynamic> map) => new HelloAllTypes.fromJson(map);
-    HelloAllTypes.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
-        allTypes = JsonConverters.get('AllTypes').fromJson(json['allTypes'], () => new AllTypes()),
-        allCollectionTypes = JsonConverters.get('AllCollectionTypes').fromJson(json['allCollectionTypes'], () => new AllCollectionTypes());
+    HelloAllTypes.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',_types);
+        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'allTypes': JsonConverters.get('AllTypes').toJson(allTypes),
-        'allCollectionTypes': JsonConverters.get('AllCollectionTypes').toJson(allCollectionTypes)
+        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',_types),
+        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',_types)
     };
 
+    createResponse() { return new HelloAllTypesResponse(); }
     String getTypeName() { return "HelloAllTypes"; }
 }
 
@@ -2892,13 +2928,15 @@ class HelloString implements IReturn<String>
     HelloString({this.name});
 
     HelloString fromMap(Map<String, dynamic> map) => new HelloString.fromJson(map);
-    HelloString.fromJson(Map<String, dynamic> json) :
+    HelloString.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    createResponse() { return ""; }
     String getTypeName() { return "HelloString"; }
 }
 
@@ -2909,8 +2947,9 @@ class HelloVoid
     HelloVoid({this.name});
 
     HelloVoid fromMap(Map<String, dynamic> map) => new HelloVoid.fromJson(map);
-    HelloVoid.fromJson(Map<String, dynamic> json) :
+    HelloVoid.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
@@ -2930,15 +2969,17 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>
     HelloWithDataContract({this.name,this.id});
 
     HelloWithDataContract fromMap(Map<String, dynamic> map) => new HelloWithDataContract.fromJson(map);
-    HelloWithDataContract.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
+    HelloWithDataContract.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
         'id': id
     };
 
+    createResponse() { return new HelloWithDataContractResponse(); }
     String getTypeName() { return "HelloWithDataContract"; }
 }
 
@@ -2952,13 +2993,15 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>
     HelloWithDescription({this.name});
 
     HelloWithDescription fromMap(Map<String, dynamic> map) => new HelloWithDescription.fromJson(map);
-    HelloWithDescription.fromJson(Map<String, dynamic> json) :
+    HelloWithDescription.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    createResponse() { return new HelloWithDescriptionResponse(); }
     String getTypeName() { return "HelloWithDescription"; }
 }
 
@@ -2969,14 +3012,15 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
     HelloWithInheritance({this.name});
 
     HelloWithInheritance fromMap(Map<String, dynamic> map) => new HelloWithInheritance.fromJson(map);
-    HelloWithInheritance.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    HelloWithInheritance.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'name': name
     });
 
+    createResponse() { return new HelloWithInheritanceResponse(); }
     String getTypeName() { return "HelloWithInheritance"; }
 }
 
@@ -2987,9 +3031,9 @@ class HelloWithGenericInheritance extends HelloBase1<Poco>
     HelloWithGenericInheritance({this.result});
 
     HelloWithGenericInheritance fromMap(Map<String, dynamic> map) => new HelloWithGenericInheritance.fromJson(map);
-    HelloWithGenericInheritance.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    HelloWithGenericInheritance.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'result': result
@@ -3004,9 +3048,9 @@ class HelloWithGenericInheritance2 extends HelloBase1<Hello>
     HelloWithGenericInheritance2({this.result});
 
     HelloWithGenericInheritance2 fromMap(Map<String, dynamic> map) => new HelloWithGenericInheritance2.fromJson(map);
-    HelloWithGenericInheritance2.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    HelloWithGenericInheritance2.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         result = json['result'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'result': result
@@ -3029,13 +3073,15 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>
     HelloWithReturn({this.name});
 
     HelloWithReturn fromMap(Map<String, dynamic> map) => new HelloWithReturn.fromJson(map);
-    HelloWithReturn.fromJson(Map<String, dynamic> json) :
+    HelloWithReturn.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    createResponse() { return new HelloWithAlternateReturnResponse(); }
     String getTypeName() { return "HelloWithReturn"; }
 }
 
@@ -3047,13 +3093,15 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>
     HelloWithRoute({this.name});
 
     HelloWithRoute fromMap(Map<String, dynamic> map) => new HelloWithRoute.fromJson(map);
-    HelloWithRoute.fromJson(Map<String, dynamic> json) :
+    HelloWithRoute.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    createResponse() { return new HelloWithRouteResponse(); }
     String getTypeName() { return "HelloWithRoute"; }
 }
 
@@ -3064,13 +3112,15 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>
     HelloWithType({this.name});
 
     HelloWithType fromMap(Map<String, dynamic> map) => new HelloWithType.fromJson(map);
-    HelloWithType.fromJson(Map<String, dynamic> json) :
+    HelloWithType.fromJson(Map<String, dynamic> json) {
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    createResponse() { return new HelloWithTypeResponse(); }
     String getTypeName() { return "HelloWithType"; }
 }
 
@@ -3083,15 +3133,16 @@ class HelloInterface
     HelloInterface({this.poco,this.emptyInterface,this.emptyClass});
 
     HelloInterface fromMap(Map<String, dynamic> map) => new HelloInterface.fromJson(map);
-    HelloInterface.fromJson(Map<String, dynamic> json) :
-        poco = JsonConverters.get('IPoco').fromJson(json['poco'], null),
-        emptyInterface = JsonConverters.get('IEmptyInterface').fromJson(json['emptyInterface'], null),
-        emptyClass = JsonConverters.get('EmptyClass').fromJson(json['emptyClass'], () => new EmptyClass());
+    HelloInterface.fromJson(Map<String, dynamic> json) {
+        poco = JsonConverters.fromJson(json['poco'],'IPoco',_types);
+        emptyInterface = JsonConverters.fromJson(json['emptyInterface'],'IEmptyInterface',_types);
+        emptyClass = JsonConverters.fromJson(json['emptyClass'],'EmptyClass',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'poco': JsonConverters.get('IPoco').toJson(poco),
-        'emptyInterface': JsonConverters.get('IEmptyInterface').toJson(emptyInterface),
-        'emptyClass': JsonConverters.get('EmptyClass').toJson(emptyClass)
+        'poco': JsonConverters.toJson(poco,'IPoco',_types),
+        'emptyInterface': JsonConverters.toJson(emptyInterface,'IEmptyInterface',_types),
+        'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',_types)
     };
 
 }
@@ -3102,6 +3153,7 @@ class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>
     HelloInnerTypes fromMap(Map<String, dynamic> map) => new HelloInnerTypes.fromJson(map);
     HelloInnerTypes.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new HelloInnerTypesResponse(); }
     String getTypeName() { return "HelloInnerTypes"; }
 }
 
@@ -3112,11 +3164,12 @@ class HelloBuiltin
     HelloBuiltin({this.dayOfWeek});
 
     HelloBuiltin fromMap(Map<String, dynamic> map) => new HelloBuiltin.fromJson(map);
-    HelloBuiltin.fromJson(Map<String, dynamic> json) :
-        dayOfWeek = JsonConverters.getEnum(DayOfWeek.values).fromJson(json['dayOfWeek'], null);
+    HelloBuiltin.fromJson(Map<String, dynamic> json) {
+        dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'dayOfWeek': JsonConverters.get('DayOfWeek').toJson(dayOfWeek)
+        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',_types)
     };
 
 }
@@ -3128,13 +3181,15 @@ class HelloGet implements IReturn<HelloVerbResponse>, IGet
     HelloGet({this.id});
 
     HelloGet fromMap(Map<String, dynamic> map) => new HelloGet.fromJson(map);
-    HelloGet.fromJson(Map<String, dynamic> json) :
+    HelloGet.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloGet"; }
 }
 
@@ -3144,6 +3199,7 @@ class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost
     HelloPost fromMap(Map<String, dynamic> map) => new HelloPost.fromJson(map);
     HelloPost.fromJson(Map<String, dynamic> json) : super.fromJson(json);
     Map<String, dynamic> toJson() => super.toJson();
+    createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPost"; }
 }
 
@@ -3154,13 +3210,15 @@ class HelloPut implements IReturn<HelloVerbResponse>, IPut
     HelloPut({this.id});
 
     HelloPut fromMap(Map<String, dynamic> map) => new HelloPut.fromJson(map);
-    HelloPut.fromJson(Map<String, dynamic> json) :
+    HelloPut.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPut"; }
 }
 
@@ -3171,13 +3229,15 @@ class HelloDelete implements IReturn<HelloVerbResponse>, IDelete
     HelloDelete({this.id});
 
     HelloDelete fromMap(Map<String, dynamic> map) => new HelloDelete.fromJson(map);
-    HelloDelete.fromJson(Map<String, dynamic> json) :
+    HelloDelete.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloDelete"; }
 }
 
@@ -3188,13 +3248,15 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch
     HelloPatch({this.id});
 
     HelloPatch fromMap(Map<String, dynamic> map) => new HelloPatch.fromJson(map);
-    HelloPatch.fromJson(Map<String, dynamic> json) :
+    HelloPatch.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPatch"; }
 }
 
@@ -3205,13 +3267,15 @@ class HelloReturnVoid implements IReturnVoid
     HelloReturnVoid({this.id});
 
     HelloReturnVoid fromMap(Map<String, dynamic> map) => new HelloReturnVoid.fromJson(map);
-    HelloReturnVoid.fromJson(Map<String, dynamic> json) :
+    HelloReturnVoid.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() {}
     String getTypeName() { return "HelloReturnVoid"; }
 }
 
@@ -3222,13 +3286,15 @@ class EnumRequest implements IReturn<EnumResponse>, IPut
     EnumRequest({this.Operator});
 
     EnumRequest fromMap(Map<String, dynamic> map) => new EnumRequest.fromJson(map);
-    EnumRequest.fromJson(Map<String, dynamic> json) :
-        Operator = JsonConverters.getEnum(ScopeType.values).fromJson(json['operator'], null);
+    EnumRequest.fromJson(Map<String, dynamic> json) {
+        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'operator': JsonConverters.get('ScopeType').toJson(Operator)
+        'operator': JsonConverters.toJson(Operator,'ScopeType',_types)
     };
 
+    createResponse() { return new EnumResponse(); }
     String getTypeName() { return "EnumRequest"; }
 }
 
@@ -3245,15 +3311,17 @@ class HelloZip implements IReturn<HelloZipResponse>
     HelloZip({this.name,this.test});
 
     HelloZip fromMap(Map<String, dynamic> map) => new HelloZip.fromJson(map);
-    HelloZip.fromJson(Map<String, dynamic> json) :
-        name = json['name'],
-        test = JsonConverters.get('List<String>').fromJson(json['test'], () => new List<String>());
+    HelloZip.fromJson(Map<String, dynamic> json) {
+        name = json['name'];
+        test = JsonConverters.fromJson(json['test'],'List<String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'test': JsonConverters.get('List<String>').toJson(test)
+        'test': JsonConverters.toJson(test,'List<String>',_types)
     };
 
+    createResponse() { return new HelloZipResponse(); }
     String getTypeName() { return "HelloZip"; }
 }
 
@@ -3264,6 +3332,7 @@ class Ping implements IReturn<PingResponse>
     Ping fromMap(Map<String, dynamic> map) => new Ping.fromJson(map);
     Ping.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new PingResponse(); }
     String getTypeName() { return "Ping"; }
 }
 
@@ -3283,6 +3352,7 @@ class RequiresRole implements IReturn<RequiresRoleResponse>
     RequiresRole fromMap(Map<String, dynamic> map) => new RequiresRole.fromJson(map);
     RequiresRole.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new RequiresRoleResponse(); }
     String getTypeName() { return "RequiresRole"; }
 }
 
@@ -3294,13 +3364,15 @@ class ReturnString implements IReturn<String>
     ReturnString({this.data});
 
     ReturnString fromMap(Map<String, dynamic> map) => new ReturnString.fromJson(map);
-    ReturnString.fromJson(Map<String, dynamic> json) :
+    ReturnString.fromJson(Map<String, dynamic> json) {
         data = json['data'];
+    }
 
     Map<String, dynamic> toJson() => {
         'data': data
     };
 
+    createResponse() { return ""; }
     String getTypeName() { return "ReturnString"; }
 }
 
@@ -3312,13 +3384,15 @@ class ReturnBytes implements IReturn<Uint8List>
     ReturnBytes({this.data});
 
     ReturnBytes fromMap(Map<String, dynamic> map) => new ReturnBytes.fromJson(map);
-    ReturnBytes.fromJson(Map<String, dynamic> json) :
-        data = JsonConverters.get('Byte[]').fromJson(json['data'], () => new Uint8List(0));
+    ReturnBytes.fromJson(Map<String, dynamic> json) {
+        data = JsonConverters.fromJson(json['data'],'Uint8List',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.get('Byte[]').toJson(data)
+        'data': JsonConverters.toJson(data,'Uint8List',_types)
     };
 
+    createResponse() { return new Uint8List(0); }
     String getTypeName() { return "ReturnBytes"; }
 }
 
@@ -3330,13 +3404,15 @@ class ReturnStream implements IReturn<Uint8List>
     ReturnStream({this.data});
 
     ReturnStream fromMap(Map<String, dynamic> map) => new ReturnStream.fromJson(map);
-    ReturnStream.fromJson(Map<String, dynamic> json) :
-        data = JsonConverters.get('Byte[]').fromJson(json['data'], () => new Uint8List(0));
+    ReturnStream.fromJson(Map<String, dynamic> json) {
+        data = JsonConverters.fromJson(json['data'],'Uint8List',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.get('Byte[]').toJson(data)
+        'data': JsonConverters.toJson(data,'Uint8List',_types)
     };
 
+    createResponse() { return new Uint8List(0); }
     String getTypeName() { return "ReturnStream"; }
 }
 
@@ -3347,6 +3423,7 @@ class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet
     GetRequest1 fromMap(Map<String, dynamic> map) => new GetRequest1.fromJson(map);
     GetRequest1.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new List<ReturnedDto>(); }
     String getTypeName() { return "GetRequest1"; }
 }
 
@@ -3357,6 +3434,7 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet
     GetRequest2 fromMap(Map<String, dynamic> map) => new GetRequest2.fromJson(map);
     GetRequest2.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new List<ReturnedDto>(); }
     String getTypeName() { return "GetRequest2"; }
 }
 
@@ -3369,15 +3447,17 @@ class SendJson implements IReturn<String>
     SendJson({this.id,this.name});
 
     SendJson fromMap(Map<String, dynamic> map) => new SendJson.fromJson(map);
-    SendJson.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
+    SendJson.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name
     };
 
+    createResponse() { return ""; }
     String getTypeName() { return "SendJson"; }
 }
 
@@ -3391,10 +3471,11 @@ class SendText implements IReturn<String>
     SendText({this.id,this.name,this.contentType});
 
     SendText fromMap(Map<String, dynamic> map) => new SendText.fromJson(map);
-    SendText.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        name = json['name'],
+    SendText.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
         contentType = json['contentType'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -3402,6 +3483,7 @@ class SendText implements IReturn<String>
         'contentType': contentType
     };
 
+    createResponse() { return ""; }
     String getTypeName() { return "SendText"; }
 }
 
@@ -3415,10 +3497,11 @@ class SendRaw implements IReturn<Uint8List>
     SendRaw({this.id,this.name,this.contentType});
 
     SendRaw fromMap(Map<String, dynamic> map) => new SendRaw.fromJson(map);
-    SendRaw.fromJson(Map<String, dynamic> json) :
-        id = json['id'],
-        name = json['name'],
+    SendRaw.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
         contentType = json['contentType'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id,
@@ -3426,6 +3509,7 @@ class SendRaw implements IReturn<Uint8List>
         'contentType': contentType
     };
 
+    createResponse() { return new Uint8List(0); }
     String getTypeName() { return "SendRaw"; }
 }
 
@@ -3436,13 +3520,15 @@ class SendDefault implements IReturn<SendVerbResponse>
     SendDefault({this.id});
 
     SendDefault fromMap(Map<String, dynamic> map) => new SendDefault.fromJson(map);
-    SendDefault.fromJson(Map<String, dynamic> json) :
+    SendDefault.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new SendVerbResponse(); }
     String getTypeName() { return "SendDefault"; }
 }
 
@@ -3454,13 +3540,15 @@ class SendRestGet implements IReturn<SendVerbResponse>, IGet
     SendRestGet({this.id});
 
     SendRestGet fromMap(Map<String, dynamic> map) => new SendRestGet.fromJson(map);
-    SendRestGet.fromJson(Map<String, dynamic> json) :
+    SendRestGet.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new SendVerbResponse(); }
     String getTypeName() { return "SendRestGet"; }
 }
 
@@ -3471,13 +3559,15 @@ class SendGet implements IReturn<SendVerbResponse>, IGet
     SendGet({this.id});
 
     SendGet fromMap(Map<String, dynamic> map) => new SendGet.fromJson(map);
-    SendGet.fromJson(Map<String, dynamic> json) :
+    SendGet.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new SendVerbResponse(); }
     String getTypeName() { return "SendGet"; }
 }
 
@@ -3488,13 +3578,15 @@ class SendPost implements IReturn<SendVerbResponse>, IPost
     SendPost({this.id});
 
     SendPost fromMap(Map<String, dynamic> map) => new SendPost.fromJson(map);
-    SendPost.fromJson(Map<String, dynamic> json) :
+    SendPost.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new SendVerbResponse(); }
     String getTypeName() { return "SendPost"; }
 }
 
@@ -3505,13 +3597,15 @@ class SendPut implements IReturn<SendVerbResponse>, IPut
     SendPut({this.id});
 
     SendPut fromMap(Map<String, dynamic> map) => new SendPut.fromJson(map);
-    SendPut.fromJson(Map<String, dynamic> json) :
+    SendPut.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    createResponse() { return new SendVerbResponse(); }
     String getTypeName() { return "SendPut"; }
 }
 
@@ -3522,6 +3616,7 @@ class GetSession implements IReturn<GetSessionResponse>
     GetSession fromMap(Map<String, dynamic> map) => new GetSession.fromJson(map);
     GetSession.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new GetSessionResponse(); }
     String getTypeName() { return "GetSession"; }
 }
 
@@ -3533,13 +3628,15 @@ class UpdateSession implements IReturn<GetSessionResponse>
     UpdateSession({this.customName});
 
     UpdateSession fromMap(Map<String, dynamic> map) => new UpdateSession.fromJson(map);
-    UpdateSession.fromJson(Map<String, dynamic> json) :
+    UpdateSession.fromJson(Map<String, dynamic> json) {
         customName = json['customName'];
+    }
 
     Map<String, dynamic> toJson() => {
         'customName': customName
     };
 
+    createResponse() { return new GetSessionResponse(); }
     String getTypeName() { return "UpdateSession"; }
 }
 
@@ -3550,13 +3647,15 @@ class StoreLogs implements IReturn<StoreLogsResponse>
     StoreLogs({this.loggers});
 
     StoreLogs fromMap(Map<String, dynamic> map) => new StoreLogs.fromJson(map);
-    StoreLogs.fromJson(Map<String, dynamic> json) :
-        loggers = JsonConverters.get('List<Logger>').fromJson(json['loggers'], () => new List<Logger>());
+    StoreLogs.fromJson(Map<String, dynamic> json) {
+        loggers = JsonConverters.fromJson(json['loggers'],'List<Logger>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
-        'loggers': JsonConverters.get('List<Logger>').toJson(loggers)
+        'loggers': JsonConverters.toJson(loggers,'List<Logger>',_types)
     };
 
+    createResponse() { return new StoreLogsResponse(); }
     String getTypeName() { return "StoreLogs"; }
 }
 
@@ -3567,6 +3666,7 @@ class TestAuth implements IReturn<TestAuthResponse>
     TestAuth fromMap(Map<String, dynamic> map) => new TestAuth.fromJson(map);
     TestAuth.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new TestAuthResponse(); }
     String getTypeName() { return "TestAuth"; }
 }
 
@@ -3577,6 +3677,7 @@ class TestDataAllTypes implements IReturn<AllTypes>
     TestDataAllTypes fromMap(Map<String, dynamic> map) => new TestDataAllTypes.fromJson(map);
     TestDataAllTypes.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new AllTypes(); }
     String getTypeName() { return "TestDataAllTypes"; }
 }
 
@@ -3587,6 +3688,7 @@ class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>
     TestDataAllCollectionTypes fromMap(Map<String, dynamic> map) => new TestDataAllCollectionTypes.fromJson(map);
     TestDataAllCollectionTypes.fromJson(Map<String, dynamic> json) : super();
     Map<String, dynamic> toJson() => {};
+    createResponse() { return new AllCollectionTypes(); }
     String getTypeName() { return "TestDataAllCollectionTypes"; }
 }
 
@@ -3672,25 +3774,26 @@ class Authenticate implements IReturn<AuthenticateResponse>, IPost, IMeta
     Authenticate({this.provider,this.state,this.oauth_token,this.oauth_verifier,this.userName,this.password,this.rememberMe,this.Continue,this.nonce,this.uri,this.response,this.qop,this.nc,this.cnonce,this.useTokenCookie,this.accessToken,this.accessTokenSecret,this.meta});
 
     Authenticate fromMap(Map<String, dynamic> map) => new Authenticate.fromJson(map);
-    Authenticate.fromJson(Map<String, dynamic> json) :
-        provider = json['provider'],
-        state = json['state'],
-        oauth_token = json['oauth_token'],
-        oauth_verifier = json['oauth_verifier'],
-        userName = json['userName'],
-        password = json['password'],
-        rememberMe = json['rememberMe'],
-        Continue = json['continue'],
-        nonce = json['nonce'],
-        uri = json['uri'],
-        response = json['response'],
-        qop = json['qop'],
-        nc = json['nc'],
-        cnonce = json['cnonce'],
-        useTokenCookie = json['useTokenCookie'],
-        accessToken = json['accessToken'],
-        accessTokenSecret = json['accessTokenSecret'],
-        meta = JsonConverters.get('Dictionary<String,String>').fromJson(json['meta'], () => new Map<String,String>());
+    Authenticate.fromJson(Map<String, dynamic> json) {
+        provider = json['provider'];
+        state = json['state'];
+        oauth_token = json['oauth_token'];
+        oauth_verifier = json['oauth_verifier'];
+        userName = json['userName'];
+        password = json['password'];
+        rememberMe = json['rememberMe'];
+        Continue = json['continue'];
+        nonce = json['nonce'];
+        uri = json['uri'];
+        response = json['response'];
+        qop = json['qop'];
+        nc = json['nc'];
+        cnonce = json['cnonce'];
+        useTokenCookie = json['useTokenCookie'];
+        accessToken = json['accessToken'];
+        accessTokenSecret = json['accessTokenSecret'];
+        meta = json['meta'];
+    }
 
     Map<String, dynamic> toJson() => {
         'provider': provider,
@@ -3710,9 +3813,10 @@ class Authenticate implements IReturn<AuthenticateResponse>, IPost, IMeta
         'useTokenCookie': useTokenCookie,
         'accessToken': accessToken,
         'accessTokenSecret': accessTokenSecret,
-        'meta': JsonConverters.get('Dictionary<String,String>').toJson(meta)
+        'meta': meta
     };
 
+    createResponse() { return new AuthenticateResponse(); }
     String getTypeName() { return "Authenticate"; }
 }
 
@@ -3732,17 +3836,19 @@ class AssignRoles implements IReturn<AssignRolesResponse>, IPost
     AssignRoles({this.userName,this.permissions,this.roles});
 
     AssignRoles fromMap(Map<String, dynamic> map) => new AssignRoles.fromJson(map);
-    AssignRoles.fromJson(Map<String, dynamic> json) :
-        userName = json['userName'],
-        permissions = JsonConverters.get('List<String>').fromJson(json['permissions'], () => new List<String>()),
-        roles = JsonConverters.get('List<String>').fromJson(json['roles'], () => new List<String>());
+    AssignRoles.fromJson(Map<String, dynamic> json) {
+        userName = json['userName'];
+        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',_types);
+        roles = JsonConverters.fromJson(json['roles'],'List<String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'userName': userName,
-        'permissions': JsonConverters.get('List<String>').toJson(permissions),
-        'roles': JsonConverters.get('List<String>').toJson(roles)
+        'permissions': JsonConverters.toJson(permissions,'List<String>',_types),
+        'roles': JsonConverters.toJson(roles,'List<String>',_types)
     };
 
+    createResponse() { return new AssignRolesResponse(); }
     String getTypeName() { return "AssignRoles"; }
 }
 
@@ -3762,17 +3868,19 @@ class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost
     UnAssignRoles({this.userName,this.permissions,this.roles});
 
     UnAssignRoles fromMap(Map<String, dynamic> map) => new UnAssignRoles.fromJson(map);
-    UnAssignRoles.fromJson(Map<String, dynamic> json) :
-        userName = json['userName'],
-        permissions = JsonConverters.get('List<String>').fromJson(json['permissions'], () => new List<String>()),
-        roles = JsonConverters.get('List<String>').fromJson(json['roles'], () => new List<String>());
+    UnAssignRoles.fromJson(Map<String, dynamic> json) {
+        userName = json['userName'];
+        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',_types);
+        roles = JsonConverters.fromJson(json['roles'],'List<String>',_types);
+    }
 
     Map<String, dynamic> toJson() => {
         'userName': userName,
-        'permissions': JsonConverters.get('List<String>').toJson(permissions),
-        'roles': JsonConverters.get('List<String>').toJson(roles)
+        'permissions': JsonConverters.toJson(permissions,'List<String>',_types),
+        'roles': JsonConverters.toJson(roles,'List<String>',_types)
     };
 
+    createResponse() { return new UnAssignRolesResponse(); }
     String getTypeName() { return "UnAssignRoles"; }
 }
 
@@ -3786,13 +3894,15 @@ class ConvertSessionToToken implements IReturn<ConvertSessionToTokenResponse>, I
     ConvertSessionToToken({this.preserveSession});
 
     ConvertSessionToToken fromMap(Map<String, dynamic> map) => new ConvertSessionToToken.fromJson(map);
-    ConvertSessionToToken.fromJson(Map<String, dynamic> json) :
+    ConvertSessionToToken.fromJson(Map<String, dynamic> json) {
         preserveSession = json['preserveSession'];
+    }
 
     Map<String, dynamic> toJson() => {
         'preserveSession': preserveSession
     };
 
+    createResponse() { return new ConvertSessionToTokenResponse(); }
     String getTypeName() { return "ConvertSessionToToken"; }
 }
 
@@ -3806,13 +3916,15 @@ class GetAccessToken implements IReturn<GetAccessTokenResponse>, IPost
     GetAccessToken({this.refreshToken});
 
     GetAccessToken fromMap(Map<String, dynamic> map) => new GetAccessToken.fromJson(map);
-    GetAccessToken.fromJson(Map<String, dynamic> json) :
+    GetAccessToken.fromJson(Map<String, dynamic> json) {
         refreshToken = json['refreshToken'];
+    }
 
     Map<String, dynamic> toJson() => {
         'refreshToken': refreshToken
     };
 
+    createResponse() { return new GetAccessTokenResponse(); }
     String getTypeName() { return "GetAccessToken"; }
 }
 
@@ -3823,14 +3935,15 @@ class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IRetur
     QueryPocoBase({this.id});
 
     QueryPocoBase fromMap(Map<String, dynamic> map) => new QueryPocoBase.fromJson(map);
-    QueryPocoBase.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    QueryPocoBase.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'id': id
     });
 
+    createResponse() { return new QueryResponse<OnlyDefinedInGenericType>(); }
     String getTypeName() { return "QueryPocoBase"; }
 }
 
@@ -3841,14 +3954,15 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom, OnlyDefin
     QueryPocoIntoBase({this.id});
 
     QueryPocoIntoBase fromMap(Map<String, dynamic> map) => new QueryPocoIntoBase.fromJson(map);
-    QueryPocoIntoBase.fromJson(Map<String, dynamic> json) :
-        super.fromJson(json),
+    QueryPocoIntoBase.fromJson(Map<String, dynamic> json): super.fromJson(json) {
         id = json['id'];
+    }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'id': id
     });
 
+    createResponse() { return new QueryResponse<OnlyDefinedInGenericTypeInto>(); }
     String getTypeName() { return "QueryPocoIntoBase"; }
 }
 
@@ -3859,5 +3973,214 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
     QueryRockstars fromMap(Map<String, dynamic> map) => new QueryRockstars.fromJson(map);
     QueryRockstars.fromJson(Map<String, dynamic> json) : super.fromJson(json);
     Map<String, dynamic> toJson() => super.toJson();
+    createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstars"; }
 }
+
+Map<String, TypeInfo> _types = <String, TypeInfo> {
+    'ResponseError': new TypeInfo(TypeOf.Class, create:() => new ResponseError()),
+    'ResponseStatus': new TypeInfo(TypeOf.Class, create:() => new ResponseStatus()),
+    'List<ResponseError>': new TypeInfo(TypeOf.Class, create:() => new List<ResponseError>()),
+    'ExternalEnum': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum.values),
+    'ExternalEnum2': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum2.values),
+    'ExternalType': new TypeInfo(TypeOf.Class, create:() => new ExternalType()),
+    'ExternalEnum3': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum3.values),
+    'IAuthTokens': new TypeInfo(TypeOf.Interface),
+    'AuthUserSession': new TypeInfo(TypeOf.Class, create:() => new AuthUserSession()),
+    'DateTime': new TypeInfo(TypeOf.Class, create:() => new DateTime(0)),
+    'List<String>': new TypeInfo(TypeOf.Class, create:() => new List<String>()),
+    'List<IAuthTokens>': new TypeInfo(TypeOf.Class, create:() => new List<IAuthTokens>()),
+    'MetadataTestNestedChild': new TypeInfo(TypeOf.Class, create:() => new MetadataTestNestedChild()),
+    'MetadataTestChild': new TypeInfo(TypeOf.Class, create:() => new MetadataTestChild()),
+    'List<MetadataTestNestedChild>': new TypeInfo(TypeOf.Class, create:() => new List<MetadataTestNestedChild>()),
+    'MenuItemExampleItem': new TypeInfo(TypeOf.Class, create:() => new MenuItemExampleItem()),
+    'MenuItemExample': new TypeInfo(TypeOf.Class, create:() => new MenuItemExample()),
+    'MenuExample': new TypeInfo(TypeOf.Class, create:() => new MenuExample()),
+    'NestedClass': new TypeInfo(TypeOf.Class, create:() => new NestedClass()),
+    'ListResult': new TypeInfo(TypeOf.Class, create:() => new ListResult()),
+    'ArrayResult': new TypeInfo(TypeOf.Class, create:() => new ArrayResult()),
+    'EnumType': new TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
+    'EnumFlags': new TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
+    'SubType': new TypeInfo(TypeOf.Class, create:() => new SubType()),
+    'HelloBase': new TypeInfo(TypeOf.AbstractClass),
+    'HelloResponseBase': new TypeInfo(TypeOf.AbstractClass),
+    'Poco': new TypeInfo(TypeOf.Class, create:() => new Poco()),
+    'HelloBase1<T>': new TypeInfo(TypeOf.AbstractClass),
+    'List<int>': new TypeInfo(TypeOf.Class, create:() => new List<int>()),
+    'Item': new TypeInfo(TypeOf.Class, create:() => new Item()),
+    'HelloWithReturnResponse': new TypeInfo(TypeOf.AbstractClass),
+    'HelloType': new TypeInfo(TypeOf.Class, create:() => new HelloType()),
+    'IPoco': new TypeInfo(TypeOf.Interface),
+    'IEmptyInterface': new TypeInfo(TypeOf.Interface),
+    'EmptyClass': new TypeInfo(TypeOf.Class, create:() => new EmptyClass()),
+    'InnerType': new TypeInfo(TypeOf.Class, create:() => new InnerType()),
+    'InnerEnum': new TypeInfo(TypeOf.Enum, enumValues:InnerEnum.values),
+    'DayOfWeek': new TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
+    'ScopeType': new TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
+    'PingService': new TypeInfo(TypeOf.Class, create:() => new PingService()),
+    'ReturnedDto': new TypeInfo(TypeOf.Class, create:() => new ReturnedDto()),
+    'CustomUserSession': new TypeInfo(TypeOf.Class, create:() => new CustomUserSession()),
+    'UnAuthInfo': new TypeInfo(TypeOf.Class, create:() => new UnAuthInfo()),
+    'Channel': new TypeInfo(TypeOf.Class, create:() => new Channel()),
+    'Device': new TypeInfo(TypeOf.Class, create:() => new Device()),
+    'List<Channel>': new TypeInfo(TypeOf.Class, create:() => new List<Channel>()),
+    'Logger': new TypeInfo(TypeOf.Class, create:() => new Logger()),
+    'List<Device>': new TypeInfo(TypeOf.Class, create:() => new List<Device>()),
+    'Rockstar': new TypeInfo(TypeOf.Class, create:() => new Rockstar()),
+    'OnlyDefinedInGenericType': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericType()),
+    'OnlyDefinedInGenericTypeFrom': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeFrom()),
+    'OnlyDefinedInGenericTypeInto': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeInto()),
+    'TypesGroup': new TypeInfo(TypeOf.Class, create:() => new TypesGroup()),
+    'CustomHttpErrorResponse': new TypeInfo(TypeOf.Class, create:() => new CustomHttpErrorResponse()),
+    'ThrowTypeResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowTypeResponse()),
+    'ThrowValidationResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowValidationResponse()),
+    'ThrowBusinessErrorResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessErrorResponse()),
+    'ExternalOperationResponse': new TypeInfo(TypeOf.Class, create:() => new ExternalOperationResponse()),
+    'ExternalOperation2Response': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation2Response()),
+    'ExternalReturnTypeResponse': new TypeInfo(TypeOf.Class, create:() => new ExternalReturnTypeResponse()),
+    'Account': new TypeInfo(TypeOf.Class, create:() => new Account()),
+    'Project': new TypeInfo(TypeOf.Class, create:() => new Project()),
+    'CreateJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateJwtResponse()),
+    'CreateRefreshJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwtResponse()),
+    'MetadataTestResponse': new TypeInfo(TypeOf.Class, create:() => new MetadataTestResponse()),
+    'List<MetadataTestChild>': new TypeInfo(TypeOf.Class, create:() => new List<MetadataTestChild>()),
+    'GetExampleResponse': new TypeInfo(TypeOf.Class, create:() => new GetExampleResponse()),
+    'GetRandomIdsResponse': new TypeInfo(TypeOf.Class, create:() => new GetRandomIdsResponse()),
+    'HelloResponse': new TypeInfo(TypeOf.Class, create:() => new HelloResponse()),
+    'AllTypes': new TypeInfo(TypeOf.Class, create:() => new AllTypes()),
+    'Duration': new TypeInfo(TypeOf.Class, create:() => new Duration()),
+    'KeyValuePair<String, String>': new TypeInfo(TypeOf.Class, create:() => new KeyValuePair<String, String>()),
+    'Map<int,String>': new TypeInfo(TypeOf.Class, create:() => new Map<int,String>()),
+    'AllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new AllCollectionTypes()),
+    'List<Poco>': new TypeInfo(TypeOf.Class, create:() => new List<Poco>()),
+    'Map<String,List<Poco>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Poco>>()),
+    'Map<String,List<Map<String,Poco>>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Map<String,Poco>>>()),
+    'List<Map<String,Poco>>': new TypeInfo(TypeOf.Class, create:() => new List<Map<String,Poco>>()),
+    'Map<String,Poco>': new TypeInfo(TypeOf.Class, create:() => new Map<String,Poco>()),
+    'HelloAllTypesResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypesResponse()),
+    'HelloDateTime': new TypeInfo(TypeOf.Class, create:() => new HelloDateTime()),
+    'HelloWithDataContractResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContractResponse()),
+    'HelloWithDescriptionResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDescriptionResponse()),
+    'HelloWithInheritanceResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithInheritanceResponse()),
+    'HelloWithAlternateReturnResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithAlternateReturnResponse()),
+    'HelloWithRouteResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithRouteResponse()),
+    'HelloWithTypeResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithTypeResponse()),
+    'HelloInnerTypesResponse': new TypeInfo(TypeOf.Class, create:() => new HelloInnerTypesResponse()),
+    'HelloVerbResponse': new TypeInfo(TypeOf.Class, create:() => new HelloVerbResponse()),
+    'EnumResponse': new TypeInfo(TypeOf.Class, create:() => new EnumResponse()),
+    'HelloTypes': new TypeInfo(TypeOf.Class, create:() => new HelloTypes()),
+    'HelloZipResponse': new TypeInfo(TypeOf.Class, create:() => new HelloZipResponse()),
+    'PingResponse': new TypeInfo(TypeOf.Class, create:() => new PingResponse()),
+    'Map<String,ResponseStatus>': new TypeInfo(TypeOf.Class, create:() => new Map<String,ResponseStatus>()),
+    'RequiresRoleResponse': new TypeInfo(TypeOf.Class, create:() => new RequiresRoleResponse()),
+    'SendVerbResponse': new TypeInfo(TypeOf.Class, create:() => new SendVerbResponse()),
+    'GetSessionResponse': new TypeInfo(TypeOf.Class, create:() => new GetSessionResponse()),
+    'StoreLogsResponse': new TypeInfo(TypeOf.Class, create:() => new StoreLogsResponse()),
+    'List<Logger>': new TypeInfo(TypeOf.Class, create:() => new List<Logger>()),
+    'TestAuthResponse': new TypeInfo(TypeOf.Class, create:() => new TestAuthResponse()),
+    'Wait': new TypeInfo(TypeOf.Class, create:() => new Wait()),
+    'EchoTypes': new TypeInfo(TypeOf.Class, create:() => new EchoTypes()),
+    'EchoCollections': new TypeInfo(TypeOf.Class, create:() => new EchoCollections()),
+    'EchoComplexTypes': new TypeInfo(TypeOf.Class, create:() => new EchoComplexTypes()),
+    'StoreRockstars': new TypeInfo(TypeOf.Class, create:() => new StoreRockstars()),
+    'AuthenticateResponse': new TypeInfo(TypeOf.Class, create:() => new AuthenticateResponse()),
+    'AssignRolesResponse': new TypeInfo(TypeOf.Class, create:() => new AssignRolesResponse()),
+    'UnAssignRolesResponse': new TypeInfo(TypeOf.Class, create:() => new UnAssignRolesResponse()),
+    'ConvertSessionToTokenResponse': new TypeInfo(TypeOf.Class, create:() => new ConvertSessionToTokenResponse()),
+    'GetAccessTokenResponse': new TypeInfo(TypeOf.Class, create:() => new GetAccessTokenResponse()),
+    'QueryResponse<T>': new TypeInfo(TypeOf.GenericDef,create:() => new QueryResponse()),
+    'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
+    'ThrowHttpError': new TypeInfo(TypeOf.Class, create:() => new ThrowHttpError()),
+    'Throw404': new TypeInfo(TypeOf.Class, create:() => new Throw404()),
+    'ThrowCustom400': new TypeInfo(TypeOf.Class, create:() => new ThrowCustom400()),
+    'ThrowType': new TypeInfo(TypeOf.Class, create:() => new ThrowType()),
+    'ThrowValidation': new TypeInfo(TypeOf.Class, create:() => new ThrowValidation()),
+    'ThrowBusinessError': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessError()),
+    'ExternalOperation': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation()),
+    'ExternalOperation2': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation2()),
+    'ExternalOperation3': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation3()),
+    'ExternalOperation4': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation4()),
+    'RootPathRoutes': new TypeInfo(TypeOf.Class, create:() => new RootPathRoutes()),
+    'GetAccount': new TypeInfo(TypeOf.Class, create:() => new GetAccount()),
+    'GetProject': new TypeInfo(TypeOf.Class, create:() => new GetProject()),
+    'ImageAsStream': new TypeInfo(TypeOf.Class, create:() => new ImageAsStream()),
+    'ImageAsBytes': new TypeInfo(TypeOf.Class, create:() => new ImageAsBytes()),
+    'ImageAsCustomResult': new TypeInfo(TypeOf.Class, create:() => new ImageAsCustomResult()),
+    'ImageWriteToResponse': new TypeInfo(TypeOf.Class, create:() => new ImageWriteToResponse()),
+    'ImageAsFile': new TypeInfo(TypeOf.Class, create:() => new ImageAsFile()),
+    'ImageAsRedirect': new TypeInfo(TypeOf.Class, create:() => new ImageAsRedirect()),
+    'DrawImage': new TypeInfo(TypeOf.Class, create:() => new DrawImage()),
+    'CreateJwt': new TypeInfo(TypeOf.Class, create:() => new CreateJwt()),
+    'CreateRefreshJwt': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwt()),
+    'ViewLogs': new TypeInfo(TypeOf.Class, create:() => new ViewLogs()),
+    'MetadataTest': new TypeInfo(TypeOf.Class, create:() => new MetadataTest()),
+    'MetadataTestArray': new TypeInfo(TypeOf.Class, create:() => new MetadataTestArray()),
+    'GetExample': new TypeInfo(TypeOf.Class, create:() => new GetExample()),
+    'GetRandomIds': new TypeInfo(TypeOf.Class, create:() => new GetRandomIds()),
+    'TextFileTest': new TypeInfo(TypeOf.Class, create:() => new TextFileTest()),
+    'ReturnText': new TypeInfo(TypeOf.Class, create:() => new ReturnText()),
+    'ReturnHtml': new TypeInfo(TypeOf.Class, create:() => new ReturnHtml()),
+    'Hello': new TypeInfo(TypeOf.Class, create:() => new Hello()),
+    'HelloWithNestedClass': new TypeInfo(TypeOf.Class, create:() => new HelloWithNestedClass()),
+    'HelloList': new TypeInfo(TypeOf.Class, create:() => new HelloList()),
+    'HelloArray': new TypeInfo(TypeOf.Class, create:() => new HelloArray()),
+    'HelloWithEnum': new TypeInfo(TypeOf.Class, create:() => new HelloWithEnum()),
+    'HelloExternal': new TypeInfo(TypeOf.Class, create:() => new HelloExternal()),
+    'AllowedAttributes': new TypeInfo(TypeOf.Class, create:() => new AllowedAttributes()),
+    'HelloAllTypes': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypes()),
+    'HelloString': new TypeInfo(TypeOf.Class, create:() => new HelloString()),
+    'HelloVoid': new TypeInfo(TypeOf.Class, create:() => new HelloVoid()),
+    'HelloWithDataContract': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContract()),
+    'HelloWithDescription': new TypeInfo(TypeOf.Class, create:() => new HelloWithDescription()),
+    'HelloWithInheritance': new TypeInfo(TypeOf.Class, create:() => new HelloWithInheritance()),
+    'HelloWithGenericInheritance': new TypeInfo(TypeOf.Class, create:() => new HelloWithGenericInheritance()),
+    'HelloWithGenericInheritance2': new TypeInfo(TypeOf.Class, create:() => new HelloWithGenericInheritance2()),
+    'HelloWithNestedInheritance': new TypeInfo(TypeOf.Class, create:() => new HelloWithNestedInheritance()),
+    'HelloWithReturn': new TypeInfo(TypeOf.Class, create:() => new HelloWithReturn()),
+    'HelloWithRoute': new TypeInfo(TypeOf.Class, create:() => new HelloWithRoute()),
+    'HelloWithType': new TypeInfo(TypeOf.Class, create:() => new HelloWithType()),
+    'HelloInterface': new TypeInfo(TypeOf.Class, create:() => new HelloInterface()),
+    'HelloInnerTypes': new TypeInfo(TypeOf.Class, create:() => new HelloInnerTypes()),
+    'HelloBuiltin': new TypeInfo(TypeOf.Class, create:() => new HelloBuiltin()),
+    'HelloGet': new TypeInfo(TypeOf.Class, create:() => new HelloGet()),
+    'HelloPost': new TypeInfo(TypeOf.Class, create:() => new HelloPost()),
+    'HelloPut': new TypeInfo(TypeOf.Class, create:() => new HelloPut()),
+    'HelloDelete': new TypeInfo(TypeOf.Class, create:() => new HelloDelete()),
+    'HelloPatch': new TypeInfo(TypeOf.Class, create:() => new HelloPatch()),
+    'HelloReturnVoid': new TypeInfo(TypeOf.Class, create:() => new HelloReturnVoid()),
+    'EnumRequest': new TypeInfo(TypeOf.Class, create:() => new EnumRequest()),
+    'HelloZip': new TypeInfo(TypeOf.Class, create:() => new HelloZip()),
+    'Ping': new TypeInfo(TypeOf.Class, create:() => new Ping()),
+    'ResetConnections': new TypeInfo(TypeOf.Class, create:() => new ResetConnections()),
+    'RequiresRole': new TypeInfo(TypeOf.Class, create:() => new RequiresRole()),
+    'ReturnString': new TypeInfo(TypeOf.Class, create:() => new ReturnString()),
+    'ReturnBytes': new TypeInfo(TypeOf.Class, create:() => new ReturnBytes()),
+    'Uint8List': new TypeInfo(TypeOf.Class, create:() => new Uint8List(0)),
+    'ReturnStream': new TypeInfo(TypeOf.Class, create:() => new ReturnStream()),
+    'GetRequest1': new TypeInfo(TypeOf.Class, create:() => new GetRequest1()),
+    'GetRequest2': new TypeInfo(TypeOf.Class, create:() => new GetRequest2()),
+    'SendJson': new TypeInfo(TypeOf.Class, create:() => new SendJson()),
+    'SendText': new TypeInfo(TypeOf.Class, create:() => new SendText()),
+    'SendRaw': new TypeInfo(TypeOf.Class, create:() => new SendRaw()),
+    'SendDefault': new TypeInfo(TypeOf.Class, create:() => new SendDefault()),
+    'SendRestGet': new TypeInfo(TypeOf.Class, create:() => new SendRestGet()),
+    'SendGet': new TypeInfo(TypeOf.Class, create:() => new SendGet()),
+    'SendPost': new TypeInfo(TypeOf.Class, create:() => new SendPost()),
+    'SendPut': new TypeInfo(TypeOf.Class, create:() => new SendPut()),
+    'GetSession': new TypeInfo(TypeOf.Class, create:() => new GetSession()),
+    'UpdateSession': new TypeInfo(TypeOf.Class, create:() => new UpdateSession()),
+    'StoreLogs': new TypeInfo(TypeOf.Class, create:() => new StoreLogs()),
+    'TestAuth': new TypeInfo(TypeOf.Class, create:() => new TestAuth()),
+    'TestDataAllTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllTypes()),
+    'TestDataAllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllCollectionTypes()),
+    'TestVoidResponse': new TypeInfo(TypeOf.Class, create:() => new TestVoidResponse()),
+    'TestNullResponse': new TypeInfo(TypeOf.Class, create:() => new TestNullResponse()),
+    'Authenticate': new TypeInfo(TypeOf.Class, create:() => new Authenticate()),
+    'AssignRoles': new TypeInfo(TypeOf.Class, create:() => new AssignRoles()),
+    'UnAssignRoles': new TypeInfo(TypeOf.Class, create:() => new UnAssignRoles()),
+    'ConvertSessionToToken': new TypeInfo(TypeOf.Class, create:() => new ConvertSessionToToken()),
+    'GetAccessToken': new TypeInfo(TypeOf.Class, create:() => new GetAccessToken()),
+    'QueryPocoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoBase()),
+    'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
+    'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),
+};

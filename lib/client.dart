@@ -1,10 +1,14 @@
 library client;
 
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
 part 'interfaces.dart';
 part 'utils.dart';
 part 'JsonConverters.dart';
-part 'converters/TimeSpanConverter.dart';
-
+part 'converters/DurationConverter.dart';
+part 'JsonServiceClient.dart';
 
 /* Missing classes */
 

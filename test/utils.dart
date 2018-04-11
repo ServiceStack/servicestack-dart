@@ -46,7 +46,7 @@ AllTypes createAllTypes() =>
 Function listEquals = const ListEquality().equals;
 Function mapEquals = const MapEquality().equals;
 
-void assertAllTypes(dto) {    
+void assertAllTypes(AllTypes dto) {
     expect(dto.id, equals(1));
     expect(dto.byte, equals(2));
     expect(dto.short, equals(3));
@@ -97,5 +97,29 @@ AllCollectionTypes createAllCollectionTypes() =>
         }
     );
 
-Poco createPoco(String name) => new Poco(name:name);
+void assertAllCollectionTypes(AllCollectionTypes dto) {
+    expect(dto.intArray, equals([1, 2, 3]));
+    expect(dto.intList, equals([4, 5, 6]));
+    expect(dto.stringArray, equals(["A", "B", "C"]));
+    expect(dto.stringList, equals(["D", "E", "F"]));
+    expect(dto.pocoArray.length, equals(1));
+    expect(dto.pocoArray[0].name, equals("pocoArray"));
+    expect(dto.pocoList.length, equals(1));
+    expect(dto.pocoList[0].name, equals("pocoList"));
+    
+    expect(dto.pocoLookup.length, equals(1));    
+    var pocoLookupValues = dto.pocoLookup["A"];
+    expect(pocoLookupValues.length, equals(2));
+    expect(pocoLookupValues[0].name, equals("B"));
+    expect(pocoLookupValues[1].name, equals("C"));
 
+    expect(dto.pocoLookupMap.length, equals(1));
+    var pocoLookupMapValues = dto.pocoLookupMap["A"];
+    expect(pocoLookupMapValues.length, equals(1));
+    var pocoLookupMapAList = pocoLookupMapValues[0];
+    expect(pocoLookupMapAList.length, equals(2));
+    expect((pocoLookupMapAList["B"] as Poco).name, equals("C"));
+    expect((pocoLookupMapAList["D"] as Poco).name, equals("E"));
+}
+
+Poco createPoco(String name) => new Poco(name:name);

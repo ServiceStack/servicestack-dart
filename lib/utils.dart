@@ -23,6 +23,15 @@ String leftPart(String strVal, String needle)
         : strVal.substring(0, pos);
 }
 
+String lastLeftPart(String strVal, String needle)
+{
+    if (strVal == null) return null;
+    var pos = strVal.lastIndexOf(needle);
+    return pos == -1
+        ? strVal
+        : strVal.substring(0, pos);
+}
+
 String rightPart(String strVal, String needle)
 {
     if (strVal == null) return null;
@@ -31,6 +40,16 @@ String rightPart(String strVal, String needle)
         ? strVal
         : strVal.substring(pos + needle.length);
 }
+
+String lastRightPart(String strVal, String needle)
+{
+    if (strVal == null) return null;
+    var pos = strVal.lastIndexOf(needle);
+    return pos == -1
+        ? strVal
+        : strVal.substring(pos + needle.length);
+}
+
 
 String trimStart(String text, String character) {
     if (text == null || text.length == 0) return "";
@@ -59,6 +78,63 @@ List<String> getGenericArgs(String type) {
   if (parts.length == 1)
     return [];
 
-  var argsString = leftPart(parts[1], ">");
-  return argsString.split(",").map((x) => x.trim()).toList();
+  var argsString = lastLeftPart(parts[1], ">");
+  return splitGenericArgs(argsString);
 }
+
+List<String> splitGenericArgs(String argsString) {
+  var to = <String>[];
+  var lastPos = 0;
+  var inBrackes = 0;
+  for (var i=0; i<argsString.length; i++) {
+    var c = argsString[i];
+    if (inBrackes > 0) {
+      if (c == '<')
+        inBrackes++;
+      else if (c == '>')        
+        inBrackes--;
+      continue;
+    }
+    if (c == '<') {
+      inBrackes++;
+      continue;
+    }
+    if (c == ',') {
+      var arg = argsString.substring(lastPos, i - lastPos).replaceAll(" ", "");
+      to.add(arg);
+      lastPos = i + 1;
+    }
+  }
+
+  var lastArg = argsString.substring(lastPos).replaceAll(" ", "");;
+  to.add(lastArg);
+  return to;
+}
+
+List<String> runtimeGenericTypeDefs(instance, List<int> indexes) {
+  var genericArgs = getGenericArgs(instance.runtimeType.toString());
+  var argTypes = <String>[];
+  indexes.forEach((i) => argTypes.add(genericArgs[i]));
+  return argTypes;
+}
+
+String combinePaths(List<String> paths) {
+    List<String> parts = [];
+    for (int i = 0; i < paths.length; i++) {
+        var arg = paths[i];
+        if (arg.indexOf("://") == -1)
+          parts.addAll(arg.split("/"));
+        else
+          parts.add(arg.lastIndexOf("/") == arg.length - 1 ? arg.substring(0, arg.length - 1) : arg);
+    }
+    List<String> combinedPaths = [];
+    for (int i = 0; i < parts.length; i++) {
+        var part = parts[i];
+        if (part == null || part == "" || part == ".") continue;
+        if (part == "..") combinedPaths.removeLast();
+        else combinedPaths.add(part);
+    }
+    if (parts[0] == "") combinedPaths.insert(0,"");
+    var ret = combinedPaths.join("/");
+    return ret.length > 0 ? ret : (combinedPaths.length == 0 ? "/" : ".");
+};
