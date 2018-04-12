@@ -7,9 +7,9 @@ import 'dart:typed_data';
 
 part 'interfaces.dart';
 part 'utils.dart';
-part 'JsonConverters.dart';
-part 'converters/DurationConverter.dart';
-part 'JsonServiceClient.dart';
+part 'json_converters.dart';
+part 'converters/duration_converter.dart';
+part 'json_service_client.dart';
 
 /* Missing classes */
 

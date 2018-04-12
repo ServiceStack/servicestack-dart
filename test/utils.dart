@@ -1,5 +1,4 @@
 import 'package:test/test.dart';
-import 'package:collection/collection.dart';
 
 import '../lib/client.dart';
 
@@ -44,9 +43,6 @@ AllTypes createAllTypes() =>
         },
         subType: new SubType(id: 1, name: "name")
     );
-
-Function listEquals = const ListEquality().equals;
-Function mapEquals = const MapEquality().equals;
 
 void assertHelloAllTypesResponse(HelloAllTypesResponse dto) {
   expect(dto.result, equals("name"));
