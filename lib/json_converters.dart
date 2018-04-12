@@ -49,6 +49,21 @@ class JsonConverters
     return converter.toJson(value, new ConverterContext(types:types, typeName:typeName));
   }
 
+  static double toDouble(dynamic value) {
+    if (value == null || value is double) {
+      return value;
+    }
+    if (value is int) {
+      return value.toDouble();
+    }
+    String str = _toString(value);
+    return double.parse(str);
+  }
+
+  static Map<String,String> toStringMap(dynamic value) {
+    return value;
+  }
+
 }
 
 String _toString(value) => value == null ? null : value is String ? value : value.toString();
@@ -162,7 +177,9 @@ class DateTimeConverter implements IConverter
     if (strDate != null) {
       if (strDate.startsWith("\/Date(")) {
         var epochAndZone = leftPart(rightPart(strDate, "("), ")");
-        var epochStr = leftPart(epochAndZone, "-");
+        var epochStr = epochAndZone.indexOf('-',1) >= 0
+          ? leftPart(epochAndZone, "-")
+          : epochAndZone;
         var epoch = int.parse(epochStr);
         return new DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
       }

@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-12 04:11:52
+Date: 2018-04-12 19:51:18
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -40,7 +40,7 @@ class ResponseError
         errorCode = json['errorCode'];
         fieldName = json['fieldName'];
         message = json['message'];
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
     }
 
     Map<String, dynamic> toJson() => {
@@ -78,7 +78,7 @@ class ResponseStatus
         message = json['message'];
         stackTrace = json['stackTrace'];
         errors = JsonConverters.fromJson(json['errors'],'List<ResponseError>',_types);
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
     }
 
     Map<String, dynamic> toJson() => {
@@ -324,7 +324,7 @@ class AuthUserSession
         tag = json['tag'];
         authProvider = json['authProvider'];
         providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',_types);
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
     }
 
     Map<String, dynamic> toJson() => {
@@ -1299,9 +1299,9 @@ class AllTypes
         uShort = json['uShort'];
         uInt = json['uInt'];
         uLong = json['uLong'];
-        float = json['float'];
-        Double = json['double'];
-        decimal = json['decimal'];
+        float = JsonConverters.toDouble(json['float']);
+        Double = JsonConverters.toDouble(json['double']);
+        decimal = JsonConverters.toDouble(json['decimal']);
         string = json['string'];
         dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
         timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',_types);
@@ -1313,7 +1313,7 @@ class AllTypes
         nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',_types);
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
-        stringMap = json['stringMap'];
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
         intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',_types);
         subType = JsonConverters.fromJson(json['subType'],'SubType',_types);
     }
@@ -1840,9 +1840,9 @@ class EchoTypes implements IReturn<EchoTypes>
         uShort = json['uShort'];
         uInt = json['uInt'];
         uLong = json['uLong'];
-        float = json['float'];
-        Double = json['double'];
-        decimal = json['decimal'];
+        float = JsonConverters.toDouble(json['float']);
+        Double = JsonConverters.toDouble(json['double']);
+        decimal = JsonConverters.toDouble(json['decimal']);
         string = json['string'];
         dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
         timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',_types);
@@ -1888,7 +1888,7 @@ class EchoCollections implements IReturn<EchoCollections>
     EchoCollections.fromJson(Map<String, dynamic> json) {
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
-        stringMap = json['stringMap'];
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
         intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',_types);
     }
 
@@ -1980,7 +1980,7 @@ class AuthenticateResponse
         bearerToken = json['bearerToken'];
         refreshToken = json['refreshToken'];
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
     }
 
     Map<String, dynamic> toJson() => {
@@ -2071,7 +2071,7 @@ class ConvertSessionToTokenResponse
 
     ConvertSessionToTokenResponse fromMap(Map<String, dynamic> map) => new ConvertSessionToTokenResponse.fromJson(map);
     ConvertSessionToTokenResponse.fromJson(Map<String, dynamic> json) {
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
         accessToken = json['accessToken'];
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
     }
@@ -2133,7 +2133,7 @@ class QueryResponse<T>
         offset = json['offset'];
         total = json['total'];
         results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',_types);
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
     }
 
@@ -2905,7 +2905,7 @@ class AllowedAttributes
 
     AllowedAttributes fromMap(Map<String, dynamic> map) => new AllowedAttributes.fromJson(map);
     AllowedAttributes.fromJson(Map<String, dynamic> json) {
-        range = json['range'];
+        range = JsonConverters.toDouble(json['range']);
     }
 
     Map<String, dynamic> toJson() => {
@@ -3830,7 +3830,7 @@ class Authenticate implements IReturn<AuthenticateResponse>, IPost, IMeta
         useTokenCookie = json['useTokenCookie'];
         accessToken = json['accessToken'];
         accessTokenSecret = json['accessTokenSecret'];
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
     }
 
     Map<String, dynamic> toJson() => {

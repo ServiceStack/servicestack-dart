@@ -128,6 +128,7 @@ class JsonServiceClient implements IServiceClient {
   String userName;
   String password;
   HttpClient client;
+  List<Cookie> cookies;
   RequestFilter requestFilter;
   ResponseFilter responseFilter;
   static RequestFilter globalRequestFilter;
@@ -145,6 +146,12 @@ class JsonServiceClient implements IServiceClient {
       HttpHeaders.ACCEPT: "application/json",
     };
     client = new HttpClient();
+    cookies = new List<Cookie>();
+  }
+
+  void setCredentials(String userName, String password){
+    this.userName = userName;
+    this.password = password;
   }
 
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic> args}) {
@@ -306,34 +313,9 @@ class JsonServiceClient implements IServiceClient {
 
       var response = await createResponse(res, info);
       return response;
-    } catch (e) {
+    } on Exception catch (e) {
       return await handleError(res, e);
     }
-  }
-
-  handleError(HttpClientResponse holdRes, Exception e) async {
-  
-    if (e is WebServiceException)
-      throw raiseError(holdRes, e);
-
-    var res = e is HttpResponseException ? e.response : holdRes;    
-
-    // if (res.bodyUsed)
-    //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
-
-    var webEx = new WebServiceException()
-      ..statusCode = res.statusCode
-      ..statusDescription = res.reasonPhrase;
-
-    try {
-      String str = await res.transform(utf8.decoder).join();
-      var jsonObj = json.decode(str);
-      webEx.responseStatus = createResponseStatus(jsonObj);
-    } catch(e){
-      webEx.innerException = e;
-    }
-
-    throw raiseError(res, webEx);
   }
 
   raiseError(HttpClientResponse res, Exception error) {
@@ -344,60 +326,6 @@ class JsonServiceClient implements IServiceClient {
       globalExceptionFilter(res, error);
     }
     return error;
-  }
-
-  Future<T> createResponse<T>(HttpClientResponse res, SendContext info) async {
-    if (res.statusCode >= 300) throw new HttpResponseException(res);
-
-    if (info.responseFilter != null) {
-      info.responseFilter(res);
-    }
-    if (responseFilter != null) {
-      responseFilter(res);
-    }
-    if (globalResponseFilter != null) {
-      globalResponseFilter(res);
-    }
-
-    var responseAs = info.responseAs ??
-        (info.request != null ? info.request.createResponse() : null);
-
-    if (res.contentLength == 1) {
-      return responseAs;
-    }
-
-    if (responseAs is String) {
-      var bodyStr = await res.transform(utf8.decoder).join();
-      return bodyStr as T;
-    }
-
-    if (responseAs is Uint8List) {
-      return (await consolidateHttpClientResponseBytes(res)) as T;
-    }
-
-    var contentType = res.headers.contentType.toString();
-    var isJson =
-        contentType != null && contentType.indexOf("application/json") != -1;
-    if (isJson) {
-      var jsonObj = json.decode(await res.transform(utf8.decoder).join());
-      if (responseAs == null) {
-        return jsonObj as T;
-      }
-      try {
-        Function fromMap = responseAs.fromMap;
-        var ret = fromMap(jsonObj);
-        return ret;
-      } catch (e) {
-        raiseError(res, e);
-        return jsonObj;
-      }
-    }
-
-    if (res.headers.contentLength == 0 ||
-        (res.headers.contentLength == null && !isJson)) {
-      return responseAs as T;
-    }
-    return json.decode(await res.transform(utf8.decoder).join());
   }
 
   Future<HttpClientRequest> createRequest(SendContext info) async {
@@ -426,6 +354,8 @@ class JsonServiceClient implements IServiceClient {
     else if (userName != null)
       req.headers.add(HttpHeaders.AUTHORIZATION,
           'Basic ' + base64.encode(utf8.encode('${userName}:${password}')));
+
+    req.cookies.addAll(this.cookies);
 
     req.headers.chunkedTransferEncoding = false;
     headers.forEach((key, val) {
@@ -465,6 +395,96 @@ class JsonServiceClient implements IServiceClient {
 
     return url;
   }
+
+  Future<T> createResponse<T>(HttpClientResponse res, SendContext info) async {
+    if (res.statusCode >= 300) throw new HttpResponseException(res);
+
+    mergeCookies(res.cookies);
+
+    if (info.responseFilter != null) {
+      info.responseFilter(res);
+    }
+    if (responseFilter != null) {
+      responseFilter(res);
+    }
+    if (globalResponseFilter != null) {
+      globalResponseFilter(res);
+    }
+
+    var responseAs = info.responseAs ??
+        (info.request != null ? info.request.createResponse() : null);
+
+    if (res.contentLength == 1) {
+      return responseAs;
+    }
+
+    if (responseAs is String) {
+      var bodyStr = await res.transform(utf8.decoder).join();
+      return bodyStr as T;
+    }
+
+    if (responseAs is Uint8List) {
+      return (await consolidateHttpClientResponseBytes(res)) as T;
+    }
+
+    var contentType = res.headers.contentType.toString();
+    var isJson =
+        contentType != null && contentType.indexOf("application/json") != -1;
+    if (isJson) {
+      var jsonObj = json.decode(await res.transform(utf8.decoder).join());
+      if (responseAs == null) {
+        return jsonObj as T;
+      }
+      try {
+        Function fromMap = responseAs.fromMap;
+        var ret = fromMap(jsonObj);
+        return ret;
+      } on Exception catch (e) {
+        raiseError(res, e);
+        return jsonObj;
+      }
+    }
+
+    if (res.headers.contentLength == 0 ||
+        (res.headers.contentLength == null && !isJson)) {
+      return responseAs as T;
+    }
+    return json.decode(await res.transform(utf8.decoder).join());
+  }
+
+  handleError(HttpClientResponse holdRes, Exception e) async {
+  
+    if (e is WebServiceException)
+      throw raiseError(holdRes, e);
+
+    var res = e is HttpResponseException ? e.response : holdRes;    
+
+    // if (res.bodyUsed)
+    //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
+
+    var webEx = new WebServiceException()
+      ..statusCode = res.statusCode
+      ..statusDescription = res.reasonPhrase;
+
+    try {
+      String str = await res.transform(utf8.decoder).join();
+      var jsonObj = json.decode(str);
+      webEx.responseStatus = createResponseStatus(jsonObj);
+    } on Exception catch (e) {
+      webEx.innerException = e;
+    }
+
+    throw raiseError(res, webEx);
+  }
+
+  void mergeCookies(List<Cookie> cookies) {
+    if (cookies == null) return;
+    for (var cookie in cookies) {
+      this.cookies.removeWhere((x) => x.name == cookie.name);
+      this.cookies.add(cookie);
+    }
+  }
+
 }
 
 bool hasRequestBody(String method) => !(method == "GET" ||
