@@ -118,4 +118,115 @@ void main() {
     expect(resolveHttpMethod(new SendPut()), equals("PUT"));
   });
 
+  test('Can POST HelloAllTypes', () async {
+    var client = createTestClient();
+    var request = createHelloAllTypes();
+    var response = await client.post(request);
+    assertHelloAllTypesResponse(response);
+  });
+
+  test('Can PUT HelloAllTypes', () async {
+    var client = createTestClient();
+    var request = createHelloAllTypes();
+    var response = await client.put(request);
+    assertHelloAllTypesResponse(response);
+  });
+
+  test('Does handle 404 Error', () async {
+    var client = createTestClient();
+    var request = new ThrowType(type: "NotFound", message: "not here");
+    try {
+      await client.put(request);
+      fail("should throw");
+    } on WebServiceException catch(ex) {
+      var status = ex.responseStatus;
+      expect(status.errorCode, equals("NotFound"));
+      expect(status.message, equals("not here"));
+      expect(status.stackTrace, isNotNull);
+    }
+  });
+  
+  test('Does handle ValidationException', () async {
+    var client = createTestClient();
+    var request = new ThrowValidation(email: "invalidemail");
+    try {
+      await client.post(request);
+      fail("should throw");
+    } on WebServiceException catch(ex) {
+      var status = ex.responseStatus;
+
+      expect(status.errors.length, equals(3));
+      expect(status.errors[0].errorCode, equals(status.errorCode));
+      expect(status.errors[0].message, equals(status.message));
+
+      expect(status.errors[0].errorCode, equals("InclusiveBetween"));
+      expect(status.errors[0].message, equals("'Age' must be between 1 and 120. You entered 0."));
+      expect(status.errors[0].fieldName, equals("Age"));
+
+      expect(status.errors[1].errorCode, equals("NotEmpty"));
+      expect(status.errors[1].message, equals("'Required' should not be empty."));
+      expect(status.errors[1].fieldName, equals("Required"));
+
+      expect(status.errors[2].errorCode, equals("Email"));
+      expect(status.errors[2].message, equals("'Email' is not a valid email address."));
+      expect(status.errors[2].fieldName, equals("Email"));
+    }
+  });
+  
+  test('Can POST valid ThrowValidation request', () async {
+    var client = createTestClient();
+    var request = new ThrowValidation(age: 21, required: "foo", email: "my@gmail.com");    
+    var response = await client.put(request);
+    expect(response.age, equals(request.age));
+    expect(response.required, equals(request.required));
+    expect(response.email, equals(request.email));
+  });
+
+  test('Does handle auth failure', () async {
+    var client = createTestClient();
+    var request = new RequiresAdmin();
+    try {
+      await client.post(request);
+      fail("should throw");
+    } on WebServiceException catch(ex) {
+      expect(ex.statusCode, equals(401));
+    }
+  });
+
+  test('Can send ReturnVoid', () async {
+    var sentMethods = new List<String>();
+    var client = createTestClient();
+    client.requestFilter = (req) => sentMethods.add(req.method);
+
+    var request = new SendReturnVoid(id: 1);
+
+    await client.send(request);
+    expect(sentMethods.last, equals("POST"));
+    request.id = 2;
+    await client.get(request);
+    expect(sentMethods.last, equals("GET"));
+    request.id = 3;
+    await client.post(request);
+    expect(sentMethods.last, equals("POST"));
+    request.id = 4;
+    await client.put(request);
+    expect(sentMethods.last, equals("PUT"));
+    request.id = 5;
+    await client.delete(request);
+    expect(sentMethods.last, equals("DELETE"));    
+  });
+
+  test('Can get response as Raw String', () async {
+    var client = createTestClient();
+    var request = new HelloString(name: "World");
+    var response = await client.get(request);
+    expect(response, equals("World"));
+  });
+
+  test('Can get response as Raw Bytes', () async {
+    var client = createTestClient();
+    Uint8List response = await client.getAs("/json/reply/HelloString?Name=World", responseAs: TypeAs.bytes);
+    expect(utf8.decode(response), equals("World"));
+  });
+
 }

@@ -73,7 +73,7 @@ abstract class IServiceClient {
 typedef void RequestFilter(HttpClientRequest req);
 typedef void UrlFilter(String url);
 typedef void ResponseFilter(HttpClientResponse res);
-typedef void ResponseExceptionFilter(HttpClientResponse res, Error e);
+typedef void ResponseExceptionFilter(HttpClientResponse res, Exception e);
 
 class TypeAs {
   static String string = "";
@@ -103,6 +103,18 @@ class SendContext {
 class HttpResponseException implements Exception {
   HttpClientResponse response;
   HttpResponseException(this.response);
+
+  ResponseStatus getResponseStatus(){
+    return new ResponseStatus();
+  }
+}
+
+class WebServiceException implements Exception {  
+  int statusCode;
+  String statusDescription;
+  String get message => responseStatus != null ? responseStatus.message ?? responseStatus.errorCode : statusDescription;
+  dynamic innerException;
+  ResponseStatus responseStatus;
 }
 
 class JsonServiceClient implements IServiceClient {
@@ -295,15 +307,36 @@ class JsonServiceClient implements IServiceClient {
       var response = await createResponse(res, info);
       return response;
     } catch (e) {
-      return handleError(res, e);
+      return await handleError(res, e);
     }
   }
 
-  handleError(HttpClientResponse holdRes, Error e) {
-    throw raiseError(holdRes, e);
+  handleError(HttpClientResponse holdRes, Exception e) async {
+  
+    if (e is WebServiceException)
+      throw raiseError(holdRes, e);
+
+    var res = e is HttpResponseException ? e.response : holdRes;    
+
+    // if (res.bodyUsed)
+    //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
+
+    var webEx = new WebServiceException()
+      ..statusCode = res.statusCode
+      ..statusDescription = res.reasonPhrase;
+
+    try {
+      String str = await res.transform(utf8.decoder).join();
+      var jsonObj = json.decode(str);
+      webEx.responseStatus = createResponseStatus(jsonObj);
+    } catch(e){
+      webEx.innerException = e;
+    }
+
+    throw raiseError(res, webEx);
   }
 
-  raiseError(HttpClientResponse res, Error error) {
+  raiseError(HttpClientResponse res, Exception error) {
     if (exceptionFilter != null) {
       exceptionFilter(res, error);
     }
@@ -314,7 +347,7 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T> createResponse<T>(HttpClientResponse res, SendContext info) async {
-    if (res.statusCode != HttpStatus.OK) throw new HttpResponseException(res);
+    if (res.statusCode >= 300) throw new HttpResponseException(res);
 
     if (info.responseFilter != null) {
       info.responseFilter(res);
@@ -328,6 +361,10 @@ class JsonServiceClient implements IServiceClient {
 
     var responseAs = info.responseAs ??
         (info.request != null ? info.request.createResponse() : null);
+
+    if (res.contentLength == 1) {
+      return responseAs;
+    }
 
     if (responseAs is String) {
       var bodyStr = await res.transform(utf8.decoder).join();
@@ -472,7 +509,10 @@ String qsValue(arg) {
   if (arg is Uint8List) {
     return base64.encode(arg);
   }
-  return Uri.encodeComponent(arg);
+  if (arg is String) {
+    return Uri.encodeComponent(arg);
+  }
+  return arg.toString();
 }
 
 Map<String, dynamic> toMap(request) {
@@ -481,6 +521,59 @@ Map<String, dynamic> toMap(request) {
   } catch (e) {
     return null;
   }
+}
+
+String sanitizeKey(String key) => key != null ? key.toLowerCase().replaceAll("_", "") : null;
+
+ResponseStatus createResponseStatus(Map<String,dynamic> obj) {
+  if (obj == null) return null;
+  var to = new ResponseStatus();  
+  var status = findValue(obj, "responseStatus") ?? obj;
+
+  status.forEach((key,val){
+    var sanitizedKey = sanitizeKey(key);
+    if (sanitizedKey == "errorcode") {
+      to.errorCode = val;
+    } else if (sanitizedKey == "message") {
+      to.message = val;
+    } else if (sanitizedKey == "stacktrace") {
+      to.stackTrace = val;
+    } else if (sanitizedKey == "errors") {
+      List errors = val;
+      to.errors = new List<ResponseError>();
+      for (Map error in errors) {
+        var fieldError = new ResponseError();
+        to.errors.add(fieldError);
+        error.forEach((fieldKey, fieldVal){
+          var sanitizedFieldKey = sanitizeKey(fieldKey);
+          if (sanitizedFieldKey == "errorcode") {
+            fieldError.errorCode = fieldVal;
+          } else if (sanitizedFieldKey == "fieldname") {
+            fieldError.fieldName = fieldVal;
+          } else if (sanitizedFieldKey == "message") {
+            fieldError.message = fieldVal;
+          } else if (sanitizedFieldKey == "meta") {
+            fieldError.meta = fieldVal;
+          }
+        });
+      }
+    } else if (sanitizedKey == "meta") {
+      to.meta = val;
+    }
+  });
+  return to;
+}
+
+dynamic findValue(Map<String,dynamic> map, String key) {
+  if (map != null) {
+    var findKey = sanitizeKey(key);
+    for (var k in map.keys) {
+      if (sanitizeKey(k) == findKey) {
+        return map[k];
+      }
+    }
+  }
+  return null;
 }
 
 //https://docs.flutter.io/flutter/foundation/consolidateHttpClientResponseBytes.html

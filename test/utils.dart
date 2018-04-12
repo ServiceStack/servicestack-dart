@@ -48,6 +48,12 @@ AllTypes createAllTypes() =>
 Function listEquals = const ListEquality().equals;
 Function mapEquals = const MapEquality().equals;
 
+void assertHelloAllTypesResponse(HelloAllTypesResponse dto) {
+  expect(dto.result, equals("name"));
+  assertAllTypes(dto.allTypes);
+  assertAllCollectionTypes(dto.allCollectionTypes);
+}
+
 void assertAllTypes(AllTypes dto) {
     expect(dto.id, equals(1));
     expect(dto.byte, equals(2));

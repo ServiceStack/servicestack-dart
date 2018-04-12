@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-11 07:15:22
+Date: 2018-04-12 04:11:52
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -1768,6 +1768,25 @@ class TestAuthResponse
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
     };
 
+}
+
+class RequiresAdmin implements IReturn<RequiresAdmin>
+{
+    int id;
+
+    RequiresAdmin({this.id});
+
+    RequiresAdmin fromMap(Map<String, dynamic> map) => new RequiresAdmin.fromJson(map);
+    RequiresAdmin.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id
+    };
+
+    createResponse() { return new RequiresAdmin(); }
+    String getTypeName() { return "RequiresAdmin"; }
 }
 
 // @Route("/wait/{ForMs}")
@@ -3609,6 +3628,25 @@ class SendPut implements IReturn<SendVerbResponse>, IPut
     String getTypeName() { return "SendPut"; }
 }
 
+class SendReturnVoid implements IReturnVoid
+{
+    int id;
+
+    SendReturnVoid({this.id});
+
+    SendReturnVoid fromMap(Map<String, dynamic> map) => new SendReturnVoid.fromJson(map);
+    SendReturnVoid.fromJson(Map<String, dynamic> json) {
+        id = json['id'];
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id
+    };
+
+    createResponse() {}
+    String getTypeName() { return "SendReturnVoid"; }
+}
+
 // @Route("/session")
 class GetSession implements IReturn<GetSessionResponse>
 {
@@ -4078,6 +4116,7 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'StoreLogsResponse': new TypeInfo(TypeOf.Class, create:() => new StoreLogsResponse()),
     'List<Logger>': new TypeInfo(TypeOf.Class, create:() => new List<Logger>()),
     'TestAuthResponse': new TypeInfo(TypeOf.Class, create:() => new TestAuthResponse()),
+    'RequiresAdmin': new TypeInfo(TypeOf.Class, create:() => new RequiresAdmin()),
     'Wait': new TypeInfo(TypeOf.Class, create:() => new Wait()),
     'EchoTypes': new TypeInfo(TypeOf.Class, create:() => new EchoTypes()),
     'EchoCollections': new TypeInfo(TypeOf.Class, create:() => new EchoCollections()),
@@ -4167,6 +4206,7 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'SendGet': new TypeInfo(TypeOf.Class, create:() => new SendGet()),
     'SendPost': new TypeInfo(TypeOf.Class, create:() => new SendPost()),
     'SendPut': new TypeInfo(TypeOf.Class, create:() => new SendPut()),
+    'SendReturnVoid': new TypeInfo(TypeOf.Class, create:() => new SendReturnVoid()),
     'GetSession': new TypeInfo(TypeOf.Class, create:() => new GetSession()),
     'UpdateSession': new TypeInfo(TypeOf.Class, create:() => new UpdateSession()),
     'StoreLogs': new TypeInfo(TypeOf.Class, create:() => new StoreLogs()),
