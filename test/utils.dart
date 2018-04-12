@@ -1,7 +1,9 @@
-import 'dtos/test.dtos.dart';
-
 import 'package:test/test.dart';
 import 'package:collection/collection.dart';
+
+import '../lib/client.dart';
+
+import 'dtos/test.dtos.dart';
 
 HelloAllTypes createHelloAllTypes() => new HelloAllTypes (
     name: "name",
@@ -118,8 +120,11 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
     expect(pocoLookupMapValues.length, equals(1));
     var pocoLookupMapAList = pocoLookupMapValues[0];
     expect(pocoLookupMapAList.length, equals(2));
-    expect((pocoLookupMapAList["B"] as Poco).name, equals("C"));
-    expect((pocoLookupMapAList["D"] as Poco).name, equals("E"));
+    expect(pocoLookupMapAList["B"].name, equals("C"));
+    expect(pocoLookupMapAList["D"].name, equals("E"));
 }
 
 Poco createPoco(String name) => new Poco(name:name);
+
+JsonServiceClient createTestClient() => 
+  new JsonServiceClient("http://test.servicestack.net");

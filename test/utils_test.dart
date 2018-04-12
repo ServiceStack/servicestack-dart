@@ -2,7 +2,6 @@ library client_test;
 
 import '../lib/client.dart';
 
-import 'dart:convert';
 import 'package:test/test.dart';
 
 void main() {

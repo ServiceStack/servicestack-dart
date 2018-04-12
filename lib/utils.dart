@@ -137,4 +137,4 @@ String combinePaths(List<String> paths) {
     if (parts[0] == "") combinedPaths.insert(0,"");
     var ret = combinedPaths.join("/");
     return ret.length > 0 ? ret : (combinedPaths.length == 0 ? "/" : ".");
-};
+}

@@ -6,10 +6,8 @@ abstract class IReturn<T>
     String getTypeName();
 }
 
-abstract class IReturnVoid 
+abstract class IReturnVoid implements IReturn<void> 
 {
-    void createResponse();
-    String getTypeName();
 }
 
 abstract class IGet {}

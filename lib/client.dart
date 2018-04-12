@@ -1,8 +1,9 @@
 library client;
 
+import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
 part 'interfaces.dart';
 part 'utils.dart';
