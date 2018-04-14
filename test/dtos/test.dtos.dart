@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-14 09:43:58
+Date: 2018-04-14 19:40:29
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -2028,6 +2028,25 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     TypeContext context = _ctx;
 }
 
+class DummyAutoBatchResponses implements IConvertible
+{
+    List<HelloResponse> helloResponses;
+
+    DummyAutoBatchResponses({this.helloResponses});
+    DummyAutoBatchResponses.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        helloResponses = JsonConverters.fromJson(json['helloResponses'],'List<HelloResponse>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'helloResponses': JsonConverters.toJson(helloResponses,'List<HelloResponse>',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
 class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 {
     int statusCode;
@@ -3998,6 +4017,8 @@ TypeContext _ctx = new TypeContext(typeName: 'test.servicestack.net', types: <St
     'EchoCollections': new TypeInfo(TypeOf.Class, create:() => new EchoCollections()),
     'EchoComplexTypes': new TypeInfo(TypeOf.Class, create:() => new EchoComplexTypes()),
     'StoreRockstars': new TypeInfo(TypeOf.Class, create:() => new StoreRockstars()),
+    'DummyAutoBatchResponses': new TypeInfo(TypeOf.Class, create:() => new DummyAutoBatchResponses()),
+    'List<HelloResponse>': new TypeInfo(TypeOf.Class, create:() => new List<HelloResponse>()),
     'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
     'ThrowHttpError': new TypeInfo(TypeOf.Class, create:() => new ThrowHttpError()),
     'Throw404': new TypeInfo(TypeOf.Class, create:() => new Throw404()),

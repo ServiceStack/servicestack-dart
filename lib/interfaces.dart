@@ -41,7 +41,7 @@ class TypeContext
 
   List<String> get genericArgs => getGenericArgs(typeName);
 
-  TypeInfo getTypeInfo(String typeName) => types[typeName] ?? childContext?.types[typeName];
+  TypeInfo getTypeInfo(String typeName) => types[typeName] ?? childContext?.getTypeInfo(typeName);
 
   TypeInfo get typeInfo => getTypeInfo(typeName);
 

@@ -82,7 +82,7 @@ void main() {
     var client = createTestClient();
     var request = new Hello(name: "World");
     
-    var jsonObj = await client.postUrl("/hello", request);
+    var jsonObj = await client.postToUrl("/hello", request);
     var response = new HelloResponse.fromJson(jsonObj);
     
     expect(response.result, equals("Hello, World!"));
@@ -107,7 +107,7 @@ void main() {
     var client = createTestClient();
     var request = new Hello(name: "World");
     
-    Map jsonObj = await client.postUrl("/hello", json.encode(request));
+    Map jsonObj = await client.postToUrl("/hello", json.encode(request));
     var response = new HelloResponse.fromJson(jsonObj);
     
     expect(response.result, equals("Hello, World!"));
@@ -247,7 +247,7 @@ void main() {
 
     var request = new SendJson(id: 1, name: "name");
     
-    var jsonObj = await client.postUrl("/sendjson", body, args:toMap(request));
+    var jsonObj = await client.postToUrl("/sendjson", body, args:toMap(request));
 
     expect(jsonObj["foo"], equals("bar"));
   });
@@ -265,6 +265,38 @@ void main() {
     var str = await client.post(request, body:body);
 
     expect(str, equals("foo"));
+  });
+
+  test('Can sendAll batch request', () async {
+    var client = createTestClient();
+
+    client.responseFilter = (res) => 
+      expect(res.headers["X-AutoBatch-Completed"], equals(['3']));
+
+    var requests = ["foo","bar","baz"].map((name) => new Hello(name: name));
+
+    var responses = await client.sendAll(requests);
+
+    expect(responses.map((x) => x.result), equals(['Hello, foo!', 'Hello, bar!', 'Hello, baz!']));
+    
+  });
+
+  test('Can sendAllOneWay IReturn<T> batch request', () async {
+    var client = createTestClient();
+    client.urlFilter = (url) => expect(url, endsWith("/json/oneway/Hello%5B%5D"));
+
+    var requests = ["foo","bar","baz"].map((name) => new Hello(name: name));
+
+    await client.sendAllOneWay(requests);
+  });
+
+  test('Can sendAllOneWay IReturnVoid batch request', () async {
+    var client = createTestClient();
+    client.urlFilter = (url) => expect(url, endsWith("/json/oneway/HelloReturnVoid%5B%5D"));
+
+    var requests = [1,2,3].map((id) => new HelloReturnVoid(id:id));
+
+    await client.sendAllOneWay(requests);
   });
 
 }

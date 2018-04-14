@@ -18,7 +18,7 @@ abstract class IServiceClient {
 
   Future<T> post<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
-  Future<Map<String, dynamic>> postUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic> args});
 
   Future<T> postAs<T>(String path, dynamic body,
@@ -40,7 +40,7 @@ abstract class IServiceClient {
 
   Future<T> put<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
-  Future<Map<String, dynamic>> putUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic> args});
 
   Future<T> putAs<T>(String path, dynamic body,
@@ -51,7 +51,7 @@ abstract class IServiceClient {
 
   Future<T> patch<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
-  Future<Map<String, dynamic>> patchUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
       {Map<String, dynamic> args});
 
   Future<T> patchAs<T>(String path, dynamic body,
@@ -87,6 +87,7 @@ class SendContext {
   dynamic body;
   Map<String, dynamic> args;
   String url;
+  Uri uri;
   RequestFilter requestFilter;
   ResponseFilter responseFilter;
   dynamic responseAs;
@@ -96,6 +97,7 @@ class SendContext {
       this.body,
       this.args,
       this.url,
+      this.uri,
       this.responseAs,
       this.requestFilter,
       this.responseFilter});
@@ -193,7 +195,7 @@ class JsonServiceClient implements IServiceClient {
     return send<T>(request, method: "POST", body:body, args: args);
   }
 
-  Future<Map<String, dynamic>> postUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
     return sendRequest<Map<String, dynamic>>(new SendContext(
         method: "POST", body: body, url: toAbsoluteUrl(path), args: args));
@@ -242,7 +244,7 @@ class JsonServiceClient implements IServiceClient {
     return send<T>(request, method: "PUT", body:body, args: args);
   }
 
-  Future<Map<String, dynamic>> putUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
     return sendRequest<Map<String, dynamic>>(new SendContext(
         method: "PUT", body: body, url: toAbsoluteUrl(path), args: args));
@@ -267,7 +269,7 @@ class JsonServiceClient implements IServiceClient {
     return send<T>(request, method: "PATCH", body:body, args: args);
   }
 
-  Future<Map<String, dynamic>> patchUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
     return sendRequest<Map<String, dynamic>>(new SendContext(
         method: "PATCH", body: body, url: toAbsoluteUrl(path), args: args));
@@ -286,6 +288,36 @@ class JsonServiceClient implements IServiceClient {
         responseAs: responseAs,
         requestFilter: requestFilter,
         responseFilter: responseFilter));
+  }
+
+  Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests, {RequestFilter requestFilter,
+      ResponseFilter responseFilter}) async {
+    if (requests == null || requests.length == 0)
+      return new List<T>();
+    var url = combinePaths([replyBaseUrl, nameOf(requests.first) + "[]"]);
+
+    return this.sendRequest<List<T>>(new SendContext(
+      method: "POST",
+      request: requests.toList(),
+      uri: createUri(url),
+      responseAs: new List<T>(),
+      requestFilter:requestFilter,
+      responseFilter: responseFilter));
+  }
+
+  Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests, {RequestFilter requestFilter,
+      ResponseFilter responseFilter}) async {
+    if (requests == null || requests.length == 0)
+      return new List<T>();
+    var url = combinePaths([oneWayBaseUrl, nameOf(requests.first) + "[]"]);
+
+    await this.sendRequest<List<T>>(new SendContext(
+      method: "POST",
+      request: requests.toList(),
+      uri: createUri(url),
+      responseAs: new List<T>(),
+      requestFilter:requestFilter,
+      responseFilter: responseFilter));
   }
 
   Future<T> send<T>(IReturn<T> request,
@@ -386,7 +418,7 @@ class JsonServiceClient implements IServiceClient {
     var body = info.body ?? request;
     var args = info.args;
 
-    if (url == null || url == '') {
+    if (info.uri == null && (url == null || url == '')) {
       var bodyNotRequestDto = info.request != null && info.body != null;
       if (bodyNotRequestDto) {
         url = combinePaths([this.replyBaseUrl, nameOf(request)]);
@@ -406,7 +438,7 @@ class JsonServiceClient implements IServiceClient {
       }
     }
 
-    var req = await client.openUrl(method, Uri.parse(url));
+    var req = await client.openUrl(method, info.uri ?? Uri.parse(url));
 
     if (bearerToken != null)
       req.headers.add(HttpHeaders.AUTHORIZATION, 'Bearer ' + bearerToken);
@@ -495,11 +527,34 @@ class JsonServiceClient implements IServiceClient {
         return jsonObj as T;
       }
       try {
-        if (info.request is IConvertible && responseAs is IConvertible) {
-          var reqContext = (info.request as IConvertible).context;
-          responseAs.context = reqContext;
+        Function fromMap;
+
+        TypeContext reqContext;
+        if (info.request is IConvertible) {
+          reqContext = (info.request as IConvertible).context;
+          if (responseAs is IConvertible) {
+            responseAs.context = reqContext;
+          }
+        } else if (info.request is List) {
+          var firstRequest = info.request[0];
+          var firstResponse = firstRequest.createResponse();
+          reqContext = (firstRequest as IConvertible).context;
+          var responseType = firstResponse.runtimeType.toString();
+          var responseListType = "List<${responseType}>";
+          var existingInfo = reqContext.getTypeInfo(responseListType);
+          reqContext = new TypeContext(
+            typeName: responseListType,
+            types: { 
+              //List<T> in Dart 1.9 (non Strong mode) creates non generic List (dynamic)
+              responseListType: existingInfo 
+                ?? new TypeInfo(TypeOf.Class, create: () => responseAs) 
+            },
+            childContext: reqContext);
         }
-        Function fromMap = responseAs.fromMap;
+        fromMap = responseAs is List 
+          ? (json) => new ListConverter().fromJson(jsonObj, reqContext)
+          : responseAs.fromMap;
+
         var ret = fromMap(jsonObj);
         return ret;
       } on Exception catch (e) {
@@ -676,6 +731,23 @@ dynamic findValue(Map<String, dynamic> map, String key) {
     }
   }
   return null;
+}
+
+Uri createUri(String url) {
+  if (url == null || url.length == 0) return null;
+
+  var parts = url.split("://");
+  if (parts.length != 2)
+    throw new FormatException("Invalid URL: '${url}'");
+
+  var urlParts = splitOnFirst(parts[1], "/");
+  var path = urlParts.length == 1
+    ? "/"
+    : "/" + urlParts[1];
+
+  return parts[0] == "https"
+    ? new Uri.https(urlParts[0], path)
+    : new Uri.http(urlParts[0], path);
 }
 
 //https://docs.flutter.io/flutter/foundation/consolidateHttpClientResponseBytes.html
