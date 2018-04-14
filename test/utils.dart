@@ -1,9 +1,26 @@
 import 'package:test/test.dart';
+import 'dart:convert';
 
 import '../lib/client.dart';
 
 import 'dtos/test.dtos.dart';
 
+JsonServiceClient createTestClient() => 
+  new JsonServiceClient("http://test.servicestack.net")
+    ..exceptionFilter = (res,e) {
+      if (e is WebServiceException) {
+        // print("ERROR: " + json.encode(e.responseStatus));
+      }
+    };
+    
+JsonServiceClient createTechStacksClient() => 
+  new JsonServiceClient("https://www.techstacks.io")
+    ..exceptionFilter = (res,e) {
+      if (e is WebServiceException) {
+        print("ERROR: " + json.encode(e.responseStatus));
+      }
+    };
+    
 HelloAllTypes createHelloAllTypes() => new HelloAllTypes (
     name: "name",
     allTypes: createAllTypes(),
@@ -128,5 +145,3 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
 
 Poco createPoco(String name) => new Poco(name:name);
 
-JsonServiceClient createTestClient() => 
-  new JsonServiceClient("http://test.servicestack.net");

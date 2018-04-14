@@ -5,6 +5,8 @@ import 'utils.dart';
 
 import 'dtos/test.dtos.dart';
 
+const TEST_URL = "http://test.servicestack.net";
+
 class NonExistingService implements IReturn<String> {
   NonExistingService();
   NonExistingService fromMap(Map<String, dynamic> map) => new NonExistingService.fromJson(map);
@@ -34,6 +36,14 @@ void main() {
     var response = await client.get(request);
 
     expect(response.dateTime, equals(request.dateTime));
+  });
+
+  test('Should generate default value', () {
+    var request = new HelloTypes();
+    request.Bool = false;
+    request.Int = 0;
+    var requestUrl = appendQueryString(TEST_URL, toMap(request));
+    expect(requestUrl, equals(TEST_URL + "?bool=false&int=0"));
   });
 
 }

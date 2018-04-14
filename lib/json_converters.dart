@@ -27,10 +27,10 @@ class JsonConverters
     return converter;
   }
 
-  static IConverter resolve(String typeName, Map<String,TypeInfo> types) {
+  static IConverter resolve(String typeName, TypeContext context) {
     var converter = get(typeName);
     if (converter == null) {
-      var typeInfo = types[typeName];
+      var typeInfo = context.getTypeInfo(typeName);
       if (typeInfo != null) {
         if (typeInfo.type == TypeOf.Enum)
           return enumConverter;
@@ -39,14 +39,16 @@ class JsonConverters
     return converter ?? defaultConverter;
   }
 
-  static dynamic fromJson(dynamic value, String typeName, Map<String,TypeInfo> types) {
-    var converter = resolve(typeName, types);
-    return converter.fromJson(value, new ConverterContext(types:types, typeName:typeName));
+  static dynamic fromJson(dynamic value, String typeName, TypeContext context) {
+    var newContext = new TypeContext(types: context.types, typeName: typeName, childContext: _ctx);
+    var converter = resolve(typeName, newContext);
+    return converter.fromJson(value, newContext);
   }
 
-  static dynamic toJson(dynamic value, String typeName, Map<String,TypeInfo> types) {
-    var converter = resolve(typeName, types);
-    return converter.toJson(value, new ConverterContext(types:types, typeName:typeName));
+  static dynamic toJson(dynamic value, String typeName, TypeContext context) {
+    var newContext = new TypeContext(types: context.types, typeName: typeName, childContext: _ctx);
+    var converter = resolve(typeName, newContext);
+    return converter.toJson(value, newContext);
   }
 
   static double toDouble(dynamic value) {
@@ -68,7 +70,7 @@ class JsonConverters
 
 String _toString(value) => value == null ? null : value is String ? value : value.toString();
 
-dynamic convert(dynamic value, String typeName, [ConverterContext context=null]) {
+dynamic convert(dynamic value, String typeName, [TypeContext context=null]) {
   if (typeName == "int") {
     return int.parse(_toString(value), onError: (s) => null);
   }
@@ -99,6 +101,9 @@ dynamic convert(dynamic value, String typeName, [ConverterContext context=null])
         return converter.fromJson(value, context.newContext(typeName));
       }
       try {
+        if (context != null && o is IConvertible) {
+          o.context = context;
+        }
         var ret = o.fromMap(value);
         return ret;
       } catch(e) {
@@ -109,8 +114,11 @@ dynamic convert(dynamic value, String typeName, [ConverterContext context=null])
   return value;
 }
 
-dynamic populate(dynamic to, dynamic from, [ConverterContext context=null]) {
+dynamic populate(dynamic to, dynamic from, [TypeContext context=null]) {
   if (from is Map) {
+    if (context != null && to is IConvertible) {
+      to.context = context;
+    }
     Function fromMap = to.fromMap;
     if (fromMap != null) {
       return fromMap(from);
@@ -121,11 +129,13 @@ dynamic populate(dynamic to, dynamic from, [ConverterContext context=null]) {
 
 class EnumConverter implements IConverter
 {
-  toJson(value, ConverterContext context) {
+  toJson(value, TypeContext context) {
+    if (value == null) return null;
     return rightPart(value.toString(), ".");
   }
 
-  fromJson(value, ConverterContext context) {
+  fromJson(value, TypeContext context) {
+    if (value == null) return null;
     var ret = context.typeInfo.enumValues.firstWhere((x) => rightPart(x.toString(), ".") == value);
     return ret;
   }
@@ -133,7 +143,7 @@ class EnumConverter implements IConverter
 
 class DefaultConverter implements IConverter
 {
-  toJson(value, ConverterContext context) {
+  toJson(value, TypeContext context) {
     if (value == null)
       return value;
     if (value is List || value is Map)
@@ -147,7 +157,7 @@ class DefaultConverter implements IConverter
     }
   }
 
-  fromJson(value, ConverterContext context) {
+  fromJson(value, TypeContext context) {
     if (value == null || !context.typeInfo.canCreate)
       return value;
 
@@ -161,7 +171,7 @@ class DefaultConverter implements IConverter
 
 class DateTimeConverter implements IConverter
 {
-  toJson(value, ConverterContext context) {
+  toJson(value, TypeContext context) {
     DateTime dateTime = value is DateTime ? value : null;
     if (dateTime != null)
       return "\/Date(${dateTime.millisecondsSinceEpoch})\/";
@@ -169,7 +179,7 @@ class DateTimeConverter implements IConverter
     return value;
   }
 
-  fromJson(value, ConverterContext context) {
+  fromJson(value, TypeContext context) {
     DateTime date = value is DateTime ? value : null;
     if (date != null) return date;
 
@@ -183,6 +193,13 @@ class DateTimeConverter implements IConverter
         var epoch = int.parse(epochStr);
         return new DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
       }
+      var hasSecFraction = strDate.indexOf(".") >= 0;
+      if (hasSecFraction) {
+        var secFraction = lastLeftPart(strDate, ".");
+        if (secFraction.length > 6) {
+          strDate = strDate.substring(0, strDate.length - 2);
+        }
+      }
       return DateTime.parse(strDate);
     }
     return value;
@@ -191,7 +208,7 @@ class DateTimeConverter implements IConverter
 
 class MapConverter implements IConverter
 {
-  toJson(value, ConverterContext context) {
+  toJson(value, TypeContext context) {
     if (value == null) return null;
     Map map = value is Map ? value : null;
     var to = {};
@@ -202,7 +219,7 @@ class MapConverter implements IConverter
     return value;
   }
 
-  fromJson(value, ConverterContext context) {
+  fromJson(value, TypeContext context) {
     if (value == null) return null;
     var o = context.typeInfo.createInstance();
     if (value.runtimeType == o.runtimeType) {
@@ -221,7 +238,7 @@ class MapConverter implements IConverter
 
 class ListConverter implements IConverter
 {
-  toJson(value, ConverterContext context) {
+  toJson(value, TypeContext context) {
     if (value == null) return null;
     List list = value is List ? value : null;
     var to = [];
@@ -232,7 +249,7 @@ class ListConverter implements IConverter
     return value;
   }  
 
-  fromJson(value, ConverterContext context) {
+  fromJson(value, TypeContext context) {
     if (value == null) return null;
     var o = context.typeInfo.createInstance();
     if (value.runtimeType == o.runtimeType) {
@@ -253,7 +270,7 @@ class ListConverter implements IConverter
 
 class KeyValuePairConverter implements IConverter
 {
-  fromJson(value, ConverterContext context) {
+  fromJson(value, TypeContext context) {
     if (value == null) return null;
     var to = context.typeInfo.createInstance();
     Map map = value is Map ? value : null;
@@ -267,7 +284,7 @@ class KeyValuePairConverter implements IConverter
     return to;
   }
 
-   toJson(value, ConverterContext context) {
+   toJson(value, TypeContext context) {
      if (value == null) return null;
     var to = {};
     KeyValuePair kvp = value is KeyValuePair ? value : null;

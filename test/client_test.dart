@@ -8,6 +8,7 @@ import 'utils.dart';
 import 'dtos/test.dtos.dart';
 
 void main() {
+
   test('Can GET Hello', () async {
     var client = createTestClient();
     var request = new Hello(name: "World");
@@ -227,6 +228,43 @@ void main() {
     var client = createTestClient();
     Uint8List response = await client.getAs("/json/reply/HelloString?Name=World", responseAs: TypeAs.bytes);
     expect(utf8.decode(response), equals("World"));
+  });
+
+  test('Should return raw text', () async {
+    var client = createTestClient();
+    var request = new ReturnString(data: "0x10");
+    var str = await client.get(request);
+    expect(str, equals("0x10"));
+  });
+
+  test('Can send raw JSON as object', () async {
+    var client = createTestClient();
+
+    client.responseFilter = (res) => 
+      expect(res.headers["X-Args"], equals(['1,name']));
+
+    var body = { "foo": "bar" };
+
+    var request = new SendJson(id: 1, name: "name");
+    
+    var jsonObj = await client.postUrl("/sendjson", body, args:toMap(request));
+
+    expect(jsonObj["foo"], equals("bar"));
+  });
+
+  test('Can send raw string', () async {
+    var client = createTestClient();
+
+    client.responseFilter = (res) => 
+      expect(res.headers["X-Args"], equals(['1,name']));
+
+    var body = "foo";
+
+    var request = new SendText(id: 1, name: "name", contentType: "text/plain");
+    
+    var str = await client.post(request, body:body);
+
+    expect(str, equals("foo"));
   });
 
 }

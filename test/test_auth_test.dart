@@ -48,5 +48,4 @@ void main(){
     expect(response.displayName, equals("test DisplayName"));
     expect(response.sessionId, isNotNull);
   });
-  
 }

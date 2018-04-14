@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-11 03:10:00
+Date: 2018-04-14 05:41:10
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:55799
@@ -11,14 +11,14 @@ BaseUrl: http://localhost:55799
 //AddDescriptionAsComments: True
 //IncludeTypes: 
 //ExcludeTypes: 
-DefaultImports: ../../lib/client.dart,dart:collection,dart:typed_data
+DefaultImports: ../../lib/client.dart
 */
 
 import '../../lib/client.dart';
 import 'dart:collection';
 import 'dart:typed_data';
 
-class RequestLogEntry
+class RequestLogEntry implements IConvertible
 {
     int id;
     DateTime dateTime;
@@ -47,44 +47,45 @@ class RequestLogEntry
     Duration requestDuration;
 
     RequestLogEntry({this.id,this.dateTime,this.statusCode,this.statusDescription,this.httpMethod,this.absoluteUri,this.pathInfo,this.requestBody,this.requestDto,this.userAuthId,this.sessionId,this.ipAddress,this.forwardedFor,this.referer,this.headers,this.formData,this.items,this.session,this.responseDto,this.errorResponse,this.exceptionSource,this.exceptionData,this.requestDuration});
+    RequestLogEntry.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    RequestLogEntry fromMap(Map<String, dynamic> map) => new RequestLogEntry.fromJson(map);
-    RequestLogEntry.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
         statusCode = json['statusCode'];
         statusDescription = json['statusDescription'];
         httpMethod = json['httpMethod'];
         absoluteUri = json['absoluteUri'];
         pathInfo = json['pathInfo'];
         requestBody = json['requestBody'];
-        requestDto = JsonConverters.fromJson(json['requestDto'],'dynamic',_types);
+        requestDto = JsonConverters.fromJson(json['requestDto'],'dynamic',context);
         userAuthId = json['userAuthId'];
         sessionId = json['sessionId'];
         ipAddress = json['ipAddress'];
         forwardedFor = json['forwardedFor'];
         referer = json['referer'];
-        headers = json['headers'];
-        formData = json['formData'];
-        items = json['items'];
-        session = JsonConverters.fromJson(json['session'],'dynamic',_types);
-        responseDto = JsonConverters.fromJson(json['responseDto'],'dynamic',_types);
-        errorResponse = JsonConverters.fromJson(json['errorResponse'],'dynamic',_types);
+        headers = JsonConverters.toStringMap(json['headers']);
+        formData = JsonConverters.toStringMap(json['formData']);
+        items = JsonConverters.toStringMap(json['items']);
+        session = JsonConverters.fromJson(json['session'],'dynamic',context);
+        responseDto = JsonConverters.fromJson(json['responseDto'],'dynamic',context);
+        errorResponse = JsonConverters.fromJson(json['errorResponse'],'dynamic',context);
         exceptionSource = json['exceptionSource'];
-        exceptionData = JsonConverters.fromJson(json['exceptionData'],'dynamic',_types);
-        requestDuration = JsonConverters.fromJson(json['requestDuration'],'Duration',_types);
+        exceptionData = JsonConverters.fromJson(json['exceptionData'],'dynamic',context);
+        requestDuration = JsonConverters.fromJson(json['requestDuration'],'Duration',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',_types),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
         'statusCode': statusCode,
         'statusDescription': statusDescription,
         'httpMethod': httpMethod,
         'absoluteUri': absoluteUri,
         'pathInfo': pathInfo,
         'requestBody': requestBody,
-        'requestDto': JsonConverters.toJson(requestDto,'dynamic',_types),
+        'requestDto': JsonConverters.toJson(requestDto,'dynamic',context),
         'userAuthId': userAuthId,
         'sessionId': sessionId,
         'ipAddress': ipAddress,
@@ -93,90 +94,18 @@ class RequestLogEntry
         'headers': headers,
         'formData': formData,
         'items': items,
-        'session': JsonConverters.toJson(session,'dynamic',_types),
-        'responseDto': JsonConverters.toJson(responseDto,'dynamic',_types),
-        'errorResponse': JsonConverters.toJson(errorResponse,'dynamic',_types),
+        'session': JsonConverters.toJson(session,'dynamic',context),
+        'responseDto': JsonConverters.toJson(responseDto,'dynamic',context),
+        'errorResponse': JsonConverters.toJson(errorResponse,'dynamic',context),
         'exceptionSource': exceptionSource,
-        'exceptionData': JsonConverters.toJson(exceptionData,'dynamic',_types),
-        'requestDuration': JsonConverters.toJson(requestDuration,'Duration',_types)
+        'exceptionData': JsonConverters.toJson(exceptionData,'dynamic',context),
+        'requestDuration': JsonConverters.toJson(requestDuration,'Duration',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-// @DataContract
-class ResponseError
-{
-    // @DataMember(Order=1, EmitDefaultValue=false)
-    String errorCode;
-
-    // @DataMember(Order=2, EmitDefaultValue=false)
-    String fieldName;
-
-    // @DataMember(Order=3, EmitDefaultValue=false)
-    String message;
-
-    // @DataMember(Order=4, EmitDefaultValue=false)
-    Map<String,String> meta;
-
-    ResponseError({this.errorCode,this.fieldName,this.message,this.meta});
-
-    ResponseError fromMap(Map<String, dynamic> map) => new ResponseError.fromJson(map);
-    ResponseError.fromJson(Map<String, dynamic> json) {
-        errorCode = json['errorCode'];
-        fieldName = json['fieldName'];
-        message = json['message'];
-        meta = json['meta'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'errorCode': errorCode,
-        'fieldName': fieldName,
-        'message': message,
-        'meta': meta
-    };
-
-}
-
-// @DataContract
-class ResponseStatus
-{
-    // @DataMember(Order=1)
-    String errorCode;
-
-    // @DataMember(Order=2)
-    String message;
-
-    // @DataMember(Order=3)
-    String stackTrace;
-
-    // @DataMember(Order=4)
-    List<ResponseError> errors;
-
-    // @DataMember(Order=5)
-    Map<String,String> meta;
-
-    ResponseStatus({this.errorCode,this.message,this.stackTrace,this.errors,this.meta});
-
-    ResponseStatus fromMap(Map<String, dynamic> map) => new ResponseStatus.fromJson(map);
-    ResponseStatus.fromJson(Map<String, dynamic> json) {
-        errorCode = json['errorCode'];
-        message = json['message'];
-        stackTrace = json['stackTrace'];
-        errors = JsonConverters.fromJson(json['errors'],'List<ResponseError>',_types);
-        meta = json['meta'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'errorCode': errorCode,
-        'message': message,
-        'stackTrace': stackTrace,
-        'errors': JsonConverters.toJson(errors,'List<ResponseError>',_types),
-        'meta': meta
-    };
-
-}
-
-class Rockstar
+class Rockstar implements IConvertible
 {
     /**
     * Идентификатор
@@ -196,13 +125,14 @@ class Rockstar
     int age;
 
     Rockstar({this.id,this.firstName,this.lastName,this.age});
+    Rockstar.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Rockstar fromMap(Map<String, dynamic> map) => new Rockstar.fromJson(map);
-    Rockstar.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         firstName = json['firstName'];
         lastName = json['lastName'];
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -212,23 +142,26 @@ class Rockstar
         'age': age
     };
 
+    TypeContext context = _ctx;
 }
 
-class ObjectDesign
+class ObjectDesign implements IConvertible
 {
     int id;
 
     ObjectDesign({this.id});
+    ObjectDesign.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ObjectDesign fromMap(Map<String, dynamic> map) => new ObjectDesign.fromJson(map);
-    ObjectDesign.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
 abstract class IAuthTokens
@@ -245,7 +178,7 @@ abstract class IAuthTokens
 }
 
 // @DataContract
-class AuthUserSession
+class AuthUserSession implements IConvertible
 {
     // @DataMember(Order=1)
     String referrerUrl;
@@ -380,9 +313,9 @@ class AuthUserSession
     Map<String,String> meta;
 
     AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta});
+    AuthUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AuthUserSession fromMap(Map<String, dynamic> map) => new AuthUserSession.fromJson(map);
-    AuthUserSession.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         referrerUrl = json['referrerUrl'];
         id = json['id'];
         userAuthId = json['userAuthId'];
@@ -399,7 +332,7 @@ class AuthUserSession
         email = json['email'];
         primaryEmail = json['primaryEmail'];
         phoneNumber = json['phoneNumber'];
-        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',_types);
+        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',context);
         birthDateRaw = json['birthDateRaw'];
         address = json['address'];
         address2 = json['address2'];
@@ -415,18 +348,19 @@ class AuthUserSession
         postalCode = json['postalCode'];
         timeZone = json['timeZone'];
         requestTokenSecret = json['requestTokenSecret'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',_types);
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',_types);
-        roles = JsonConverters.fromJson(json['roles'],'List<String>',_types);
-        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',_types);
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context);
+        roles = JsonConverters.fromJson(json['roles'],'List<String>',context);
+        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',context);
         isAuthenticated = json['isAuthenticated'];
         fromToken = json['fromToken'];
         profileUrl = json['profileUrl'];
         sequence = json['sequence'];
         tag = json['tag'];
         authProvider = json['authProvider'];
-        providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',_types);
-        meta = json['meta'];
+        providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -446,7 +380,7 @@ class AuthUserSession
         'email': email,
         'primaryEmail': primaryEmail,
         'phoneNumber': phoneNumber,
-        'birthDate': JsonConverters.toJson(birthDate,'DateTime',_types),
+        'birthDate': JsonConverters.toJson(birthDate,'DateTime',context),
         'birthDateRaw': birthDateRaw,
         'address': address,
         'address2': address2,
@@ -462,79 +396,86 @@ class AuthUserSession
         'postalCode': postalCode,
         'timeZone': timeZone,
         'requestTokenSecret': requestTokenSecret,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',_types),
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',_types),
-        'roles': JsonConverters.toJson(roles,'List<String>',_types),
-        'permissions': JsonConverters.toJson(permissions,'List<String>',_types),
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context),
+        'roles': JsonConverters.toJson(roles,'List<String>',context),
+        'permissions': JsonConverters.toJson(permissions,'List<String>',context),
         'isAuthenticated': isAuthenticated,
         'fromToken': fromToken,
         'profileUrl': profileUrl,
         'sequence': sequence,
         'tag': tag,
         'authProvider': authProvider,
-        'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',_types),
+        'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',context),
         'meta': meta
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataTestNestedChild
+class MetadataTestNestedChild implements IConvertible
 {
     String name;
 
     MetadataTestNestedChild({this.name});
+    MetadataTestNestedChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataTestNestedChild fromMap(Map<String, dynamic> map) => new MetadataTestNestedChild.fromJson(map);
-    MetadataTestNestedChild.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataTestChild
+class MetadataTestChild implements IConvertible
 {
     String name;
     List<MetadataTestNestedChild> results;
 
     MetadataTestChild({this.name,this.results});
+    MetadataTestChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataTestChild fromMap(Map<String, dynamic> map) => new MetadataTestChild.fromJson(map);
-    MetadataTestChild.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        results = JsonConverters.fromJson(json['results'],'List<MetadataTestNestedChild>',_types);
+        results = JsonConverters.fromJson(json['results'],'List<MetadataTestNestedChild>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'results': JsonConverters.toJson(results,'List<MetadataTestNestedChild>',_types)
+        'results': JsonConverters.toJson(results,'List<MetadataTestNestedChild>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class MenuItemExampleItem
+class MenuItemExampleItem implements IConvertible
 {
     // @DataMember(Order=1)
     // @ApiMember()
     String name1;
 
     MenuItemExampleItem({this.name1});
+    MenuItemExampleItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MenuItemExampleItem fromMap(Map<String, dynamic> map) => new MenuItemExampleItem.fromJson(map);
-    MenuItemExampleItem.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name1 = json['name1'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name1': name1
     };
 
+    TypeContext context = _ctx;
 }
 
-class MenuItemExample
+class MenuItemExample implements IConvertible
 {
     // @DataMember(Order=1)
     // @ApiMember()
@@ -543,64 +484,70 @@ class MenuItemExample
     MenuItemExampleItem menuItemExampleItem;
 
     MenuItemExample({this.name1,this.menuItemExampleItem});
+    MenuItemExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MenuItemExample fromMap(Map<String, dynamic> map) => new MenuItemExample.fromJson(map);
-    MenuItemExample.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name1 = json['name1'];
-        menuItemExampleItem = JsonConverters.fromJson(json['menuItemExampleItem'],'MenuItemExampleItem',_types);
+        menuItemExampleItem = JsonConverters.fromJson(json['menuItemExampleItem'],'MenuItemExampleItem',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name1': name1,
-        'menuItemExampleItem': JsonConverters.toJson(menuItemExampleItem,'MenuItemExampleItem',_types)
+        'menuItemExampleItem': JsonConverters.toJson(menuItemExampleItem,'MenuItemExampleItem',context)
     };
 
+    TypeContext context = _ctx;
 }
 
 // @DataContract
-class MenuExample
+class MenuExample implements IConvertible
 {
     // @DataMember(Order=1)
     // @ApiMember()
     MenuItemExample menuItemExample1;
 
     MenuExample({this.menuItemExample1});
+    MenuExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MenuExample fromMap(Map<String, dynamic> map) => new MenuExample.fromJson(map);
-    MenuExample.fromJson(Map<String, dynamic> json) {
-        menuItemExample1 = JsonConverters.fromJson(json['menuItemExample1'],'MenuItemExample',_types);
+    fromMap(Map<String, dynamic> json) {
+        menuItemExample1 = JsonConverters.fromJson(json['menuItemExample1'],'MenuItemExample',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'menuItemExample1': JsonConverters.toJson(menuItemExample1,'MenuItemExample',_types)
+        'menuItemExample1': JsonConverters.toJson(menuItemExample1,'MenuItemExample',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataTypeName
+class MetadataTypeName implements IConvertible
 {
     String name;
     String namespace;
     List<String> genericArgs;
 
     MetadataTypeName({this.name,this.namespace,this.genericArgs});
+    MetadataTypeName.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataTypeName fromMap(Map<String, dynamic> map) => new MetadataTypeName.fromJson(map);
-    MetadataTypeName.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         namespace = json['namespace'];
-        genericArgs = JsonConverters.fromJson(json['genericArgs'],'List<String>',_types);
+        genericArgs = JsonConverters.fromJson(json['genericArgs'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
         'namespace': namespace,
-        'genericArgs': JsonConverters.toJson(genericArgs,'List<String>',_types)
+        'genericArgs': JsonConverters.toJson(genericArgs,'List<String>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataRoute
+class MetadataRoute implements IConvertible
 {
     String path;
     String verbs;
@@ -608,13 +555,14 @@ class MetadataRoute
     String summary;
 
     MetadataRoute({this.path,this.verbs,this.notes,this.summary});
+    MetadataRoute.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataRoute fromMap(Map<String, dynamic> map) => new MetadataRoute.fromJson(map);
-    MetadataRoute.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         path = json['path'];
         verbs = json['verbs'];
         notes = json['notes'];
         summary = json['summary'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -624,19 +572,21 @@ class MetadataRoute
         'summary': summary
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataDataContract
+class MetadataDataContract implements IConvertible
 {
     String name;
     String namespace;
 
     MetadataDataContract({this.name,this.namespace});
+    MetadataDataContract.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataDataContract fromMap(Map<String, dynamic> map) => new MetadataDataContract.fromJson(map);
-    MetadataDataContract.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         namespace = json['namespace'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -644,9 +594,10 @@ class MetadataDataContract
         'namespace': namespace
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataDataMember
+class MetadataDataMember implements IConvertible
 {
     String name;
     int order;
@@ -654,13 +605,14 @@ class MetadataDataMember
     bool emitDefaultValue;
 
     MetadataDataMember({this.name,this.order,this.isRequired,this.emitDefaultValue});
+    MetadataDataMember.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataDataMember fromMap(Map<String, dynamic> map) => new MetadataDataMember.fromJson(map);
-    MetadataDataMember.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         order = json['order'];
         isRequired = json['isRequired'];
         emitDefaultValue = json['emitDefaultValue'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -670,32 +622,35 @@ class MetadataDataMember
         'emitDefaultValue': emitDefaultValue
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataAttribute
+class MetadataAttribute implements IConvertible
 {
     String name;
     List<MetadataPropertyType> constructorArgs;
     List<MetadataPropertyType> args;
 
     MetadataAttribute({this.name,this.constructorArgs,this.args});
+    MetadataAttribute.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataAttribute fromMap(Map<String, dynamic> map) => new MetadataAttribute.fromJson(map);
-    MetadataAttribute.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        constructorArgs = JsonConverters.fromJson(json['constructorArgs'],'List<MetadataPropertyType>',_types);
-        args = JsonConverters.fromJson(json['args'],'List<MetadataPropertyType>',_types);
+        constructorArgs = JsonConverters.fromJson(json['constructorArgs'],'List<MetadataPropertyType>',context);
+        args = JsonConverters.fromJson(json['args'],'List<MetadataPropertyType>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'constructorArgs': JsonConverters.toJson(constructorArgs,'List<MetadataPropertyType>',_types),
-        'args': JsonConverters.toJson(args,'List<MetadataPropertyType>',_types)
+        'constructorArgs': JsonConverters.toJson(constructorArgs,'List<MetadataPropertyType>',context),
+        'args': JsonConverters.toJson(args,'List<MetadataPropertyType>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataPropertyType
+class MetadataPropertyType implements IConvertible
 {
     String name;
     String type;
@@ -717,27 +672,28 @@ class MetadataPropertyType
     List<MetadataAttribute> attributes;
 
     MetadataPropertyType({this.name,this.type,this.isValueType,this.isSystemType,this.isEnum,this.typeNamespace,this.genericArgs,this.value,this.description,this.dataMember,this.readOnly,this.paramType,this.displayType,this.isRequired,this.allowableValues,this.allowableMin,this.allowableMax,this.attributes});
+    MetadataPropertyType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataPropertyType fromMap(Map<String, dynamic> map) => new MetadataPropertyType.fromJson(map);
-    MetadataPropertyType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         type = json['type'];
         isValueType = json['isValueType'];
         isSystemType = json['isSystemType'];
         isEnum = json['isEnum'];
         typeNamespace = json['typeNamespace'];
-        genericArgs = JsonConverters.fromJson(json['genericArgs'],'List<String>',_types);
+        genericArgs = JsonConverters.fromJson(json['genericArgs'],'List<String>',context);
         value = json['value'];
         description = json['description'];
-        dataMember = JsonConverters.fromJson(json['dataMember'],'MetadataDataMember',_types);
+        dataMember = JsonConverters.fromJson(json['dataMember'],'MetadataDataMember',context);
         readOnly = json['readOnly'];
         paramType = json['paramType'];
         displayType = json['displayType'];
         isRequired = json['isRequired'];
-        allowableValues = JsonConverters.fromJson(json['allowableValues'],'List<String>',_types);
+        allowableValues = JsonConverters.fromJson(json['allowableValues'],'List<String>',context);
         allowableMin = json['allowableMin'];
         allowableMax = json['allowableMax'];
-        attributes = JsonConverters.fromJson(json['attributes'],'List<MetadataAttribute>',_types);
+        attributes = JsonConverters.fromJson(json['attributes'],'List<MetadataAttribute>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -747,23 +703,24 @@ class MetadataPropertyType
         'isSystemType': isSystemType,
         'isEnum': isEnum,
         'typeNamespace': typeNamespace,
-        'genericArgs': JsonConverters.toJson(genericArgs,'List<String>',_types),
+        'genericArgs': JsonConverters.toJson(genericArgs,'List<String>',context),
         'value': value,
         'description': description,
-        'dataMember': JsonConverters.toJson(dataMember,'MetadataDataMember',_types),
+        'dataMember': JsonConverters.toJson(dataMember,'MetadataDataMember',context),
         'readOnly': readOnly,
         'paramType': paramType,
         'displayType': displayType,
         'isRequired': isRequired,
-        'allowableValues': JsonConverters.toJson(allowableValues,'List<String>',_types),
+        'allowableValues': JsonConverters.toJson(allowableValues,'List<String>',context),
         'allowableMin': allowableMin,
         'allowableMax': allowableMax,
-        'attributes': JsonConverters.toJson(attributes,'List<MetadataAttribute>',_types)
+        'attributes': JsonConverters.toJson(attributes,'List<MetadataAttribute>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataType
+class MetadataType implements IConvertible
 {
     String name;
     String namespace;
@@ -789,14 +746,14 @@ class MetadataType
     Map<String,String> meta;
 
     MetadataType({this.name,this.namespace,this.genericArgs,this.inherits,this.Implements,this.displayType,this.description,this.returnVoidMarker,this.isNested,this.isEnum,this.isEnumInt,this.isInterface,this.isAbstract,this.returnMarkerTypeName,this.routes,this.dataContract,this.properties,this.attributes,this.innerTypes,this.enumNames,this.enumValues,this.meta});
+    MetadataType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataType fromMap(Map<String, dynamic> map) => new MetadataType.fromJson(map);
-    MetadataType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         namespace = json['namespace'];
-        genericArgs = JsonConverters.fromJson(json['genericArgs'],'List<String>',_types);
-        inherits = JsonConverters.fromJson(json['inherits'],'MetadataTypeName',_types);
-        Implements = JsonConverters.fromJson(json['implements'],'List<MetadataTypeName>',_types);
+        genericArgs = JsonConverters.fromJson(json['genericArgs'],'List<String>',context);
+        inherits = JsonConverters.fromJson(json['inherits'],'MetadataTypeName',context);
+        Implements = JsonConverters.fromJson(json['implements'],'List<MetadataTypeName>',context);
         displayType = json['displayType'];
         description = json['description'];
         returnVoidMarker = json['returnVoidMarker'];
@@ -805,23 +762,24 @@ class MetadataType
         isEnumInt = json['isEnumInt'];
         isInterface = json['isInterface'];
         isAbstract = json['isAbstract'];
-        returnMarkerTypeName = JsonConverters.fromJson(json['returnMarkerTypeName'],'MetadataTypeName',_types);
-        routes = JsonConverters.fromJson(json['routes'],'List<MetadataRoute>',_types);
-        dataContract = JsonConverters.fromJson(json['dataContract'],'MetadataDataContract',_types);
-        properties = JsonConverters.fromJson(json['properties'],'List<MetadataPropertyType>',_types);
-        attributes = JsonConverters.fromJson(json['attributes'],'List<MetadataAttribute>',_types);
-        innerTypes = JsonConverters.fromJson(json['innerTypes'],'List<MetadataTypeName>',_types);
-        enumNames = JsonConverters.fromJson(json['enumNames'],'List<String>',_types);
-        enumValues = JsonConverters.fromJson(json['enumValues'],'List<String>',_types);
-        meta = json['meta'];
+        returnMarkerTypeName = JsonConverters.fromJson(json['returnMarkerTypeName'],'MetadataTypeName',context);
+        routes = JsonConverters.fromJson(json['routes'],'List<MetadataRoute>',context);
+        dataContract = JsonConverters.fromJson(json['dataContract'],'MetadataDataContract',context);
+        properties = JsonConverters.fromJson(json['properties'],'List<MetadataPropertyType>',context);
+        attributes = JsonConverters.fromJson(json['attributes'],'List<MetadataAttribute>',context);
+        innerTypes = JsonConverters.fromJson(json['innerTypes'],'List<MetadataTypeName>',context);
+        enumNames = JsonConverters.fromJson(json['enumNames'],'List<String>',context);
+        enumValues = JsonConverters.fromJson(json['enumValues'],'List<String>',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
         'namespace': namespace,
-        'genericArgs': JsonConverters.toJson(genericArgs,'List<String>',_types),
-        'inherits': JsonConverters.toJson(inherits,'MetadataTypeName',_types),
-        'implements': JsonConverters.toJson(Implements,'List<MetadataTypeName>',_types),
+        'genericArgs': JsonConverters.toJson(genericArgs,'List<String>',context),
+        'inherits': JsonConverters.toJson(inherits,'MetadataTypeName',context),
+        'implements': JsonConverters.toJson(Implements,'List<MetadataTypeName>',context),
         'displayType': displayType,
         'description': description,
         'returnVoidMarker': returnVoidMarker,
@@ -830,32 +788,34 @@ class MetadataType
         'isEnumInt': isEnumInt,
         'isInterface': isInterface,
         'isAbstract': isAbstract,
-        'returnMarkerTypeName': JsonConverters.toJson(returnMarkerTypeName,'MetadataTypeName',_types),
-        'routes': JsonConverters.toJson(routes,'List<MetadataRoute>',_types),
-        'dataContract': JsonConverters.toJson(dataContract,'MetadataDataContract',_types),
-        'properties': JsonConverters.toJson(properties,'List<MetadataPropertyType>',_types),
-        'attributes': JsonConverters.toJson(attributes,'List<MetadataAttribute>',_types),
-        'innerTypes': JsonConverters.toJson(innerTypes,'List<MetadataTypeName>',_types),
-        'enumNames': JsonConverters.toJson(enumNames,'List<String>',_types),
-        'enumValues': JsonConverters.toJson(enumValues,'List<String>',_types),
+        'returnMarkerTypeName': JsonConverters.toJson(returnMarkerTypeName,'MetadataTypeName',context),
+        'routes': JsonConverters.toJson(routes,'List<MetadataRoute>',context),
+        'dataContract': JsonConverters.toJson(dataContract,'MetadataDataContract',context),
+        'properties': JsonConverters.toJson(properties,'List<MetadataPropertyType>',context),
+        'attributes': JsonConverters.toJson(attributes,'List<MetadataAttribute>',context),
+        'innerTypes': JsonConverters.toJson(innerTypes,'List<MetadataTypeName>',context),
+        'enumNames': JsonConverters.toJson(enumNames,'List<String>',context),
+        'enumValues': JsonConverters.toJson(enumValues,'List<String>',context),
         'meta': meta
     };
 
+    TypeContext context = _ctx;
 }
 
-class AutoQueryConvention
+class AutoQueryConvention implements IConvertible
 {
     String name;
     String value;
     String types;
 
     AutoQueryConvention({this.name,this.value,this.types});
+    AutoQueryConvention.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AutoQueryConvention fromMap(Map<String, dynamic> map) => new AutoQueryConvention.fromJson(map);
-    AutoQueryConvention.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         value = json['value'];
         types = json['types'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -864,9 +824,10 @@ class AutoQueryConvention
         'types': types
     };
 
+    TypeContext context = _ctx;
 }
 
-class AutoQueryViewerConfig
+class AutoQueryViewerConfig implements IConvertible
 {
     String serviceBaseUrl;
     String serviceName;
@@ -890,18 +851,18 @@ class AutoQueryViewerConfig
     Map<String,String> meta;
 
     AutoQueryViewerConfig({this.serviceBaseUrl,this.serviceName,this.serviceDescription,this.serviceIconUrl,this.formats,this.maxLimit,this.isPublic,this.onlyShowAnnotatedServices,this.implicitConventions,this.defaultSearchField,this.defaultSearchType,this.defaultSearchText,this.brandUrl,this.brandImageUrl,this.textColor,this.linkColor,this.backgroundColor,this.backgroundImageUrl,this.iconUrl,this.meta});
+    AutoQueryViewerConfig.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AutoQueryViewerConfig fromMap(Map<String, dynamic> map) => new AutoQueryViewerConfig.fromJson(map);
-    AutoQueryViewerConfig.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         serviceBaseUrl = json['serviceBaseUrl'];
         serviceName = json['serviceName'];
         serviceDescription = json['serviceDescription'];
         serviceIconUrl = json['serviceIconUrl'];
-        formats = JsonConverters.fromJson(json['formats'],'List<String>',_types);
+        formats = JsonConverters.fromJson(json['formats'],'List<String>',context);
         maxLimit = json['maxLimit'];
         isPublic = json['isPublic'];
         onlyShowAnnotatedServices = json['onlyShowAnnotatedServices'];
-        implicitConventions = JsonConverters.fromJson(json['implicitConventions'],'List<AutoQueryConvention>',_types);
+        implicitConventions = JsonConverters.fromJson(json['implicitConventions'],'List<AutoQueryConvention>',context);
         defaultSearchField = json['defaultSearchField'];
         defaultSearchType = json['defaultSearchType'];
         defaultSearchText = json['defaultSearchText'];
@@ -912,7 +873,8 @@ class AutoQueryViewerConfig
         backgroundColor = json['backgroundColor'];
         backgroundImageUrl = json['backgroundImageUrl'];
         iconUrl = json['iconUrl'];
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -920,11 +882,11 @@ class AutoQueryViewerConfig
         'serviceName': serviceName,
         'serviceDescription': serviceDescription,
         'serviceIconUrl': serviceIconUrl,
-        'formats': JsonConverters.toJson(formats,'List<String>',_types),
+        'formats': JsonConverters.toJson(formats,'List<String>',context),
         'maxLimit': maxLimit,
         'isPublic': isPublic,
         'onlyShowAnnotatedServices': onlyShowAnnotatedServices,
-        'implicitConventions': JsonConverters.toJson(implicitConventions,'List<AutoQueryConvention>',_types),
+        'implicitConventions': JsonConverters.toJson(implicitConventions,'List<AutoQueryConvention>',context),
         'defaultSearchField': defaultSearchField,
         'defaultSearchType': defaultSearchType,
         'defaultSearchText': defaultSearchText,
@@ -938,21 +900,23 @@ class AutoQueryViewerConfig
         'meta': meta
     };
 
+    TypeContext context = _ctx;
 }
 
-class AutoQueryViewerUserInfo
+class AutoQueryViewerUserInfo implements IConvertible
 {
     bool isAuthenticated;
     int queryCount;
     Map<String,String> meta;
 
     AutoQueryViewerUserInfo({this.isAuthenticated,this.queryCount,this.meta});
+    AutoQueryViewerUserInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AutoQueryViewerUserInfo fromMap(Map<String, dynamic> map) => new AutoQueryViewerUserInfo.fromJson(map);
-    AutoQueryViewerUserInfo.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         isAuthenticated = json['isAuthenticated'];
         queryCount = json['queryCount'];
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -961,9 +925,10 @@ class AutoQueryViewerUserInfo
         'meta': meta
     };
 
+    TypeContext context = _ctx;
 }
 
-class AutoQueryOperation
+class AutoQueryOperation implements IConvertible
 {
     String request;
     String from;
@@ -971,13 +936,14 @@ class AutoQueryOperation
     Map<String,String> meta;
 
     AutoQueryOperation({this.request,this.from,this.to,this.meta});
+    AutoQueryOperation.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AutoQueryOperation fromMap(Map<String, dynamic> map) => new AutoQueryOperation.fromJson(map);
-    AutoQueryOperation.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         request = json['request'];
         from = json['from'];
         to = json['to'];
-        meta = json['meta'];
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -987,82 +953,95 @@ class AutoQueryOperation
         'meta': meta
     };
 
+    TypeContext context = _ctx;
 }
 
-class NativeTypesTestService
+class NativeTypesTestService implements IConvertible
 {
     NativeTypesTestService();
-    NativeTypesTestService fromMap(Map<String, dynamic> map) => new NativeTypesTestService.fromJson(map);
     NativeTypesTestService.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
-class NestedClass
+class NestedClass implements IConvertible
 {
     String value;
 
     NestedClass({this.value});
+    NestedClass.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    NestedClass fromMap(Map<String, dynamic> map) => new NestedClass.fromJson(map);
-    NestedClass.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         value = json['value'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'value': value
     };
 
+    TypeContext context = _ctx;
 }
 
-class ListResult
+class ListResult implements IConvertible
 {
     String result;
 
     ListResult({this.result});
+    ListResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ListResult fromMap(Map<String, dynamic> map) => new ListResult.fromJson(map);
-    ListResult.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class OnlyInReturnListArg
+class OnlyInReturnListArg implements IConvertible
 {
     String result;
 
     OnlyInReturnListArg({this.result});
+    OnlyInReturnListArg.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    OnlyInReturnListArg fromMap(Map<String, dynamic> map) => new OnlyInReturnListArg.fromJson(map);
-    OnlyInReturnListArg.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class ArrayResult
+class ArrayResult implements IConvertible
 {
     String result;
 
     ArrayResult({this.result});
+    ArrayResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ArrayResult fromMap(Map<String, dynamic> map) => new ArrayResult.fromJson(map);
-    ArrayResult.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
 enum EnumType
@@ -1092,24 +1071,26 @@ class EnumFlags
     static List<EnumFlags> get values => const [Value0,Value1,Value2,Value3,Value123];
 }
 
-class Poco
+class Poco implements IConvertible
 {
     String name;
 
     Poco({this.name});
+    Poco.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Poco fromMap(Map<String, dynamic> map) => new Poco.fromJson(map);
-    Poco.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class AllCollectionTypes
+class AllCollectionTypes implements IConvertible
 {
     List<int> intArray;
     List<int> intList;
@@ -1125,51 +1106,54 @@ class AllCollectionTypes
     Map<String,List<Map<String,Poco>>> pocoLookupMap;
 
     AllCollectionTypes({this.intArray,this.intList,this.stringArray,this.stringList,this.pocoArray,this.pocoList,this.nullableByteArray,this.nullableByteList,this.nullableDateTimeArray,this.nullableDateTimeList,this.pocoLookup,this.pocoLookupMap});
+    AllCollectionTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AllCollectionTypes fromMap(Map<String, dynamic> map) => new AllCollectionTypes.fromJson(map);
-    AllCollectionTypes.fromJson(Map<String, dynamic> json) {
-        intArray = JsonConverters.fromJson(json['intArray'],'List<int>',_types);
-        intList = JsonConverters.fromJson(json['intList'],'List<int>',_types);
-        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
-        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
-        pocoArray = JsonConverters.fromJson(json['pocoArray'],'List<Poco>',_types);
-        pocoList = JsonConverters.fromJson(json['pocoList'],'List<Poco>',_types);
-        nullableByteArray = JsonConverters.fromJson(json['nullableByteArray'],'Uint8List',_types);
-        nullableByteList = JsonConverters.fromJson(json['nullableByteList'],'List<int>',_types);
-        nullableDateTimeArray = JsonConverters.fromJson(json['nullableDateTimeArray'],'List<DateTime>',_types);
-        nullableDateTimeList = JsonConverters.fromJson(json['nullableDateTimeList'],'List<DateTime>',_types);
-        pocoLookup = JsonConverters.fromJson(json['pocoLookup'],'Map<String,List<Poco>>',_types);
-        pocoLookupMap = JsonConverters.fromJson(json['pocoLookupMap'],'Map<String,List<Map<String,Poco>>>',_types);
+    fromMap(Map<String, dynamic> json) {
+        intArray = JsonConverters.fromJson(json['intArray'],'List<int>',context);
+        intList = JsonConverters.fromJson(json['intList'],'List<int>',context);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
+        pocoArray = JsonConverters.fromJson(json['pocoArray'],'List<Poco>',context);
+        pocoList = JsonConverters.fromJson(json['pocoList'],'List<Poco>',context);
+        nullableByteArray = JsonConverters.fromJson(json['nullableByteArray'],'Uint8List',context);
+        nullableByteList = JsonConverters.fromJson(json['nullableByteList'],'List<int>',context);
+        nullableDateTimeArray = JsonConverters.fromJson(json['nullableDateTimeArray'],'List<DateTime>',context);
+        nullableDateTimeList = JsonConverters.fromJson(json['nullableDateTimeList'],'List<DateTime>',context);
+        pocoLookup = JsonConverters.fromJson(json['pocoLookup'],'Map<String,List<Poco>>',context);
+        pocoLookupMap = JsonConverters.fromJson(json['pocoLookupMap'],'Map<String,List<Map<String,Poco>>>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'intArray': JsonConverters.toJson(intArray,'List<int>',_types),
-        'intList': JsonConverters.toJson(intList,'List<int>',_types),
-        'stringArray': JsonConverters.toJson(stringArray,'List<String>',_types),
-        'stringList': JsonConverters.toJson(stringList,'List<String>',_types),
-        'pocoArray': JsonConverters.toJson(pocoArray,'List<Poco>',_types),
-        'pocoList': JsonConverters.toJson(pocoList,'List<Poco>',_types),
-        'nullableByteArray': JsonConverters.toJson(nullableByteArray,'Uint8List',_types),
-        'nullableByteList': JsonConverters.toJson(nullableByteList,'List<int>',_types),
-        'nullableDateTimeArray': JsonConverters.toJson(nullableDateTimeArray,'List<DateTime>',_types),
-        'nullableDateTimeList': JsonConverters.toJson(nullableDateTimeList,'List<DateTime>',_types),
-        'pocoLookup': JsonConverters.toJson(pocoLookup,'Map<String,List<Poco>>',_types),
-        'pocoLookupMap': JsonConverters.toJson(pocoLookupMap,'Map<String,List<Map<String,Poco>>>',_types)
+        'intArray': JsonConverters.toJson(intArray,'List<int>',context),
+        'intList': JsonConverters.toJson(intList,'List<int>',context),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
+        'pocoArray': JsonConverters.toJson(pocoArray,'List<Poco>',context),
+        'pocoList': JsonConverters.toJson(pocoList,'List<Poco>',context),
+        'nullableByteArray': JsonConverters.toJson(nullableByteArray,'Uint8List',context),
+        'nullableByteList': JsonConverters.toJson(nullableByteList,'List<int>',context),
+        'nullableDateTimeArray': JsonConverters.toJson(nullableDateTimeArray,'List<DateTime>',context),
+        'nullableDateTimeList': JsonConverters.toJson(nullableDateTimeList,'List<DateTime>',context),
+        'pocoLookup': JsonConverters.toJson(pocoLookup,'Map<String,List<Poco>>',context),
+        'pocoLookupMap': JsonConverters.toJson(pocoLookupMap,'Map<String,List<Map<String,Poco>>>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class SubType
+class SubType implements IConvertible
 {
     int id;
     String name;
 
     SubType({this.id,this.name});
+    SubType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SubType fromMap(Map<String, dynamic> map) => new SubType.fromJson(map);
-    SubType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1177,6 +1161,7 @@ class SubType
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
 abstract class HelloBase
@@ -1184,32 +1169,37 @@ abstract class HelloBase
     int id;
 
     HelloBase({this.id});
+    HelloBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloBase.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloResponseBase
+class HelloResponseBase implements IConvertible
 {
     int refId;
 
     HelloResponseBase({this.refId});
+    HelloResponseBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloResponseBase fromMap(Map<String, dynamic> map) => new HelloResponseBase.fromJson(map);
-    HelloResponseBase.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         refId = json['refId'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'refId': refId
     };
 
+    TypeContext context = _ctx;
 }
 
 abstract class HelloBase1<T>
@@ -1218,85 +1208,96 @@ abstract class HelloBase1<T>
     List<int> counts;
 
     HelloBase1({this.items,this.counts});
+    HelloBase1.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloBase1.fromJson(Map<String, dynamic> json) {
-        items = JsonConverters.fromJson(json['items'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',_types);
-        counts = JsonConverters.fromJson(json['counts'],'List<int>',_types);
+    fromMap(Map<String, dynamic> json) {
+        items = JsonConverters.fromJson(json['items'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context);
+        counts = JsonConverters.fromJson(json['counts'],'List<int>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'items': JsonConverters.toJson(items,'List<T>',_types),
-        'counts': JsonConverters.toJson(counts,'List<int>',_types)
+        'items': JsonConverters.toJson(items,'List<T>',context),
+        'counts': JsonConverters.toJson(counts,'List<int>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class Item
+class Item implements IConvertible
 {
     String value;
 
     Item({this.value});
+    Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Item fromMap(Map<String, dynamic> map) => new Item.fromJson(map);
-    Item.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         value = json['value'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'value': value
     };
 
+    TypeContext context = _ctx;
 }
 
-class InheritedItem
+class InheritedItem implements IConvertible
 {
     String name;
 
     InheritedItem({this.name});
+    InheritedItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    InheritedItem fromMap(Map<String, dynamic> map) => new InheritedItem.fromJson(map);
-    InheritedItem.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithReturnResponse
+class HelloWithReturnResponse implements IConvertible
 {
     String result;
 
     HelloWithReturnResponse({this.result});
+    HelloWithReturnResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithReturnResponse fromMap(Map<String, dynamic> map) => new HelloWithReturnResponse.fromJson(map);
-    HelloWithReturnResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloType
+class HelloType implements IConvertible
 {
     String result;
 
     HelloType({this.result});
+    HelloType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloType fromMap(Map<String, dynamic> map) => new HelloType.fromJson(map);
-    HelloType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
 abstract class IPoco
@@ -1308,12 +1309,16 @@ abstract class IEmptyInterface
 {
 }
 
-class EmptyClass
+class EmptyClass implements IConvertible
 {
     EmptyClass();
-    EmptyClass fromMap(Map<String, dynamic> map) => new EmptyClass.fromJson(map);
     EmptyClass.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
 abstract class ImplementsPoco
@@ -1321,51 +1326,56 @@ abstract class ImplementsPoco
     String name;
 }
 
-class TypeB
+class TypeB implements IConvertible
 {
     String foo;
 
     TypeB({this.foo});
+    TypeB.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TypeB fromMap(Map<String, dynamic> map) => new TypeB.fromJson(map);
-    TypeB.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         foo = json['foo'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'foo': foo
     };
 
+    TypeContext context = _ctx;
 }
 
-class TypeA
+class TypeA implements IConvertible
 {
     List<TypeB> bar;
 
     TypeA({this.bar});
+    TypeA.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TypeA fromMap(Map<String, dynamic> map) => new TypeA.fromJson(map);
-    TypeA.fromJson(Map<String, dynamic> json) {
-        bar = JsonConverters.fromJson(json['bar'],'List<TypeB>',_types);
+    fromMap(Map<String, dynamic> json) {
+        bar = JsonConverters.fromJson(json['bar'],'List<TypeB>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'bar': JsonConverters.toJson(bar,'List<TypeB>',_types)
+        'bar': JsonConverters.toJson(bar,'List<TypeB>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class InnerType
+class InnerType implements IConvertible
 {
     int id;
     String name;
 
     InnerType({this.id,this.name});
+    InnerType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    InnerType fromMap(Map<String, dynamic> map) => new InnerType.fromJson(map);
-    InnerType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1373,6 +1383,7 @@ class InnerType
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
 enum InnerEnum
@@ -1382,17 +1393,18 @@ enum InnerEnum
     Baz,
 }
 
-class InnerTypeItem
+class InnerTypeItem implements IConvertible
 {
     int id;
     String name;
 
     InnerTypeItem({this.id,this.name});
+    InnerTypeItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    InnerTypeItem fromMap(Map<String, dynamic> map) => new InnerTypeItem.fromJson(map);
-    InnerTypeItem.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1400,6 +1412,7 @@ class InnerTypeItem
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
 enum DayOfWeek
@@ -1418,49 +1431,6 @@ enum ScopeType
 {
     Global,
     Sale,
-}
-
-class Tuple2<T1, T2>
-{
-    T1 item1;
-    T2 item2;
-
-    Tuple2({this.item1,this.item2});
-
-    Tuple2 fromMap(Map<String, dynamic> map) => new Tuple2.fromJson(map);
-    Tuple2.fromJson(Map<String, dynamic> json) {
-        item1 = json['item1'];
-        item2 = json['item2'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'item1': item1,
-        'item2': item2
-    };
-
-}
-
-class Tuple3<T1, T2, T3>
-{
-    T1 item1;
-    T2 item2;
-    T3 item3;
-
-    Tuple3({this.item1,this.item2,this.item3});
-
-    Tuple3 fromMap(Map<String, dynamic> map) => new Tuple3.fromJson(map);
-    Tuple3.fromJson(Map<String, dynamic> json) {
-        item1 = json['item1'];
-        item2 = json['item2'];
-        item3 = json['item3'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'item1': item1,
-        'item2': item2,
-        'item3': item3
-    };
-
 }
 
 abstract class IEcho
@@ -1493,7 +1463,7 @@ enum MyColor
     Blue,
 }
 
-class SwaggerNestedModel
+class SwaggerNestedModel implements IConvertible
 {
     /**
     * NestedProperty description
@@ -1502,19 +1472,21 @@ class SwaggerNestedModel
     bool nestedProperty;
 
     SwaggerNestedModel({this.nestedProperty});
+    SwaggerNestedModel.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerNestedModel fromMap(Map<String, dynamic> map) => new SwaggerNestedModel.fromJson(map);
-    SwaggerNestedModel.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         nestedProperty = json['nestedProperty'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'nestedProperty': nestedProperty
     };
 
+    TypeContext context = _ctx;
 }
 
-class SwaggerNestedModel2
+class SwaggerNestedModel2 implements IConvertible
 {
     /**
     * NestedProperty2 description
@@ -1535,12 +1507,13 @@ class SwaggerNestedModel2
     int testRange;
 
     SwaggerNestedModel2({this.nestedProperty2,this.multipleValues,this.testRange});
+    SwaggerNestedModel2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerNestedModel2 fromMap(Map<String, dynamic> map) => new SwaggerNestedModel2.fromJson(map);
-    SwaggerNestedModel2.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         nestedProperty2 = json['nestedProperty2'];
         multipleValues = json['multipleValues'];
         testRange = json['testRange'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1549,6 +1522,7 @@ class SwaggerNestedModel2
         'testRange': testRange
     };
 
+    TypeContext context = _ctx;
 }
 
 enum MyEnum
@@ -1558,44 +1532,20 @@ enum MyEnum
     C,
 }
 
-// @DataContract
-class UserApiKey
-{
-    // @DataMember(Order=1)
-    String key;
-
-    // @DataMember(Order=2)
-    String keyType;
-
-    // @DataMember(Order=3)
-    DateTime expiryDate;
-
-    UserApiKey({this.key,this.keyType,this.expiryDate});
-
-    UserApiKey fromMap(Map<String, dynamic> map) => new UserApiKey.fromJson(map);
-    UserApiKey.fromJson(Map<String, dynamic> json) {
-        key = json['key'];
-        keyType = json['keyType'];
-        expiryDate = JsonConverters.fromJson(json['expiryDate'],'DateTime',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'key': key,
-        'keyType': keyType,
-        'expiryDate': JsonConverters.toJson(expiryDate,'DateTime',_types)
-    };
-
-}
-
-class PgRockstar extends Rockstar
+class PgRockstar extends Rockstar implements IConvertible
 {
     PgRockstar();
-    PgRockstar fromMap(Map<String, dynamic> map) => new PgRockstar.fromJson(map);
     PgRockstar.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
 }
 
-class CustomRockstar
+class CustomRockstar implements IConvertible
 {
     // @AutoQueryViewerField(Title="Name")
     String firstName;
@@ -1611,14 +1561,15 @@ class CustomRockstar
     String rockstarGenreName;
 
     CustomRockstar({this.firstName,this.lastName,this.age,this.rockstarAlbumName,this.rockstarGenreName});
+    CustomRockstar.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CustomRockstar fromMap(Map<String, dynamic> map) => new CustomRockstar.fromJson(map);
-    CustomRockstar.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         firstName = json['firstName'];
         lastName = json['lastName'];
         age = json['age'];
         rockstarAlbumName = json['rockstarAlbumName'];
         rockstarGenreName = json['rockstarGenreName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1629,13 +1580,14 @@ class CustomRockstar
         'rockstarGenreName': rockstarGenreName
     };
 
+    TypeContext context = _ctx;
 }
 
 abstract class IFilterRockstars
 {
 }
 
-class Movie
+class Movie implements IConvertible
 {
     int id;
     String imdbId;
@@ -1648,18 +1600,19 @@ class Movie
     List<String> genres;
 
     Movie({this.id,this.imdbId,this.title,this.rating,this.score,this.director,this.releaseDate,this.tagLine,this.genres});
+    Movie.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Movie fromMap(Map<String, dynamic> map) => new Movie.fromJson(map);
-    Movie.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         imdbId = json['imdbId'];
         title = json['title'];
         rating = json['rating'];
-        score = json['score'];
+        score = JsonConverters.toDouble(json['score']);
         director = json['director'];
-        releaseDate = JsonConverters.fromJson(json['releaseDate'],'DateTime',_types);
+        releaseDate = JsonConverters.fromJson(json['releaseDate'],'DateTime',context);
         tagLine = json['tagLine'];
-        genres = JsonConverters.fromJson(json['genres'],'List<String>',_types);
+        genres = JsonConverters.fromJson(json['genres'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1669,26 +1622,28 @@ class Movie
         'rating': rating,
         'score': score,
         'director': director,
-        'releaseDate': JsonConverters.toJson(releaseDate,'DateTime',_types),
+        'releaseDate': JsonConverters.toJson(releaseDate,'DateTime',context),
         'tagLine': tagLine,
-        'genres': JsonConverters.toJson(genres,'List<String>',_types)
+        'genres': JsonConverters.toJson(genres,'List<String>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class RockstarAlbum
+class RockstarAlbum implements IConvertible
 {
     int id;
     int rockstarId;
     String name;
 
     RockstarAlbum({this.id,this.rockstarId,this.name});
+    RockstarAlbum.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    RockstarAlbum fromMap(Map<String, dynamic> map) => new RockstarAlbum.fromJson(map);
-    RockstarAlbum.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         rockstarId = json['rockstarId'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1697,9 +1652,10 @@ class RockstarAlbum
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class RockstarReference
+class RockstarReference implements IConvertible
 {
     int id;
     String firstName;
@@ -1708,14 +1664,15 @@ class RockstarReference
     List<RockstarAlbum> albums;
 
     RockstarReference({this.id,this.firstName,this.lastName,this.age,this.albums});
+    RockstarReference.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    RockstarReference fromMap(Map<String, dynamic> map) => new RockstarReference.fromJson(map);
-    RockstarReference.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         firstName = json['firstName'];
         lastName = json['lastName'];
         age = json['age'];
-        albums = JsonConverters.fromJson(json['albums'],'List<RockstarAlbum>',_types);
+        albums = JsonConverters.fromJson(json['albums'],'List<RockstarAlbum>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1723,22 +1680,24 @@ class RockstarReference
         'firstName': firstName,
         'lastName': lastName,
         'age': age,
-        'albums': JsonConverters.toJson(albums,'List<RockstarAlbum>',_types)
+        'albums': JsonConverters.toJson(albums,'List<RockstarAlbum>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class OnlyDefinedInGenericType
+class OnlyDefinedInGenericType implements IConvertible
 {
     int id;
     String name;
 
     OnlyDefinedInGenericType({this.id,this.name});
+    OnlyDefinedInGenericType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    OnlyDefinedInGenericType fromMap(Map<String, dynamic> map) => new OnlyDefinedInGenericType.fromJson(map);
-    OnlyDefinedInGenericType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1746,19 +1705,21 @@ class OnlyDefinedInGenericType
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class OnlyDefinedInGenericTypeFrom
+class OnlyDefinedInGenericTypeFrom implements IConvertible
 {
     int id;
     String name;
 
     OnlyDefinedInGenericTypeFrom({this.id,this.name});
+    OnlyDefinedInGenericTypeFrom.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    OnlyDefinedInGenericTypeFrom fromMap(Map<String, dynamic> map) => new OnlyDefinedInGenericTypeFrom.fromJson(map);
-    OnlyDefinedInGenericTypeFrom.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1766,19 +1727,21 @@ class OnlyDefinedInGenericTypeFrom
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class OnlyDefinedInGenericTypeInto
+class OnlyDefinedInGenericTypeInto implements IConvertible
 {
     int id;
     String name;
 
     OnlyDefinedInGenericTypeInto({this.id,this.name});
+    OnlyDefinedInGenericTypeInto.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    OnlyDefinedInGenericTypeInto fromMap(Map<String, dynamic> map) => new OnlyDefinedInGenericTypeInto.fromJson(map);
-    OnlyDefinedInGenericTypeInto.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1786,56 +1749,22 @@ class OnlyDefinedInGenericTypeInto
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
-class TypesGroup
+class TypesGroup implements IConvertible
 {
     TypesGroup();
-    TypesGroup fromMap(Map<String, dynamic> map) => new TypesGroup.fromJson(map);
     TypesGroup.fromJson(Map<String, dynamic> json) : super();
-    Map<String, dynamic> toJson() => {};
-}
-
-// @DataContract
-class QueryResponse<T>
-{
-    // @DataMember(Order=1)
-    int offset;
-
-    // @DataMember(Order=2)
-    int total;
-
-    // @DataMember(Order=3)
-    List<T> results;
-
-    // @DataMember(Order=4)
-    Map<String,String> meta;
-
-    // @DataMember(Order=5)
-    ResponseStatus responseStatus;
-
-    QueryResponse({this.offset,this.total,this.results,this.meta,this.responseStatus});
-
-    QueryResponse fromMap(Map<String, dynamic> map) => new QueryResponse.fromJson(map);
-    QueryResponse.fromJson(Map<String, dynamic> json) {
-        offset = json['offset'];
-        total = json['total'];
-        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',_types);
-        meta = json['meta'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    fromMap(Map<String, dynamic> json) {
+        return this;
     }
 
-    Map<String, dynamic> toJson() => {
-        'offset': offset,
-        'total': total,
-        'results': JsonConverters.toJson(results,'List<T>',_types),
-        'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
-    };
-
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
-class ChangeRequestResponse
+class ChangeRequestResponse implements IConvertible
 {
     String contentType;
     String header;
@@ -1844,14 +1773,15 @@ class ChangeRequestResponse
     ResponseStatus responseStatus;
 
     ChangeRequestResponse({this.contentType,this.header,this.queryString,this.form,this.responseStatus});
+    ChangeRequestResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ChangeRequestResponse fromMap(Map<String, dynamic> map) => new ChangeRequestResponse.fromJson(map);
-    ChangeRequestResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         contentType = json['contentType'];
         header = json['header'];
         queryString = json['queryString'];
         form = json['form'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -1859,200 +1789,229 @@ class ChangeRequestResponse
         'header': header,
         'queryString': queryString,
         'form': form,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class CustomHttpErrorResponse
+class CustomHttpErrorResponse implements IConvertible
 {
     String custom;
     ResponseStatus responseStatus;
 
     CustomHttpErrorResponse({this.custom,this.responseStatus});
+    CustomHttpErrorResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CustomHttpErrorResponse fromMap(Map<String, dynamic> map) => new CustomHttpErrorResponse.fromJson(map);
-    CustomHttpErrorResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         custom = json['custom'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'custom': custom,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/alwaysthrows")
-class AlwaysThrows implements IReturn<AlwaysThrows>
+class AlwaysThrows implements IReturn<AlwaysThrows>, IConvertible
 {
     AlwaysThrows();
-    AlwaysThrows fromMap(Map<String, dynamic> map) => new AlwaysThrows.fromJson(map);
     AlwaysThrows.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new AlwaysThrows(); }
     String getTypeName() { return "AlwaysThrows"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/alwaysthrowsfilterattribute")
-class AlwaysThrowsFilterAttribute implements IReturn<AlwaysThrowsFilterAttribute>
+class AlwaysThrowsFilterAttribute implements IReturn<AlwaysThrowsFilterAttribute>, IConvertible
 {
     AlwaysThrowsFilterAttribute();
-    AlwaysThrowsFilterAttribute fromMap(Map<String, dynamic> map) => new AlwaysThrowsFilterAttribute.fromJson(map);
     AlwaysThrowsFilterAttribute.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new AlwaysThrowsFilterAttribute(); }
     String getTypeName() { return "AlwaysThrowsFilterAttribute"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/alwaysthrowsglobalfilter")
-class AlwaysThrowsGlobalFilter implements IReturn<AlwaysThrowsGlobalFilter>
+class AlwaysThrowsGlobalFilter implements IReturn<AlwaysThrowsGlobalFilter>, IConvertible
 {
     AlwaysThrowsGlobalFilter();
-    AlwaysThrowsGlobalFilter fromMap(Map<String, dynamic> map) => new AlwaysThrowsGlobalFilter.fromJson(map);
     AlwaysThrowsGlobalFilter.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new AlwaysThrowsGlobalFilter(); }
     String getTypeName() { return "AlwaysThrowsGlobalFilter"; }
+    TypeContext context = _ctx;
 }
 
-class CustomFieldHttpErrorResponse
+class CustomFieldHttpErrorResponse implements IConvertible
 {
     String custom;
     ResponseStatus responseStatus;
 
     CustomFieldHttpErrorResponse({this.custom,this.responseStatus});
+    CustomFieldHttpErrorResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CustomFieldHttpErrorResponse fromMap(Map<String, dynamic> map) => new CustomFieldHttpErrorResponse.fromJson(map);
-    CustomFieldHttpErrorResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         custom = json['custom'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'custom': custom,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class NoRepeatResponse
+class NoRepeatResponse implements IConvertible
 {
     String id;
 
     NoRepeatResponse({this.id});
+    NoRepeatResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    NoRepeatResponse fromMap(Map<String, dynamic> map) => new NoRepeatResponse.fromJson(map);
-    NoRepeatResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
-class BatchThrowsResponse
+class BatchThrowsResponse implements IConvertible
 {
     String result;
     ResponseStatus responseStatus;
 
     BatchThrowsResponse({this.result,this.responseStatus});
+    BatchThrowsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    BatchThrowsResponse fromMap(Map<String, dynamic> map) => new BatchThrowsResponse.fromJson(map);
-    BatchThrowsResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class ObjectDesignResponse
+class ObjectDesignResponse implements IConvertible
 {
     ObjectDesign data;
 
     ObjectDesignResponse({this.data});
+    ObjectDesignResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ObjectDesignResponse fromMap(Map<String, dynamic> map) => new ObjectDesignResponse.fromJson(map);
-    ObjectDesignResponse.fromJson(Map<String, dynamic> json) {
-        data = JsonConverters.fromJson(json['data'],'ObjectDesign',_types);
+    fromMap(Map<String, dynamic> json) {
+        data = JsonConverters.fromJson(json['data'],'ObjectDesign',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.toJson(data,'ObjectDesign',_types)
+        'data': JsonConverters.toJson(data,'ObjectDesign',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class CreateJwtResponse
+class CreateJwtResponse implements IConvertible
 {
     String token;
     ResponseStatus responseStatus;
 
     CreateJwtResponse({this.token,this.responseStatus});
+    CreateJwtResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CreateJwtResponse fromMap(Map<String, dynamic> map) => new CreateJwtResponse.fromJson(map);
-    CreateJwtResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         token = json['token'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'token': token,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class CreateRefreshJwtResponse
+class CreateRefreshJwtResponse implements IConvertible
 {
     String token;
     ResponseStatus responseStatus;
 
     CreateRefreshJwtResponse({this.token,this.responseStatus});
+    CreateRefreshJwtResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CreateRefreshJwtResponse fromMap(Map<String, dynamic> map) => new CreateRefreshJwtResponse.fromJson(map);
-    CreateRefreshJwtResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         token = json['token'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'token': token,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class MetadataTestResponse
+class MetadataTestResponse implements IConvertible
 {
     int id;
     List<MetadataTestChild> results;
 
     MetadataTestResponse({this.id,this.results});
+    MetadataTestResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataTestResponse fromMap(Map<String, dynamic> map) => new MetadataTestResponse.fromJson(map);
-    MetadataTestResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        results = JsonConverters.fromJson(json['results'],'List<MetadataTestChild>',_types);
+        results = JsonConverters.fromJson(json['results'],'List<MetadataTestChild>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'results': JsonConverters.toJson(results,'List<MetadataTestChild>',_types)
+        'results': JsonConverters.toJson(results,'List<MetadataTestChild>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
 // @DataContract
-class GetExampleResponse
+class GetExampleResponse implements IConvertible
 {
     // @DataMember(Order=1)
     ResponseStatus responseStatus;
@@ -2062,21 +2021,23 @@ class GetExampleResponse
     MenuExample menuExample1;
 
     GetExampleResponse({this.responseStatus,this.menuExample1});
+    GetExampleResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    GetExampleResponse fromMap(Map<String, dynamic> map) => new GetExampleResponse.fromJson(map);
-    GetExampleResponse.fromJson(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-        menuExample1 = JsonConverters.fromJson(json['menuExample1'],'MenuExample',_types);
+    fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        menuExample1 = JsonConverters.fromJson(json['menuExample1'],'MenuExample',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types),
-        'menuExample1': JsonConverters.toJson(menuExample1,'MenuExample',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
+        'menuExample1': JsonConverters.toJson(menuExample1,'MenuExample',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class AutoQueryMetadataResponse
+class AutoQueryMetadataResponse implements IConvertible
 {
     AutoQueryViewerConfig config;
     AutoQueryViewerUserInfo userInfo;
@@ -2086,30 +2047,32 @@ class AutoQueryMetadataResponse
     Map<String,String> meta;
 
     AutoQueryMetadataResponse({this.config,this.userInfo,this.operations,this.types,this.responseStatus,this.meta});
+    AutoQueryMetadataResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AutoQueryMetadataResponse fromMap(Map<String, dynamic> map) => new AutoQueryMetadataResponse.fromJson(map);
-    AutoQueryMetadataResponse.fromJson(Map<String, dynamic> json) {
-        config = JsonConverters.fromJson(json['config'],'AutoQueryViewerConfig',_types);
-        userInfo = JsonConverters.fromJson(json['userInfo'],'AutoQueryViewerUserInfo',_types);
-        operations = JsonConverters.fromJson(json['operations'],'List<AutoQueryOperation>',_types);
-        types = JsonConverters.fromJson(json['types'],'List<MetadataType>',_types);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-        meta = json['meta'];
+    fromMap(Map<String, dynamic> json) {
+        config = JsonConverters.fromJson(json['config'],'AutoQueryViewerConfig',context);
+        userInfo = JsonConverters.fromJson(json['userInfo'],'AutoQueryViewerUserInfo',context);
+        operations = JsonConverters.fromJson(json['operations'],'List<AutoQueryOperation>',context);
+        types = JsonConverters.fromJson(json['types'],'List<MetadataType>',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'config': JsonConverters.toJson(config,'AutoQueryViewerConfig',_types),
-        'userInfo': JsonConverters.toJson(userInfo,'AutoQueryViewerUserInfo',_types),
-        'operations': JsonConverters.toJson(operations,'List<AutoQueryOperation>',_types),
-        'types': JsonConverters.toJson(types,'List<MetadataType>',_types),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types),
+        'config': JsonConverters.toJson(config,'AutoQueryViewerConfig',context),
+        'userInfo': JsonConverters.toJson(userInfo,'AutoQueryViewerUserInfo',context),
+        'operations': JsonConverters.toJson(operations,'List<AutoQueryOperation>',context),
+        'types': JsonConverters.toJson(types,'List<MetadataType>',context),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'meta': meta
     };
 
+    TypeContext context = _ctx;
 }
 
 // @DataContract
-class HelloACodeGenTestResponse
+class HelloACodeGenTestResponse implements IConvertible
 {
     /**
     * Description for FirstResult
@@ -2125,11 +2088,12 @@ class HelloACodeGenTestResponse
     int secondResult;
 
     HelloACodeGenTestResponse({this.firstResult,this.secondResult});
+    HelloACodeGenTestResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloACodeGenTestResponse fromMap(Map<String, dynamic> map) => new HelloACodeGenTestResponse.fromJson(map);
-    HelloACodeGenTestResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         firstResult = json['firstResult'];
         secondResult = json['secondResult'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2137,86 +2101,95 @@ class HelloACodeGenTestResponse
         'secondResult': secondResult
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloResponse
+class HelloResponse implements IConvertible
 {
     String result;
 
     HelloResponse({this.result});
+    HelloResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloResponse fromMap(Map<String, dynamic> map) => new HelloResponse.fromJson(map);
-    HelloResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
 /**
 * Description on HelloAllResponse type
 */
 // @DataContract
-class HelloAnnotatedResponse
+class HelloAnnotatedResponse implements IConvertible
 {
     // @DataMember
     String result;
 
     HelloAnnotatedResponse({this.result});
+    HelloAnnotatedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloAnnotatedResponse fromMap(Map<String, dynamic> map) => new HelloAnnotatedResponse.fromJson(map);
-    HelloAnnotatedResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloList implements IReturn<List<ListResult>>
+class HelloList implements IReturn<List<ListResult>>, IConvertible
 {
     List<String> names;
 
     HelloList({this.names});
+    HelloList.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloList fromMap(Map<String, dynamic> map) => new HelloList.fromJson(map);
-    HelloList.fromJson(Map<String, dynamic> json) {
-        names = JsonConverters.fromJson(json['names'],'List<String>',_types);
+    fromMap(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.toJson(names,'List<String>',_types)
+        'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
     createResponse() { return new List<ListResult>(); }
     String getTypeName() { return "HelloList"; }
+    TypeContext context = _ctx;
 }
 
-class HelloArray implements IReturn<List<ArrayResult>>
+class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
 {
     List<String> names;
 
     HelloArray({this.names});
+    HelloArray.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloArray fromMap(Map<String, dynamic> map) => new HelloArray.fromJson(map);
-    HelloArray.fromJson(Map<String, dynamic> json) {
-        names = JsonConverters.fromJson(json['names'],'List<String>',_types);
+    fromMap(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.toJson(names,'List<String>',_types)
+        'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
     createResponse() { return new List<ArrayResult>(); }
     String getTypeName() { return "HelloArray"; }
+    TypeContext context = _ctx;
 }
 
-class HelloExistingResponse
+class HelloExistingResponse implements IConvertible
 {
     HelloList helloList;
     HelloArray helloArray;
@@ -2224,25 +2197,27 @@ class HelloExistingResponse
     List<ListResult> listResults;
 
     HelloExistingResponse({this.helloList,this.helloArray,this.arrayResults,this.listResults});
+    HelloExistingResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloExistingResponse fromMap(Map<String, dynamic> map) => new HelloExistingResponse.fromJson(map);
-    HelloExistingResponse.fromJson(Map<String, dynamic> json) {
-        helloList = JsonConverters.fromJson(json['helloList'],'HelloList',_types);
-        helloArray = JsonConverters.fromJson(json['helloArray'],'HelloArray',_types);
-        arrayResults = JsonConverters.fromJson(json['arrayResults'],'List<ArrayResult>',_types);
-        listResults = JsonConverters.fromJson(json['listResults'],'List<ListResult>',_types);
+    fromMap(Map<String, dynamic> json) {
+        helloList = JsonConverters.fromJson(json['helloList'],'HelloList',context);
+        helloArray = JsonConverters.fromJson(json['helloArray'],'HelloArray',context);
+        arrayResults = JsonConverters.fromJson(json['arrayResults'],'List<ArrayResult>',context);
+        listResults = JsonConverters.fromJson(json['listResults'],'List<ListResult>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'helloList': JsonConverters.toJson(helloList,'HelloList',_types),
-        'helloArray': JsonConverters.toJson(helloArray,'HelloArray',_types),
-        'arrayResults': JsonConverters.toJson(arrayResults,'List<ArrayResult>',_types),
-        'listResults': JsonConverters.toJson(listResults,'List<ListResult>',_types)
+        'helloList': JsonConverters.toJson(helloList,'HelloList',context),
+        'helloArray': JsonConverters.toJson(helloArray,'HelloArray',context),
+        'arrayResults': JsonConverters.toJson(arrayResults,'List<ArrayResult>',context),
+        'listResults': JsonConverters.toJson(listResults,'List<ListResult>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class AllTypes implements IReturn<AllTypes>
+class AllTypes implements IReturn<AllTypes>, IConvertible
 {
     int id;
     int nullableId;
@@ -2262,7 +2237,7 @@ class AllTypes implements IReturn<AllTypes>
     DateTime dateTimeOffset;
     String guid;
     String char;
-    KeyValuePair<String, String> keyValuePair;
+    KeyValuePair<String,String> keyValuePair;
     DateTime nullableDateTime;
     Duration nullableTimeSpan;
     List<String> stringList;
@@ -2275,9 +2250,9 @@ class AllTypes implements IReturn<AllTypes>
     String originalName;
 
     AllTypes({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType,this.point,this.originalName});
+    AllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AllTypes fromMap(Map<String, dynamic> map) => new AllTypes.fromJson(map);
-    AllTypes.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         nullableId = json['nullableId'];
         byte = json['byte'];
@@ -2287,25 +2262,26 @@ class AllTypes implements IReturn<AllTypes>
         uShort = json['uShort'];
         uInt = json['uInt'];
         uLong = json['uLong'];
-        float = json['float'];
-        Double = json['double'];
-        decimal = json['decimal'];
+        float = JsonConverters.toDouble(json['float']);
+        Double = JsonConverters.toDouble(json['double']);
+        decimal = JsonConverters.toDouble(json['decimal']);
         string = json['string'];
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
-        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',_types);
-        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',_types);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context);
         guid = json['guid'];
         char = json['char'];
-        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String, String>',_types);
-        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',_types);
-        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',_types);
-        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',_types);
-        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',_types);
-        stringMap = json['stringMap'];
-        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',_types);
-        subType = JsonConverters.fromJson(json['subType'],'SubType',_types);
-        point = JsonConverters.fromJson(json['point'],'String',_types);
+        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String,String>',context);
+        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',context);
+        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
+        subType = JsonConverters.fromJson(json['subType'],'SubType',context);
+        point = JsonConverters.fromJson(json['point'],'String',context);
         originalName = json['originalName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2322,205 +2298,227 @@ class AllTypes implements IReturn<AllTypes>
         'double': Double,
         'decimal': decimal,
         'string': string,
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',_types),
-        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',_types),
-        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',_types),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context),
         'guid': guid,
         'char': char,
-        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String, String>',_types),
-        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',_types),
-        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',_types),
-        'stringList': JsonConverters.toJson(stringList,'List<String>',_types),
-        'stringArray': JsonConverters.toJson(stringArray,'List<String>',_types),
+        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String,String>',context),
+        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',context),
+        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
         'stringMap': stringMap,
-        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',_types),
-        'subType': JsonConverters.toJson(subType,'SubType',_types),
-        'point': JsonConverters.toJson(point,'String',_types),
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context),
+        'subType': JsonConverters.toJson(subType,'SubType',context),
+        'point': JsonConverters.toJson(point,'String',context),
         'originalName': originalName
     };
 
     createResponse() { return new AllTypes(); }
     String getTypeName() { return "AllTypes"; }
+    TypeContext context = _ctx;
 }
 
-class HelloAllTypesResponse
+class HelloAllTypesResponse implements IConvertible
 {
     String result;
     AllTypes allTypes;
     AllCollectionTypes allCollectionTypes;
 
     HelloAllTypesResponse({this.result,this.allTypes,this.allCollectionTypes});
+    HelloAllTypesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloAllTypesResponse fromMap(Map<String, dynamic> map) => new HelloAllTypesResponse.fromJson(map);
-    HelloAllTypesResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
-        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',_types);
-        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',_types);
+        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context);
+        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',_types),
-        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',_types)
+        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context),
+        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
     };
 
+    TypeContext context = _ctx;
 }
 
 // @DataContract
-class HelloWithDataContractResponse
+class HelloWithDataContractResponse implements IConvertible
 {
     // @DataMember(Name="result", Order=1, IsRequired=true, EmitDefaultValue=false)
     String result;
 
     HelloWithDataContractResponse({this.result});
+    HelloWithDataContractResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithDataContractResponse fromMap(Map<String, dynamic> map) => new HelloWithDataContractResponse.fromJson(map);
-    HelloWithDataContractResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
 /**
 * Description on HelloWithDescriptionResponse type
 */
-class HelloWithDescriptionResponse
+class HelloWithDescriptionResponse implements IConvertible
 {
     String result;
 
     HelloWithDescriptionResponse({this.result});
+    HelloWithDescriptionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithDescriptionResponse fromMap(Map<String, dynamic> map) => new HelloWithDescriptionResponse.fromJson(map);
-    HelloWithDescriptionResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithInheritanceResponse extends HelloResponseBase
+class HelloWithInheritanceResponse extends HelloResponseBase implements IConvertible
 {
     String result;
 
     HelloWithInheritanceResponse({this.result});
+    HelloWithInheritanceResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithInheritanceResponse fromMap(Map<String, dynamic> map) => new HelloWithInheritanceResponse.fromJson(map);
-    HelloWithInheritanceResponse.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'result': result
     });
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithAlternateReturnResponse extends HelloWithReturnResponse
+class HelloWithAlternateReturnResponse extends HelloWithReturnResponse implements IConvertible
 {
     String altResult;
 
     HelloWithAlternateReturnResponse({this.altResult});
+    HelloWithAlternateReturnResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithAlternateReturnResponse fromMap(Map<String, dynamic> map) => new HelloWithAlternateReturnResponse.fromJson(map);
-    HelloWithAlternateReturnResponse.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         altResult = json['altResult'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'altResult': altResult
     });
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithRouteResponse
+class HelloWithRouteResponse implements IConvertible
 {
     String result;
 
     HelloWithRouteResponse({this.result});
+    HelloWithRouteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithRouteResponse fromMap(Map<String, dynamic> map) => new HelloWithRouteResponse.fromJson(map);
-    HelloWithRouteResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithTypeResponse
+class HelloWithTypeResponse implements IConvertible
 {
     HelloType result;
 
     HelloWithTypeResponse({this.result});
+    HelloWithTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithTypeResponse fromMap(Map<String, dynamic> map) => new HelloWithTypeResponse.fromJson(map);
-    HelloWithTypeResponse.fromJson(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'HelloType',_types);
+    fromMap(Map<String, dynamic> json) {
+        result = JsonConverters.fromJson(json['result'],'HelloType',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'HelloType',_types)
+        'result': JsonConverters.toJson(result,'HelloType',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloStruct implements IReturn<HelloStruct>
+class HelloStruct implements IReturn<HelloStruct>, IConvertible
 {
     String point;
     String nullablePoint;
 
     HelloStruct({this.point,this.nullablePoint});
+    HelloStruct.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloStruct fromMap(Map<String, dynamic> map) => new HelloStruct.fromJson(map);
-    HelloStruct.fromJson(Map<String, dynamic> json) {
-        point = JsonConverters.fromJson(json['point'],'String',_types);
-        nullablePoint = JsonConverters.fromJson(json['nullablePoint'],'String',_types);
+    fromMap(Map<String, dynamic> json) {
+        point = JsonConverters.fromJson(json['point'],'String',context);
+        nullablePoint = JsonConverters.fromJson(json['nullablePoint'],'String',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'point': JsonConverters.toJson(point,'String',_types),
-        'nullablePoint': JsonConverters.toJson(nullablePoint,'String',_types)
+        'point': JsonConverters.toJson(point,'String',context),
+        'nullablePoint': JsonConverters.toJson(nullablePoint,'String',context)
     };
 
     createResponse() { return new HelloStruct(); }
     String getTypeName() { return "HelloStruct"; }
+    TypeContext context = _ctx;
 }
 
-class HelloSessionResponse
+class HelloSessionResponse implements IConvertible
 {
     AuthUserSession result;
 
     HelloSessionResponse({this.result});
+    HelloSessionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloSessionResponse fromMap(Map<String, dynamic> map) => new HelloSessionResponse.fromJson(map);
-    HelloSessionResponse.fromJson(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'AuthUserSession',_types);
+    fromMap(Map<String, dynamic> json) {
+        result = JsonConverters.fromJson(json['result'],'AuthUserSession',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'AuthUserSession',_types)
+        'result': JsonConverters.toJson(result,'AuthUserSession',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloImplementsInterface implements IReturn<HelloImplementsInterface>, ImplementsPoco
+class HelloImplementsInterface implements IReturn<HelloImplementsInterface>, ImplementsPoco, IConvertible
 {
     String name;
 
     HelloImplementsInterface({this.name});
+    HelloImplementsInterface.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloImplementsInterface fromMap(Map<String, dynamic> map) => new HelloImplementsInterface.fromJson(map);
-    HelloImplementsInterface.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2529,66 +2527,73 @@ class HelloImplementsInterface implements IReturn<HelloImplementsInterface>, Imp
 
     createResponse() { return new HelloImplementsInterface(); }
     String getTypeName() { return "HelloImplementsInterface"; }
+    TypeContext context = _ctx;
 }
 
-class Request1Response
+class Request1Response implements IConvertible
 {
     TypeA test;
 
     Request1Response({this.test});
+    Request1Response.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Request1Response fromMap(Map<String, dynamic> map) => new Request1Response.fromJson(map);
-    Request1Response.fromJson(Map<String, dynamic> json) {
-        test = JsonConverters.fromJson(json['test'],'TypeA',_types);
+    fromMap(Map<String, dynamic> json) {
+        test = JsonConverters.fromJson(json['test'],'TypeA',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'test': JsonConverters.toJson(test,'TypeA',_types)
+        'test': JsonConverters.toJson(test,'TypeA',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class Request2Response
+class Request2Response implements IConvertible
 {
     TypeA test;
 
     Request2Response({this.test});
+    Request2Response.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Request2Response fromMap(Map<String, dynamic> map) => new Request2Response.fromJson(map);
-    Request2Response.fromJson(Map<String, dynamic> json) {
-        test = JsonConverters.fromJson(json['test'],'TypeA',_types);
+    fromMap(Map<String, dynamic> json) {
+        test = JsonConverters.fromJson(json['test'],'TypeA',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'test': JsonConverters.toJson(test,'TypeA',_types)
+        'test': JsonConverters.toJson(test,'TypeA',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloInnerTypesResponse
+class HelloInnerTypesResponse implements IConvertible
 {
     InnerType innerType;
     InnerEnum innerEnum;
     List<InnerTypeItem> innerList;
 
     HelloInnerTypesResponse({this.innerType,this.innerEnum,this.innerList});
+    HelloInnerTypesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloInnerTypesResponse fromMap(Map<String, dynamic> map) => new HelloInnerTypesResponse.fromJson(map);
-    HelloInnerTypesResponse.fromJson(Map<String, dynamic> json) {
-        innerType = JsonConverters.fromJson(json['innerType'],'InnerType',_types);
-        innerEnum = JsonConverters.fromJson(json['innerEnum'],'InnerEnum',_types);
-        innerList = JsonConverters.fromJson(json['innerList'],'List<InnerTypeItem>',_types);
+    fromMap(Map<String, dynamic> json) {
+        innerType = JsonConverters.fromJson(json['innerType'],'InnerType',context);
+        innerEnum = JsonConverters.fromJson(json['innerEnum'],'InnerEnum',context);
+        innerList = JsonConverters.fromJson(json['innerList'],'List<InnerTypeItem>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'innerType': JsonConverters.toJson(innerType,'InnerType',_types),
-        'innerEnum': JsonConverters.toJson(innerEnum,'InnerEnum',_types),
-        'innerList': JsonConverters.toJson(innerList,'List<InnerTypeItem>',_types)
+        'innerType': JsonConverters.toJson(innerType,'InnerType',context),
+        'innerEnum': JsonConverters.toJson(innerEnum,'InnerEnum',context),
+        'innerList': JsonConverters.toJson(innerList,'List<InnerTypeItem>',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class CustomUserSession extends AuthUserSession
+class CustomUserSession extends AuthUserSession implements IConvertible
 {
     // @DataMember
     String customName;
@@ -2597,11 +2602,13 @@ class CustomUserSession extends AuthUserSession
     String customInfo;
 
     CustomUserSession({this.customName,this.customInfo});
+    CustomUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CustomUserSession fromMap(Map<String, dynamic> map) => new CustomUserSession.fromJson(map);
-    CustomUserSession.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         customName = json['customName'];
         customInfo = json['customInfo'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -2609,10 +2616,11 @@ class CustomUserSession extends AuthUserSession
         'customInfo': customInfo
     });
 
+    TypeContext context = _ctx;
 }
 
 // @DataContract
-class QueryResponseTemplate<T>
+class QueryResponseTemplate<T> implements IConvertible
 {
     // @DataMember(Order=1)
     int offset;
@@ -2630,86 +2638,95 @@ class QueryResponseTemplate<T>
     ResponseStatus responseStatus;
 
     QueryResponseTemplate({this.offset,this.total,this.results,this.meta,this.responseStatus});
+    QueryResponseTemplate.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryResponseTemplate fromMap(Map<String, dynamic> map) => new QueryResponseTemplate.fromJson(map);
-    QueryResponseTemplate.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         offset = json['offset'];
         total = json['total'];
-        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',_types);
-        meta = json['meta'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'offset': offset,
         'total': total,
-        'results': JsonConverters.toJson(results,'List<T>',_types),
+        'results': JsonConverters.toJson(results,'List<T>',context),
         'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloVerbResponse
+class HelloVerbResponse implements IConvertible
 {
     String result;
 
     HelloVerbResponse({this.result});
+    HelloVerbResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloVerbResponse fromMap(Map<String, dynamic> map) => new HelloVerbResponse.fromJson(map);
-    HelloVerbResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
-class EnumResponse
+class EnumResponse implements IConvertible
 {
     ScopeType Operator;
 
     EnumResponse({this.Operator});
+    EnumResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    EnumResponse fromMap(Map<String, dynamic> map) => new EnumResponse.fromJson(map);
-    EnumResponse.fromJson(Map<String, dynamic> json) {
-        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',_types);
+    fromMap(Map<String, dynamic> json) {
+        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'operator': JsonConverters.toJson(Operator,'ScopeType',_types)
+        'operator': JsonConverters.toJson(Operator,'ScopeType',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class ExcludeTestNested
+class ExcludeTestNested implements IConvertible
 {
     int id;
 
     ExcludeTestNested({this.id});
+    ExcludeTestNested.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ExcludeTestNested fromMap(Map<String, dynamic> map) => new ExcludeTestNested.fromJson(map);
-    ExcludeTestNested.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
-class RestrictLocalhost implements IReturn<RestrictLocalhost>
+class RestrictLocalhost implements IReturn<RestrictLocalhost>, IConvertible
 {
     int id;
 
     RestrictLocalhost({this.id});
+    RestrictLocalhost.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    RestrictLocalhost fromMap(Map<String, dynamic> map) => new RestrictLocalhost.fromJson(map);
-    RestrictLocalhost.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2718,17 +2735,19 @@ class RestrictLocalhost implements IReturn<RestrictLocalhost>
 
     createResponse() { return new RestrictLocalhost(); }
     String getTypeName() { return "RestrictLocalhost"; }
+    TypeContext context = _ctx;
 }
 
-class RestrictInternal implements IReturn<RestrictInternal>
+class RestrictInternal implements IReturn<RestrictInternal>, IConvertible
 {
     int id;
 
     RestrictInternal({this.id});
+    RestrictInternal.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    RestrictInternal fromMap(Map<String, dynamic> map) => new RestrictInternal.fromJson(map);
-    RestrictInternal.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2737,37 +2756,40 @@ class RestrictInternal implements IReturn<RestrictInternal>
 
     createResponse() { return new RestrictInternal(); }
     String getTypeName() { return "RestrictInternal"; }
+    TypeContext context = _ctx;
 }
 
-class HelloTuple implements IReturn<HelloTuple>
+class HelloTuple implements IReturn<HelloTuple>, IConvertible
 {
-    Tuple2<String, int> tuple2;
-    Tuple3<String, int, bool> tuple3;
+    Tuple2<String,int> tuple2;
+    Tuple3<String,int,bool> tuple3;
     List<Tuple2<String,int>> tuples2;
     List<Tuple3<String,int,bool>> tuples3;
 
     HelloTuple({this.tuple2,this.tuple3,this.tuples2,this.tuples3});
+    HelloTuple.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloTuple fromMap(Map<String, dynamic> map) => new HelloTuple.fromJson(map);
-    HelloTuple.fromJson(Map<String, dynamic> json) {
-        tuple2 = JsonConverters.fromJson(json['tuple2'],'Tuple2<String, int>',_types);
-        tuple3 = JsonConverters.fromJson(json['tuple3'],'Tuple3<String, int, bool>',_types);
-        tuples2 = JsonConverters.fromJson(json['tuples2'],'List<Tuple2<String,int>>',_types);
-        tuples3 = JsonConverters.fromJson(json['tuples3'],'List<Tuple3<String,int,bool>>',_types);
+    fromMap(Map<String, dynamic> json) {
+        tuple2 = JsonConverters.fromJson(json['tuple2'],'Tuple2<String,int>',context);
+        tuple3 = JsonConverters.fromJson(json['tuple3'],'Tuple3<String,int,bool>',context);
+        tuples2 = JsonConverters.fromJson(json['tuples2'],'List<Tuple2<String,int>>',context);
+        tuples3 = JsonConverters.fromJson(json['tuples3'],'List<Tuple3<String,int,bool>>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'tuple2': JsonConverters.toJson(tuple2,'Tuple2<String, int>',_types),
-        'tuple3': JsonConverters.toJson(tuple3,'Tuple3<String, int, bool>',_types),
-        'tuples2': JsonConverters.toJson(tuples2,'List<Tuple2<String,int>>',_types),
-        'tuples3': JsonConverters.toJson(tuples3,'List<Tuple3<String,int,bool>>',_types)
+        'tuple2': JsonConverters.toJson(tuple2,'Tuple2<String,int>',context),
+        'tuple3': JsonConverters.toJson(tuple3,'Tuple3<String,int,bool>',context),
+        'tuples2': JsonConverters.toJson(tuples2,'List<Tuple2<String,int>>',context),
+        'tuples3': JsonConverters.toJson(tuples3,'List<Tuple3<String,int,bool>>',context)
     };
 
     createResponse() { return new HelloTuple(); }
     String getTypeName() { return "HelloTuple"; }
+    TypeContext context = _ctx;
 }
 
-class HelloAuthenticatedResponse
+class HelloAuthenticatedResponse implements IConvertible
 {
     int version;
     String sessionId;
@@ -2777,15 +2799,16 @@ class HelloAuthenticatedResponse
     ResponseStatus responseStatus;
 
     HelloAuthenticatedResponse({this.version,this.sessionId,this.userName,this.email,this.isAuthenticated,this.responseStatus});
+    HelloAuthenticatedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloAuthenticatedResponse fromMap(Map<String, dynamic> map) => new HelloAuthenticatedResponse.fromJson(map);
-    HelloAuthenticatedResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         version = json['version'];
         sessionId = json['sessionId'];
         userName = json['userName'];
         email = json['email'];
         isAuthenticated = json['isAuthenticated'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2794,54 +2817,63 @@ class HelloAuthenticatedResponse
         'userName': userName,
         'email': email,
         'isAuthenticated': isAuthenticated,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class Echo
+class Echo implements IConvertible
 {
     String sentence;
 
     Echo({this.sentence});
+    Echo.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Echo fromMap(Map<String, dynamic> map) => new Echo.fromJson(map);
-    Echo.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         sentence = json['sentence'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'sentence': sentence
     };
 
+    TypeContext context = _ctx;
 }
 
-class ThrowHttpErrorResponse
+class ThrowHttpErrorResponse implements IConvertible
 {
     ThrowHttpErrorResponse();
-    ThrowHttpErrorResponse fromMap(Map<String, dynamic> map) => new ThrowHttpErrorResponse.fromJson(map);
     ThrowHttpErrorResponse.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
-class ThrowTypeResponse
+class ThrowTypeResponse implements IConvertible
 {
     ResponseStatus responseStatus;
 
     ThrowTypeResponse({this.responseStatus});
+    ThrowTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ThrowTypeResponse fromMap(Map<String, dynamic> map) => new ThrowTypeResponse.fromJson(map);
-    ThrowTypeResponse.fromJson(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+    fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class ThrowValidationResponse
+class ThrowValidationResponse implements IConvertible
 {
     int age;
     String required;
@@ -2849,68 +2881,75 @@ class ThrowValidationResponse
     ResponseStatus responseStatus;
 
     ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
+    ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ThrowValidationResponse fromMap(Map<String, dynamic> map) => new ThrowValidationResponse.fromJson(map);
-    ThrowValidationResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         age = json['age'];
         required = json['required'];
         email = json['email'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'age': age,
         'required': required,
         'email': email,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class acsprofileResponse
+class acsprofileResponse implements IConvertible
 {
     String profileId;
 
     acsprofileResponse({this.profileId});
+    acsprofileResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    acsprofileResponse fromMap(Map<String, dynamic> map) => new acsprofileResponse.fromJson(map);
-    acsprofileResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         profileId = json['profileId'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'profileId': profileId
     };
 
+    TypeContext context = _ctx;
 }
 
-class ReturnedDto
+class ReturnedDto implements IConvertible
 {
     int id;
 
     ReturnedDto({this.id});
+    ReturnedDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ReturnedDto fromMap(Map<String, dynamic> map) => new ReturnedDto.fromJson(map);
-    ReturnedDto.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/matchroute/html")
-class MatchesHtml implements IReturn<MatchesHtml>
+class MatchesHtml implements IReturn<MatchesHtml>, IConvertible
 {
     String name;
 
     MatchesHtml({this.name});
+    MatchesHtml.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchesHtml fromMap(Map<String, dynamic> map) => new MatchesHtml.fromJson(map);
-    MatchesHtml.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2919,18 +2958,20 @@ class MatchesHtml implements IReturn<MatchesHtml>
 
     createResponse() { return new MatchesHtml(); }
     String getTypeName() { return "MatchesHtml"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/matchroute/json")
-class MatchesJson implements IReturn<MatchesJson>
+class MatchesJson implements IReturn<MatchesJson>, IConvertible
 {
     String name;
 
     MatchesJson({this.name});
+    MatchesJson.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchesJson fromMap(Map<String, dynamic> map) => new MatchesJson.fromJson(map);
-    MatchesJson.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2939,35 +2980,39 @@ class MatchesJson implements IReturn<MatchesJson>
 
     createResponse() { return new MatchesJson(); }
     String getTypeName() { return "MatchesJson"; }
+    TypeContext context = _ctx;
 }
 
-class TimestampData
+class TimestampData implements IConvertible
 {
     int timestamp;
 
     TimestampData({this.timestamp});
+    TimestampData.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TimestampData fromMap(Map<String, dynamic> map) => new TimestampData.fromJson(map);
-    TimestampData.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         timestamp = json['timestamp'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'timestamp': timestamp
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/test/html")
-class TestHtml implements IReturn<TestHtml>
+class TestHtml implements IReturn<TestHtml>, IConvertible
 {
     String name;
 
     TestHtml({this.name});
+    TestHtml.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TestHtml fromMap(Map<String, dynamic> map) => new TestHtml.fromJson(map);
-    TestHtml.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -2976,27 +3021,30 @@ class TestHtml implements IReturn<TestHtml>
 
     createResponse() { return new TestHtml(); }
     String getTypeName() { return "TestHtml"; }
+    TypeContext context = _ctx;
 }
 
-class ViewResponse
+class ViewResponse implements IConvertible
 {
     String result;
 
     ViewResponse({this.result});
+    ViewResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ViewResponse fromMap(Map<String, dynamic> map) => new ViewResponse.fromJson(map);
-    ViewResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/swagger/model")
-class SwaggerModel implements IReturn<SwaggerModel>
+class SwaggerModel implements IReturn<SwaggerModel>, IConvertible
 {
     int Int;
     String string;
@@ -3005,38 +3053,41 @@ class SwaggerModel implements IReturn<SwaggerModel>
     Duration timeSpan;
 
     SwaggerModel({this.Int,this.string,this.dateTime,this.dateTimeOffset,this.timeSpan});
+    SwaggerModel.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerModel fromMap(Map<String, dynamic> map) => new SwaggerModel.fromJson(map);
-    SwaggerModel.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         Int = json['int'];
         string = json['string'];
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',_types);
-        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',_types);
-        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',_types);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'int': Int,
         'string': string,
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',_types),
-        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',_types),
-        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',_types)
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context)
     };
 
     createResponse() { return new SwaggerModel(); }
     String getTypeName() { return "SwaggerModel"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/plain-dto")
-class PlainDto implements IReturn<PlainDto>
+class PlainDto implements IReturn<PlainDto>, IConvertible
 {
     String name;
 
     PlainDto({this.name});
+    PlainDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    PlainDto fromMap(Map<String, dynamic> map) => new PlainDto.fromJson(map);
-    PlainDto.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3045,18 +3096,20 @@ class PlainDto implements IReturn<PlainDto>
 
     createResponse() { return new PlainDto(); }
     String getTypeName() { return "PlainDto"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/httpresult-dto")
-class HttpResultDto implements IReturn<HttpResultDto>
+class HttpResultDto implements IReturn<HttpResultDto>, IConvertible
 {
     String name;
 
     HttpResultDto({this.name});
+    HttpResultDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HttpResultDto fromMap(Map<String, dynamic> map) => new HttpResultDto.fromJson(map);
-    HttpResultDto.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3065,18 +3118,20 @@ class HttpResultDto implements IReturn<HttpResultDto>
 
     createResponse() { return new HttpResultDto(); }
     String getTypeName() { return "HttpResultDto"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/restrict/mq")
-class TestMqRestriction implements IReturn<TestMqRestriction>
+class TestMqRestriction implements IReturn<TestMqRestriction>, IConvertible
 {
     String name;
 
     TestMqRestriction({this.name});
+    TestMqRestriction.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TestMqRestriction fromMap(Map<String, dynamic> map) => new TestMqRestriction.fromJson(map);
-    TestMqRestriction.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3085,10 +3140,11 @@ class TestMqRestriction implements IReturn<TestMqRestriction>
 
     createResponse() { return new TestMqRestriction(); }
     String getTypeName() { return "TestMqRestriction"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/set-cache")
-class SetCache implements IReturn<SetCache>
+class SetCache implements IReturn<SetCache>, IConvertible
 {
     String eTag;
     Duration age;
@@ -3098,31 +3154,33 @@ class SetCache implements IReturn<SetCache>
     CacheControl cacheControl;
 
     SetCache({this.eTag,this.age,this.maxAge,this.expires,this.lastModified,this.cacheControl});
+    SetCache.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SetCache fromMap(Map<String, dynamic> map) => new SetCache.fromJson(map);
-    SetCache.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         eTag = json['eTag'];
-        age = JsonConverters.fromJson(json['age'],'Duration',_types);
-        maxAge = JsonConverters.fromJson(json['maxAge'],'Duration',_types);
-        expires = JsonConverters.fromJson(json['expires'],'DateTime',_types);
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',_types);
-        cacheControl = JsonConverters.fromJson(json['cacheControl'],'CacheControl',_types);
+        age = JsonConverters.fromJson(json['age'],'Duration',context);
+        maxAge = JsonConverters.fromJson(json['maxAge'],'Duration',context);
+        expires = JsonConverters.fromJson(json['expires'],'DateTime',context);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context);
+        cacheControl = JsonConverters.fromJson(json['cacheControl'],'CacheControl',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'eTag': eTag,
-        'age': JsonConverters.toJson(age,'Duration',_types),
-        'maxAge': JsonConverters.toJson(maxAge,'Duration',_types),
-        'expires': JsonConverters.toJson(expires,'DateTime',_types),
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',_types),
-        'cacheControl': JsonConverters.toJson(cacheControl,'CacheControl',_types)
+        'age': JsonConverters.toJson(age,'Duration',context),
+        'maxAge': JsonConverters.toJson(maxAge,'Duration',context),
+        'expires': JsonConverters.toJson(expires,'DateTime',context),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context),
+        'cacheControl': JsonConverters.toJson(cacheControl,'CacheControl',context)
     };
 
     createResponse() { return new SetCache(); }
     String getTypeName() { return "SetCache"; }
+    TypeContext context = _ctx;
 }
 
-class SwaggerComplexResponse
+class SwaggerComplexResponse implements IConvertible
 {
     // @DataMember
     // @ApiMember()
@@ -3149,26 +3207,28 @@ class SwaggerComplexResponse
     Map<String,String> dictionaryString;
 
     SwaggerComplexResponse({this.isRequired,this.arrayString,this.arrayInt,this.listString,this.listInt,this.dictionaryString});
+    SwaggerComplexResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerComplexResponse fromMap(Map<String, dynamic> map) => new SwaggerComplexResponse.fromJson(map);
-    SwaggerComplexResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         isRequired = json['isRequired'];
-        arrayString = JsonConverters.fromJson(json['arrayString'],'List<String>',_types);
-        arrayInt = JsonConverters.fromJson(json['arrayInt'],'List<int>',_types);
-        listString = JsonConverters.fromJson(json['listString'],'List<String>',_types);
-        listInt = JsonConverters.fromJson(json['listInt'],'List<int>',_types);
-        dictionaryString = json['dictionaryString'];
+        arrayString = JsonConverters.fromJson(json['arrayString'],'List<String>',context);
+        arrayInt = JsonConverters.fromJson(json['arrayInt'],'List<int>',context);
+        listString = JsonConverters.fromJson(json['listString'],'List<String>',context);
+        listInt = JsonConverters.fromJson(json['listInt'],'List<int>',context);
+        dictionaryString = JsonConverters.toStringMap(json['dictionaryString']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'isRequired': isRequired,
-        'arrayString': JsonConverters.toJson(arrayString,'List<String>',_types),
-        'arrayInt': JsonConverters.toJson(arrayInt,'List<int>',_types),
-        'listString': JsonConverters.toJson(listString,'List<String>',_types),
-        'listInt': JsonConverters.toJson(listInt,'List<int>',_types),
+        'arrayString': JsonConverters.toJson(arrayString,'List<String>',context),
+        'arrayInt': JsonConverters.toJson(arrayInt,'List<int>',context),
+        'listString': JsonConverters.toJson(listString,'List<String>',context),
+        'listInt': JsonConverters.toJson(listInt,'List<int>',context),
         'dictionaryString': dictionaryString
     };
 
+    TypeContext context = _ctx;
 }
 
 /**
@@ -3176,15 +3236,16 @@ class SwaggerComplexResponse
 */
 // @Route("/swaggerexamples", "GET")
 // @Api(Description="Api GET All")
-class GetSwaggerExamples implements IReturn<GetSwaggerExamples>
+class GetSwaggerExamples implements IReturn<GetSwaggerExamples>, IConvertible
 {
     String Get;
 
     GetSwaggerExamples({this.Get});
+    GetSwaggerExamples.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    GetSwaggerExamples fromMap(Map<String, dynamic> map) => new GetSwaggerExamples.fromJson(map);
-    GetSwaggerExamples.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         Get = json['get'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3193,6 +3254,7 @@ class GetSwaggerExamples implements IReturn<GetSwaggerExamples>
 
     createResponse() { return new GetSwaggerExamples(); }
     String getTypeName() { return "GetSwaggerExamples"; }
+    TypeContext context = _ctx;
 }
 
 /**
@@ -3200,17 +3262,18 @@ class GetSwaggerExamples implements IReturn<GetSwaggerExamples>
 */
 // @Route("/swaggerexamples/{Id}", "GET")
 // @Api(Description="Api GET Id")
-class GetSwaggerExample implements IReturn<GetSwaggerExample>
+class GetSwaggerExample implements IReturn<GetSwaggerExample>, IConvertible
 {
     int id;
     String Get;
 
     GetSwaggerExample({this.id,this.Get});
+    GetSwaggerExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    GetSwaggerExample fromMap(Map<String, dynamic> map) => new GetSwaggerExample.fromJson(map);
-    GetSwaggerExample.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         Get = json['get'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3220,6 +3283,7 @@ class GetSwaggerExample implements IReturn<GetSwaggerExample>
 
     createResponse() { return new GetSwaggerExample(); }
     String getTypeName() { return "GetSwaggerExample"; }
+    TypeContext context = _ctx;
 }
 
 /**
@@ -3227,15 +3291,16 @@ class GetSwaggerExample implements IReturn<GetSwaggerExample>
 */
 // @Route("/swaggerexamples", "POST")
 // @Api(Description="Api POST")
-class PostSwaggerExamples implements IReturn<PostSwaggerExamples>
+class PostSwaggerExamples implements IReturn<PostSwaggerExamples>, IConvertible
 {
     String post;
 
     PostSwaggerExamples({this.post});
+    PostSwaggerExamples.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    PostSwaggerExamples fromMap(Map<String, dynamic> map) => new PostSwaggerExamples.fromJson(map);
-    PostSwaggerExamples.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         post = json['post'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3244,6 +3309,7 @@ class PostSwaggerExamples implements IReturn<PostSwaggerExamples>
 
     createResponse() { return new PostSwaggerExamples(); }
     String getTypeName() { return "PostSwaggerExamples"; }
+    TypeContext context = _ctx;
 }
 
 /**
@@ -3251,17 +3317,18 @@ class PostSwaggerExamples implements IReturn<PostSwaggerExamples>
 */
 // @Route("/swaggerexamples/{Id}", "PUT")
 // @Api(Description="Api PUT Id")
-class PutSwaggerExample implements IReturn<PutSwaggerExample>
+class PutSwaggerExample implements IReturn<PutSwaggerExample>, IConvertible
 {
     int id;
     String Get;
 
     PutSwaggerExample({this.id,this.Get});
+    PutSwaggerExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    PutSwaggerExample fromMap(Map<String, dynamic> map) => new PutSwaggerExample.fromJson(map);
-    PutSwaggerExample.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         Get = json['get'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3271,18 +3338,20 @@ class PutSwaggerExample implements IReturn<PutSwaggerExample>
 
     createResponse() { return new PutSwaggerExample(); }
     String getTypeName() { return "PutSwaggerExample"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/lists", "GET")
-class GetLists implements IReturn<GetLists>
+class GetLists implements IReturn<GetLists>, IConvertible
 {
     String id;
 
     GetLists({this.id});
+    GetLists.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    GetLists fromMap(Map<String, dynamic> map) => new GetLists.fromJson(map);
-    GetLists.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3291,340 +3360,122 @@ class GetLists implements IReturn<GetLists>
 
     createResponse() { return new GetLists(); }
     String getTypeName() { return "GetLists"; }
-}
-
-// @DataContract
-class AuthenticateResponse
-{
-    // @DataMember(Order=1)
-    String userId;
-
-    // @DataMember(Order=2)
-    String sessionId;
-
-    // @DataMember(Order=3)
-    String userName;
-
-    // @DataMember(Order=4)
-    String displayName;
-
-    // @DataMember(Order=5)
-    String referrerUrl;
-
-    // @DataMember(Order=6)
-    String bearerToken;
-
-    // @DataMember(Order=7)
-    String refreshToken;
-
-    // @DataMember(Order=8)
-    ResponseStatus responseStatus;
-
-    // @DataMember(Order=9)
-    Map<String,String> meta;
-
-    AuthenticateResponse({this.userId,this.sessionId,this.userName,this.displayName,this.referrerUrl,this.bearerToken,this.refreshToken,this.responseStatus,this.meta});
-
-    AuthenticateResponse fromMap(Map<String, dynamic> map) => new AuthenticateResponse.fromJson(map);
-    AuthenticateResponse.fromJson(Map<String, dynamic> json) {
-        userId = json['userId'];
-        sessionId = json['sessionId'];
-        userName = json['userName'];
-        displayName = json['displayName'];
-        referrerUrl = json['referrerUrl'];
-        bearerToken = json['bearerToken'];
-        refreshToken = json['refreshToken'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-        meta = json['meta'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'userId': userId,
-        'sessionId': sessionId,
-        'userName': userName,
-        'displayName': displayName,
-        'referrerUrl': referrerUrl,
-        'bearerToken': bearerToken,
-        'refreshToken': refreshToken,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types),
-        'meta': meta
-    };
-
-}
-
-// @DataContract
-class AssignRolesResponse
-{
-    // @DataMember(Order=1)
-    List<String> allRoles;
-
-    // @DataMember(Order=2)
-    List<String> allPermissions;
-
-    // @DataMember(Order=3)
-    ResponseStatus responseStatus;
-
-    AssignRolesResponse({this.allRoles,this.allPermissions,this.responseStatus});
-
-    AssignRolesResponse fromMap(Map<String, dynamic> map) => new AssignRolesResponse.fromJson(map);
-    AssignRolesResponse.fromJson(Map<String, dynamic> json) {
-        allRoles = JsonConverters.fromJson(json['allRoles'],'List<String>',_types);
-        allPermissions = JsonConverters.fromJson(json['allPermissions'],'List<String>',_types);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'allRoles': JsonConverters.toJson(allRoles,'List<String>',_types),
-        'allPermissions': JsonConverters.toJson(allPermissions,'List<String>',_types),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
-    };
-
-}
-
-// @DataContract
-class UnAssignRolesResponse
-{
-    // @DataMember(Order=1)
-    List<String> allRoles;
-
-    // @DataMember(Order=2)
-    List<String> allPermissions;
-
-    // @DataMember(Order=3)
-    ResponseStatus responseStatus;
-
-    UnAssignRolesResponse({this.allRoles,this.allPermissions,this.responseStatus});
-
-    UnAssignRolesResponse fromMap(Map<String, dynamic> map) => new UnAssignRolesResponse.fromJson(map);
-    UnAssignRolesResponse.fromJson(Map<String, dynamic> json) {
-        allRoles = JsonConverters.fromJson(json['allRoles'],'List<String>',_types);
-        allPermissions = JsonConverters.fromJson(json['allPermissions'],'List<String>',_types);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'allRoles': JsonConverters.toJson(allRoles,'List<String>',_types),
-        'allPermissions': JsonConverters.toJson(allPermissions,'List<String>',_types),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
-    };
-
-}
-
-// @DataContract
-class ConvertSessionToTokenResponse
-{
-    // @DataMember(Order=1)
-    Map<String,String> meta;
-
-    // @DataMember(Order=2)
-    String accessToken;
-
-    // @DataMember(Order=3)
-    ResponseStatus responseStatus;
-
-    ConvertSessionToTokenResponse({this.meta,this.accessToken,this.responseStatus});
-
-    ConvertSessionToTokenResponse fromMap(Map<String, dynamic> map) => new ConvertSessionToTokenResponse.fromJson(map);
-    ConvertSessionToTokenResponse.fromJson(Map<String, dynamic> json) {
-        meta = json['meta'];
-        accessToken = json['accessToken'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'meta': meta,
-        'accessToken': accessToken,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
-    };
-
-}
-
-// @DataContract
-class GetAccessTokenResponse
-{
-    // @DataMember(Order=1)
-    String accessToken;
-
-    // @DataMember(Order=2)
-    ResponseStatus responseStatus;
-
-    GetAccessTokenResponse({this.accessToken,this.responseStatus});
-
-    GetAccessTokenResponse fromMap(Map<String, dynamic> map) => new GetAccessTokenResponse.fromJson(map);
-    GetAccessTokenResponse.fromJson(Map<String, dynamic> json) {
-        accessToken = json['accessToken'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'accessToken': accessToken,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
-    };
-
-}
-
-// @DataContract
-class GetApiKeysResponse
-{
-    // @DataMember(Order=1)
-    List<UserApiKey> results;
-
-    // @DataMember(Order=2)
-    ResponseStatus responseStatus;
-
-    GetApiKeysResponse({this.results,this.responseStatus});
-
-    GetApiKeysResponse fromMap(Map<String, dynamic> map) => new GetApiKeysResponse.fromJson(map);
-    GetApiKeysResponse.fromJson(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<UserApiKey>',_types);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<UserApiKey>',_types),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types)
-    };
-
-}
-
-// @DataContract
-class RegisterResponse
-{
-    // @DataMember(Order=1)
-    String userId;
-
-    // @DataMember(Order=2)
-    String sessionId;
-
-    // @DataMember(Order=3)
-    String userName;
-
-    // @DataMember(Order=4)
-    String referrerUrl;
-
-    // @DataMember(Order=5)
-    String bearerToken;
-
-    // @DataMember(Order=6)
-    String refreshToken;
-
-    // @DataMember(Order=7)
-    ResponseStatus responseStatus;
-
-    // @DataMember(Order=8)
-    Map<String,String> meta;
-
-    RegisterResponse({this.userId,this.sessionId,this.userName,this.referrerUrl,this.bearerToken,this.refreshToken,this.responseStatus,this.meta});
-
-    RegisterResponse fromMap(Map<String, dynamic> map) => new RegisterResponse.fromJson(map);
-    RegisterResponse.fromJson(Map<String, dynamic> json) {
-        userId = json['userId'];
-        sessionId = json['sessionId'];
-        userName = json['userName'];
-        referrerUrl = json['referrerUrl'];
-        bearerToken = json['bearerToken'];
-        refreshToken = json['refreshToken'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',_types);
-        meta = json['meta'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'userId': userId,
-        'sessionId': sessionId,
-        'userName': userName,
-        'referrerUrl': referrerUrl,
-        'bearerToken': bearerToken,
-        'refreshToken': refreshToken,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',_types),
-        'meta': meta
-    };
-
+    TypeContext context = _ctx;
 }
 
 // @Route("/anontype")
-class AnonType
+class AnonType implements IConvertible
 {
     AnonType();
-    AnonType fromMap(Map<String, dynamic> map) => new AnonType.fromJson(map);
     AnonType.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
 // @Route("/query/requestlogs")
 // @Route("/query/requestlogs/{Date}")
-class QueryRequestLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IMeta
+class QueryRequestLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IConvertible
 {
     DateTime date;
     bool viewErrors;
 
     QueryRequestLogs({this.date,this.viewErrors});
+    QueryRequestLogs.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRequestLogs fromMap(Map<String, dynamic> map) => new QueryRequestLogs.fromJson(map);
-    QueryRequestLogs.fromJson(Map<String, dynamic> json): super.fromJson(json) {
-        date = JsonConverters.fromJson(json['date'],'DateTime',_types);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        date = JsonConverters.fromJson(json['date'],'DateTime',context);
         viewErrors = json['viewErrors'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'date': JsonConverters.toJson(date,'DateTime',_types),
+        'date': JsonConverters.toJson(date,'DateTime',context),
         'viewErrors': viewErrors
     });
 
     createResponse() { return new QueryResponse<RequestLogEntry>(); }
     String getTypeName() { return "QueryRequestLogs"; }
+    TypeContext context = _ctx;
 }
 
 // @AutoQueryViewer(Name="Today's Logs", Title="Logs from Today")
-class TodayLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IMeta
+class TodayLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IConvertible
 {
     TodayLogs();
-    TodayLogs fromMap(Map<String, dynamic> map) => new TodayLogs.fromJson(map);
     TodayLogs.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<RequestLogEntry>(); }
     String getTypeName() { return "TodayLogs"; }
+    TypeContext context = _ctx;
 }
 
-class TodayErrorLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IMeta
+class TodayErrorLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IConvertible
 {
     TodayErrorLogs();
-    TodayErrorLogs fromMap(Map<String, dynamic> map) => new TodayErrorLogs.fromJson(map);
     TodayErrorLogs.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<RequestLogEntry>(); }
     String getTypeName() { return "TodayErrorLogs"; }
+    TypeContext context = _ctx;
 }
 
-class YesterdayLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IMeta
+class YesterdayLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IConvertible
 {
     YesterdayLogs();
-    YesterdayLogs fromMap(Map<String, dynamic> map) => new YesterdayLogs.fromJson(map);
     YesterdayLogs.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<RequestLogEntry>(); }
     String getTypeName() { return "YesterdayLogs"; }
+    TypeContext context = _ctx;
 }
 
-class YesterdayErrorLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IMeta
+class YesterdayErrorLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IConvertible
 {
     YesterdayErrorLogs();
-    YesterdayErrorLogs fromMap(Map<String, dynamic> map) => new YesterdayErrorLogs.fromJson(map);
     YesterdayErrorLogs.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<RequestLogEntry>(); }
     String getTypeName() { return "YesterdayErrorLogs"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/query/rockstars")
-class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryRockstars({this.age});
+    QueryRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstars fromMap(Map<String, dynamic> map) => new QueryRockstars.fromJson(map);
-    QueryRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -3633,18 +3484,21 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstars"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/query/rockstars/cached")
-class QueryRockstarsCached extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryRockstarsCached extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryRockstarsCached({this.age});
+    QueryRockstarsCached.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarsCached fromMap(Map<String, dynamic> map) => new QueryRockstarsCached.fromJson(map);
-    QueryRockstarsCached.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -3653,18 +3507,20 @@ class QueryRockstarsCached extends QueryDb1<Rockstar> implements IReturn<QueryRe
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstarsCached"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/changerequest/{Id}")
-class ChangeRequest implements IReturn<ChangeRequestResponse>
+class ChangeRequest implements IReturn<ChangeRequestResponse>, IConvertible
 {
     String id;
 
     ChangeRequest({this.id});
+    ChangeRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ChangeRequest fromMap(Map<String, dynamic> map) => new ChangeRequest.fromJson(map);
-    ChangeRequest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3673,38 +3529,42 @@ class ChangeRequest implements IReturn<ChangeRequestResponse>
 
     createResponse() { return new ChangeRequestResponse(); }
     String getTypeName() { return "ChangeRequest"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/compress/{Path*}")
-class CompressFile
+class CompressFile implements IConvertible
 {
     String path;
 
     CompressFile({this.path});
+    CompressFile.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CompressFile fromMap(Map<String, dynamic> map) => new CompressFile.fromJson(map);
-    CompressFile.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         path = json['path'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'path': path
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/Routing/LeadPost.aspx")
-class LegacyLeadPost
+class LegacyLeadPost implements IConvertible
 {
     String leadType;
     int myId;
 
     LegacyLeadPost({this.leadType,this.myId});
+    LegacyLeadPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    LegacyLeadPost fromMap(Map<String, dynamic> map) => new LegacyLeadPost.fromJson(map);
-    LegacyLeadPost.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         leadType = json['leadType'];
         myId = json['myId'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3712,37 +3572,41 @@ class LegacyLeadPost
         'myId': myId
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/info/{Id}")
-class Info
+class Info implements IConvertible
 {
     String id;
 
     Info({this.id});
+    Info.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Info fromMap(Map<String, dynamic> map) => new Info.fromJson(map);
-    Info.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
-class CustomHttpError implements IReturn<CustomHttpErrorResponse>
+class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 {
     int statusCode;
     String statusDescription;
 
     CustomHttpError({this.statusCode,this.statusDescription});
+    CustomHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CustomHttpError fromMap(Map<String, dynamic> map) => new CustomHttpError.fromJson(map);
-    CustomHttpError.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         statusCode = json['statusCode'];
         statusDescription = json['statusDescription'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3752,44 +3616,52 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>
 
     createResponse() { return new CustomHttpErrorResponse(); }
     String getTypeName() { return "CustomHttpError"; }
+    TypeContext context = _ctx;
 }
 
-class CustomFieldHttpError implements IReturn<CustomFieldHttpErrorResponse>
+class CustomFieldHttpError implements IReturn<CustomFieldHttpErrorResponse>, IConvertible
 {
     CustomFieldHttpError();
-    CustomFieldHttpError fromMap(Map<String, dynamic> map) => new CustomFieldHttpError.fromJson(map);
     CustomFieldHttpError.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new CustomFieldHttpErrorResponse(); }
     String getTypeName() { return "CustomFieldHttpError"; }
+    TypeContext context = _ctx;
 }
 
-class FallbackRoute
+class FallbackRoute implements IConvertible
 {
     String pathInfo;
 
     FallbackRoute({this.pathInfo});
+    FallbackRoute.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    FallbackRoute fromMap(Map<String, dynamic> map) => new FallbackRoute.fromJson(map);
-    FallbackRoute.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         pathInfo = json['pathInfo'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'pathInfo': pathInfo
     };
 
+    TypeContext context = _ctx;
 }
 
-class NoRepeat implements IReturn<NoRepeatResponse>
+class NoRepeat implements IReturn<NoRepeatResponse>, IConvertible
 {
     String id;
 
     NoRepeat({this.id});
+    NoRepeat.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    NoRepeat fromMap(Map<String, dynamic> map) => new NoRepeat.fromJson(map);
-    NoRepeat.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3798,19 +3670,21 @@ class NoRepeat implements IReturn<NoRepeatResponse>
 
     createResponse() { return new NoRepeatResponse(); }
     String getTypeName() { return "NoRepeat"; }
+    TypeContext context = _ctx;
 }
 
-class BatchThrows implements IReturn<BatchThrowsResponse>
+class BatchThrows implements IReturn<BatchThrowsResponse>, IConvertible
 {
     int id;
     String name;
 
     BatchThrows({this.id,this.name});
+    BatchThrows.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    BatchThrows fromMap(Map<String, dynamic> map) => new BatchThrows.fromJson(map);
-    BatchThrows.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3820,19 +3694,21 @@ class BatchThrows implements IReturn<BatchThrowsResponse>
 
     createResponse() { return new BatchThrowsResponse(); }
     String getTypeName() { return "BatchThrows"; }
+    TypeContext context = _ctx;
 }
 
-class BatchThrowsAsync implements IReturn<BatchThrowsResponse>
+class BatchThrowsAsync implements IReturn<BatchThrowsResponse>, IConvertible
 {
     int id;
     String name;
 
     BatchThrowsAsync({this.id,this.name});
+    BatchThrowsAsync.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    BatchThrowsAsync fromMap(Map<String, dynamic> map) => new BatchThrowsAsync.fromJson(map);
-    BatchThrowsAsync.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3842,18 +3718,20 @@ class BatchThrowsAsync implements IReturn<BatchThrowsResponse>
 
     createResponse() { return new BatchThrowsResponse(); }
     String getTypeName() { return "BatchThrowsAsync"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/code/object", "GET")
-class ObjectId implements IReturn<ObjectDesignResponse>
+class ObjectId implements IReturn<ObjectDesignResponse>, IConvertible
 {
     String objectName;
 
     ObjectId({this.objectName});
+    ObjectId.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ObjectId fromMap(Map<String, dynamic> map) => new ObjectId.fromJson(map);
-    ObjectId.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         objectName = json['objectName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3862,60 +3740,67 @@ class ObjectId implements IReturn<ObjectDesignResponse>
 
     createResponse() { return new ObjectDesignResponse(); }
     String getTypeName() { return "ObjectId"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/jwt")
-class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IMeta
+class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IConvertible
 {
     DateTime jwtExpiry;
 
     CreateJwt({this.jwtExpiry});
+    CreateJwt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CreateJwt fromMap(Map<String, dynamic> map) => new CreateJwt.fromJson(map);
-    CreateJwt.fromJson(Map<String, dynamic> json): super.fromJson(json) {
-        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',_types);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',_types)
+        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
     });
 
     createResponse() { return new CreateJwtResponse(); }
     String getTypeName() { return "CreateJwt"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/jwt-refresh")
-class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>
+class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertible
 {
     String userAuthId;
     DateTime jwtExpiry;
 
     CreateRefreshJwt({this.userAuthId,this.jwtExpiry});
+    CreateRefreshJwt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CreateRefreshJwt fromMap(Map<String, dynamic> map) => new CreateRefreshJwt.fromJson(map);
-    CreateRefreshJwt.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         userAuthId = json['userAuthId'];
-        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',_types);
+        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'userAuthId': userAuthId,
-        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',_types)
+        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
     };
 
     createResponse() { return new CreateRefreshJwtResponse(); }
     String getTypeName() { return "CreateRefreshJwt"; }
+    TypeContext context = _ctx;
 }
 
-class MetadataTest implements IReturn<MetadataTestResponse>
+class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
 {
     int id;
 
     MetadataTest({this.id});
+    MetadataTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataTest fromMap(Map<String, dynamic> map) => new MetadataTest.fromJson(map);
-    MetadataTest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -3924,78 +3809,89 @@ class MetadataTest implements IReturn<MetadataTestResponse>
 
     createResponse() { return new MetadataTestResponse(); }
     String getTypeName() { return "MetadataTest"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/example", "GET")
 // @DataContract
-class GetExample implements IReturn<GetExampleResponse>
+class GetExample implements IReturn<GetExampleResponse>, IConvertible
 {
     GetExample();
-    GetExample fromMap(Map<String, dynamic> map) => new GetExample.fromJson(map);
     GetExample.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new GetExampleResponse(); }
     String getTypeName() { return "GetExample"; }
+    TypeContext context = _ctx;
 }
 
-class MetadataRequest implements IReturn<AutoQueryMetadataResponse>
+class MetadataRequest implements IReturn<AutoQueryMetadataResponse>, IConvertible
 {
     MetadataType metadataType;
 
     MetadataRequest({this.metadataType});
+    MetadataRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MetadataRequest fromMap(Map<String, dynamic> map) => new MetadataRequest.fromJson(map);
-    MetadataRequest.fromJson(Map<String, dynamic> json) {
-        metadataType = JsonConverters.fromJson(json['metadataType'],'MetadataType',_types);
+    fromMap(Map<String, dynamic> json) {
+        metadataType = JsonConverters.fromJson(json['metadataType'],'MetadataType',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'metadataType': JsonConverters.toJson(metadataType,'MetadataType',_types)
+        'metadataType': JsonConverters.toJson(metadataType,'MetadataType',context)
     };
 
     createResponse() { return new AutoQueryMetadataResponse(); }
     String getTypeName() { return "MetadataRequest"; }
+    TypeContext context = _ctx;
 }
 
-class ExcludeMetadataProperty
+class ExcludeMetadataProperty implements IConvertible
 {
     int id;
 
     ExcludeMetadataProperty({this.id});
+    ExcludeMetadataProperty.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ExcludeMetadataProperty fromMap(Map<String, dynamic> map) => new ExcludeMetadataProperty.fromJson(map);
-    ExcludeMetadataProperty.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/namedconnection")
-class NamedConnection
+class NamedConnection implements IConvertible
 {
     String emailAddresses;
 
     NamedConnection({this.emailAddresses});
+    NamedConnection.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    NamedConnection fromMap(Map<String, dynamic> map) => new NamedConnection.fromJson(map);
-    NamedConnection.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         emailAddresses = json['emailAddresses'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'emailAddresses': emailAddresses
     };
 
+    TypeContext context = _ctx;
 }
 
 /**
 * Description for HelloACodeGenTest
 */
-class HelloACodeGenTest implements IReturn<HelloACodeGenTestResponse>
+class HelloACodeGenTest implements IReturn<HelloACodeGenTestResponse>, IConvertible
 {
     /**
     * Description for FirstField
@@ -4004,31 +3900,34 @@ class HelloACodeGenTest implements IReturn<HelloACodeGenTestResponse>
     List<String> secondFields;
 
     HelloACodeGenTest({this.firstField,this.secondFields});
+    HelloACodeGenTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloACodeGenTest fromMap(Map<String, dynamic> map) => new HelloACodeGenTest.fromJson(map);
-    HelloACodeGenTest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         firstField = json['firstField'];
-        secondFields = JsonConverters.fromJson(json['secondFields'],'List<String>',_types);
+        secondFields = JsonConverters.fromJson(json['secondFields'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'firstField': firstField,
-        'secondFields': JsonConverters.toJson(secondFields,'List<String>',_types)
+        'secondFields': JsonConverters.toJson(secondFields,'List<String>',context)
     };
 
     createResponse() { return new HelloACodeGenTestResponse(); }
     String getTypeName() { return "HelloACodeGenTest"; }
+    TypeContext context = _ctx;
 }
 
-class HelloInService implements IReturn<HelloResponse>
+class HelloInService implements IReturn<HelloResponse>, IConvertible
 {
     String name;
 
     HelloInService({this.name});
+    HelloInService.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloInService fromMap(Map<String, dynamic> map) => new HelloInService.fromJson(map);
-    HelloInService.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4037,11 +3936,12 @@ class HelloInService implements IReturn<HelloResponse>
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "NativeTypesTestService.HelloInService"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/hello")
 // @Route("/hello/{Name}")
-class Hello implements IReturn<HelloResponse>
+class Hello implements IReturn<HelloResponse>, IConvertible
 {
     // @Required()
     String name;
@@ -4049,11 +3949,12 @@ class Hello implements IReturn<HelloResponse>
     String title;
 
     Hello({this.name,this.title});
+    Hello.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Hello fromMap(Map<String, dynamic> map) => new Hello.fromJson(map);
-    Hello.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         title = json['title'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4063,22 +3964,24 @@ class Hello implements IReturn<HelloResponse>
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "Hello"; }
+    TypeContext context = _ctx;
 }
 
 /**
 * Description on HelloAll type
 */
 // @DataContract
-class HelloAnnotated implements IReturn<HelloAnnotatedResponse>
+class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
 {
     // @DataMember
     String name;
 
     HelloAnnotated({this.name});
+    HelloAnnotated.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloAnnotated fromMap(Map<String, dynamic> map) => new HelloAnnotated.fromJson(map);
-    HelloAnnotated.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4087,69 +3990,76 @@ class HelloAnnotated implements IReturn<HelloAnnotatedResponse>
 
     createResponse() { return new HelloAnnotatedResponse(); }
     String getTypeName() { return "HelloAnnotated"; }
+    TypeContext context = _ctx;
 }
 
-class HelloWithNestedClass implements IReturn<HelloResponse>
+class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
 {
     String name;
     NestedClass nestedClassProp;
 
     HelloWithNestedClass({this.name,this.nestedClassProp});
+    HelloWithNestedClass.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithNestedClass fromMap(Map<String, dynamic> map) => new HelloWithNestedClass.fromJson(map);
-    HelloWithNestedClass.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        nestedClassProp = JsonConverters.fromJson(json['nestedClassProp'],'NestedClass',_types);
+        nestedClassProp = JsonConverters.fromJson(json['nestedClassProp'],'NestedClass',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',_types)
+        'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',context)
     };
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "HelloWithNestedClass"; }
+    TypeContext context = _ctx;
 }
 
-class HelloReturnList implements IReturn<List<OnlyInReturnListArg>>
+class HelloReturnList implements IReturn<List<OnlyInReturnListArg>>, IConvertible
 {
     List<String> names;
 
     HelloReturnList({this.names});
+    HelloReturnList.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloReturnList fromMap(Map<String, dynamic> map) => new HelloReturnList.fromJson(map);
-    HelloReturnList.fromJson(Map<String, dynamic> json) {
-        names = JsonConverters.fromJson(json['names'],'List<String>',_types);
+    fromMap(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.toJson(names,'List<String>',_types)
+        'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
     createResponse() { return new List<OnlyInReturnListArg>(); }
     String getTypeName() { return "HelloReturnList"; }
+    TypeContext context = _ctx;
 }
 
-class HelloExisting implements IReturn<HelloExistingResponse>
+class HelloExisting implements IReturn<HelloExistingResponse>, IConvertible
 {
     List<String> names;
 
     HelloExisting({this.names});
+    HelloExisting.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloExisting fromMap(Map<String, dynamic> map) => new HelloExisting.fromJson(map);
-    HelloExisting.fromJson(Map<String, dynamic> json) {
-        names = JsonConverters.fromJson(json['names'],'List<String>',_types);
+    fromMap(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.toJson(names,'List<String>',_types)
+        'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
     createResponse() { return new HelloExistingResponse(); }
     String getTypeName() { return "HelloExisting"; }
+    TypeContext context = _ctx;
 }
 
-class HelloWithEnum
+class HelloWithEnum implements IConvertible
 {
     EnumType enumProp;
     EnumWithValues enumWithValues;
@@ -4157,45 +4067,49 @@ class HelloWithEnum
     EnumFlags enumFlags;
 
     HelloWithEnum({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags});
+    HelloWithEnum.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithEnum fromMap(Map<String, dynamic> map) => new HelloWithEnum.fromJson(map);
-    HelloWithEnum.fromJson(Map<String, dynamic> json) {
-        enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',_types);
-        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'EnumWithValues',_types);
-        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',_types);
-        enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',_types);
+    fromMap(Map<String, dynamic> json) {
+        enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',context);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'EnumWithValues',context);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',context);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'enumProp': JsonConverters.toJson(enumProp,'EnumType',_types),
-        'enumWithValues': JsonConverters.toJson(enumWithValues,'EnumWithValues',_types),
-        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',_types),
-        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',_types)
+        'enumProp': JsonConverters.toJson(enumProp,'EnumType',context),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'EnumWithValues',context),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',context),
+        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class RestrictedAttributes
+class RestrictedAttributes implements IConvertible
 {
     int id;
     String name;
     Hello hello;
 
     RestrictedAttributes({this.id,this.name,this.hello});
+    RestrictedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    RestrictedAttributes fromMap(Map<String, dynamic> map) => new RestrictedAttributes.fromJson(map);
-    RestrictedAttributes.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
-        hello = JsonConverters.fromJson(json['hello'],'Hello',_types);
+        hello = JsonConverters.fromJson(json['hello'],'Hello',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'hello': JsonConverters.toJson(hello,'Hello',_types)
+        'hello': JsonConverters.toJson(hello,'Hello',context)
     };
 
+    TypeContext context = _ctx;
 }
 
 /**
@@ -4205,7 +4119,7 @@ class RestrictedAttributes
 // @Api(Description="AllowedAttributes Description")
 // @ApiResponse(Description="Your request was not understood", StatusCode=400)
 // @DataContract
-class AllowedAttributes
+class AllowedAttributes implements IConvertible
 {
     // @DataMember
     // @Required()
@@ -4219,11 +4133,12 @@ class AllowedAttributes
     double range;
 
     AllowedAttributes({this.id,this.range});
+    AllowedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    AllowedAttributes fromMap(Map<String, dynamic> map) => new AllowedAttributes.fromJson(map);
-    AllowedAttributes.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        range = json['range'];
+        range = JsonConverters.toDouble(json['range']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4231,13 +4146,14 @@ class AllowedAttributes
         'range': range
     };
 
+    TypeContext context = _ctx;
 }
 
 /**
 * Multi Line Class
 */
 // @Api(Description="Multi Line Class")
-class HelloMultiline
+class HelloMultiline implements IConvertible
 {
     /**
     * Multi Line Property
@@ -4246,52 +4162,57 @@ class HelloMultiline
     String overflow;
 
     HelloMultiline({this.overflow});
+    HelloMultiline.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloMultiline fromMap(Map<String, dynamic> map) => new HelloMultiline.fromJson(map);
-    HelloMultiline.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         overflow = json['overflow'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'overflow': overflow
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloAllTypes implements IReturn<HelloAllTypesResponse>
+class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 {
     String name;
     AllTypes allTypes;
     AllCollectionTypes allCollectionTypes;
 
     HelloAllTypes({this.name,this.allTypes,this.allCollectionTypes});
+    HelloAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloAllTypes fromMap(Map<String, dynamic> map) => new HelloAllTypes.fromJson(map);
-    HelloAllTypes.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',_types);
-        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',_types);
+        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context);
+        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',_types),
-        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',_types)
+        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context),
+        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
     };
 
     createResponse() { return new HelloAllTypesResponse(); }
     String getTypeName() { return "HelloAllTypes"; }
+    TypeContext context = _ctx;
 }
 
-class HelloString implements IReturn<String>
+class HelloString implements IReturn<String>, IConvertible
 {
     String name;
 
     HelloString({this.name});
+    HelloString.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloString fromMap(Map<String, dynamic> map) => new HelloString.fromJson(map);
-    HelloString.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4300,17 +4221,19 @@ class HelloString implements IReturn<String>
 
     createResponse() { return ""; }
     String getTypeName() { return "HelloString"; }
+    TypeContext context = _ctx;
 }
 
-class HelloVoid implements IReturnVoid
+class HelloVoid implements IReturnVoid, IConvertible
 {
     String name;
 
     HelloVoid({this.name});
+    HelloVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloVoid fromMap(Map<String, dynamic> map) => new HelloVoid.fromJson(map);
-    HelloVoid.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4319,10 +4242,11 @@ class HelloVoid implements IReturnVoid
 
     createResponse() {}
     String getTypeName() { return "HelloVoid"; }
+    TypeContext context = _ctx;
 }
 
 // @DataContract
-class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>
+class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, IConvertible
 {
     // @DataMember(Name="name", Order=1, IsRequired=true, EmitDefaultValue=false)
     String name;
@@ -4331,11 +4255,12 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>
     int id;
 
     HelloWithDataContract({this.name,this.id});
+    HelloWithDataContract.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithDataContract fromMap(Map<String, dynamic> map) => new HelloWithDataContract.fromJson(map);
-    HelloWithDataContract.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4345,20 +4270,22 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>
 
     createResponse() { return new HelloWithDataContractResponse(); }
     String getTypeName() { return "HelloWithDataContract"; }
+    TypeContext context = _ctx;
 }
 
 /**
 * Description on HelloWithDescription type
 */
-class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>
+class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible
 {
     String name;
 
     HelloWithDescription({this.name});
+    HelloWithDescription.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithDescription fromMap(Map<String, dynamic> map) => new HelloWithDescription.fromJson(map);
-    HelloWithDescription.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4367,17 +4294,20 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>
 
     createResponse() { return new HelloWithDescriptionResponse(); }
     String getTypeName() { return "HelloWithDescription"; }
+    TypeContext context = _ctx;
 }
 
-class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>
+class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>, IConvertible
 {
     String name;
 
     HelloWithInheritance({this.name});
+    HelloWithInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithInheritance fromMap(Map<String, dynamic> map) => new HelloWithInheritance.fromJson(map);
-    HelloWithInheritance.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -4386,51 +4316,63 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
 
     createResponse() { return new HelloWithInheritanceResponse(); }
     String getTypeName() { return "HelloWithInheritance"; }
+    TypeContext context = _ctx;
 }
 
-class HelloWithGenericInheritance extends HelloBase1<Poco>
+class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertible
 {
     String result;
 
     HelloWithGenericInheritance({this.result});
+    HelloWithGenericInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithGenericInheritance fromMap(Map<String, dynamic> map) => new HelloWithGenericInheritance.fromJson(map);
-    HelloWithGenericInheritance.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'result': result
     });
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithGenericInheritance2 extends HelloBase1<Hello>
+class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvertible
 {
     String result;
 
     HelloWithGenericInheritance2({this.result});
+    HelloWithGenericInheritance2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithGenericInheritance2 fromMap(Map<String, dynamic> map) => new HelloWithGenericInheritance2.fromJson(map);
-    HelloWithGenericInheritance2.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         result = json['result'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'result': result
     });
 
+    TypeContext context = _ctx;
 }
 
-class HelloWithNestedInheritance extends HelloBase1<Item>
+class HelloWithNestedInheritance extends HelloBase1<Item> implements IConvertible
 {
     HelloWithNestedInheritance();
-    HelloWithNestedInheritance fromMap(Map<String, dynamic> map) => new HelloWithNestedInheritance.fromJson(map);
     HelloWithNestedInheritance.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
 }
 
-class HelloWithListInheritance extends ListBase<InheritedItem>
+class HelloWithListInheritance extends ListBase<InheritedItem> implements IConvertible
 {
     final List<InheritedItem> l = [];
     void set length(int newLength) { l.length = newLength; }
@@ -4438,20 +4380,25 @@ class HelloWithListInheritance extends ListBase<InheritedItem>
     InheritedItem operator [](int index) => l[index];
     void operator []=(int index, InheritedItem value) { l[index] = value; }
     HelloWithListInheritance();
-    HelloWithListInheritance fromMap(Map<String, dynamic> map) => new HelloWithListInheritance.fromJson(map);
     HelloWithListInheritance.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
-class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>
+class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, IConvertible
 {
     String name;
 
     HelloWithReturn({this.name});
+    HelloWithReturn.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithReturn fromMap(Map<String, dynamic> map) => new HelloWithReturn.fromJson(map);
-    HelloWithReturn.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4460,18 +4407,20 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>
 
     createResponse() { return new HelloWithAlternateReturnResponse(); }
     String getTypeName() { return "HelloWithReturn"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/helloroute")
-class HelloWithRoute implements IReturn<HelloWithRouteResponse>
+class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
 {
     String name;
 
     HelloWithRoute({this.name});
+    HelloWithRoute.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithRoute fromMap(Map<String, dynamic> map) => new HelloWithRoute.fromJson(map);
-    HelloWithRoute.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4480,17 +4429,19 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>
 
     createResponse() { return new HelloWithRouteResponse(); }
     String getTypeName() { return "HelloWithRoute"; }
+    TypeContext context = _ctx;
 }
 
-class HelloWithType implements IReturn<HelloWithTypeResponse>
+class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
 {
     String name;
 
     HelloWithType({this.name});
+    HelloWithType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloWithType fromMap(Map<String, dynamic> map) => new HelloWithType.fromJson(map);
-    HelloWithType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4499,19 +4450,24 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>
 
     createResponse() { return new HelloWithTypeResponse(); }
     String getTypeName() { return "HelloWithType"; }
+    TypeContext context = _ctx;
 }
 
-class HelloSession implements IReturn<HelloSessionResponse>
+class HelloSession implements IReturn<HelloSessionResponse>, IConvertible
 {
     HelloSession();
-    HelloSession fromMap(Map<String, dynamic> map) => new HelloSession.fromJson(map);
     HelloSession.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new HelloSessionResponse(); }
     String getTypeName() { return "HelloSession"; }
+    TypeContext context = _ctx;
 }
 
-class HelloInterface
+class HelloInterface implements IConvertible
 {
     IPoco poco;
     IEmptyInterface emptyInterface;
@@ -4519,105 +4475,124 @@ class HelloInterface
     String value;
 
     HelloInterface({this.poco,this.emptyInterface,this.emptyClass,this.value});
+    HelloInterface.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloInterface fromMap(Map<String, dynamic> map) => new HelloInterface.fromJson(map);
-    HelloInterface.fromJson(Map<String, dynamic> json) {
-        poco = JsonConverters.fromJson(json['poco'],'IPoco',_types);
-        emptyInterface = JsonConverters.fromJson(json['emptyInterface'],'IEmptyInterface',_types);
-        emptyClass = JsonConverters.fromJson(json['emptyClass'],'EmptyClass',_types);
+    fromMap(Map<String, dynamic> json) {
+        poco = JsonConverters.fromJson(json['poco'],'IPoco',context);
+        emptyInterface = JsonConverters.fromJson(json['emptyInterface'],'IEmptyInterface',context);
+        emptyClass = JsonConverters.fromJson(json['emptyClass'],'EmptyClass',context);
         value = json['value'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'poco': JsonConverters.toJson(poco,'IPoco',_types),
-        'emptyInterface': JsonConverters.toJson(emptyInterface,'IEmptyInterface',_types),
-        'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',_types),
+        'poco': JsonConverters.toJson(poco,'IPoco',context),
+        'emptyInterface': JsonConverters.toJson(emptyInterface,'IEmptyInterface',context),
+        'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',context),
         'value': value
     };
 
+    TypeContext context = _ctx;
 }
 
-class Request1 implements IReturn<Request1Response>
+class Request1 implements IReturn<Request1Response>, IConvertible
 {
     TypeA test;
 
     Request1({this.test});
+    Request1.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Request1 fromMap(Map<String, dynamic> map) => new Request1.fromJson(map);
-    Request1.fromJson(Map<String, dynamic> json) {
-        test = JsonConverters.fromJson(json['test'],'TypeA',_types);
+    fromMap(Map<String, dynamic> json) {
+        test = JsonConverters.fromJson(json['test'],'TypeA',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'test': JsonConverters.toJson(test,'TypeA',_types)
+        'test': JsonConverters.toJson(test,'TypeA',context)
     };
 
     createResponse() { return new Request1Response(); }
     String getTypeName() { return "Request1"; }
+    TypeContext context = _ctx;
 }
 
-class Request2 implements IReturn<Request2Response>
+class Request2 implements IReturn<Request2Response>, IConvertible
 {
     TypeA test;
 
     Request2({this.test});
+    Request2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Request2 fromMap(Map<String, dynamic> map) => new Request2.fromJson(map);
-    Request2.fromJson(Map<String, dynamic> json) {
-        test = JsonConverters.fromJson(json['test'],'TypeA',_types);
+    fromMap(Map<String, dynamic> json) {
+        test = JsonConverters.fromJson(json['test'],'TypeA',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'test': JsonConverters.toJson(test,'TypeA',_types)
+        'test': JsonConverters.toJson(test,'TypeA',context)
     };
 
     createResponse() { return new Request2Response(); }
     String getTypeName() { return "Request2"; }
+    TypeContext context = _ctx;
 }
 
-class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>
+class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
 {
     HelloInnerTypes();
-    HelloInnerTypes fromMap(Map<String, dynamic> map) => new HelloInnerTypes.fromJson(map);
     HelloInnerTypes.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new HelloInnerTypesResponse(); }
     String getTypeName() { return "HelloInnerTypes"; }
+    TypeContext context = _ctx;
 }
 
-class GetUserSession implements IReturn<CustomUserSession>
+class GetUserSession implements IReturn<CustomUserSession>, IConvertible
 {
     GetUserSession();
-    GetUserSession fromMap(Map<String, dynamic> map) => new GetUserSession.fromJson(map);
     GetUserSession.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new CustomUserSession(); }
     String getTypeName() { return "GetUserSession"; }
+    TypeContext context = _ctx;
 }
 
-class QueryTemplate implements IReturn<QueryResponseTemplate<Poco>>
+class QueryTemplate implements IReturn<QueryResponseTemplate<Poco>>, IConvertible
 {
     QueryTemplate();
-    QueryTemplate fromMap(Map<String, dynamic> map) => new QueryTemplate.fromJson(map);
     QueryTemplate.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new QueryResponseTemplate<Poco>(); }
     String getTypeName() { return "QueryTemplate"; }
+    TypeContext context = _ctx;
 }
 
-class HelloReserved
+class HelloReserved implements IConvertible
 {
     String Class;
     String type;
     String extension;
 
     HelloReserved({this.Class,this.type,this.extension});
+    HelloReserved.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloReserved fromMap(Map<String, dynamic> map) => new HelloReserved.fromJson(map);
-    HelloReserved.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         Class = json['class'];
         type = json['type'];
         extension = json['extension'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4626,19 +4601,21 @@ class HelloReserved
         'extension': extension
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloDictionary implements IReturn<Map<String,String>>
+class HelloDictionary implements IReturn<Map<String,String>>, IConvertible
 {
     String key;
     String value;
 
     HelloDictionary({this.key,this.value});
+    HelloDictionary.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloDictionary fromMap(Map<String, dynamic> map) => new HelloDictionary.fromJson(map);
-    HelloDictionary.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         key = json['key'];
         value = json['value'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4648,34 +4625,38 @@ class HelloDictionary implements IReturn<Map<String,String>>
 
     createResponse() { return new Map<String,String>(); }
     String getTypeName() { return "HelloDictionary"; }
+    TypeContext context = _ctx;
 }
 
-class HelloBuiltin
+class HelloBuiltin implements IConvertible
 {
     DayOfWeek dayOfWeek;
 
     HelloBuiltin({this.dayOfWeek});
+    HelloBuiltin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloBuiltin fromMap(Map<String, dynamic> map) => new HelloBuiltin.fromJson(map);
-    HelloBuiltin.fromJson(Map<String, dynamic> json) {
-        dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',_types);
+    fromMap(Map<String, dynamic> json) {
+        dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',_types)
+        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context)
     };
 
+    TypeContext context = _ctx;
 }
 
-class HelloGet implements IReturn<HelloVerbResponse>, IGet
+class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
 {
     int id;
 
     HelloGet({this.id});
+    HelloGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloGet fromMap(Map<String, dynamic> map) => new HelloGet.fromJson(map);
-    HelloGet.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4684,27 +4665,34 @@ class HelloGet implements IReturn<HelloVerbResponse>, IGet
 
     createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloGet"; }
+    TypeContext context = _ctx;
 }
 
-class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost
+class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, IConvertible
 {
     HelloPost();
-    HelloPost fromMap(Map<String, dynamic> map) => new HelloPost.fromJson(map);
     HelloPost.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPost"; }
+    TypeContext context = _ctx;
 }
 
-class HelloPut implements IReturn<HelloVerbResponse>, IPut
+class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
 {
     int id;
 
     HelloPut({this.id});
+    HelloPut.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloPut fromMap(Map<String, dynamic> map) => new HelloPut.fromJson(map);
-    HelloPut.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4713,17 +4701,19 @@ class HelloPut implements IReturn<HelloVerbResponse>, IPut
 
     createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPut"; }
+    TypeContext context = _ctx;
 }
 
-class HelloDelete implements IReturn<HelloVerbResponse>, IDelete
+class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
 {
     int id;
 
     HelloDelete({this.id});
+    HelloDelete.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloDelete fromMap(Map<String, dynamic> map) => new HelloDelete.fromJson(map);
-    HelloDelete.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4732,17 +4722,19 @@ class HelloDelete implements IReturn<HelloVerbResponse>, IDelete
 
     createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloDelete"; }
+    TypeContext context = _ctx;
 }
 
-class HelloPatch implements IReturn<HelloVerbResponse>, IPatch
+class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
 {
     int id;
 
     HelloPatch({this.id});
+    HelloPatch.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloPatch fromMap(Map<String, dynamic> map) => new HelloPatch.fromJson(map);
-    HelloPatch.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4751,17 +4743,19 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch
 
     createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPatch"; }
+    TypeContext context = _ctx;
 }
 
-class HelloReturnVoid implements IReturnVoid
+class HelloReturnVoid implements IReturnVoid, IConvertible
 {
     int id;
 
     HelloReturnVoid({this.id});
+    HelloReturnVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloReturnVoid fromMap(Map<String, dynamic> map) => new HelloReturnVoid.fromJson(map);
-    HelloReturnVoid.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4770,67 +4764,77 @@ class HelloReturnVoid implements IReturnVoid
 
     createResponse() {}
     String getTypeName() { return "HelloReturnVoid"; }
+    TypeContext context = _ctx;
 }
 
-class EnumRequest implements IReturn<EnumResponse>, IPut
+class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
 {
     ScopeType Operator;
 
     EnumRequest({this.Operator});
+    EnumRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    EnumRequest fromMap(Map<String, dynamic> map) => new EnumRequest.fromJson(map);
-    EnumRequest.fromJson(Map<String, dynamic> json) {
-        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',_types);
+    fromMap(Map<String, dynamic> json) {
+        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'operator': JsonConverters.toJson(Operator,'ScopeType',_types)
+        'operator': JsonConverters.toJson(Operator,'ScopeType',context)
     };
 
     createResponse() { return new EnumResponse(); }
     String getTypeName() { return "EnumRequest"; }
+    TypeContext context = _ctx;
 }
 
-class ExcludeTest1 implements IReturn<ExcludeTestNested>
+class ExcludeTest1 implements IReturn<ExcludeTestNested>, IConvertible
 {
     ExcludeTest1();
-    ExcludeTest1 fromMap(Map<String, dynamic> map) => new ExcludeTest1.fromJson(map);
     ExcludeTest1.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new ExcludeTestNested(); }
     String getTypeName() { return "ExcludeTest1"; }
+    TypeContext context = _ctx;
 }
 
-class ExcludeTest2 implements IReturn<String>
+class ExcludeTest2 implements IReturn<String>, IConvertible
 {
     ExcludeTestNested excludeTestNested;
 
     ExcludeTest2({this.excludeTestNested});
+    ExcludeTest2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ExcludeTest2 fromMap(Map<String, dynamic> map) => new ExcludeTest2.fromJson(map);
-    ExcludeTest2.fromJson(Map<String, dynamic> json) {
-        excludeTestNested = JsonConverters.fromJson(json['excludeTestNested'],'ExcludeTestNested',_types);
+    fromMap(Map<String, dynamic> json) {
+        excludeTestNested = JsonConverters.fromJson(json['excludeTestNested'],'ExcludeTestNested',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'excludeTestNested': JsonConverters.toJson(excludeTestNested,'ExcludeTestNested',_types)
+        'excludeTestNested': JsonConverters.toJson(excludeTestNested,'ExcludeTestNested',context)
     };
 
     createResponse() { return ""; }
     String getTypeName() { return "ExcludeTest2"; }
+    TypeContext context = _ctx;
 }
 
-class HelloAuthenticated implements IReturn<HelloAuthenticatedResponse>, IHasSessionId
+class HelloAuthenticated implements IReturn<HelloAuthenticatedResponse>, IHasSessionId, IConvertible
 {
     String sessionId;
     int version;
 
     HelloAuthenticated({this.sessionId,this.version});
+    HelloAuthenticated.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    HelloAuthenticated fromMap(Map<String, dynamic> map) => new HelloAuthenticated.fromJson(map);
-    HelloAuthenticated.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         sessionId = json['sessionId'];
         version = json['version'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4840,6 +4844,7 @@ class HelloAuthenticated implements IReturn<HelloAuthenticatedResponse>, IHasSes
 
     createResponse() { return new HelloAuthenticatedResponse(); }
     String getTypeName() { return "HelloAuthenticated"; }
+    TypeContext context = _ctx;
 }
 
 /**
@@ -4847,7 +4852,7 @@ class HelloAuthenticated implements IReturn<HelloAuthenticatedResponse>, IHasSes
 */
 // @Route("/echoes", "POST")
 // @Api(Description="Echoes a sentence")
-class Echoes implements IReturn<Echo>
+class Echoes implements IReturn<Echo>, IConvertible
 {
     /**
     * The sentence to echo.
@@ -4856,10 +4861,11 @@ class Echoes implements IReturn<Echo>
     String sentence;
 
     Echoes({this.sentence});
+    Echoes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Echoes fromMap(Map<String, dynamic> map) => new Echoes.fromJson(map);
-    Echoes.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         sentence = json['sentence'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4868,19 +4874,21 @@ class Echoes implements IReturn<Echo>
 
     createResponse() { return new Echo(); }
     String getTypeName() { return "Echoes"; }
+    TypeContext context = _ctx;
 }
 
-class CachedEcho implements IReturn<Echo>
+class CachedEcho implements IReturn<Echo>, IConvertible
 {
     bool reload;
     String sentence;
 
     CachedEcho({this.reload,this.sentence});
+    CachedEcho.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    CachedEcho fromMap(Map<String, dynamic> map) => new CachedEcho.fromJson(map);
-    CachedEcho.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         reload = json['reload'];
         sentence = json['sentence'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4890,30 +4898,36 @@ class CachedEcho implements IReturn<Echo>
 
     createResponse() { return new Echo(); }
     String getTypeName() { return "CachedEcho"; }
+    TypeContext context = _ctx;
 }
 
-class AsyncTest implements IReturn<Echo>
+class AsyncTest implements IReturn<Echo>, IConvertible
 {
     AsyncTest();
-    AsyncTest fromMap(Map<String, dynamic> map) => new AsyncTest.fromJson(map);
     AsyncTest.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new Echo(); }
     String getTypeName() { return "AsyncTest"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/throwhttperror/{Status}")
-class ThrowHttpError implements IReturn<ThrowHttpErrorResponse>
+class ThrowHttpError implements IReturn<ThrowHttpErrorResponse>, IConvertible
 {
     int status;
     String message;
 
     ThrowHttpError({this.status,this.message});
+    ThrowHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ThrowHttpError fromMap(Map<String, dynamic> map) => new ThrowHttpError.fromJson(map);
-    ThrowHttpError.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         status = json['status'];
         message = json['message'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4923,57 +4937,69 @@ class ThrowHttpError implements IReturn<ThrowHttpErrorResponse>
 
     createResponse() { return new ThrowHttpErrorResponse(); }
     String getTypeName() { return "ThrowHttpError"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/throw404")
 // @Route("/throw404/{Message}")
-class Throw404
+class Throw404 implements IConvertible
 {
     String message;
 
     Throw404({this.message});
+    Throw404.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    Throw404 fromMap(Map<String, dynamic> map) => new Throw404.fromJson(map);
-    Throw404.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         message = json['message'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'message': message
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/return404")
-class Return404
+class Return404 implements IConvertible
 {
     Return404();
-    Return404 fromMap(Map<String, dynamic> map) => new Return404.fromJson(map);
     Return404.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
 // @Route("/return404result")
-class Return404Result
+class Return404Result implements IConvertible
 {
     Return404Result();
-    Return404Result fromMap(Map<String, dynamic> map) => new Return404Result.fromJson(map);
     Return404Result.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
 // @Route("/throw/{Type}")
-class ThrowType implements IReturn<ThrowTypeResponse>
+class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
 {
     String type;
     String message;
 
     ThrowType({this.type,this.message});
+    ThrowType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ThrowType fromMap(Map<String, dynamic> map) => new ThrowType.fromJson(map);
-    ThrowType.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         type = json['type'];
         message = json['message'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -4983,22 +5009,24 @@ class ThrowType implements IReturn<ThrowTypeResponse>
 
     createResponse() { return new ThrowTypeResponse(); }
     String getTypeName() { return "ThrowType"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/throwvalidation")
-class ThrowValidation implements IReturn<ThrowValidationResponse>
+class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
 {
     int age;
     String required;
     String email;
 
     ThrowValidation({this.age,this.required,this.email});
+    ThrowValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ThrowValidation fromMap(Map<String, dynamic> map) => new ThrowValidation.fromJson(map);
-    ThrowValidation.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         age = json['age'];
         required = json['required'];
         email = json['email'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5009,11 +5037,12 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>
 
     createResponse() { return new ThrowValidationResponse(); }
     String getTypeName() { return "ThrowValidation"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/api/acsprofiles", "POST,PUT,PATCH,DELETE")
 // @Route("/api/acsprofiles/{profileId}")
-class ACSProfile implements IReturn<acsprofileResponse>, IHasVersion, IHasSessionId
+class ACSProfile implements IReturn<acsprofileResponse>, IHasVersion, IHasSessionId, IConvertible
 {
     String profileId;
     // @Required()
@@ -5038,19 +5067,20 @@ class ACSProfile implements IReturn<acsprofileResponse>, IHasVersion, IHasSessio
     String sessionId;
 
     ACSProfile({this.profileId,this.shortName,this.longName,this.regionId,this.groupId,this.deviceID,this.lastUpdated,this.enabled,this.version,this.sessionId});
+    ACSProfile.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ACSProfile fromMap(Map<String, dynamic> map) => new ACSProfile.fromJson(map);
-    ACSProfile.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         profileId = json['profileId'];
         shortName = json['shortName'];
         longName = json['longName'];
         regionId = json['regionId'];
         groupId = json['groupId'];
         deviceID = json['deviceID'];
-        lastUpdated = JsonConverters.fromJson(json['lastUpdated'],'DateTime',_types);
+        lastUpdated = JsonConverters.fromJson(json['lastUpdated'],'DateTime',context);
         enabled = json['enabled'];
         version = json['version'];
         sessionId = json['sessionId'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5060,7 +5090,7 @@ class ACSProfile implements IReturn<acsprofileResponse>, IHasVersion, IHasSessio
         'regionId': regionId,
         'groupId': groupId,
         'deviceID': deviceID,
-        'lastUpdated': JsonConverters.toJson(lastUpdated,'DateTime',_types),
+        'lastUpdated': JsonConverters.toJson(lastUpdated,'DateTime',context),
         'enabled': enabled,
         'version': version,
         'sessionId': sessionId
@@ -5068,18 +5098,20 @@ class ACSProfile implements IReturn<acsprofileResponse>, IHasVersion, IHasSessio
 
     createResponse() { return new acsprofileResponse(); }
     String getTypeName() { return "ACSProfile"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/return/string")
-class ReturnString implements IReturn<String>
+class ReturnString implements IReturn<String>, IConvertible
 {
     String data;
 
     ReturnString({this.data});
+    ReturnString.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ReturnString fromMap(Map<String, dynamic> map) => new ReturnString.fromJson(map);
-    ReturnString.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         data = json['data'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5088,252 +5120,294 @@ class ReturnString implements IReturn<String>
 
     createResponse() { return ""; }
     String getTypeName() { return "ReturnString"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/return/bytes")
-class ReturnBytes implements IReturn<Uint8List>
+class ReturnBytes implements IReturn<Uint8List>, IConvertible
 {
     Uint8List data;
 
     ReturnBytes({this.data});
+    ReturnBytes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ReturnBytes fromMap(Map<String, dynamic> map) => new ReturnBytes.fromJson(map);
-    ReturnBytes.fromJson(Map<String, dynamic> json) {
-        data = JsonConverters.fromJson(json['data'],'Uint8List',_types);
+    fromMap(Map<String, dynamic> json) {
+        data = JsonConverters.fromJson(json['data'],'Uint8List',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.toJson(data,'Uint8List',_types)
+        'data': JsonConverters.toJson(data,'Uint8List',context)
     };
 
     createResponse() { return new Uint8List(0); }
     String getTypeName() { return "ReturnBytes"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/return/stream")
-class ReturnStream implements IReturn<Uint8List>
+class ReturnStream implements IReturn<Uint8List>, IConvertible
 {
     Uint8List data;
 
     ReturnStream({this.data});
+    ReturnStream.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ReturnStream fromMap(Map<String, dynamic> map) => new ReturnStream.fromJson(map);
-    ReturnStream.fromJson(Map<String, dynamic> json) {
-        data = JsonConverters.fromJson(json['data'],'Uint8List',_types);
+    fromMap(Map<String, dynamic> json) {
+        data = JsonConverters.fromJson(json['data'],'Uint8List',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.toJson(data,'Uint8List',_types)
+        'data': JsonConverters.toJson(data,'Uint8List',context)
     };
 
     createResponse() { return new Uint8List(0); }
     String getTypeName() { return "ReturnStream"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/Request1/", "GET")
-class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet
+class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 {
     GetRequest1();
-    GetRequest1 fromMap(Map<String, dynamic> map) => new GetRequest1.fromJson(map);
     GetRequest1.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new List<ReturnedDto>(); }
     String getTypeName() { return "GetRequest1"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/Request3", "GET")
-class GetRequest2 implements IReturn<ReturnedDto>, IGet
+class GetRequest2 implements IReturn<ReturnedDto>, IGet, IConvertible
 {
     GetRequest2();
-    GetRequest2 fromMap(Map<String, dynamic> map) => new GetRequest2.fromJson(map);
     GetRequest2.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new ReturnedDto(); }
     String getTypeName() { return "GetRequest2"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/matchlast/{Id}")
-class MatchesLastInt
+class MatchesLastInt implements IConvertible
 {
     int id;
 
     MatchesLastInt({this.id});
+    MatchesLastInt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchesLastInt fromMap(Map<String, dynamic> map) => new MatchesLastInt.fromJson(map);
-    MatchesLastInt.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/matchlast/{Slug}")
-class MatchesNotLastInt
+class MatchesNotLastInt implements IConvertible
 {
     String slug;
 
     MatchesNotLastInt({this.slug});
+    MatchesNotLastInt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchesNotLastInt fromMap(Map<String, dynamic> map) => new MatchesNotLastInt.fromJson(map);
-    MatchesNotLastInt.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         slug = json['slug'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'slug': slug
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/matchregex/{Id}")
-class MatchesId
+class MatchesId implements IConvertible
 {
     int id;
 
     MatchesId({this.id});
+    MatchesId.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchesId fromMap(Map<String, dynamic> map) => new MatchesId.fromJson(map);
-    MatchesId.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/matchregex/{Slug}")
-class MatchesSlug
+class MatchesSlug implements IConvertible
 {
     String slug;
 
     MatchesSlug({this.slug});
+    MatchesSlug.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchesSlug fromMap(Map<String, dynamic> map) => new MatchesSlug.fromJson(map);
-    MatchesSlug.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         slug = json['slug'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'slug': slug
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/{Version}/userdata", "GET")
-class SwaggerVersionTest
+class SwaggerVersionTest implements IConvertible
 {
     String version;
 
     SwaggerVersionTest({this.version});
+    SwaggerVersionTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerVersionTest fromMap(Map<String, dynamic> map) => new SwaggerVersionTest.fromJson(map);
-    SwaggerVersionTest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         version = json['version'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'version': version
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/test/errorview")
-class TestErrorView
+class TestErrorView implements IConvertible
 {
     String id;
 
     TestErrorView({this.id});
+    TestErrorView.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TestErrorView fromMap(Map<String, dynamic> map) => new TestErrorView.fromJson(map);
-    TestErrorView.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/timestamp", "GET")
-class GetTimestamp implements IReturn<TimestampData>
+class GetTimestamp implements IReturn<TimestampData>, IConvertible
 {
     GetTimestamp();
-    GetTimestamp fromMap(Map<String, dynamic> map) => new GetTimestamp.fromJson(map);
     GetTimestamp.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() { return new TimestampData(); }
     String getTypeName() { return "GetTimestamp"; }
+    TypeContext context = _ctx;
 }
 
-class TestMiniverView
+class TestMiniverView implements IConvertible
 {
     TestMiniverView();
-    TestMiniverView fromMap(Map<String, dynamic> map) => new TestMiniverView.fromJson(map);
     TestMiniverView.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
 // @Route("/testexecproc")
-class TestExecProc
+class TestExecProc implements IConvertible
 {
     TestExecProc();
-    TestExecProc fromMap(Map<String, dynamic> map) => new TestExecProc.fromJson(map);
     TestExecProc.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
 }
 
 // @Route("/files/{Path*}")
-class GetFile
+class GetFile implements IConvertible
 {
     String path;
 
     GetFile({this.path});
+    GetFile.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    GetFile fromMap(Map<String, dynamic> map) => new GetFile.fromJson(map);
-    GetFile.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         path = json['path'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'path': path
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/test/html2")
-class TestHtml2
+class TestHtml2 implements IConvertible
 {
     String name;
 
     TestHtml2({this.name});
+    TestHtml2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    TestHtml2 fromMap(Map<String, dynamic> map) => new TestHtml2.fromJson(map);
-    TestHtml2.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/views/request")
-class ViewRequest implements IReturn<ViewResponse>
+class ViewRequest implements IReturn<ViewResponse>, IConvertible
 {
     String name;
 
     ViewRequest({this.name});
+    ViewRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ViewRequest fromMap(Map<String, dynamic> map) => new ViewRequest.fromJson(map);
-    ViewRequest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5342,54 +5416,60 @@ class ViewRequest implements IReturn<ViewResponse>
 
     createResponse() { return new ViewResponse(); }
     String getTypeName() { return "ViewRequest"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/index")
-class IndexPage
+class IndexPage implements IConvertible
 {
     String pathInfo;
 
     IndexPage({this.pathInfo});
+    IndexPage.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    IndexPage fromMap(Map<String, dynamic> map) => new IndexPage.fromJson(map);
-    IndexPage.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         pathInfo = json['pathInfo'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'pathInfo': pathInfo
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/return/text")
-class ReturnText
+class ReturnText implements IConvertible
 {
     String text;
 
     ReturnText({this.text});
+    ReturnText.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    ReturnText fromMap(Map<String, dynamic> map) => new ReturnText.fromJson(map);
-    ReturnText.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         text = json['text'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'text': text
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/gzip/{FileName}")
-class DownloadGzipFile implements IReturn<Uint8List>
+class DownloadGzipFile implements IReturn<Uint8List>, IConvertible
 {
     String fileName;
 
     DownloadGzipFile({this.fileName});
+    DownloadGzipFile.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    DownloadGzipFile fromMap(Map<String, dynamic> map) => new DownloadGzipFile.fromJson(map);
-    DownloadGzipFile.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         fileName = json['fileName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5398,20 +5478,22 @@ class DownloadGzipFile implements IReturn<Uint8List>
 
     createResponse() { return new Uint8List(0); }
     String getTypeName() { return "DownloadGzipFile"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/match/{Language}/{Name*}")
-class MatchName implements IReturn<HelloResponse>
+class MatchName implements IReturn<HelloResponse>, IConvertible
 {
     String language;
     String name;
 
     MatchName({this.language,this.name});
+    MatchName.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchName fromMap(Map<String, dynamic> map) => new MatchName.fromJson(map);
-    MatchName.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         language = json['language'];
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5421,18 +5503,20 @@ class MatchName implements IReturn<HelloResponse>
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "MatchName"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/match/{Language*}")
-class MatchLang implements IReturn<HelloResponse>
+class MatchLang implements IReturn<HelloResponse>, IConvertible
 {
     String language;
 
     MatchLang({this.language});
+    MatchLang.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    MatchLang fromMap(Map<String, dynamic> map) => new MatchLang.fromJson(map);
-    MatchLang.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         language = json['language'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5441,6 +5525,7 @@ class MatchLang implements IReturn<HelloResponse>
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "MatchLang"; }
+    TypeContext context = _ctx;
 }
 
 /**
@@ -5453,7 +5538,7 @@ class MatchLang implements IReturn<HelloResponse>
 // @ApiResponse(Description="Your request was not understood", StatusCode=400)
 // @ApiResponse(Description="Oops, something broke", StatusCode=500)
 // @DataContract
-class SwaggerTest
+class SwaggerTest implements IConvertible
 {
     /**
     * Color Description
@@ -5506,34 +5591,36 @@ class SwaggerTest
     SwaggerNestedModel2 nestedModel2;
 
     SwaggerTest({this.name,this.color,this.original,this.notAliased,this.password,this.myDateBetween,this.nestedModel1,this.nestedModel2});
+    SwaggerTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerTest fromMap(Map<String, dynamic> map) => new SwaggerTest.fromJson(map);
-    SwaggerTest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        color = JsonConverters.fromJson(json['color'],'MyColor',_types);
+        color = JsonConverters.fromJson(json['color'],'MyColor',context);
         original = json['original'];
         notAliased = json['notAliased'];
         password = json['password'];
-        myDateBetween = JsonConverters.fromJson(json['myDateBetween'],'List<DateTime>',_types);
-        nestedModel1 = JsonConverters.fromJson(json['nestedModel1'],'SwaggerNestedModel',_types);
-        nestedModel2 = JsonConverters.fromJson(json['nestedModel2'],'SwaggerNestedModel2',_types);
+        myDateBetween = JsonConverters.fromJson(json['myDateBetween'],'List<DateTime>',context);
+        nestedModel1 = JsonConverters.fromJson(json['nestedModel1'],'SwaggerNestedModel',context);
+        nestedModel2 = JsonConverters.fromJson(json['nestedModel2'],'SwaggerNestedModel2',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'color': JsonConverters.toJson(color,'MyColor',_types),
+        'color': JsonConverters.toJson(color,'MyColor',context),
         'original': original,
         'notAliased': notAliased,
         'password': password,
-        'myDateBetween': JsonConverters.toJson(myDateBetween,'List<DateTime>',_types),
-        'nestedModel1': JsonConverters.toJson(nestedModel1,'SwaggerNestedModel',_types),
-        'nestedModel2': JsonConverters.toJson(nestedModel2,'SwaggerNestedModel2',_types)
+        'myDateBetween': JsonConverters.toJson(myDateBetween,'List<DateTime>',context),
+        'nestedModel1': JsonConverters.toJson(nestedModel1,'SwaggerNestedModel',context),
+        'nestedModel2': JsonConverters.toJson(nestedModel2,'SwaggerNestedModel2',context)
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/swaggertest2", "POST")
-class SwaggerTest2
+class SwaggerTest2 implements IConvertible
 {
     // @ApiMember()
     MyEnum myEnumProperty;
@@ -5542,22 +5629,24 @@ class SwaggerTest2
     String token;
 
     SwaggerTest2({this.myEnumProperty,this.token});
+    SwaggerTest2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerTest2 fromMap(Map<String, dynamic> map) => new SwaggerTest2.fromJson(map);
-    SwaggerTest2.fromJson(Map<String, dynamic> json) {
-        myEnumProperty = JsonConverters.fromJson(json['myEnumProperty'],'MyEnum',_types);
+    fromMap(Map<String, dynamic> json) {
+        myEnumProperty = JsonConverters.fromJson(json['myEnumProperty'],'MyEnum',context);
         token = json['token'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'myEnumProperty': JsonConverters.toJson(myEnumProperty,'MyEnum',_types),
+        'myEnumProperty': JsonConverters.toJson(myEnumProperty,'MyEnum',context),
         'token': token
     };
 
+    TypeContext context = _ctx;
 }
 
 // @Route("/swagger-complex", "POST")
-class SwaggerComplex implements IReturn<SwaggerComplexResponse>
+class SwaggerComplex implements IReturn<SwaggerComplexResponse>, IConvertible
 {
     // @DataMember
     // @ApiMember()
@@ -5584,34 +5673,36 @@ class SwaggerComplex implements IReturn<SwaggerComplexResponse>
     Map<String,String> dictionaryString;
 
     SwaggerComplex({this.isRequired,this.arrayString,this.arrayInt,this.listString,this.listInt,this.dictionaryString});
+    SwaggerComplex.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerComplex fromMap(Map<String, dynamic> map) => new SwaggerComplex.fromJson(map);
-    SwaggerComplex.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         isRequired = json['isRequired'];
-        arrayString = JsonConverters.fromJson(json['arrayString'],'List<String>',_types);
-        arrayInt = JsonConverters.fromJson(json['arrayInt'],'List<int>',_types);
-        listString = JsonConverters.fromJson(json['listString'],'List<String>',_types);
-        listInt = JsonConverters.fromJson(json['listInt'],'List<int>',_types);
-        dictionaryString = json['dictionaryString'];
+        arrayString = JsonConverters.fromJson(json['arrayString'],'List<String>',context);
+        arrayInt = JsonConverters.fromJson(json['arrayInt'],'List<int>',context);
+        listString = JsonConverters.fromJson(json['listString'],'List<String>',context);
+        listInt = JsonConverters.fromJson(json['listInt'],'List<int>',context);
+        dictionaryString = JsonConverters.toStringMap(json['dictionaryString']);
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'isRequired': isRequired,
-        'arrayString': JsonConverters.toJson(arrayString,'List<String>',_types),
-        'arrayInt': JsonConverters.toJson(arrayInt,'List<int>',_types),
-        'listString': JsonConverters.toJson(listString,'List<String>',_types),
-        'listInt': JsonConverters.toJson(listInt,'List<int>',_types),
+        'arrayString': JsonConverters.toJson(arrayString,'List<String>',context),
+        'arrayInt': JsonConverters.toJson(arrayInt,'List<int>',context),
+        'listString': JsonConverters.toJson(listString,'List<String>',context),
+        'listInt': JsonConverters.toJson(listInt,'List<int>',context),
         'dictionaryString': dictionaryString
     };
 
     createResponse() { return new SwaggerComplexResponse(); }
     String getTypeName() { return "SwaggerComplex"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/swaggerpost/{Required1}", "GET")
 // @Route("/swaggerpost/{Required1}/{Optional1}", "GET")
 // @Route("/swaggerpost", "POST")
-class SwaggerPostTest implements IReturn<HelloResponse>
+class SwaggerPostTest implements IReturn<HelloResponse>, IConvertible
 {
     // @ApiMember(Verb="POST")
     // @ApiMember(ParameterType="path", Route="/swaggerpost/{Required1}", Verb="GET")
@@ -5623,11 +5714,12 @@ class SwaggerPostTest implements IReturn<HelloResponse>
     String optional1;
 
     SwaggerPostTest({this.required1,this.optional1});
+    SwaggerPostTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerPostTest fromMap(Map<String, dynamic> map) => new SwaggerPostTest.fromJson(map);
-    SwaggerPostTest.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         required1 = json['required1'];
         optional1 = json['optional1'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5637,12 +5729,13 @@ class SwaggerPostTest implements IReturn<HelloResponse>
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "SwaggerPostTest"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/swaggerpost2/{Required1}/{Required2}", "GET")
 // @Route("/swaggerpost2/{Required1}/{Required2}/{Optional1}", "GET")
 // @Route("/swaggerpost2", "POST")
-class SwaggerPostTest2 implements IReturn<HelloResponse>
+class SwaggerPostTest2 implements IReturn<HelloResponse>, IConvertible
 {
     // @ApiMember(ParameterType="path", Route="/swaggerpost2/{Required1}/{Required2}", Verb="GET")
     // @ApiMember(ParameterType="path", Route="/swaggerpost2/{Required1}/{Required2}/{Optional1}", Verb="GET")
@@ -5656,12 +5749,13 @@ class SwaggerPostTest2 implements IReturn<HelloResponse>
     String optional1;
 
     SwaggerPostTest2({this.required1,this.required2,this.optional1});
+    SwaggerPostTest2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    SwaggerPostTest2 fromMap(Map<String, dynamic> map) => new SwaggerPostTest2.fromJson(map);
-    SwaggerPostTest2.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         required1 = json['required1'];
         required2 = json['required2'];
         optional1 = json['optional1'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
@@ -5672,371 +5766,59 @@ class SwaggerPostTest2 implements IReturn<HelloResponse>
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "SwaggerPostTest2"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/swagger/multiattrtest", "POST")
 // @ApiResponse(Description="Code 1", StatusCode=400)
 // @ApiResponse(Description="Code 2", StatusCode=402)
 // @ApiResponse(Description="Code 3", StatusCode=401)
-class SwaggerMultiApiResponseTest implements IReturnVoid
+class SwaggerMultiApiResponseTest implements IReturnVoid, IConvertible
 {
     SwaggerMultiApiResponseTest();
-    SwaggerMultiApiResponseTest fromMap(Map<String, dynamic> map) => new SwaggerMultiApiResponseTest.fromJson(map);
     SwaggerMultiApiResponseTest.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
     Map<String, dynamic> toJson() => {};
     createResponse() {}
     String getTypeName() { return "SwaggerMultiApiResponseTest"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/dynamically/registered/{Name}")
-class DynamicallyRegistered
+class DynamicallyRegistered implements IConvertible
 {
     String name;
 
     DynamicallyRegistered({this.name});
+    DynamicallyRegistered.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    DynamicallyRegistered fromMap(Map<String, dynamic> map) => new DynamicallyRegistered.fromJson(map);
-    DynamicallyRegistered.fromJson(Map<String, dynamic> json) {
+    fromMap(Map<String, dynamic> json) {
         name = json['name'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name
     };
 
-}
-
-// @Route("/auth")
-// @Route("/auth/{provider}")
-// @Route("/authenticate")
-// @Route("/authenticate/{provider}")
-// @DataContract
-class Authenticate implements IReturn<AuthenticateResponse>, IPost, IMeta
-{
-    // @DataMember(Order=1)
-    String provider;
-
-    // @DataMember(Order=2)
-    String state;
-
-    // @DataMember(Order=3)
-    String oauth_token;
-
-    // @DataMember(Order=4)
-    String oauth_verifier;
-
-    // @DataMember(Order=5)
-    String userName;
-
-    // @DataMember(Order=6)
-    String password;
-
-    // @DataMember(Order=7)
-    bool rememberMe;
-
-    // @DataMember(Order=8)
-    String Continue;
-
-    // @DataMember(Order=9)
-    String nonce;
-
-    // @DataMember(Order=10)
-    String uri;
-
-    // @DataMember(Order=11)
-    String response;
-
-    // @DataMember(Order=12)
-    String qop;
-
-    // @DataMember(Order=13)
-    String nc;
-
-    // @DataMember(Order=14)
-    String cnonce;
-
-    // @DataMember(Order=15)
-    bool useTokenCookie;
-
-    // @DataMember(Order=16)
-    String accessToken;
-
-    // @DataMember(Order=17)
-    String accessTokenSecret;
-
-    // @DataMember(Order=18)
-    Map<String,String> meta;
-
-    Authenticate({this.provider,this.state,this.oauth_token,this.oauth_verifier,this.userName,this.password,this.rememberMe,this.Continue,this.nonce,this.uri,this.response,this.qop,this.nc,this.cnonce,this.useTokenCookie,this.accessToken,this.accessTokenSecret,this.meta});
-
-    Authenticate fromMap(Map<String, dynamic> map) => new Authenticate.fromJson(map);
-    Authenticate.fromJson(Map<String, dynamic> json) {
-        provider = json['provider'];
-        state = json['state'];
-        oauth_token = json['oauth_token'];
-        oauth_verifier = json['oauth_verifier'];
-        userName = json['userName'];
-        password = json['password'];
-        rememberMe = json['rememberMe'];
-        Continue = json['continue'];
-        nonce = json['nonce'];
-        uri = json['uri'];
-        response = json['response'];
-        qop = json['qop'];
-        nc = json['nc'];
-        cnonce = json['cnonce'];
-        useTokenCookie = json['useTokenCookie'];
-        accessToken = json['accessToken'];
-        accessTokenSecret = json['accessTokenSecret'];
-        meta = json['meta'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'provider': provider,
-        'state': state,
-        'oauth_token': oauth_token,
-        'oauth_verifier': oauth_verifier,
-        'userName': userName,
-        'password': password,
-        'rememberMe': rememberMe,
-        'continue': Continue,
-        'nonce': nonce,
-        'uri': uri,
-        'response': response,
-        'qop': qop,
-        'nc': nc,
-        'cnonce': cnonce,
-        'useTokenCookie': useTokenCookie,
-        'accessToken': accessToken,
-        'accessTokenSecret': accessTokenSecret,
-        'meta': meta
-    };
-
-    createResponse() { return new AuthenticateResponse(); }
-    String getTypeName() { return "Authenticate"; }
-}
-
-// @Route("/assignroles")
-// @DataContract
-class AssignRoles implements IReturn<AssignRolesResponse>, IPost
-{
-    // @DataMember(Order=1)
-    String userName;
-
-    // @DataMember(Order=2)
-    List<String> permissions;
-
-    // @DataMember(Order=3)
-    List<String> roles;
-
-    AssignRoles({this.userName,this.permissions,this.roles});
-
-    AssignRoles fromMap(Map<String, dynamic> map) => new AssignRoles.fromJson(map);
-    AssignRoles.fromJson(Map<String, dynamic> json) {
-        userName = json['userName'];
-        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',_types);
-        roles = JsonConverters.fromJson(json['roles'],'List<String>',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'userName': userName,
-        'permissions': JsonConverters.toJson(permissions,'List<String>',_types),
-        'roles': JsonConverters.toJson(roles,'List<String>',_types)
-    };
-
-    createResponse() { return new AssignRolesResponse(); }
-    String getTypeName() { return "AssignRoles"; }
-}
-
-// @Route("/unassignroles")
-// @DataContract
-class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost
-{
-    // @DataMember(Order=1)
-    String userName;
-
-    // @DataMember(Order=2)
-    List<String> permissions;
-
-    // @DataMember(Order=3)
-    List<String> roles;
-
-    UnAssignRoles({this.userName,this.permissions,this.roles});
-
-    UnAssignRoles fromMap(Map<String, dynamic> map) => new UnAssignRoles.fromJson(map);
-    UnAssignRoles.fromJson(Map<String, dynamic> json) {
-        userName = json['userName'];
-        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',_types);
-        roles = JsonConverters.fromJson(json['roles'],'List<String>',_types);
-    }
-
-    Map<String, dynamic> toJson() => {
-        'userName': userName,
-        'permissions': JsonConverters.toJson(permissions,'List<String>',_types),
-        'roles': JsonConverters.toJson(roles,'List<String>',_types)
-    };
-
-    createResponse() { return new UnAssignRolesResponse(); }
-    String getTypeName() { return "UnAssignRoles"; }
-}
-
-// @Route("/session-to-token")
-// @DataContract
-class ConvertSessionToToken implements IReturn<ConvertSessionToTokenResponse>, IPost
-{
-    // @DataMember(Order=1)
-    bool preserveSession;
-
-    ConvertSessionToToken({this.preserveSession});
-
-    ConvertSessionToToken fromMap(Map<String, dynamic> map) => new ConvertSessionToToken.fromJson(map);
-    ConvertSessionToToken.fromJson(Map<String, dynamic> json) {
-        preserveSession = json['preserveSession'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'preserveSession': preserveSession
-    };
-
-    createResponse() { return new ConvertSessionToTokenResponse(); }
-    String getTypeName() { return "ConvertSessionToToken"; }
-}
-
-// @Route("/access-token")
-// @DataContract
-class GetAccessToken implements IReturn<GetAccessTokenResponse>, IPost
-{
-    // @DataMember(Order=1)
-    String refreshToken;
-
-    GetAccessToken({this.refreshToken});
-
-    GetAccessToken fromMap(Map<String, dynamic> map) => new GetAccessToken.fromJson(map);
-    GetAccessToken.fromJson(Map<String, dynamic> json) {
-        refreshToken = json['refreshToken'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'refreshToken': refreshToken
-    };
-
-    createResponse() { return new GetAccessTokenResponse(); }
-    String getTypeName() { return "GetAccessToken"; }
-}
-
-// @Route("/apikeys")
-// @Route("/apikeys/{Environment}")
-// @DataContract
-class GetApiKeys implements IReturn<GetApiKeysResponse>, IGet
-{
-    // @DataMember(Order=1)
-    String environment;
-
-    GetApiKeys({this.environment});
-
-    GetApiKeys fromMap(Map<String, dynamic> map) => new GetApiKeys.fromJson(map);
-    GetApiKeys.fromJson(Map<String, dynamic> json) {
-        environment = json['environment'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'environment': environment
-    };
-
-    createResponse() { return new GetApiKeysResponse(); }
-    String getTypeName() { return "GetApiKeys"; }
-}
-
-// @Route("/apikeys/regenerate")
-// @Route("/apikeys/regenerate/{Environment}")
-// @DataContract
-class RegenerateApiKeys implements IReturn<GetApiKeysResponse>, IPost
-{
-    // @DataMember(Order=1)
-    String environment;
-
-    RegenerateApiKeys({this.environment});
-
-    RegenerateApiKeys fromMap(Map<String, dynamic> map) => new RegenerateApiKeys.fromJson(map);
-    RegenerateApiKeys.fromJson(Map<String, dynamic> json) {
-        environment = json['environment'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'environment': environment
-    };
-
-    createResponse() { return new GetApiKeysResponse(); }
-    String getTypeName() { return "RegenerateApiKeys"; }
-}
-
-// @Route("/register")
-// @DataContract
-class Register implements IReturn<RegisterResponse>, IPost
-{
-    // @DataMember(Order=1)
-    String userName;
-
-    // @DataMember(Order=2)
-    String firstName;
-
-    // @DataMember(Order=3)
-    String lastName;
-
-    // @DataMember(Order=4)
-    String displayName;
-
-    // @DataMember(Order=5)
-    String email;
-
-    // @DataMember(Order=6)
-    String password;
-
-    // @DataMember(Order=7)
-    bool autoLogin;
-
-    // @DataMember(Order=8)
-    String Continue;
-
-    Register({this.userName,this.firstName,this.lastName,this.displayName,this.email,this.password,this.autoLogin,this.Continue});
-
-    Register fromMap(Map<String, dynamic> map) => new Register.fromJson(map);
-    Register.fromJson(Map<String, dynamic> json) {
-        userName = json['userName'];
-        firstName = json['firstName'];
-        lastName = json['lastName'];
-        displayName = json['displayName'];
-        email = json['email'];
-        password = json['password'];
-        autoLogin = json['autoLogin'];
-        Continue = json['continue'];
-    }
-
-    Map<String, dynamic> toJson() => {
-        'userName': userName,
-        'firstName': firstName,
-        'lastName': lastName,
-        'displayName': displayName,
-        'email': email,
-        'password': password,
-        'autoLogin': autoLogin,
-        'continue': Continue
-    };
-
-    createResponse() { return new RegisterResponse(); }
-    String getTypeName() { return "Register"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/pgsql/rockstars")
-class QueryPostgresRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryPostgresRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryPostgresRockstars({this.age});
+    QueryPostgresRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryPostgresRockstars fromMap(Map<String, dynamic> map) => new QueryPostgresRockstars.fromJson(map);
-    QueryPostgresRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6045,18 +5827,21 @@ class QueryPostgresRockstars extends QueryDb1<Rockstar> implements IReturn<Query
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryPostgresRockstars"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/pgsql/pgrockstars")
-class QueryPostgresPgRockstars extends QueryDb1<PgRockstar> implements IReturn<QueryResponse<PgRockstar>>, IMeta
+class QueryPostgresPgRockstars extends QueryDb1<PgRockstar> implements IReturn<QueryResponse<PgRockstar>>, IConvertible
 {
     int age;
 
     QueryPostgresPgRockstars({this.age});
+    QueryPostgresPgRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryPostgresPgRockstars fromMap(Map<String, dynamic> map) => new QueryPostgresPgRockstars.fromJson(map);
-    QueryPostgresPgRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6065,9 +5850,10 @@ class QueryPostgresPgRockstars extends QueryDb1<PgRockstar> implements IReturn<Q
 
     createResponse() { return new QueryResponse<PgRockstar>(); }
     String getTypeName() { return "QueryPostgresPgRockstars"; }
+    TypeContext context = _ctx;
 }
 
-class QueryRockstarsConventions extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryRockstarsConventions extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     List<int> ids;
     int ageOlderThan;
@@ -6082,10 +5868,11 @@ class QueryRockstarsConventions extends QueryDb1<Rockstar> implements IReturn<Qu
     int rockstarIdOnOrAfter;
 
     QueryRockstarsConventions({this.ids,this.ageOlderThan,this.ageGreaterThanOrEqualTo,this.ageGreaterThan,this.greaterThanAge,this.firstNameStartsWith,this.lastNameEndsWith,this.lastNameContains,this.rockstarAlbumNameContains,this.rockstarIdAfter,this.rockstarIdOnOrAfter});
+    QueryRockstarsConventions.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarsConventions fromMap(Map<String, dynamic> map) => new QueryRockstarsConventions.fromJson(map);
-    QueryRockstarsConventions.fromJson(Map<String, dynamic> json): super.fromJson(json) {
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',_types);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
         ageOlderThan = json['ageOlderThan'];
         ageGreaterThanOrEqualTo = json['ageGreaterThanOrEqualTo'];
         ageGreaterThan = json['ageGreaterThan'];
@@ -6096,10 +5883,11 @@ class QueryRockstarsConventions extends QueryDb1<Rockstar> implements IReturn<Qu
         rockstarAlbumNameContains = json['rockstarAlbumNameContains'];
         rockstarIdAfter = json['rockstarIdAfter'];
         rockstarIdOnOrAfter = json['rockstarIdOnOrAfter'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',_types),
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
         'ageOlderThan': ageOlderThan,
         'ageGreaterThanOrEqualTo': ageGreaterThanOrEqualTo,
         'ageGreaterThan': ageGreaterThan,
@@ -6114,18 +5902,21 @@ class QueryRockstarsConventions extends QueryDb1<Rockstar> implements IReturn<Qu
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstarsConventions"; }
+    TypeContext context = _ctx;
 }
 
 // @AutoQueryViewer(Description="Use this option to search for Rockstars!", Title="Search for Rockstars")
-class QueryCustomRockstars extends QueryDb2<Rockstar, CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IMeta
+class QueryCustomRockstars extends QueryDb2<Rockstar,CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IConvertible
 {
     int age;
 
     QueryCustomRockstars({this.age});
+    QueryCustomRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryCustomRockstars fromMap(Map<String, dynamic> map) => new QueryCustomRockstars.fromJson(map);
-    QueryCustomRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6134,20 +5925,23 @@ class QueryCustomRockstars extends QueryDb2<Rockstar, CustomRockstar> implements
 
     createResponse() { return new QueryResponse<CustomRockstar>(); }
     String getTypeName() { return "QueryCustomRockstars"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/customrockstars")
-class QueryRockstarAlbums extends QueryDb2<Rockstar, CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IMeta
+class QueryRockstarAlbums extends QueryDb2<Rockstar,CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IConvertible
 {
     int age;
     String rockstarAlbumName;
 
     QueryRockstarAlbums({this.age,this.rockstarAlbumName});
+    QueryRockstarAlbums.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarAlbums fromMap(Map<String, dynamic> map) => new QueryRockstarAlbums.fromJson(map);
-    QueryRockstarAlbums.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
         rockstarAlbumName = json['rockstarAlbumName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6157,29 +5951,37 @@ class QueryRockstarAlbums extends QueryDb2<Rockstar, CustomRockstar> implements 
 
     createResponse() { return new QueryResponse<CustomRockstar>(); }
     String getTypeName() { return "QueryRockstarAlbums"; }
+    TypeContext context = _ctx;
 }
 
-class QueryRockstarAlbumsImplicit extends QueryDb2<Rockstar, CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IMeta
+class QueryRockstarAlbumsImplicit extends QueryDb2<Rockstar,CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IConvertible
 {
     QueryRockstarAlbumsImplicit();
-    QueryRockstarAlbumsImplicit fromMap(Map<String, dynamic> map) => new QueryRockstarAlbumsImplicit.fromJson(map);
     QueryRockstarAlbumsImplicit.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<CustomRockstar>(); }
     String getTypeName() { return "QueryRockstarAlbumsImplicit"; }
+    TypeContext context = _ctx;
 }
 
-class QueryRockstarAlbumsLeftJoin extends QueryDb2<Rockstar, CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IMeta
+class QueryRockstarAlbumsLeftJoin extends QueryDb2<Rockstar,CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IConvertible
 {
     int age;
     String albumName;
 
     QueryRockstarAlbumsLeftJoin({this.age,this.albumName});
+    QueryRockstarAlbumsLeftJoin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarAlbumsLeftJoin fromMap(Map<String, dynamic> map) => new QueryRockstarAlbumsLeftJoin.fromJson(map);
-    QueryRockstarAlbumsLeftJoin.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
         albumName = json['albumName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6189,17 +5991,20 @@ class QueryRockstarAlbumsLeftJoin extends QueryDb2<Rockstar, CustomRockstar> imp
 
     createResponse() { return new QueryResponse<CustomRockstar>(); }
     String getTypeName() { return "QueryRockstarAlbumsLeftJoin"; }
+    TypeContext context = _ctx;
 }
 
-class QueryOverridedRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryOverridedRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryOverridedRockstars({this.age});
+    QueryOverridedRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryOverridedRockstars fromMap(Map<String, dynamic> map) => new QueryOverridedRockstars.fromJson(map);
-    QueryOverridedRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6208,17 +6013,20 @@ class QueryOverridedRockstars extends QueryDb1<Rockstar> implements IReturn<Quer
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryOverridedRockstars"; }
+    TypeContext context = _ctx;
 }
 
-class QueryOverridedCustomRockstars extends QueryDb2<Rockstar, CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IMeta
+class QueryOverridedCustomRockstars extends QueryDb2<Rockstar,CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IConvertible
 {
     int age;
 
     QueryOverridedCustomRockstars({this.age});
+    QueryOverridedCustomRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryOverridedCustomRockstars fromMap(Map<String, dynamic> map) => new QueryOverridedCustomRockstars.fromJson(map);
-    QueryOverridedCustomRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6227,10 +6035,11 @@ class QueryOverridedCustomRockstars extends QueryDb2<Rockstar, CustomRockstar> i
 
     createResponse() { return new QueryResponse<CustomRockstar>(); }
     String getTypeName() { return "QueryOverridedCustomRockstars"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/query-custom/rockstars")
-class QueryFieldRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryFieldRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     String firstName;
     List<String> firstNames;
@@ -6243,45 +6052,50 @@ class QueryFieldRockstars extends QueryDb1<Rockstar> implements IReturn<QueryRes
     List<String> firstNameContainsMulti;
 
     QueryFieldRockstars({this.firstName,this.firstNames,this.age,this.firstNameCaseInsensitive,this.firstNameStartsWith,this.lastNameEndsWith,this.firstNameBetween,this.orLastName,this.firstNameContainsMulti});
+    QueryFieldRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryFieldRockstars fromMap(Map<String, dynamic> map) => new QueryFieldRockstars.fromJson(map);
-    QueryFieldRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         firstName = json['firstName'];
-        firstNames = JsonConverters.fromJson(json['firstNames'],'List<String>',_types);
+        firstNames = JsonConverters.fromJson(json['firstNames'],'List<String>',context);
         age = json['age'];
         firstNameCaseInsensitive = json['firstNameCaseInsensitive'];
         firstNameStartsWith = json['firstNameStartsWith'];
         lastNameEndsWith = json['lastNameEndsWith'];
-        firstNameBetween = JsonConverters.fromJson(json['firstNameBetween'],'List<String>',_types);
+        firstNameBetween = JsonConverters.fromJson(json['firstNameBetween'],'List<String>',context);
         orLastName = json['orLastName'];
-        firstNameContainsMulti = JsonConverters.fromJson(json['firstNameContainsMulti'],'List<String>',_types);
+        firstNameContainsMulti = JsonConverters.fromJson(json['firstNameContainsMulti'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'firstName': firstName,
-        'firstNames': JsonConverters.toJson(firstNames,'List<String>',_types),
+        'firstNames': JsonConverters.toJson(firstNames,'List<String>',context),
         'age': age,
         'firstNameCaseInsensitive': firstNameCaseInsensitive,
         'firstNameStartsWith': firstNameStartsWith,
         'lastNameEndsWith': lastNameEndsWith,
-        'firstNameBetween': JsonConverters.toJson(firstNameBetween,'List<String>',_types),
+        'firstNameBetween': JsonConverters.toJson(firstNameBetween,'List<String>',context),
         'orLastName': orLastName,
-        'firstNameContainsMulti': JsonConverters.toJson(firstNameContainsMulti,'List<String>',_types)
+        'firstNameContainsMulti': JsonConverters.toJson(firstNameContainsMulti,'List<String>',context)
     });
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryFieldRockstars"; }
+    TypeContext context = _ctx;
 }
 
-class QueryFieldRockstarsDynamic extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryFieldRockstarsDynamic extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryFieldRockstarsDynamic({this.age});
+    QueryFieldRockstarsDynamic.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryFieldRockstarsDynamic fromMap(Map<String, dynamic> map) => new QueryFieldRockstarsDynamic.fromJson(map);
-    QueryFieldRockstarsDynamic.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6290,17 +6104,20 @@ class QueryFieldRockstarsDynamic extends QueryDb1<Rockstar> implements IReturn<Q
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryFieldRockstarsDynamic"; }
+    TypeContext context = _ctx;
 }
 
-class QueryRockstarsFilter extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryRockstarsFilter extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryRockstarsFilter({this.age});
+    QueryRockstarsFilter.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarsFilter fromMap(Map<String, dynamic> map) => new QueryRockstarsFilter.fromJson(map);
-    QueryRockstarsFilter.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6309,17 +6126,20 @@ class QueryRockstarsFilter extends QueryDb1<Rockstar> implements IReturn<QueryRe
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstarsFilter"; }
+    TypeContext context = _ctx;
 }
 
-class QueryCustomRockstarsFilter extends QueryDb2<Rockstar, CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IMeta
+class QueryCustomRockstarsFilter extends QueryDb2<Rockstar,CustomRockstar> implements IReturn<QueryResponse<CustomRockstar>>, IConvertible
 {
     int age;
 
     QueryCustomRockstarsFilter({this.age});
+    QueryCustomRockstarsFilter.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryCustomRockstarsFilter fromMap(Map<String, dynamic> map) => new QueryCustomRockstarsFilter.fromJson(map);
-    QueryCustomRockstarsFilter.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6328,17 +6148,20 @@ class QueryCustomRockstarsFilter extends QueryDb2<Rockstar, CustomRockstar> impl
 
     createResponse() { return new QueryResponse<CustomRockstar>(); }
     String getTypeName() { return "QueryCustomRockstarsFilter"; }
+    TypeContext context = _ctx;
 }
 
-class QueryRockstarsIFilter extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta, IFilterRockstars
+class QueryRockstarsIFilter extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IFilterRockstars, IConvertible
 {
     int age;
 
     QueryRockstarsIFilter({this.age});
+    QueryRockstarsIFilter.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarsIFilter fromMap(Map<String, dynamic> map) => new QueryRockstarsIFilter.fromJson(map);
-    QueryRockstarsIFilter.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6347,20 +6170,23 @@ class QueryRockstarsIFilter extends QueryDb1<Rockstar> implements IReturn<QueryR
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstarsIFilter"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/OrRockstars")
-class QueryOrRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryOrRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
     String firstName;
 
     QueryOrRockstars({this.age,this.firstName});
+    QueryOrRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryOrRockstars fromMap(Map<String, dynamic> map) => new QueryOrRockstars.fromJson(map);
-    QueryOrRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
         firstName = json['firstName'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6370,9 +6196,10 @@ class QueryOrRockstars extends QueryDb1<Rockstar> implements IReturn<QueryRespon
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryOrRockstars"; }
+    TypeContext context = _ctx;
 }
 
-class QueryGetRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryGetRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     List<int> ids;
     List<int> ages;
@@ -6380,103 +6207,124 @@ class QueryGetRockstars extends QueryDb1<Rockstar> implements IReturn<QueryRespo
     List<int> idsBetween;
 
     QueryGetRockstars({this.ids,this.ages,this.firstNames,this.idsBetween});
+    QueryGetRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryGetRockstars fromMap(Map<String, dynamic> map) => new QueryGetRockstars.fromJson(map);
-    QueryGetRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',_types);
-        ages = JsonConverters.fromJson(json['ages'],'List<int>',_types);
-        firstNames = JsonConverters.fromJson(json['firstNames'],'List<String>',_types);
-        idsBetween = JsonConverters.fromJson(json['idsBetween'],'List<int>',_types);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        ages = JsonConverters.fromJson(json['ages'],'List<int>',context);
+        firstNames = JsonConverters.fromJson(json['firstNames'],'List<String>',context);
+        idsBetween = JsonConverters.fromJson(json['idsBetween'],'List<int>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',_types),
-        'ages': JsonConverters.toJson(ages,'List<int>',_types),
-        'firstNames': JsonConverters.toJson(firstNames,'List<String>',_types),
-        'idsBetween': JsonConverters.toJson(idsBetween,'List<int>',_types)
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'ages': JsonConverters.toJson(ages,'List<int>',context),
+        'firstNames': JsonConverters.toJson(firstNames,'List<String>',context),
+        'idsBetween': JsonConverters.toJson(idsBetween,'List<int>',context)
     });
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryGetRockstars"; }
+    TypeContext context = _ctx;
 }
 
-class QueryGetRockstarsDynamic extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryGetRockstarsDynamic extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     QueryGetRockstarsDynamic();
-    QueryGetRockstarsDynamic fromMap(Map<String, dynamic> map) => new QueryGetRockstarsDynamic.fromJson(map);
     QueryGetRockstarsDynamic.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryGetRockstarsDynamic"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/movies/search")
-class SearchMovies extends QueryDb1<Movie> implements IReturn<QueryResponse<Movie>>, IMeta
+class SearchMovies extends QueryDb1<Movie> implements IReturn<QueryResponse<Movie>>, IConvertible
 {
     SearchMovies();
-    SearchMovies fromMap(Map<String, dynamic> map) => new SearchMovies.fromJson(map);
     SearchMovies.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<Movie>(); }
     String getTypeName() { return "SearchMovies"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/movies")
-class QueryMovies extends QueryDb1<Movie> implements IReturn<QueryResponse<Movie>>, IMeta
+class QueryMovies extends QueryDb1<Movie> implements IReturn<QueryResponse<Movie>>, IConvertible
 {
     List<int> ids;
     List<String> imdbIds;
     List<String> ratings;
 
     QueryMovies({this.ids,this.imdbIds,this.ratings});
+    QueryMovies.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryMovies fromMap(Map<String, dynamic> map) => new QueryMovies.fromJson(map);
-    QueryMovies.fromJson(Map<String, dynamic> json): super.fromJson(json) {
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',_types);
-        imdbIds = JsonConverters.fromJson(json['imdbIds'],'List<String>',_types);
-        ratings = JsonConverters.fromJson(json['ratings'],'List<String>',_types);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        imdbIds = JsonConverters.fromJson(json['imdbIds'],'List<String>',context);
+        ratings = JsonConverters.fromJson(json['ratings'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',_types),
-        'imdbIds': JsonConverters.toJson(imdbIds,'List<String>',_types),
-        'ratings': JsonConverters.toJson(ratings,'List<String>',_types)
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'imdbIds': JsonConverters.toJson(imdbIds,'List<String>',context),
+        'ratings': JsonConverters.toJson(ratings,'List<String>',context)
     });
 
     createResponse() { return new QueryResponse<Movie>(); }
     String getTypeName() { return "QueryMovies"; }
+    TypeContext context = _ctx;
 }
 
-class StreamMovies extends QueryDb1<Movie> implements IReturn<QueryResponse<Movie>>, IMeta
+class StreamMovies extends QueryDb1<Movie> implements IReturn<QueryResponse<Movie>>, IConvertible
 {
     List<String> ratings;
 
     StreamMovies({this.ratings});
+    StreamMovies.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    StreamMovies fromMap(Map<String, dynamic> map) => new StreamMovies.fromJson(map);
-    StreamMovies.fromJson(Map<String, dynamic> json): super.fromJson(json) {
-        ratings = JsonConverters.fromJson(json['ratings'],'List<String>',_types);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        ratings = JsonConverters.fromJson(json['ratings'],'List<String>',context);
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ratings': JsonConverters.toJson(ratings,'List<String>',_types)
+        'ratings': JsonConverters.toJson(ratings,'List<String>',context)
     });
 
     createResponse() { return new QueryResponse<Movie>(); }
     String getTypeName() { return "StreamMovies"; }
+    TypeContext context = _ctx;
 }
 
-class QueryUnknownRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryUnknownRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int unknownInt;
     String unknownProperty;
 
     QueryUnknownRockstars({this.unknownInt,this.unknownProperty});
+    QueryUnknownRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryUnknownRockstars fromMap(Map<String, dynamic> map) => new QueryUnknownRockstars.fromJson(map);
-    QueryUnknownRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         unknownInt = json['unknownInt'];
         unknownProperty = json['unknownProperty'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6486,18 +6334,21 @@ class QueryUnknownRockstars extends QueryDb1<Rockstar> implements IReturn<QueryR
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryUnknownRockstars"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/query/rockstar-references")
-class QueryRockstarsWithReferences extends QueryDb1<RockstarReference> implements IReturn<QueryResponse<RockstarReference>>, IMeta
+class QueryRockstarsWithReferences extends QueryDb1<RockstarReference> implements IReturn<QueryResponse<RockstarReference>>, IConvertible
 {
     int age;
 
     QueryRockstarsWithReferences({this.age});
+    QueryRockstarsWithReferences.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryRockstarsWithReferences fromMap(Map<String, dynamic> map) => new QueryRockstarsWithReferences.fromJson(map);
-    QueryRockstarsWithReferences.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6506,17 +6357,20 @@ class QueryRockstarsWithReferences extends QueryDb1<RockstarReference> implement
 
     createResponse() { return new QueryResponse<RockstarReference>(); }
     String getTypeName() { return "QueryRockstarsWithReferences"; }
+    TypeContext context = _ctx;
 }
 
-class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IMeta
+class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
 {
     int id;
 
     QueryPocoBase({this.id});
+    QueryPocoBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryPocoBase fromMap(Map<String, dynamic> map) => new QueryPocoBase.fromJson(map);
-    QueryPocoBase.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6525,17 +6379,20 @@ class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IRetur
 
     createResponse() { return new QueryResponse<OnlyDefinedInGenericType>(); }
     String getTypeName() { return "QueryPocoBase"; }
+    TypeContext context = _ctx;
 }
 
-class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom, OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IMeta
+class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IConvertible
 {
     int id;
 
     QueryPocoIntoBase({this.id});
+    QueryPocoIntoBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryPocoIntoBase fromMap(Map<String, dynamic> map) => new QueryPocoIntoBase.fromJson(map);
-    QueryPocoIntoBase.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         id = json['id'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6544,29 +6401,37 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom, OnlyDefin
 
     createResponse() { return new QueryResponse<OnlyDefinedInGenericTypeInto>(); }
     String getTypeName() { return "QueryPocoIntoBase"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/query/alltypes")
-class QueryAllTypes extends QueryDb1<AllTypes> implements IReturn<QueryResponse<AllTypes>>, IMeta
+class QueryAllTypes extends QueryDb1<AllTypes> implements IReturn<QueryResponse<AllTypes>>, IConvertible
 {
     QueryAllTypes();
-    QueryAllTypes fromMap(Map<String, dynamic> map) => new QueryAllTypes.fromJson(map);
     QueryAllTypes.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return new QueryResponse<AllTypes>(); }
     String getTypeName() { return "QueryAllTypes"; }
+    TypeContext context = _ctx;
 }
 
 // @Route("/querydata/rockstars")
-class QueryDataRockstars extends QueryData<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IMeta
+class QueryDataRockstars extends QueryData<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     int age;
 
     QueryDataRockstars({this.age});
+    QueryDataRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
-    QueryDataRockstars fromMap(Map<String, dynamic> map) => new QueryDataRockstars.fromJson(map);
-    QueryDataRockstars.fromJson(Map<String, dynamic> json): super.fromJson(json) {
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
         age = json['age'];
+        return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
@@ -6575,21 +6440,15 @@ class QueryDataRockstars extends QueryData<Rockstar> implements IReturn<QueryRes
 
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryDataRockstars"; }
+    TypeContext context = _ctx;
 }
 
-Map<String, TypeInfo> _types = <String, TypeInfo> {
+TypeContext _ctx = new TypeContext(typeName: 'localhost', types: <String, TypeInfo> {
     'RequestLogEntry': new TypeInfo(TypeOf.Class, create:() => new RequestLogEntry()),
-    'DateTime': new TypeInfo(TypeOf.Class, create:() => new DateTime(0)),
-    'dynamic': new TypeInfo(TypeOf.Class, create:() => new dynamic()),
-    'Duration': new TypeInfo(TypeOf.Class, create:() => new Duration()),
-    'ResponseError': new TypeInfo(TypeOf.Class, create:() => new ResponseError()),
-    'ResponseStatus': new TypeInfo(TypeOf.Class, create:() => new ResponseStatus()),
-    'List<ResponseError>': new TypeInfo(TypeOf.Class, create:() => new List<ResponseError>()),
     'Rockstar': new TypeInfo(TypeOf.Class, create:() => new Rockstar()),
     'ObjectDesign': new TypeInfo(TypeOf.Class, create:() => new ObjectDesign()),
     'IAuthTokens': new TypeInfo(TypeOf.Interface),
     'AuthUserSession': new TypeInfo(TypeOf.Class, create:() => new AuthUserSession()),
-    'List<String>': new TypeInfo(TypeOf.Class, create:() => new List<String>()),
     'List<IAuthTokens>': new TypeInfo(TypeOf.Class, create:() => new List<IAuthTokens>()),
     'MetadataTestNestedChild': new TypeInfo(TypeOf.Class, create:() => new MetadataTestNestedChild()),
     'MetadataTestChild': new TypeInfo(TypeOf.Class, create:() => new MetadataTestChild()),
@@ -6623,7 +6482,6 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'EnumFlags': new TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
     'Poco': new TypeInfo(TypeOf.Class, create:() => new Poco()),
     'AllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new AllCollectionTypes()),
-    'List<int>': new TypeInfo(TypeOf.Class, create:() => new List<int>()),
     'List<Poco>': new TypeInfo(TypeOf.Class, create:() => new List<Poco>()),
     'Uint8List': new TypeInfo(TypeOf.Class, create:() => new Uint8List(0)),
     'List<DateTime>': new TypeInfo(TypeOf.Class, create:() => new List<DateTime>()),
@@ -6651,15 +6509,12 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'InnerTypeItem': new TypeInfo(TypeOf.Class, create:() => new InnerTypeItem()),
     'DayOfWeek': new TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
     'ScopeType': new TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
-    'Tuple2<T1, T2>': new TypeInfo(TypeOf.GenericDef,create:() => new Tuple2()),
-    'Tuple3<T1, T2, T3>': new TypeInfo(TypeOf.GenericDef,create:() => new Tuple3()),
     'IEcho': new TypeInfo(TypeOf.Interface),
     'CacheControl': new TypeInfo(TypeOf.Enum, enumValues:CacheControl.values),
     'MyColor': new TypeInfo(TypeOf.Enum, enumValues:MyColor.values),
     'SwaggerNestedModel': new TypeInfo(TypeOf.Class, create:() => new SwaggerNestedModel()),
     'SwaggerNestedModel2': new TypeInfo(TypeOf.Class, create:() => new SwaggerNestedModel2()),
     'MyEnum': new TypeInfo(TypeOf.Enum, enumValues:MyEnum.values),
-    'UserApiKey': new TypeInfo(TypeOf.Class, create:() => new UserApiKey()),
     'PgRockstar': new TypeInfo(TypeOf.Class, create:() => new PgRockstar()),
     'CustomRockstar': new TypeInfo(TypeOf.Class, create:() => new CustomRockstar()),
     'IFilterRockstars': new TypeInfo(TypeOf.Interface),
@@ -6671,7 +6526,6 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'OnlyDefinedInGenericTypeFrom': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeFrom()),
     'OnlyDefinedInGenericTypeInto': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeInto()),
     'TypesGroup': new TypeInfo(TypeOf.Class, create:() => new TypesGroup()),
-    'QueryResponse<T>': new TypeInfo(TypeOf.GenericDef,create:() => new QueryResponse()),
     'ChangeRequestResponse': new TypeInfo(TypeOf.Class, create:() => new ChangeRequestResponse()),
     'CustomHttpErrorResponse': new TypeInfo(TypeOf.Class, create:() => new CustomHttpErrorResponse()),
     'AlwaysThrows': new TypeInfo(TypeOf.Class, create:() => new AlwaysThrows()),
@@ -6698,9 +6552,7 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'List<ArrayResult>': new TypeInfo(TypeOf.Class, create:() => new List<ArrayResult>()),
     'List<ListResult>': new TypeInfo(TypeOf.Class, create:() => new List<ListResult>()),
     'AllTypes': new TypeInfo(TypeOf.Class, create:() => new AllTypes()),
-    'KeyValuePair<String, String>': new TypeInfo(TypeOf.Class, create:() => new KeyValuePair<String, String>()),
     'Map<int,String>': new TypeInfo(TypeOf.Class, create:() => new Map<int,String>()),
-    'String': new TypeInfo(TypeOf.Class, create:() => ""),
     'HelloAllTypesResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypesResponse()),
     'HelloWithDataContractResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContractResponse()),
     'HelloWithDescriptionResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDescriptionResponse()),
@@ -6723,12 +6575,10 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'RestrictLocalhost': new TypeInfo(TypeOf.Class, create:() => new RestrictLocalhost()),
     'RestrictInternal': new TypeInfo(TypeOf.Class, create:() => new RestrictInternal()),
     'HelloTuple': new TypeInfo(TypeOf.Class, create:() => new HelloTuple()),
-    'Tuple2<String, int>': new TypeInfo(TypeOf.Class, create:() => new Tuple2<String, int>()),
-    'Tuple3<String, int, bool>': new TypeInfo(TypeOf.Class, create:() => new Tuple3<String, int, bool>()),
-    'List<Tuple2<String,int>>': new TypeInfo(TypeOf.Class, create:() => new List<Tuple2<String,int>>()),
     'Tuple2<String,int>': new TypeInfo(TypeOf.Class, create:() => new Tuple2<String,int>()),
-    'List<Tuple3<String,int,bool>>': new TypeInfo(TypeOf.Class, create:() => new List<Tuple3<String,int,bool>>()),
     'Tuple3<String,int,bool>': new TypeInfo(TypeOf.Class, create:() => new Tuple3<String,int,bool>()),
+    'List<Tuple2<String,int>>': new TypeInfo(TypeOf.Class, create:() => new List<Tuple2<String,int>>()),
+    'List<Tuple3<String,int,bool>>': new TypeInfo(TypeOf.Class, create:() => new List<Tuple3<String,int,bool>>()),
     'HelloAuthenticatedResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAuthenticatedResponse()),
     'Echo': new TypeInfo(TypeOf.Class, create:() => new Echo()),
     'ThrowHttpErrorResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowHttpErrorResponse()),
@@ -6752,14 +6602,6 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'PostSwaggerExamples': new TypeInfo(TypeOf.Class, create:() => new PostSwaggerExamples()),
     'PutSwaggerExample': new TypeInfo(TypeOf.Class, create:() => new PutSwaggerExample()),
     'GetLists': new TypeInfo(TypeOf.Class, create:() => new GetLists()),
-    'AuthenticateResponse': new TypeInfo(TypeOf.Class, create:() => new AuthenticateResponse()),
-    'AssignRolesResponse': new TypeInfo(TypeOf.Class, create:() => new AssignRolesResponse()),
-    'UnAssignRolesResponse': new TypeInfo(TypeOf.Class, create:() => new UnAssignRolesResponse()),
-    'ConvertSessionToTokenResponse': new TypeInfo(TypeOf.Class, create:() => new ConvertSessionToTokenResponse()),
-    'GetAccessTokenResponse': new TypeInfo(TypeOf.Class, create:() => new GetAccessTokenResponse()),
-    'GetApiKeysResponse': new TypeInfo(TypeOf.Class, create:() => new GetApiKeysResponse()),
-    'List<UserApiKey>': new TypeInfo(TypeOf.Class, create:() => new List<UserApiKey>()),
-    'RegisterResponse': new TypeInfo(TypeOf.Class, create:() => new RegisterResponse()),
     'AnonType': new TypeInfo(TypeOf.Class, create:() => new AnonType()),
     'QueryRequestLogs': new TypeInfo(TypeOf.Class, create:() => new QueryRequestLogs()),
     'TodayLogs': new TypeInfo(TypeOf.Class, create:() => new TodayLogs()),
@@ -6869,14 +6711,6 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'SwaggerPostTest2': new TypeInfo(TypeOf.Class, create:() => new SwaggerPostTest2()),
     'SwaggerMultiApiResponseTest': new TypeInfo(TypeOf.Class, create:() => new SwaggerMultiApiResponseTest()),
     'DynamicallyRegistered': new TypeInfo(TypeOf.Class, create:() => new DynamicallyRegistered()),
-    'Authenticate': new TypeInfo(TypeOf.Class, create:() => new Authenticate()),
-    'AssignRoles': new TypeInfo(TypeOf.Class, create:() => new AssignRoles()),
-    'UnAssignRoles': new TypeInfo(TypeOf.Class, create:() => new UnAssignRoles()),
-    'ConvertSessionToToken': new TypeInfo(TypeOf.Class, create:() => new ConvertSessionToToken()),
-    'GetAccessToken': new TypeInfo(TypeOf.Class, create:() => new GetAccessToken()),
-    'GetApiKeys': new TypeInfo(TypeOf.Class, create:() => new GetApiKeys()),
-    'RegenerateApiKeys': new TypeInfo(TypeOf.Class, create:() => new RegenerateApiKeys()),
-    'Register': new TypeInfo(TypeOf.Class, create:() => new Register()),
     'QueryPostgresRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryPostgresRockstars()),
     'QueryPostgresPgRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryPostgresPgRockstars()),
     'QueryRockstarsConventions': new TypeInfo(TypeOf.Class, create:() => new QueryRockstarsConventions()),
@@ -6903,4 +6737,4 @@ Map<String, TypeInfo> _types = <String, TypeInfo> {
     'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
     'QueryAllTypes': new TypeInfo(TypeOf.Class, create:() => new QueryAllTypes()),
     'QueryDataRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryDataRockstars()),
-};
+});

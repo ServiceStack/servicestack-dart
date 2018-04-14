@@ -16,7 +16,7 @@ abstract class IServiceClient {
       RequestFilter requestFilter,
       ResponseFilter responseFilter});
 
-  Future<T> post<T>(IReturn<T> request, {Map<String, dynamic> args});
+  Future<T> post<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
   Future<Map<String, dynamic>> postUrl(String path, dynamic body,
       {Map<String, dynamic> args});
@@ -38,7 +38,7 @@ abstract class IServiceClient {
       RequestFilter requestFilter,
       ResponseFilter responseFilter});
 
-  Future<T> put<T>(IReturn<T> request, {Map<String, dynamic> args});
+  Future<T> put<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
   Future<Map<String, dynamic>> putUrl(String path, dynamic body,
       {Map<String, dynamic> args});
@@ -49,7 +49,7 @@ abstract class IServiceClient {
       RequestFilter requestFilter,
       ResponseFilter responseFilter});
 
-  Future<T> patch<T>(IReturn<T> request, {Map<String, dynamic> args});
+  Future<T> patch<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
   Future<Map<String, dynamic>> patchUrl(String path, dynamic body,
       {Map<String, dynamic> args});
@@ -74,6 +74,7 @@ typedef void RequestFilter(HttpClientRequest req);
 typedef void UrlFilter(String url);
 typedef void ResponseFilter(HttpClientResponse res);
 typedef void ResponseExceptionFilter(HttpClientResponse res, Exception e);
+typedef Future AsyncCallbackFunction();
 
 class TypeAs {
   static String string = "";
@@ -104,15 +105,22 @@ class HttpResponseException implements Exception {
   HttpClientResponse response;
   HttpResponseException(this.response);
 
-  ResponseStatus getResponseStatus(){
+  ResponseStatus getResponseStatus() {
     return new ResponseStatus();
   }
 }
 
-class WebServiceException implements Exception {  
+enum WebServiceExceptionType {
+  RefreshTokenException,
+}
+
+class WebServiceException implements Exception {
   int statusCode;
   String statusDescription;
-  String get message => responseStatus != null ? responseStatus.message ?? responseStatus.errorCode : statusDescription;
+  WebServiceExceptionType type;
+  String get message => responseStatus != null
+      ? responseStatus.message ?? responseStatus.errorCode
+      : statusDescription;
   dynamic innerException;
   ResponseStatus responseStatus;
 }
@@ -125,6 +133,8 @@ class JsonServiceClient implements IServiceClient {
   String credentials;
   Map<String, String> headers;
   String bearerToken;
+  String refreshToken;
+  String refreshTokenUri;
   String userName;
   String password;
   HttpClient client;
@@ -136,6 +146,7 @@ class JsonServiceClient implements IServiceClient {
   UrlFilter urlFilter;
   ResponseExceptionFilter exceptionFilter;
   static ResponseExceptionFilter globalExceptionFilter;
+  AsyncCallbackFunction onAuthenticationRequired;
 
   JsonServiceClient([this.baseUrl = "/"]) {
     replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
@@ -149,7 +160,7 @@ class JsonServiceClient implements IServiceClient {
     cookies = new List<Cookie>();
   }
 
-  void setCredentials(String userName, String password){
+  void setCredentials(String userName, String password) {
     this.userName = userName;
     this.password = password;
   }
@@ -178,8 +189,8 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  Future<T> post<T>(IReturn<T> request, {Map<String, dynamic> args}) {
-    return send<T>(request, method: "POST", args: args);
+  Future<T> post<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args}) {
+    return send<T>(request, method: "POST", body:body, args: args);
   }
 
   Future<Map<String, dynamic>> postUrl(String path, dynamic body,
@@ -227,8 +238,8 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  Future<T> put<T>(IReturn<T> request, {Map<String, dynamic> args}) {
-    return send<T>(request, method: "PUT", args: args);
+  Future<T> put<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args}) {
+    return send<T>(request, method: "PUT", body:body, args: args);
   }
 
   Future<Map<String, dynamic>> putUrl(String path, dynamic body,
@@ -252,8 +263,8 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  Future<T> patch<T>(IReturn<T> request, {Map<String, dynamic> args}) {
-    return send<T>(request, method: "PATCH", args: args);
+  Future<T> patch<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args}) {
+    return send<T>(request, method: "PATCH", body:body, args: args);
   }
 
   Future<Map<String, dynamic>> patchUrl(String path, dynamic body,
@@ -279,12 +290,14 @@ class JsonServiceClient implements IServiceClient {
 
   Future<T> send<T>(IReturn<T> request,
       {String method,
+      dynamic body,
       Map<String, dynamic> args,
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
     return sendRequest<T>(new SendContext(
         request: request,
+        body:body,
         method: method ?? resolveHttpMethod(request),
         args: args,
         responseAs: responseAs,
@@ -308,12 +321,50 @@ class JsonServiceClient implements IServiceClient {
 
     HttpClientResponse res = null;
 
+    resendRequest() async {
+      req = await createRequest(info);
+      if (urlFilter != null) {
+        urlFilter(req.uri.toString());
+      }            
+      try {
+        res = await req.close();
+        var response = await createResponse(res, info);
+        return response;
+      } on Exception catch (e) {
+        return await handleError(res, e);
+      }
+    }
+
     try {
       res = await req.close();
 
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
+      if (res.statusCode == 401) {
+
+        if (refreshToken != null) {
+          var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
+          var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
+          
+          var jwtInfo = new SendContext(method: "POST", request:jwtRequest, args: null, url:url);
+          try {
+            var jwtReq = await createRequest(jwtInfo);
+            var jwtRes = await jwtReq.close();
+            var jwtResponse = await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
+            bearerToken = jwtResponse.accessToken;
+            return await resendRequest();
+          } on Exception catch(jwtEx) {
+            return await handleError(res, jwtEx, WebServiceExceptionType.RefreshTokenException);
+          }
+        }
+
+        if (onAuthenticationRequired != null) {
+          await onAuthenticationRequired();
+          return await resendRequest();
+        }
+      }
+
       return await handleError(res, e);
     }
   }
@@ -332,10 +383,18 @@ class JsonServiceClient implements IServiceClient {
     var url = info.url;
     var method = info.method;
     var request = info.request;
-    var body = request ?? info.body;
+    var body = info.body ?? request;
     var args = info.args;
 
-    if (url == null || url == '') url = createUrlFromDto(method, request);
+    if (url == null || url == '') {
+      var bodyNotRequestDto = info.request != null && info.body != null;
+      if (bodyNotRequestDto) {
+        url = combinePaths([this.replyBaseUrl, nameOf(request)]);
+        url = appendQueryString(url, toMap(request));
+      } else {
+        url = createUrlFromDto(method, request);
+      }
+    }
     if (args != null) url = appendQueryString(url, args);
 
     String bodyStr = null;
@@ -436,6 +495,10 @@ class JsonServiceClient implements IServiceClient {
         return jsonObj as T;
       }
       try {
+        if (info.request is IConvertible && responseAs is IConvertible) {
+          var reqContext = (info.request as IConvertible).context;
+          responseAs.context = reqContext;
+        }
         Function fromMap = responseAs.fromMap;
         var ret = fromMap(jsonObj);
         return ret;
@@ -452,24 +515,30 @@ class JsonServiceClient implements IServiceClient {
     return json.decode(await res.transform(utf8.decoder).join());
   }
 
-  handleError(HttpClientResponse holdRes, Exception e) async {
-  
-    if (e is WebServiceException)
-      throw raiseError(holdRes, e);
+  handleError(HttpClientResponse holdRes, Exception e,
+      [WebServiceExceptionType type]) async {
+    if (e is WebServiceException) throw raiseError(holdRes, e);
 
-    var res = e is HttpResponseException ? e.response : holdRes;    
+    var res = e is HttpResponseException ? e.response : holdRes;
 
     // if (res.bodyUsed)
     //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
 
     var webEx = new WebServiceException()
       ..statusCode = res.statusCode
-      ..statusDescription = res.reasonPhrase;
+      ..statusDescription = res.reasonPhrase
+      ..type = type;
 
     try {
       String str = await res.transform(utf8.decoder).join();
-      var jsonObj = json.decode(str);
-      webEx.responseStatus = createResponseStatus(jsonObj);
+      if (!isJsonObject(str)) {
+        webEx.responseStatus = createErrorResponse(
+                res.statusCode.toString(), res.reasonPhrase, type)
+            .responseStatus;
+      } else {
+        var jsonObj = json.decode(str);
+        webEx.responseStatus = createResponseStatus(jsonObj);
+      }
     } on Exception catch (e) {
       webEx.innerException = e;
     }
@@ -484,7 +553,16 @@ class JsonServiceClient implements IServiceClient {
       this.cookies.add(cookie);
     }
   }
+}
 
+WebServiceException createErrorResponse(String errorCode, String message,
+    [WebServiceExceptionType type]) {
+  var error = new WebServiceException();
+  if (type != null) error.type = type;
+  error.responseStatus = new ResponseStatus()
+    ..errorCode = errorCode
+    ..message = message;
+  return error;
 }
 
 bool hasRequestBody(String method) => !(method == "GET" ||
@@ -503,6 +581,8 @@ String resolveHttpMethod(request) {
                   ? "PATCH"
                   : request is IOptions ? "OPTIONS" : "POST";
 }
+
+bool isJsonObject(String str) => str != null && str.trim().startsWith("{");
 
 String nameOf(dynamic o) {
   if (o == null) return "null";
@@ -537,20 +617,22 @@ String qsValue(arg) {
 
 Map<String, dynamic> toMap(request) {
   try {
-    return request.toJson();
+    var ret = request.toJson();
+    return ret;
   } catch (e) {
     return null;
   }
 }
 
-String sanitizeKey(String key) => key != null ? key.toLowerCase().replaceAll("_", "") : null;
+String sanitizeKey(String key) =>
+    key != null ? key.toLowerCase().replaceAll("_", "") : null;
 
-ResponseStatus createResponseStatus(Map<String,dynamic> obj) {
+ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
   if (obj == null) return null;
-  var to = new ResponseStatus();  
+  var to = new ResponseStatus();
   var status = findValue(obj, "responseStatus") ?? obj;
 
-  status.forEach((key,val){
+  status.forEach((key, val) {
     var sanitizedKey = sanitizeKey(key);
     if (sanitizedKey == "errorcode") {
       to.errorCode = val;
@@ -564,7 +646,7 @@ ResponseStatus createResponseStatus(Map<String,dynamic> obj) {
       for (Map error in errors) {
         var fieldError = new ResponseError();
         to.errors.add(fieldError);
-        error.forEach((fieldKey, fieldVal){
+        error.forEach((fieldKey, fieldVal) {
           var sanitizedFieldKey = sanitizeKey(fieldKey);
           if (sanitizedFieldKey == "errorcode") {
             fieldError.errorCode = fieldVal;
@@ -584,7 +666,7 @@ ResponseStatus createResponseStatus(Map<String,dynamic> obj) {
   return to;
 }
 
-dynamic findValue(Map<String,dynamic> map, String key) {
+dynamic findValue(Map<String, dynamic> map, String key) {
   if (map != null) {
     var findKey = sanitizeKey(key);
     for (var k in map.keys) {

@@ -2,7 +2,7 @@ part of client;
 
 class DurationConverter implements IConverter
 {
-  dynamic fromJson(value, ConverterContext context) {
+  dynamic fromJson(value, TypeContext context) {
     Duration duration = value is Duration ? value : null;
     if (duration != null) return duration;
 
@@ -62,7 +62,7 @@ class DurationConverter implements IConverter
       milliseconds: (ms * 1000).toInt());
   }
 
-  toJson(dynamic value, ConverterContext context) {
+  toJson(dynamic value, TypeContext context) {
     Duration duration = value is Duration ? value : null;
     if (duration == null)
       return null;
