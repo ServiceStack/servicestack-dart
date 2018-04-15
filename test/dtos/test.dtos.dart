@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-14 19:40:29
+Date: 2018-04-15 01:00:30
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -3918,7 +3918,7 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(typeName: 'test.servicestack.net', types: <String, TypeInfo> {
+TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
     'ExternalEnum': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum.values),
     'ExternalEnum2': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum2.values),
     'ExternalType': new TypeInfo(TypeOf.Class, create:() => new ExternalType()),

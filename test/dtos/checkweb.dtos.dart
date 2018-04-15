@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-14 05:41:10
+Date: 2018-04-14 20:57:54
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:55799
@@ -6443,7 +6443,7 @@ class QueryDataRockstars extends QueryData<Rockstar> implements IReturn<QueryRes
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(typeName: 'localhost', types: <String, TypeInfo> {
+TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'RequestLogEntry': new TypeInfo(TypeOf.Class, create:() => new RequestLogEntry()),
     'Rockstar': new TypeInfo(TypeOf.Class, create:() => new Rockstar()),
     'ObjectDesign': new TypeInfo(TypeOf.Class, create:() => new ObjectDesign()),

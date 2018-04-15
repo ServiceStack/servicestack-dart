@@ -252,6 +252,22 @@ void main() {
     expect(jsonObj["foo"], equals("bar"));
   });
 
+  test('Can send raw JSON as string', () async {
+    var client = createTestClient();
+
+    client.responseFilter = (res) => 
+      expect(res.headers["X-Args"], equals(['1,name']));
+
+    var body = { "foo": "bar" };
+
+    var request = new SendJson(id: 1, name: "name");
+    
+    var jsonStr = await client.post(request, body:json.encode(body));
+    var jsonObj = json.decode(jsonStr);
+
+    expect(jsonObj["foo"], equals("bar"));
+  });
+
   test('Can send raw string', () async {
     var client = createTestClient();
 
@@ -297,6 +313,104 @@ void main() {
     var requests = [1,2,3].map((id) => new HelloReturnVoid(id:id));
 
     await client.sendAllOneWay(requests);
+  });
+
+  test('Can POST to EchoTypes', () async {
+    var client = createTestClient();
+
+    var request = new EchoTypes(Int: 1, string: "foo");
+
+    var response = await client.post(request);
+
+    expect(response.Int, equals(1));
+    expect(response.string, equals("foo"));
+  });
+
+  test('Can GET IReturnVoid requests', () async {
+    var client = createTestClient();
+
+    var request = new HelloReturnVoid(id: 1);
+
+    await client.get(request);
+  });
+
+  test('Can POST IReturnVoid requests', () async {
+    var client = createTestClient();
+
+    var request = new HelloReturnVoid(id: 1);
+
+    await client.post(request);
+  });
+
+  test('Can handle Validation Errors with Camel Casing', () async {
+    var client = createTestClient();
+
+    client.urlFilter = (url) => expect(url, endsWith("ThrowValidation?jsconfig=EmitCamelCaseNames%3Atrue"));
+
+    try {
+      await client.post(new ThrowValidation(), args: { "jsconfig": "EmitCamelCaseNames:true" });
+    } on WebServiceException catch(e) {
+      expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
+      expect(e.responseStatus.message, equals("'Age' must be between 1 and 120. You entered 0."));
+      expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
+      expect(e.responseStatus.errors[1].fieldName, equals("Required"));
+      expect(e.responseStatus.errors[1].message, equals("'Required' should not be empty."));
+    }
+  });
+
+  test('Can handle Validation Errors with Pascal Casing', () async {
+    var client = createTestClient();
+
+    client.urlFilter = (url) => expect(url, endsWith("ThrowValidation?jsconfig=EmitCamelCaseNames%3Afalse"));
+
+    try {
+      await client.post(new ThrowValidation(), args: { "jsconfig": "EmitCamelCaseNames:false" });
+    } on WebServiceException catch(e) {
+      expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
+      expect(e.responseStatus.message, equals("'Age' must be between 1 and 120. You entered 0."));
+      expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
+      expect(e.responseStatus.errors[1].fieldName, equals("Required"));
+      expect(e.responseStatus.errors[1].message, equals("'Required' should not be empty."));
+    }
+  });
+
+  test('Can GET using only path info', () async {
+    var client = createTestClient();
+
+    var jsonObj = await client.getUrl("/hello/World");
+    var response = new HelloResponse.fromJson(jsonObj);
+
+    expect(response.result, equals("Hello, World!"));
+  });
+
+  test('Can GET using absolute url', () async {
+    var client = createTestClient();
+
+    var jsonObj = await client.getUrl("http://test.servicestack.net/hello/World");
+    var response = new HelloResponse.fromJson(jsonObj);
+
+    expect(response.result, equals("Hello, World!"));
+  });
+
+  test('Can GET using route and queryString', () async {
+    var client = createTestClient();
+
+    var jsonObj = await client.getUrl("/hello", args: {"name": "World"});
+    var response = new HelloResponse.fromJson(jsonObj);
+
+    expect(response.result, equals("Hello, World!"));
+  });
+
+  test('Can GET EchoTypes using route', () async {
+    var client = createTestClient();
+
+    var request = new EchoTypes(Int: 1, string: "foo");
+
+    var jsonObj = await client.getUrl("/echo/types", args: toMap(request));
+    var response = new EchoTypes.fromJson(jsonObj);
+
+    expect(response.Int, equals(1));
+    expect(response.string, equals("foo"));
   });
 
 }

@@ -33,11 +33,12 @@ class TypeInfo {
 
 class TypeContext
 {
+  String library;
   Map<String, TypeInfo> types;
   String typeName;
   TypeContext childContext;
 
-  TypeContext({this.types, this.typeName, this.childContext});  
+  TypeContext({this.library, this.types, this.typeName, this.childContext});
 
   List<String> get genericArgs => getGenericArgs(typeName);
 

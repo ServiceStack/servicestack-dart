@@ -5767,7 +5767,7 @@ class FindTechnologiesAdmin extends QueryDb1<Technology> implements IReturn<Quer
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(typeName: 'www.techstacks.io', types: <String, TypeInfo> {
+TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String, TypeInfo> {
     'Organization': new TypeInfo(TypeOf.Class, create:() => new Organization()),
     'OrganizationLabel': new TypeInfo(TypeOf.Class, create:() => new OrganizationLabel()),
     'Category': new TypeInfo(TypeOf.Class, create:() => new Category()),

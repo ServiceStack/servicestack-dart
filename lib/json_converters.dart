@@ -188,7 +188,7 @@ class DateTimeConverter implements IConverter
       if (strDate.startsWith("\/Date(")) {
         var epochAndZone = leftPart(rightPart(strDate, "("), ")");
         var epochStr = epochAndZone.indexOf('-',1) >= 0
-          ? leftPart(epochAndZone, "-")
+          ? lastLeftPart(epochAndZone, "-")
           : epochAndZone;
         var epoch = int.parse(epochStr);
         return new DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
