@@ -3,6 +3,7 @@ part of client;
 abstract class IServiceClient {
   String baseUrl;
   String bearerToken;
+  String refreshToken;
   String userName;
   String password;
 
@@ -12,9 +13,7 @@ abstract class IServiceClient {
 
   Future<T> getAs<T>(String path,
       {Map<String, dynamic> args,
-      T responseAs,
-      RequestFilter requestFilter,
-      ResponseFilter responseFilter});
+      T responseAs});
 
   Future<T> post<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
@@ -23,9 +22,7 @@ abstract class IServiceClient {
 
   Future<T> postAs<T>(String path, dynamic body,
       {Map<String, dynamic> args,
-      T responseAs,
-      RequestFilter requestFilter,
-      ResponseFilter responseFilter});
+      T responseAs});
 
   Future<T> delete<T>(IReturn<T> request, {Map<String, dynamic> args});
 
@@ -34,9 +31,7 @@ abstract class IServiceClient {
 
   Future<T> deleteAs<T>(String path,
       {Map<String, dynamic> args,
-      T responseAs,
-      RequestFilter requestFilter,
-      ResponseFilter responseFilter});
+      T responseAs});
 
   Future<T> put<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
@@ -45,9 +40,7 @@ abstract class IServiceClient {
 
   Future<T> putAs<T>(String path, dynamic body,
       {Map<String, dynamic> args,
-      T responseAs,
-      RequestFilter requestFilter,
-      ResponseFilter responseFilter});
+      T responseAs});
 
   Future<T> patch<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args});
 
@@ -56,18 +49,12 @@ abstract class IServiceClient {
 
   Future<T> patchAs<T>(String path, dynamic body,
       {Map<String, dynamic> args,
-      T responseAs,
-      RequestFilter requestFilter,
-      ResponseFilter responseFilter});
+      T responseAs});
 
   Future<T> send<T>(IReturn<T> request,
       {String method,
       Map<String, dynamic> args,
-      T responseAs,
-      RequestFilter requestFilter,
-      ResponseFilter responseFilter});
-
-  Future<T> sendRequest<T>(SendContext requestInfo);
+      T responseAs});
 }
 
 typedef void RequestFilter(HttpClientRequest req);
@@ -131,8 +118,6 @@ class JsonServiceClient implements IServiceClient {
   String baseUrl;
   String replyBaseUrl;
   String oneWayBaseUrl;
-  String mode;
-  String credentials;
   Map<String, String> headers;
   String bearerToken;
   String refreshToken;
@@ -153,8 +138,6 @@ class JsonServiceClient implements IServiceClient {
   JsonServiceClient([this.baseUrl = "/"]) {
     replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
     oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
-    mode = "cors";
-    credentials = "include";
     headers = {
       HttpHeaders.ACCEPT: "application/json",
     };
