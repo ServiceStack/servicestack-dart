@@ -732,12 +732,12 @@ ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
           } else if (sanitizedFieldKey == "message") {
             fieldError.message = fieldVal;
           } else if (sanitizedFieldKey == "meta") {
-            fieldError.meta = fieldVal;
+            fieldError.meta = JsonConverters.toStringMap(fieldVal);
           }
         });
       }
     } else if (sanitizedKey == "meta") {
-      to.meta = val;
+      to.meta = JsonConverters.toStringMap(val);
     }
   });
   return to;

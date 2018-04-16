@@ -33,11 +33,12 @@ abstract class IHasVersion
 }
 
 Map<String, TypeInfo> TypeInfos = <String, TypeInfo> {
-    'dynamic': new TypeInfo(TypeOf.Class, create:() => new dynamic()),
+    'dynamic': new TypeInfo(TypeOf.Class, create:() => {}),
     'String': new TypeInfo(TypeOf.Class, create:() => ""),
     'int': new TypeInfo(TypeOf.Class, create:() => 0),
     'double': new TypeInfo(TypeOf.Class, create:() => 0.toDouble()),
     'bool': new TypeInfo(TypeOf.Class, create:() => true),
+    'Map<String,dynamic>': new TypeInfo(TypeOf.Class, create:() => new Map<String,dynamic>()),
     'Map<String,String>': new TypeInfo(TypeOf.Class, create:() => new Map<String,String>()),
     'List<String>': new TypeInfo(TypeOf.Class, create:() => new List<String>()),
     'List<int>': new TypeInfo(TypeOf.Class, create:() => new List<int>()),

@@ -63,9 +63,15 @@ class JsonConverters
   }
 
   static Map<String,String> toStringMap(dynamic value) {
+    if (value is Map<String, dynamic>) {
+      var to = new Map<String,String>();
+      value.forEach((key,val) => to[key] = _toString(val));
+      return to;
+    }
     return value;
   }
 
+  static String asString(dynamic value) => _toString(value);
 }
 
 String _toString(value) => value == null ? null : value is String ? value : value.toString();

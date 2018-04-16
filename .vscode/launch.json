@@ -8,6 +8,9 @@
         {
             "name": "Dart",
             "program": "${workspaceFolder}/test/client_test.dart",
+            "args": [
+                "--preview-dart-2"
+            ],
             "request": "launch",
             "type": "dart"
         }
