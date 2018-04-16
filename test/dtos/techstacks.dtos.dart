@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-14 09:59:31
+Date: 2018-04-16 02:06:11
 Version: 5.03
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://www.techstacks.io
@@ -15,6 +15,209 @@ DefaultImports: ../../lib/client.dart
 */
 
 import '../../lib/client.dart';
+
+enum PostType
+{
+    Announcement,
+    Post,
+    Showcase,
+    Question,
+    Request,
+}
+
+class Post implements IConvertible
+{
+    int id;
+    int organizationId;
+    int userId;
+    PostType type;
+    int categoryId;
+    String title;
+    String slug;
+    String url;
+    String imageUrl;
+    // @StringLength(2147483647)
+    String content;
+
+    // @StringLength(2147483647)
+    String contentHtml;
+
+    int pinCommentId;
+    List<int> technologyIds;
+    DateTime fromDate;
+    DateTime toDate;
+    String location;
+    String metaType;
+    String meta;
+    bool approved;
+    int upVotes;
+    int downVotes;
+    int points;
+    int views;
+    int favorites;
+    int subscribers;
+    int replyCount;
+    int commentsCount;
+    int wordCount;
+    int reportCount;
+    int linksCount;
+    int linkedToCount;
+    int score;
+    int rank;
+    List<String> labels;
+    List<int> refUserIds;
+    List<String> refLinks;
+    List<int> muteUserIds;
+    DateTime lastCommentDate;
+    int lastCommentId;
+    int lastCommentUserId;
+    DateTime deleted;
+    String deletedBy;
+    DateTime locked;
+    String lockedBy;
+    DateTime hidden;
+    String hiddenBy;
+    String status;
+    DateTime statusDate;
+    String statusBy;
+    bool archived;
+    DateTime bumped;
+    DateTime created;
+    String createdBy;
+    DateTime modified;
+    String modifiedBy;
+    int refId;
+    String refSource;
+    String refUrn;
+
+    Post({this.id,this.organizationId,this.userId,this.type,this.categoryId,this.title,this.slug,this.url,this.imageUrl,this.content,this.contentHtml,this.pinCommentId,this.technologyIds,this.fromDate,this.toDate,this.location,this.metaType,this.meta,this.approved,this.upVotes,this.downVotes,this.points,this.views,this.favorites,this.subscribers,this.replyCount,this.commentsCount,this.wordCount,this.reportCount,this.linksCount,this.linkedToCount,this.score,this.rank,this.labels,this.refUserIds,this.refLinks,this.muteUserIds,this.lastCommentDate,this.lastCommentId,this.lastCommentUserId,this.deleted,this.deletedBy,this.locked,this.lockedBy,this.hidden,this.hiddenBy,this.status,this.statusDate,this.statusBy,this.archived,this.bumped,this.created,this.createdBy,this.modified,this.modifiedBy,this.refId,this.refSource,this.refUrn});
+    Post.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        organizationId = json['organizationId'];
+        userId = json['userId'];
+        type = JsonConverters.fromJson(json['type'],'PostType',context);
+        categoryId = json['categoryId'];
+        title = json['title'];
+        slug = json['slug'];
+        url = json['url'];
+        imageUrl = json['imageUrl'];
+        content = json['content'];
+        contentHtml = json['contentHtml'];
+        pinCommentId = json['pinCommentId'];
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context);
+        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context);
+        location = json['location'];
+        metaType = json['metaType'];
+        meta = json['meta'];
+        approved = json['approved'];
+        upVotes = json['upVotes'];
+        downVotes = json['downVotes'];
+        points = json['points'];
+        views = json['views'];
+        favorites = json['favorites'];
+        subscribers = json['subscribers'];
+        replyCount = json['replyCount'];
+        commentsCount = json['commentsCount'];
+        wordCount = json['wordCount'];
+        reportCount = json['reportCount'];
+        linksCount = json['linksCount'];
+        linkedToCount = json['linkedToCount'];
+        score = json['score'];
+        rank = json['rank'];
+        labels = JsonConverters.fromJson(json['labels'],'List<String>',context);
+        refUserIds = JsonConverters.fromJson(json['refUserIds'],'List<int>',context);
+        refLinks = JsonConverters.fromJson(json['refLinks'],'List<String>',context);
+        muteUserIds = JsonConverters.fromJson(json['muteUserIds'],'List<int>',context);
+        lastCommentDate = JsonConverters.fromJson(json['lastCommentDate'],'DateTime',context);
+        lastCommentId = json['lastCommentId'];
+        lastCommentUserId = json['lastCommentUserId'];
+        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context);
+        deletedBy = json['deletedBy'];
+        locked = JsonConverters.fromJson(json['locked'],'DateTime',context);
+        lockedBy = json['lockedBy'];
+        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context);
+        hiddenBy = json['hiddenBy'];
+        status = json['status'];
+        statusDate = JsonConverters.fromJson(json['statusDate'],'DateTime',context);
+        statusBy = json['statusBy'];
+        archived = json['archived'];
+        bumped = JsonConverters.fromJson(json['bumped'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        createdBy = json['createdBy'];
+        modified = JsonConverters.fromJson(json['modified'],'DateTime',context);
+        modifiedBy = json['modifiedBy'];
+        refId = json['refId'];
+        refSource = json['refSource'];
+        refUrn = json['refUrn'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'organizationId': organizationId,
+        'userId': userId,
+        'type': JsonConverters.toJson(type,'PostType',context),
+        'categoryId': categoryId,
+        'title': title,
+        'slug': slug,
+        'url': url,
+        'imageUrl': imageUrl,
+        'content': content,
+        'contentHtml': contentHtml,
+        'pinCommentId': pinCommentId,
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context),
+        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context),
+        'toDate': JsonConverters.toJson(toDate,'DateTime',context),
+        'location': location,
+        'metaType': metaType,
+        'meta': meta,
+        'approved': approved,
+        'upVotes': upVotes,
+        'downVotes': downVotes,
+        'points': points,
+        'views': views,
+        'favorites': favorites,
+        'subscribers': subscribers,
+        'replyCount': replyCount,
+        'commentsCount': commentsCount,
+        'wordCount': wordCount,
+        'reportCount': reportCount,
+        'linksCount': linksCount,
+        'linkedToCount': linkedToCount,
+        'score': score,
+        'rank': rank,
+        'labels': JsonConverters.toJson(labels,'List<String>',context),
+        'refUserIds': JsonConverters.toJson(refUserIds,'List<int>',context),
+        'refLinks': JsonConverters.toJson(refLinks,'List<String>',context),
+        'muteUserIds': JsonConverters.toJson(muteUserIds,'List<int>',context),
+        'lastCommentDate': JsonConverters.toJson(lastCommentDate,'DateTime',context),
+        'lastCommentId': lastCommentId,
+        'lastCommentUserId': lastCommentUserId,
+        'deleted': JsonConverters.toJson(deleted,'DateTime',context),
+        'deletedBy': deletedBy,
+        'locked': JsonConverters.toJson(locked,'DateTime',context),
+        'lockedBy': lockedBy,
+        'hidden': JsonConverters.toJson(hidden,'DateTime',context),
+        'hiddenBy': hiddenBy,
+        'status': status,
+        'statusDate': JsonConverters.toJson(statusDate,'DateTime',context),
+        'statusBy': statusBy,
+        'archived': archived,
+        'bumped': JsonConverters.toJson(bumped,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context),
+        'createdBy': createdBy,
+        'modified': JsonConverters.toJson(modified,'DateTime',context),
+        'modifiedBy': modifiedBy,
+        'refId': refId,
+        'refSource': refSource,
+        'refUrn': refUrn
+    };
+
+    TypeContext context = _ctx;
+}
 
 class Organization implements IConvertible
 {
@@ -471,209 +674,6 @@ class PostCommentReportInfo extends PostCommentReport implements IConvertible
         'reportCount': reportCount,
         'createdBy': createdBy
     });
-
-    TypeContext context = _ctx;
-}
-
-enum PostType
-{
-    Announcement,
-    Post,
-    Showcase,
-    Question,
-    Request,
-}
-
-class Post implements IConvertible
-{
-    int id;
-    int organizationId;
-    int userId;
-    PostType type;
-    int categoryId;
-    String title;
-    String slug;
-    String url;
-    String imageUrl;
-    // @StringLength(2147483647)
-    String content;
-
-    // @StringLength(2147483647)
-    String contentHtml;
-
-    int pinCommentId;
-    List<int> technologyIds;
-    DateTime fromDate;
-    DateTime toDate;
-    String location;
-    String metaType;
-    String meta;
-    bool approved;
-    int upVotes;
-    int downVotes;
-    int points;
-    int views;
-    int favorites;
-    int subscribers;
-    int replyCount;
-    int commentsCount;
-    int wordCount;
-    int reportCount;
-    int linksCount;
-    int linkedToCount;
-    int score;
-    int rank;
-    List<String> labels;
-    List<int> refUserIds;
-    List<String> refLinks;
-    List<int> muteUserIds;
-    DateTime lastCommentDate;
-    int lastCommentId;
-    int lastCommentUserId;
-    DateTime deleted;
-    String deletedBy;
-    DateTime locked;
-    String lockedBy;
-    DateTime hidden;
-    String hiddenBy;
-    String status;
-    DateTime statusDate;
-    String statusBy;
-    bool archived;
-    DateTime bumped;
-    DateTime created;
-    String createdBy;
-    DateTime modified;
-    String modifiedBy;
-    int refId;
-    String refSource;
-    String refUrn;
-
-    Post({this.id,this.organizationId,this.userId,this.type,this.categoryId,this.title,this.slug,this.url,this.imageUrl,this.content,this.contentHtml,this.pinCommentId,this.technologyIds,this.fromDate,this.toDate,this.location,this.metaType,this.meta,this.approved,this.upVotes,this.downVotes,this.points,this.views,this.favorites,this.subscribers,this.replyCount,this.commentsCount,this.wordCount,this.reportCount,this.linksCount,this.linkedToCount,this.score,this.rank,this.labels,this.refUserIds,this.refLinks,this.muteUserIds,this.lastCommentDate,this.lastCommentId,this.lastCommentUserId,this.deleted,this.deletedBy,this.locked,this.lockedBy,this.hidden,this.hiddenBy,this.status,this.statusDate,this.statusBy,this.archived,this.bumped,this.created,this.createdBy,this.modified,this.modifiedBy,this.refId,this.refSource,this.refUrn});
-    Post.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        organizationId = json['organizationId'];
-        userId = json['userId'];
-        type = JsonConverters.fromJson(json['type'],'PostType',context);
-        categoryId = json['categoryId'];
-        title = json['title'];
-        slug = json['slug'];
-        url = json['url'];
-        imageUrl = json['imageUrl'];
-        content = json['content'];
-        contentHtml = json['contentHtml'];
-        pinCommentId = json['pinCommentId'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
-        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context);
-        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context);
-        location = json['location'];
-        metaType = json['metaType'];
-        meta = json['meta'];
-        approved = json['approved'];
-        upVotes = json['upVotes'];
-        downVotes = json['downVotes'];
-        points = json['points'];
-        views = json['views'];
-        favorites = json['favorites'];
-        subscribers = json['subscribers'];
-        replyCount = json['replyCount'];
-        commentsCount = json['commentsCount'];
-        wordCount = json['wordCount'];
-        reportCount = json['reportCount'];
-        linksCount = json['linksCount'];
-        linkedToCount = json['linkedToCount'];
-        score = json['score'];
-        rank = json['rank'];
-        labels = JsonConverters.fromJson(json['labels'],'List<String>',context);
-        refUserIds = JsonConverters.fromJson(json['refUserIds'],'List<int>',context);
-        refLinks = JsonConverters.fromJson(json['refLinks'],'List<String>',context);
-        muteUserIds = JsonConverters.fromJson(json['muteUserIds'],'List<int>',context);
-        lastCommentDate = JsonConverters.fromJson(json['lastCommentDate'],'DateTime',context);
-        lastCommentId = json['lastCommentId'];
-        lastCommentUserId = json['lastCommentUserId'];
-        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context);
-        deletedBy = json['deletedBy'];
-        locked = JsonConverters.fromJson(json['locked'],'DateTime',context);
-        lockedBy = json['lockedBy'];
-        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context);
-        hiddenBy = json['hiddenBy'];
-        status = json['status'];
-        statusDate = JsonConverters.fromJson(json['statusDate'],'DateTime',context);
-        statusBy = json['statusBy'];
-        archived = json['archived'];
-        bumped = JsonConverters.fromJson(json['bumped'],'DateTime',context);
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        createdBy = json['createdBy'];
-        modified = JsonConverters.fromJson(json['modified'],'DateTime',context);
-        modifiedBy = json['modifiedBy'];
-        refId = json['refId'];
-        refSource = json['refSource'];
-        refUrn = json['refUrn'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'organizationId': organizationId,
-        'userId': userId,
-        'type': JsonConverters.toJson(type,'PostType',context),
-        'categoryId': categoryId,
-        'title': title,
-        'slug': slug,
-        'url': url,
-        'imageUrl': imageUrl,
-        'content': content,
-        'contentHtml': contentHtml,
-        'pinCommentId': pinCommentId,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context),
-        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context),
-        'toDate': JsonConverters.toJson(toDate,'DateTime',context),
-        'location': location,
-        'metaType': metaType,
-        'meta': meta,
-        'approved': approved,
-        'upVotes': upVotes,
-        'downVotes': downVotes,
-        'points': points,
-        'views': views,
-        'favorites': favorites,
-        'subscribers': subscribers,
-        'replyCount': replyCount,
-        'commentsCount': commentsCount,
-        'wordCount': wordCount,
-        'reportCount': reportCount,
-        'linksCount': linksCount,
-        'linkedToCount': linkedToCount,
-        'score': score,
-        'rank': rank,
-        'labels': JsonConverters.toJson(labels,'List<String>',context),
-        'refUserIds': JsonConverters.toJson(refUserIds,'List<int>',context),
-        'refLinks': JsonConverters.toJson(refLinks,'List<String>',context),
-        'muteUserIds': JsonConverters.toJson(muteUserIds,'List<int>',context),
-        'lastCommentDate': JsonConverters.toJson(lastCommentDate,'DateTime',context),
-        'lastCommentId': lastCommentId,
-        'lastCommentUserId': lastCommentUserId,
-        'deleted': JsonConverters.toJson(deleted,'DateTime',context),
-        'deletedBy': deletedBy,
-        'locked': JsonConverters.toJson(locked,'DateTime',context),
-        'lockedBy': lockedBy,
-        'hidden': JsonConverters.toJson(hidden,'DateTime',context),
-        'hiddenBy': hiddenBy,
-        'status': status,
-        'statusDate': JsonConverters.toJson(statusDate,'DateTime',context),
-        'statusBy': statusBy,
-        'archived': archived,
-        'bumped': JsonConverters.toJson(bumped,'DateTime',context),
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'createdBy': createdBy,
-        'modified': JsonConverters.toJson(modified,'DateTime',context),
-        'modifiedBy': modifiedBy,
-        'refId': refId,
-        'refSource': refSource,
-        'refUrn': refUrn
-    };
 
     TypeContext context = _ctx;
 }
@@ -2365,27 +2365,27 @@ class GetAllTechnologiesResponse implements IConvertible
 
 class GetTechnologyResponse implements IConvertible
 {
+    ResponseStatus responseStatus;
     DateTime created;
     Technology technology;
     List<TechnologyStack> technologyStacks;
-    ResponseStatus responseStatus;
 
-    GetTechnologyResponse({this.created,this.technology,this.technologyStacks,this.responseStatus});
+    GetTechnologyResponse({this.responseStatus,this.created,this.technology,this.technologyStacks});
     GetTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         created = JsonConverters.fromJson(json['created'],'DateTime',context);
         technology = JsonConverters.fromJson(json['technology'],'Technology',context);
         technologyStacks = JsonConverters.fromJson(json['technologyStacks'],'List<TechnologyStack>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'created': JsonConverters.toJson(created,'DateTime',context),
         'technology': JsonConverters.toJson(technology,'Technology',context),
-        'technologyStacks': JsonConverters.toJson(technologyStacks,'List<TechnologyStack>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'technologyStacks': JsonConverters.toJson(technologyStacks,'List<TechnologyStack>',context)
     };
 
     TypeContext context = _ctx;
@@ -3071,6 +3071,25 @@ class Ping implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+class DummyTypes implements IConvertible
+{
+    List<Post> post;
+
+    DummyTypes({this.post});
+    DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        post = JsonConverters.fromJson(json['post'],'List<Post>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'post': JsonConverters.toJson(post,'List<Post>',context)
+    };
+
     TypeContext context = _ctx;
 }
 
@@ -5768,6 +5787,8 @@ class FindTechnologiesAdmin extends QueryDb1<Technology> implements IReturn<Quer
 }
 
 TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String, TypeInfo> {
+    'PostType': new TypeInfo(TypeOf.Enum, enumValues:PostType.values),
+    'Post': new TypeInfo(TypeOf.Class, create:() => new Post()),
     'Organization': new TypeInfo(TypeOf.Class, create:() => new Organization()),
     'OrganizationLabel': new TypeInfo(TypeOf.Class, create:() => new OrganizationLabel()),
     'Category': new TypeInfo(TypeOf.Class, create:() => new Category()),
@@ -5778,8 +5799,6 @@ TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String,
     'PostReportInfo': new TypeInfo(TypeOf.Class, create:() => new PostReportInfo()),
     'PostCommentReport': new TypeInfo(TypeOf.Class, create:() => new PostCommentReport()),
     'PostCommentReportInfo': new TypeInfo(TypeOf.Class, create:() => new PostCommentReportInfo()),
-    'PostType': new TypeInfo(TypeOf.Enum, enumValues:PostType.values),
-    'Post': new TypeInfo(TypeOf.Class, create:() => new Post()),
     'PostComment': new TypeInfo(TypeOf.Class, create:() => new PostComment()),
     'ReportAction': new TypeInfo(TypeOf.Enum, enumValues:ReportAction.values),
     'UserRef': new TypeInfo(TypeOf.Class, create:() => new UserRef()),
@@ -5893,6 +5912,8 @@ TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String,
     'ImportUserResponse': new TypeInfo(TypeOf.Class, create:() => new ImportUserResponse()),
     'ImportUserVoiceSuggestionResponse': new TypeInfo(TypeOf.Class, create:() => new ImportUserVoiceSuggestionResponse()),
     'Ping': new TypeInfo(TypeOf.Class, create:() => new Ping()),
+    'DummyTypes': new TypeInfo(TypeOf.Class, create:() => new DummyTypes()),
+    'List<Post>': new TypeInfo(TypeOf.Class, create:() => new List<Post>()),
     'GetOrganization': new TypeInfo(TypeOf.Class, create:() => new GetOrganization()),
     'GetOrganizationBySlug': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationBySlug()),
     'GetOrganizationMembers': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationMembers()),
@@ -5994,3 +6015,4 @@ TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String,
     'QueryPostComments': new TypeInfo(TypeOf.Class, create:() => new QueryPostComments()),
     'FindTechnologiesAdmin': new TypeInfo(TypeOf.Class, create:() => new FindTechnologiesAdmin()),
 });
+

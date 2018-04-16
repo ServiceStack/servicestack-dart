@@ -413,4 +413,24 @@ void main() {
     expect(response.string, equals("foo"));
   });
 
+  test('Can POST EchoComplexTypes', () async {
+    var client = createTestClient();
+
+    var request = createEchoComplexTypes();
+
+    var response = await client.post(request);
+
+    assertEchoComplexTypes(response);
+  });
+
+  test('Can GET EchoComplexTypes', () async {
+    var client = createTestClient();
+
+    var request = createEchoComplexTypes();
+
+    var response = await client.get(request);
+
+    assertEchoComplexTypes(response);
+  });
+
 }

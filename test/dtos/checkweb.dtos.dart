@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-14 20:57:54
+Date: 2018-04-15 22:06:11
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:55799
@@ -6738,3 +6738,4 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'QueryAllTypes': new TypeInfo(TypeOf.Class, create:() => new QueryAllTypes()),
     'QueryDataRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryDataRockstars()),
 });
+

@@ -62,14 +62,29 @@ void main() {
 
   test('Can query AutoQuery with anon object and runtime args', () async {
     var client = createTechStacksClient();
-    var args = { "Take": 3, "VendorName": "Amazon" };
+    var args = {"Take": 3, "VendorName": "Amazon"};
     var techstacksContext = new FindTechnologies().context;
 
-    var response = await client.getAs("/technology/search", args:args, 
-      responseAs:new QueryResponse<Technology>()..context = techstacksContext);
+    var response = await client.getAs("/technology/search",
+        args: args,
+        responseAs: new QueryResponse<Technology>()
+          ..context = techstacksContext);
 
     expect(response.results.length, equals(3));
     expect(response.results.map((x) => x.vendorName),
         equals(["Amazon", "Amazon", "Amazon"]));
+  });
+
+  test('Can query with args and base class property', () async {
+    var client = createTechStacksClient();
+    var techs =
+        await client.get(new FindTechnologies(), args: {"slug": "flutter"});
+    var posts = await client.get(new QueryPosts(
+        anyTechnologyIds: [techs.results[0].id],
+        types: ['Announcement', 'Showcase'])
+      ..take = 1);
+
+    expect(techs.results[0].name, equals("Flutter"));
+    expect(posts.results[0].title, isNotEmpty);
   });
 }

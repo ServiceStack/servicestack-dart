@@ -145,3 +145,33 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
 
 Poco createPoco(String name) => new Poco(name:name);
 
+EchoComplexTypes createEchoComplexTypes() => 
+  new EchoComplexTypes(
+    subType: new SubType(id: 1,name: "foo"),
+    subTypes: [
+      new SubType(id: 2, name: "bar"),
+      new SubType(id: 3, name: "baz"),
+    ],
+    subTypeMap: {
+      "a": new SubType(id: 4, name: "qux")
+    },
+    stringMap: {
+      "a": "b"
+    },
+    intStringMap: {
+      1: "A"
+    }
+  );
+
+void assertEchoComplexTypes(EchoComplexTypes dto) {
+  expect(dto.subType.id, equals(1));
+  expect(dto.subType.name, equals("foo"));
+  expect(dto.subTypes[0].id, equals(2));
+  expect(dto.subTypes[0].name, equals("bar"));
+  expect(dto.subTypes[1].id, equals(3));
+  expect(dto.subTypes[1].name, equals("baz"));
+  expect(dto.subTypeMap['a'].id, equals(4));
+  expect(dto.subTypeMap['a'].name, equals('qux'));
+  expect(dto.stringMap['a'], equals('b'));
+  expect(dto.intStringMap[1], equals('A'));
+}

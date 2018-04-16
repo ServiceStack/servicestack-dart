@@ -438,7 +438,7 @@ class JsonServiceClient implements IServiceClient {
       }
     }
 
-    var req = await client.openUrl(method, info.uri ?? Uri.parse(url));
+    var req = await client.openUrl(method, info.uri ?? createUri(url));
 
     if (bearerToken != null)
       req.headers.add(HttpHeaders.AUTHORIZATION, 'Bearer ' + bearerToken);
@@ -667,6 +667,28 @@ String qsValue(arg) {
   if (arg is String) {
     return Uri.encodeComponent(arg);
   }
+  if (arg is List) {
+    var sb = new StringBuffer();
+    for (var x in arg) {
+      if (sb.length > 0) sb.write(",");
+      sb.write(qsValue(x));      
+    }
+    return sb.toString();
+  }
+  if (arg is IConvertible) {
+    arg = (arg as IConvertible).toJson();
+  }
+  if (arg is Map) {
+    var sb = new StringBuffer();
+    arg.forEach((key,val) {
+      if (val == null) return;
+      if (sb.length > 0) sb.write(",");
+      sb.write(_toString(key));
+      sb.write(":");
+      sb.write(qsValue(val));
+    });
+    return "{" + sb.toString() + "}";
+  }
   return arg.toString();
 }
 
@@ -736,18 +758,40 @@ dynamic findValue(Map<String, dynamic> map, String key) {
 Uri createUri(String url) {
   if (url == null || url.length == 0) return null;
 
-  var parts = url.split("://");
-  if (parts.length != 2)
-    throw new FormatException("Invalid URL: '${url}'");
+  try {
+    var uri = Uri.parse(url);
+    return uri;
+  } catch(e) {
+    //sometimes Uri refuses to parse urls with encodable chars so need to manually parse + reconstruct
+    var parts = url.split("://");
+    if (parts.length != 2)
+      throw new FormatException("Invalid URL: '${url}'");
 
-  var urlParts = splitOnFirst(parts[1], "/");
-  var path = urlParts.length == 1
-    ? "/"
-    : "/" + urlParts[1];
+    var urlParts = splitOnFirst(parts[1], "/");
+    var relativeUrl = urlParts.length == 1
+      ? "/"
+      : "/" + urlParts[1];
 
-  return parts[0] == "https"
-    ? new Uri.https(urlParts[0], path)
-    : new Uri.http(urlParts[0], path);
+    var relativeUrlParts = splitOnFirst(relativeUrl, "?");
+    var path = relativeUrlParts[0];
+
+    Map<String,String> query = null;
+
+    if (relativeUrlParts.length == 2) {
+      query = new Map<String,String>();
+      var qs = relativeUrlParts[1];
+      var qsParts = qs.split("&");
+      for (var qsPart in qsParts) {
+        var kvp = splitOnFirst(qsPart, "=");
+        if (kvp.length == 1) continue;
+        query[kvp[0]] = kvp[1];
+      }
+    }
+
+    return parts[0] == "https"
+      ? new Uri.https(urlParts[0], path, query)
+      : new Uri.http(urlParts[0], path, query);
+  }
 }
 
 //https://docs.flutter.io/flutter/foundation/consolidateHttpClientResponseBytes.html

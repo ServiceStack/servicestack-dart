@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-15 01:00:30
+Date: 2018-04-16 02:06:09
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -1015,27 +1015,27 @@ class ThrowTypeResponse implements IConvertible
 
 class ThrowValidationResponse implements IConvertible
 {
+    ResponseStatus responseStatus;
     int age;
     String required;
     String email;
-    ResponseStatus responseStatus;
 
-    ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
+    ThrowValidationResponse({this.responseStatus,this.age,this.required,this.email});
     ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         age = json['age'];
         required = json['required'];
         email = json['email'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'age': age,
         'required': required,
-        'email': email,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'email': email
     };
 
     TypeContext context = _ctx;
@@ -1987,20 +1987,33 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
     TypeContext context = _ctx;
 }
 
+// @Route("/echo/complex")
 class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
 {
     SubType subType;
+    List<SubType> subTypes;
+    Map<String,SubType> subTypeMap;
+    Map<String,String> stringMap;
+    Map<int,String> intStringMap;
 
-    EchoComplexTypes({this.subType});
+    EchoComplexTypes({this.subType,this.subTypes,this.subTypeMap,this.stringMap,this.intStringMap});
     EchoComplexTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         subType = JsonConverters.fromJson(json['subType'],'SubType',context);
+        subTypes = JsonConverters.fromJson(json['subTypes'],'List<SubType>',context);
+        subTypeMap = JsonConverters.fromJson(json['subTypeMap'],'Map<String,SubType>',context);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'subType': JsonConverters.toJson(subType,'SubType',context)
+        'subType': JsonConverters.toJson(subType,'SubType',context),
+        'subTypes': JsonConverters.toJson(subTypes,'List<SubType>',context),
+        'subTypeMap': JsonConverters.toJson(subTypeMap,'Map<String,SubType>',context),
+        'stringMap': stringMap,
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context)
     };
 
     createResponse() { return new EchoComplexTypes(); }
@@ -2028,12 +2041,12 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     TypeContext context = _ctx;
 }
 
-class DummyAutoBatchResponses implements IConvertible
+class DummyTypes implements IConvertible
 {
     List<HelloResponse> helloResponses;
 
-    DummyAutoBatchResponses({this.helloResponses});
-    DummyAutoBatchResponses.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    DummyTypes({this.helloResponses});
+    DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         helloResponses = JsonConverters.fromJson(json['helloResponses'],'List<HelloResponse>',context);
@@ -4016,8 +4029,10 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'EchoTypes': new TypeInfo(TypeOf.Class, create:() => new EchoTypes()),
     'EchoCollections': new TypeInfo(TypeOf.Class, create:() => new EchoCollections()),
     'EchoComplexTypes': new TypeInfo(TypeOf.Class, create:() => new EchoComplexTypes()),
+    'List<SubType>': new TypeInfo(TypeOf.Class, create:() => new List<SubType>()),
+    'Map<String,SubType>': new TypeInfo(TypeOf.Class, create:() => new Map<String,SubType>()),
     'StoreRockstars': new TypeInfo(TypeOf.Class, create:() => new StoreRockstars()),
-    'DummyAutoBatchResponses': new TypeInfo(TypeOf.Class, create:() => new DummyAutoBatchResponses()),
+    'DummyTypes': new TypeInfo(TypeOf.Class, create:() => new DummyTypes()),
     'List<HelloResponse>': new TypeInfo(TypeOf.Class, create:() => new List<HelloResponse>()),
     'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
     'ThrowHttpError': new TypeInfo(TypeOf.Class, create:() => new ThrowHttpError()),
@@ -4110,3 +4125,4 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
     'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),
 });
+
