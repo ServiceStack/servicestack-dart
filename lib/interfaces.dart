@@ -105,6 +105,10 @@ abstract class IServiceClient {
       {Map<String, dynamic> args,
       T responseAs});
 
+  Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests);
+
+  Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests);
+
   Future<T> send<T>(IReturn<T> request,
       {String method,
       Map<String, dynamic> args,
