@@ -1,6 +1,6 @@
 /* Options:
-Date: 2018-04-16 02:06:11
-Version: 5.03
+Date: 2018-05-01 09:12:24
+Version: 5.10
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://www.techstacks.io
 
@@ -519,7 +519,7 @@ enum FlagType
     Other,
 }
 
-class PostReport implements IConvertible
+class PostReportInfo implements IConvertible
 {
     int id;
     int organizationId;
@@ -533,9 +533,12 @@ class PostReport implements IConvertible
     String acknowledgedBy;
     DateTime dismissed;
     String dismissedBy;
+    String title;
+    int reportCount;
+    String createdBy;
 
-    PostReport({this.id,this.organizationId,this.postId,this.userId,this.userName,this.flagType,this.reportNotes,this.created,this.acknowledged,this.acknowledgedBy,this.dismissed,this.dismissedBy});
-    PostReport.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    PostReportInfo({this.id,this.organizationId,this.postId,this.userId,this.userName,this.flagType,this.reportNotes,this.created,this.acknowledged,this.acknowledgedBy,this.dismissed,this.dismissedBy,this.title,this.reportCount,this.createdBy});
+    PostReportInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
@@ -550,6 +553,9 @@ class PostReport implements IConvertible
         acknowledgedBy = json['acknowledgedBy'];
         dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context);
         dismissedBy = json['dismissedBy'];
+        title = json['title'];
+        reportCount = json['reportCount'];
+        createdBy = json['createdBy'];
         return this;
     }
 
@@ -565,39 +571,16 @@ class PostReport implements IConvertible
         'acknowledged': JsonConverters.toJson(acknowledged,'DateTime',context),
         'acknowledgedBy': acknowledgedBy,
         'dismissed': JsonConverters.toJson(dismissed,'DateTime',context),
-        'dismissedBy': dismissedBy
+        'dismissedBy': dismissedBy,
+        'title': title,
+        'reportCount': reportCount,
+        'createdBy': createdBy
     };
 
     TypeContext context = _ctx;
 }
 
-class PostReportInfo extends PostReport implements IConvertible
-{
-    String title;
-    int reportCount;
-    String createdBy;
-
-    PostReportInfo({this.title,this.reportCount,this.createdBy});
-    PostReportInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        title = json['title'];
-        reportCount = json['reportCount'];
-        createdBy = json['createdBy'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'title': title,
-        'reportCount': reportCount,
-        'createdBy': createdBy
-    });
-
-    TypeContext context = _ctx;
-}
-
-class PostCommentReport implements IConvertible
+class PostCommentReportInfo implements IConvertible
 {
     int id;
     int organizationId;
@@ -612,9 +595,12 @@ class PostCommentReport implements IConvertible
     String acknowledgedBy;
     DateTime dismissed;
     String dismissedBy;
+    String contentHtml;
+    int reportCount;
+    String createdBy;
 
-    PostCommentReport({this.id,this.organizationId,this.postId,this.postCommentId,this.userId,this.userName,this.flagType,this.reportNotes,this.created,this.acknowledged,this.acknowledgedBy,this.dismissed,this.dismissedBy});
-    PostCommentReport.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    PostCommentReportInfo({this.id,this.organizationId,this.postId,this.postCommentId,this.userId,this.userName,this.flagType,this.reportNotes,this.created,this.acknowledged,this.acknowledgedBy,this.dismissed,this.dismissedBy,this.contentHtml,this.reportCount,this.createdBy});
+    PostCommentReportInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
@@ -630,6 +616,9 @@ class PostCommentReport implements IConvertible
         acknowledgedBy = json['acknowledgedBy'];
         dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context);
         dismissedBy = json['dismissedBy'];
+        contentHtml = json['contentHtml'];
+        reportCount = json['reportCount'];
+        createdBy = json['createdBy'];
         return this;
     }
 
@@ -646,34 +635,11 @@ class PostCommentReport implements IConvertible
         'acknowledged': JsonConverters.toJson(acknowledged,'DateTime',context),
         'acknowledgedBy': acknowledgedBy,
         'dismissed': JsonConverters.toJson(dismissed,'DateTime',context),
-        'dismissedBy': dismissedBy
-    };
-
-    TypeContext context = _ctx;
-}
-
-class PostCommentReportInfo extends PostCommentReport implements IConvertible
-{
-    String contentHtml;
-    int reportCount;
-    String createdBy;
-
-    PostCommentReportInfo({this.contentHtml,this.reportCount,this.createdBy});
-    PostCommentReportInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        contentHtml = json['contentHtml'];
-        reportCount = json['reportCount'];
-        createdBy = json['createdBy'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'dismissedBy': dismissedBy,
         'contentHtml': contentHtml,
         'reportCount': reportCount,
         'createdBy': createdBy
-    });
+    };
 
     TypeContext context = _ctx;
 }
@@ -1475,6 +1441,7 @@ class UserVoiceComment implements IConvertible
 
 class GetOrganizationResponse implements IConvertible
 {
+    ResponseStatus responseStatus;
     int cache;
     int id;
     String slug;
@@ -1484,12 +1451,12 @@ class GetOrganizationResponse implements IConvertible
     List<OrganizationMember> owners;
     List<OrganizationMember> moderators;
     int membersCount;
-    ResponseStatus responseStatus;
 
-    GetOrganizationResponse({this.cache,this.id,this.slug,this.organization,this.labels,this.categories,this.owners,this.moderators,this.membersCount,this.responseStatus});
+    GetOrganizationResponse({this.responseStatus,this.cache,this.id,this.slug,this.organization,this.labels,this.categories,this.owners,this.moderators,this.membersCount});
     GetOrganizationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         cache = json['cache'];
         id = json['id'];
         slug = json['slug'];
@@ -1499,11 +1466,11 @@ class GetOrganizationResponse implements IConvertible
         owners = JsonConverters.fromJson(json['owners'],'List<OrganizationMember>',context);
         moderators = JsonConverters.fromJson(json['moderators'],'List<OrganizationMember>',context);
         membersCount = json['membersCount'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'cache': cache,
         'id': id,
         'slug': slug,
@@ -1512,8 +1479,7 @@ class GetOrganizationResponse implements IConvertible
         'categories': JsonConverters.toJson(categories,'List<Category>',context),
         'owners': JsonConverters.toJson(owners,'List<OrganizationMember>',context),
         'moderators': JsonConverters.toJson(moderators,'List<OrganizationMember>',context),
-        'membersCount': membersCount,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'membersCount': membersCount
     };
 
     TypeContext context = _ctx;
@@ -1672,14 +1638,14 @@ class OrganizationLabelResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-class AddCategoryResponse implements IConvertible
+class AddOrganizationCategoryResponse implements IConvertible
 {
     int id;
     String slug;
     ResponseStatus responseStatus;
 
-    AddCategoryResponse({this.id,this.slug,this.responseStatus});
-    AddCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    AddOrganizationCategoryResponse({this.id,this.slug,this.responseStatus});
+    AddOrganizationCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
@@ -1697,12 +1663,12 @@ class AddCategoryResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-class UpdateCategoryResponse implements IConvertible
+class UpdateOrganizationCategoryResponse implements IConvertible
 {
     ResponseStatus responseStatus;
 
-    UpdateCategoryResponse({this.responseStatus});
-    UpdateCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    UpdateOrganizationCategoryResponse({this.responseStatus});
+    UpdateOrganizationCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
@@ -3457,7 +3423,7 @@ class RemoveOrganizationLabel implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/categories", "POST")
-class AddOrganizationCategory implements IReturn<AddCategoryResponse>, IConvertible
+class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse>, IConvertible
 {
     int organizationId;
     String slug;
@@ -3485,13 +3451,13 @@ class AddOrganizationCategory implements IReturn<AddCategoryResponse>, IConverti
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new AddCategoryResponse(); }
+    createResponse() { return new AddOrganizationCategoryResponse(); }
     String getTypeName() { return "AddOrganizationCategory"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "PUT")
-class UpdateOrganizationCategory implements IReturn<UpdateCategoryResponse>, IConvertible
+class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryResponse>, IConvertible
 {
     int organizationId;
     int id;
@@ -3522,7 +3488,7 @@ class UpdateOrganizationCategory implements IReturn<UpdateCategoryResponse>, ICo
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new UpdateCategoryResponse(); }
+    createResponse() { return new UpdateOrganizationCategoryResponse(); }
     String getTypeName() { return "UpdateOrganizationCategory"; }
     TypeContext context = _ctx;
 }
@@ -5795,9 +5761,7 @@ TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String,
     'OrganizationMember': new TypeInfo(TypeOf.Class, create:() => new OrganizationMember()),
     'OrganizationMemberInvite': new TypeInfo(TypeOf.Class, create:() => new OrganizationMemberInvite()),
     'FlagType': new TypeInfo(TypeOf.Enum, enumValues:FlagType.values),
-    'PostReport': new TypeInfo(TypeOf.Class, create:() => new PostReport()),
     'PostReportInfo': new TypeInfo(TypeOf.Class, create:() => new PostReportInfo()),
-    'PostCommentReport': new TypeInfo(TypeOf.Class, create:() => new PostCommentReport()),
     'PostCommentReportInfo': new TypeInfo(TypeOf.Class, create:() => new PostCommentReportInfo()),
     'PostComment': new TypeInfo(TypeOf.Class, create:() => new PostComment()),
     'ReportAction': new TypeInfo(TypeOf.Enum, enumValues:ReportAction.values),
@@ -5839,8 +5803,8 @@ TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String,
     'CreateOrganizationResponse': new TypeInfo(TypeOf.Class, create:() => new CreateOrganizationResponse()),
     'UpdateOrganizationResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationResponse()),
     'OrganizationLabelResponse': new TypeInfo(TypeOf.Class, create:() => new OrganizationLabelResponse()),
-    'AddCategoryResponse': new TypeInfo(TypeOf.Class, create:() => new AddCategoryResponse()),
-    'UpdateCategoryResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateCategoryResponse()),
+    'AddOrganizationCategoryResponse': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationCategoryResponse()),
+    'UpdateOrganizationCategoryResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationCategoryResponse()),
     'AddOrganizationMemberResponse': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationMemberResponse()),
     'UpdateOrganizationMemberResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationMemberResponse()),
     'SetOrganizationMembersResponse': new TypeInfo(TypeOf.Class, create:() => new SetOrganizationMembersResponse()),

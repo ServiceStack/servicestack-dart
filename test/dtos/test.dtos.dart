@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-16 02:06:09
+Date: 2018-05-01 09:12:21
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -7,7 +7,7 @@ BaseUrl: http://test.servicestack.net
 //GlobalNamespace: 
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion: 
+AddImplicitVersion: 1
 //AddDescriptionAsComments: True
 //IncludeTypes: 
 //ExcludeTypes: 
@@ -1015,27 +1015,27 @@ class ThrowTypeResponse implements IConvertible
 
 class ThrowValidationResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
     int age;
     String required;
     String email;
+    ResponseStatus responseStatus;
 
-    ThrowValidationResponse({this.responseStatus,this.age,this.required,this.email});
+    ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
     ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         age = json['age'];
         required = json['required'];
         email = json['email'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'age': age,
         'required': required,
-        'email': email
+        'email': email,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
     TypeContext context = _ctx;
@@ -1291,6 +1291,7 @@ class HelloResponse implements IConvertible
 
 class AllTypes implements IConvertible
 {
+    int version = 1;
     int id;
     int nullableId;
     int byte;
@@ -1318,10 +1319,11 @@ class AllTypes implements IConvertible
     Map<int,String> intStringMap;
     SubType subType;
 
-    AllTypes({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
+    AllTypes({this.version,this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
     AllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         nullableId = json['nullableId'];
         byte = json['byte'];
@@ -1352,6 +1354,7 @@ class AllTypes implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id,
         'nullableId': nullableId,
         'byte': byte,
@@ -1450,17 +1453,20 @@ class HelloAllTypesResponse implements IConvertible
 
 class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
 {
+    int version = 1;
     DateTime dateTime;
 
-    HelloDateTime({this.dateTime});
+    HelloDateTime({this.version,this.dateTime});
     HelloDateTime.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'dateTime': JsonConverters.toJson(dateTime,'DateTime',context)
     };
 
@@ -1653,14 +1659,16 @@ class EnumResponse implements IConvertible
 // @Route("/hellotypes/{Name}")
 class HelloTypes implements IReturn<HelloTypes>, IConvertible
 {
+    int version = 1;
     String string;
     bool Bool;
     int Int;
 
-    HelloTypes({this.string,this.Bool,this.Int});
+    HelloTypes({this.version,this.string,this.Bool,this.Int});
     HelloTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         string = json['string'];
         Bool = json['bool'];
         Int = json['int'];
@@ -1668,6 +1676,7 @@ class HelloTypes implements IReturn<HelloTypes>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'string': string,
         'bool': Bool,
         'int': Int
@@ -1848,17 +1857,20 @@ class TestAuthResponse implements IConvertible
 
 class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
 {
+    int version = 1;
     int id;
 
-    RequiresAdmin({this.id});
+    RequiresAdmin({this.version,this.id});
     RequiresAdmin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -1870,17 +1882,20 @@ class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
 // @Route("/wait/{ForMs}")
 class Wait implements IReturn<Wait>, IConvertible
 {
+    int version = 1;
     int forMs;
 
-    Wait({this.forMs});
+    Wait({this.version,this.forMs});
     Wait.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         forMs = json['forMs'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'forMs': forMs
     };
 
@@ -1892,6 +1907,7 @@ class Wait implements IReturn<Wait>, IConvertible
 // @Route("/echo/types")
 class EchoTypes implements IReturn<EchoTypes>, IConvertible
 {
+    int version = 1;
     int byte;
     int short;
     int Int;
@@ -1909,10 +1925,11 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
     String guid;
     String char;
 
-    EchoTypes({this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char});
+    EchoTypes({this.version,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char});
     EchoTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         byte = json['byte'];
         short = json['short'];
         Int = json['int'];
@@ -1933,6 +1950,7 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'byte': byte,
         'short': short,
         'int': Int,
@@ -1959,15 +1977,17 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
 // @Route("/echo/collections")
 class EchoCollections implements IReturn<EchoCollections>, IConvertible
 {
+    int version = 1;
     List<String> stringList;
     List<String> stringArray;
     Map<String,String> stringMap;
     Map<int,String> intStringMap;
 
-    EchoCollections({this.stringList,this.stringArray,this.stringMap,this.intStringMap});
+    EchoCollections({this.version,this.stringList,this.stringArray,this.stringMap,this.intStringMap});
     EchoCollections.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
         stringMap = JsonConverters.toStringMap(json['stringMap']);
@@ -1976,6 +1996,7 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'stringList': JsonConverters.toJson(stringList,'List<String>',context),
         'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
         'stringMap': stringMap,
@@ -1990,16 +2011,18 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
 // @Route("/echo/complex")
 class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
 {
+    int version = 1;
     SubType subType;
     List<SubType> subTypes;
     Map<String,SubType> subTypeMap;
     Map<String,String> stringMap;
     Map<int,String> intStringMap;
 
-    EchoComplexTypes({this.subType,this.subTypes,this.subTypeMap,this.stringMap,this.intStringMap});
+    EchoComplexTypes({this.version,this.subType,this.subTypes,this.subTypeMap,this.stringMap,this.intStringMap});
     EchoComplexTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         subType = JsonConverters.fromJson(json['subType'],'SubType',context);
         subTypes = JsonConverters.fromJson(json['subTypes'],'List<SubType>',context);
         subTypeMap = JsonConverters.fromJson(json['subTypeMap'],'Map<String,SubType>',context);
@@ -2009,6 +2032,7 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'subType': JsonConverters.toJson(subType,'SubType',context),
         'subTypes': JsonConverters.toJson(subTypes,'List<SubType>',context),
         'subTypeMap': JsonConverters.toJson(subTypeMap,'Map<String,SubType>',context),
@@ -2024,36 +2048,87 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
 // @Route("/rockstars", "POST")
 class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstars>, IConvertible
 {
+    int version = 1;
+
     final List<Rockstar> l = [];
     void set length(int newLength) { l.length = newLength; }
     int get length => l.length;
     Rockstar operator [](int index) => l[index];
     void operator []=(int index, Rockstar value) { l[index] = value; }
-    StoreRockstars();
-    StoreRockstars.fromJson(Map<String, dynamic> json) : super();
+    StoreRockstars({this.version});
+    StoreRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new StoreRockstars(); }
     String getTypeName() { return "StoreRockstars"; }
     TypeContext context = _ctx;
 }
 
+// @DataContract(Namespace="http://schemas.servicestack.net/types")
+class GetStuffResponse implements IConvertible
+{
+    // @DataMember
+    DateTime summaryDate;
+
+    // @DataMember
+    DateTime summaryEndDate;
+
+    // @DataMember
+    String symbol;
+
+    // @DataMember
+    String email;
+
+    // @DataMember
+    bool isEnabled;
+
+    GetStuffResponse({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
+    GetStuffResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
+        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
+        symbol = json['symbol'];
+        email = json['email'];
+        isEnabled = json['isEnabled'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
+        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
+        'symbol': symbol,
+        'email': email,
+        'isEnabled': isEnabled
+    };
+
+    TypeContext context = _ctx;
+}
+
 class DummyTypes implements IConvertible
 {
+    int version = 1;
     List<HelloResponse> helloResponses;
 
-    DummyTypes({this.helloResponses});
+    DummyTypes({this.version,this.helloResponses});
     DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         helloResponses = JsonConverters.fromJson(json['helloResponses'],'List<HelloResponse>',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'helloResponses': JsonConverters.toJson(helloResponses,'List<HelloResponse>',context)
     };
 
@@ -2062,19 +2137,22 @@ class DummyTypes implements IConvertible
 
 class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 {
+    int version = 1;
     int statusCode;
     String statusDescription;
 
-    CustomHttpError({this.statusCode,this.statusDescription});
+    CustomHttpError({this.version,this.statusCode,this.statusDescription});
     CustomHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         statusCode = json['statusCode'];
         statusDescription = json['statusDescription'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'statusCode': statusCode,
         'statusDescription': statusDescription
     };
@@ -2087,19 +2165,22 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 // @Route("/throwhttperror/{Status}")
 class ThrowHttpError implements IConvertible
 {
+    int version = 1;
     int status;
     String message;
 
-    ThrowHttpError({this.status,this.message});
+    ThrowHttpError({this.version,this.status,this.message});
     ThrowHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         status = json['status'];
         message = json['message'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'status': status,
         'message': message
     };
@@ -2111,17 +2192,20 @@ class ThrowHttpError implements IConvertible
 // @Route("/throw404/{Message}")
 class Throw404 implements IConvertible
 {
+    int version = 1;
     String message;
 
-    Throw404({this.message});
+    Throw404({this.version,this.message});
     Throw404.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         message = json['message'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'message': message
     };
 
@@ -2132,17 +2216,20 @@ class Throw404 implements IConvertible
 // @Route("/throwcustom400/{Message}")
 class ThrowCustom400 implements IConvertible
 {
+    int version = 1;
     String message;
 
-    ThrowCustom400({this.message});
+    ThrowCustom400({this.version,this.message});
     ThrowCustom400.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         message = json['message'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'message': message
     };
 
@@ -2152,19 +2239,22 @@ class ThrowCustom400 implements IConvertible
 // @Route("/throw/{Type}")
 class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
 {
+    int version = 1;
     String type;
     String message;
 
-    ThrowType({this.type,this.message});
+    ThrowType({this.version,this.type,this.message});
     ThrowType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         type = json['type'];
         message = json['message'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'type': type,
         'message': message
     };
@@ -2177,14 +2267,16 @@ class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
 // @Route("/throwvalidation")
 class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
 {
+    int version = 1;
     int age;
     String required;
     String email;
 
-    ThrowValidation({this.age,this.required,this.email});
+    ThrowValidation({this.version,this.age,this.required,this.email});
     ThrowValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         age = json['age'];
         required = json['required'];
         email = json['email'];
@@ -2192,6 +2284,7 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'age': age,
         'required': required,
         'email': email
@@ -2205,13 +2298,20 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
 // @Route("/throwbusinesserror")
 class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConvertible
 {
-    ThrowBusinessError();
-    ThrowBusinessError.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    ThrowBusinessError({this.version});
+    ThrowBusinessError.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new ThrowBusinessErrorResponse(); }
     String getTypeName() { return "ThrowBusinessError"; }
     TypeContext context = _ctx;
@@ -2219,14 +2319,16 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
 
 class ExternalOperation implements IReturn<ExternalOperationResponse>, IConvertible
 {
+    int version = 1;
     int id;
     String name;
     ExternalEnum externalEnum;
 
-    ExternalOperation({this.id,this.name,this.externalEnum});
+    ExternalOperation({this.version,this.id,this.name,this.externalEnum});
     ExternalOperation.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         name = json['name'];
         externalEnum = JsonConverters.fromJson(json['externalEnum'],'ExternalEnum',context);
@@ -2234,6 +2336,7 @@ class ExternalOperation implements IReturn<ExternalOperationResponse>, IConverti
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id,
         'name': name,
         'externalEnum': JsonConverters.toJson(externalEnum,'ExternalEnum',context)
@@ -2246,17 +2349,20 @@ class ExternalOperation implements IReturn<ExternalOperationResponse>, IConverti
 
 class ExternalOperation2 implements IReturn<ExternalOperation2Response>, IConvertible
 {
+    int version = 1;
     int id;
 
-    ExternalOperation2({this.id});
+    ExternalOperation2({this.version,this.id});
     ExternalOperation2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -2267,17 +2373,20 @@ class ExternalOperation2 implements IReturn<ExternalOperation2Response>, IConver
 
 class ExternalOperation3 implements IReturn<ExternalReturnTypeResponse>, IConvertible
 {
+    int version = 1;
     int id;
 
-    ExternalOperation3({this.id});
+    ExternalOperation3({this.version,this.id});
     ExternalOperation3.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -2288,17 +2397,20 @@ class ExternalOperation3 implements IReturn<ExternalReturnTypeResponse>, IConver
 
 class ExternalOperation4 implements IConvertible
 {
+    int version = 1;
     int id;
 
-    ExternalOperation4({this.id});
+    ExternalOperation4({this.version,this.id});
     ExternalOperation4.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -2307,17 +2419,20 @@ class ExternalOperation4 implements IConvertible
 
 class RootPathRoutes implements IConvertible
 {
+    int version = 1;
     String path;
 
-    RootPathRoutes({this.path});
+    RootPathRoutes({this.version,this.path});
     RootPathRoutes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         path = json['path'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'path': path
     };
 
@@ -2326,17 +2441,20 @@ class RootPathRoutes implements IConvertible
 
 class GetAccount implements IReturn<Account>, IConvertible
 {
+    int version = 1;
     String account;
 
-    GetAccount({this.account});
+    GetAccount({this.version,this.account});
     GetAccount.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         account = json['account'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'account': account
     };
 
@@ -2347,19 +2465,22 @@ class GetAccount implements IReturn<Account>, IConvertible
 
 class GetProject implements IReturn<Project>, IConvertible
 {
+    int version = 1;
     String account;
     String project;
 
-    GetProject({this.account,this.project});
+    GetProject({this.version,this.account,this.project});
     GetProject.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         account = json['account'];
         project = json['project'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'account': account,
         'project': project
     };
@@ -2370,178 +2491,217 @@ class GetProject implements IReturn<Project>, IConvertible
 }
 
 // @Route("/image-stream")
-class ImageAsStream implements IConvertible
+class ImageAsStream implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     String format;
 
-    ImageAsStream({this.format});
+    ImageAsStream({this.version,this.format});
     ImageAsStream.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         format = json['format'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'format': format
     };
 
+    createResponse() { return new Uint8List(0); }
+    String getTypeName() { return "ImageAsStream"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/image-bytes")
-class ImageAsBytes implements IConvertible
+class ImageAsBytes implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     String format;
 
-    ImageAsBytes({this.format});
+    ImageAsBytes({this.version,this.format});
     ImageAsBytes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         format = json['format'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'format': format
     };
 
+    createResponse() { return new Uint8List(0); }
+    String getTypeName() { return "ImageAsBytes"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/image-custom")
-class ImageAsCustomResult implements IConvertible
+class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     String format;
 
-    ImageAsCustomResult({this.format});
+    ImageAsCustomResult({this.version,this.format});
     ImageAsCustomResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         format = json['format'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'format': format
     };
 
+    createResponse() { return new Uint8List(0); }
+    String getTypeName() { return "ImageAsCustomResult"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/image-response")
-class ImageWriteToResponse implements IConvertible
+class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     String format;
 
-    ImageWriteToResponse({this.format});
+    ImageWriteToResponse({this.version,this.format});
     ImageWriteToResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         format = json['format'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'format': format
     };
 
+    createResponse() { return new Uint8List(0); }
+    String getTypeName() { return "ImageWriteToResponse"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/image-file")
-class ImageAsFile implements IConvertible
+class ImageAsFile implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     String format;
 
-    ImageAsFile({this.format});
+    ImageAsFile({this.version,this.format});
     ImageAsFile.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         format = json['format'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'format': format
     };
 
+    createResponse() { return new Uint8List(0); }
+    String getTypeName() { return "ImageAsFile"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/image-redirect")
 class ImageAsRedirect implements IConvertible
 {
+    int version = 1;
     String format;
 
-    ImageAsRedirect({this.format});
+    ImageAsRedirect({this.version,this.format});
     ImageAsRedirect.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         format = json['format'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'format': format
     };
 
     TypeContext context = _ctx;
 }
 
-// @Route("/image-draw/{Name}")
-class DrawImage implements IConvertible
+// @Route("/hello-image/{Name}")
+class HelloImage implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     String name;
     String format;
     int width;
     int height;
     int fontSize;
+    String fontFamily;
     String foreground;
     String background;
 
-    DrawImage({this.name,this.format,this.width,this.height,this.fontSize,this.foreground,this.background});
-    DrawImage.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    HelloImage({this.version,this.name,this.format,this.width,this.height,this.fontSize,this.fontFamily,this.foreground,this.background});
+    HelloImage.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         format = json['format'];
         width = json['width'];
         height = json['height'];
         fontSize = json['fontSize'];
+        fontFamily = json['fontFamily'];
         foreground = json['foreground'];
         background = json['background'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name,
         'format': format,
         'width': width,
         'height': height,
         'fontSize': fontSize,
+        'fontFamily': fontFamily,
         'foreground': foreground,
         'background': background
     };
 
+    createResponse() { return new Uint8List(0); }
+    String getTypeName() { return "HelloImage"; }
     TypeContext context = _ctx;
 }
 
 // @Route("/jwt")
 class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IConvertible
 {
+    int version = 1;
     DateTime jwtExpiry;
 
-    CreateJwt({this.jwtExpiry});
+    CreateJwt({this.version,this.jwtExpiry});
     CreateJwt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version,
         'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
     });
 
@@ -2553,19 +2713,22 @@ class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, I
 // @Route("/jwt-refresh")
 class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertible
 {
+    int version = 1;
     String userAuthId;
     DateTime jwtExpiry;
 
-    CreateRefreshJwt({this.userAuthId,this.jwtExpiry});
+    CreateRefreshJwt({this.version,this.userAuthId,this.jwtExpiry});
     CreateRefreshJwt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         userAuthId = json['userAuthId'];
         jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'userAuthId': userAuthId,
         'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
     };
@@ -2578,17 +2741,20 @@ class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertibl
 // @Route("/logs")
 class ViewLogs implements IReturn<String>, IConvertible
 {
+    int version = 1;
     bool clear;
 
-    ViewLogs({this.clear});
+    ViewLogs({this.version,this.clear});
     ViewLogs.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         clear = json['clear'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'clear': clear
     };
 
@@ -2600,17 +2766,20 @@ class ViewLogs implements IReturn<String>, IConvertible
 // @Route("/metadatatest")
 class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
 {
+    int version = 1;
     int id;
 
-    MetadataTest({this.id});
+    MetadataTest({this.version,this.id});
     MetadataTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -2622,17 +2791,20 @@ class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
 // @Route("/metadatatest-array")
 class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertible
 {
+    int version = 1;
     int id;
 
-    MetadataTestArray({this.id});
+    MetadataTestArray({this.version,this.id});
     MetadataTestArray.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -2645,13 +2817,20 @@ class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertibl
 // @DataContract
 class GetExample implements IReturn<GetExampleResponse>, IConvertible
 {
-    GetExample();
-    GetExample.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    GetExample({this.version});
+    GetExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new GetExampleResponse(); }
     String getTypeName() { return "GetExample"; }
     TypeContext context = _ctx;
@@ -2660,17 +2839,20 @@ class GetExample implements IReturn<GetExampleResponse>, IConvertible
 // @Route("/randomids")
 class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
 {
+    int version = 1;
     int take;
 
-    GetRandomIds({this.take});
+    GetRandomIds({this.version,this.take});
     GetRandomIds.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         take = json['take'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'take': take
     };
 
@@ -2682,17 +2864,20 @@ class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
 // @Route("/textfile-test")
 class TextFileTest implements IConvertible
 {
+    int version = 1;
     bool asAttachment;
 
-    TextFileTest({this.asAttachment});
+    TextFileTest({this.version,this.asAttachment});
     TextFileTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         asAttachment = json['asAttachment'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'asAttachment': asAttachment
     };
 
@@ -2702,17 +2887,20 @@ class TextFileTest implements IConvertible
 // @Route("/return/text")
 class ReturnText implements IConvertible
 {
+    int version = 1;
     String text;
 
-    ReturnText({this.text});
+    ReturnText({this.version,this.text});
     ReturnText.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         text = json['text'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'text': text
     };
 
@@ -2722,17 +2910,20 @@ class ReturnText implements IConvertible
 // @Route("/return/html")
 class ReturnHtml implements IConvertible
 {
+    int version = 1;
     String text;
 
-    ReturnHtml({this.text});
+    ReturnHtml({this.version,this.text});
     ReturnHtml.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         text = json['text'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'text': text
     };
 
@@ -2743,21 +2934,24 @@ class ReturnHtml implements IConvertible
 // @Route("/hello/{Name}")
 class Hello implements IReturn<HelloResponse>, IConvertible
 {
+    int version = 1;
     // @Required()
     String name;
 
     String title;
 
-    Hello({this.name,this.title});
+    Hello({this.version,this.name,this.title});
     Hello.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         title = json['title'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name,
         'title': title
     };
@@ -2769,19 +2963,22 @@ class Hello implements IReturn<HelloResponse>, IConvertible
 
 class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
 {
+    int version = 1;
     String name;
     NestedClass nestedClassProp;
 
-    HelloWithNestedClass({this.name,this.nestedClassProp});
+    HelloWithNestedClass({this.version,this.name,this.nestedClassProp});
     HelloWithNestedClass.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         nestedClassProp = JsonConverters.fromJson(json['nestedClassProp'],'NestedClass',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name,
         'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',context)
     };
@@ -2793,17 +2990,20 @@ class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
 
 class HelloList implements IReturn<List<ListResult>>, IConvertible
 {
+    int version = 1;
     List<String> names;
 
-    HelloList({this.names});
+    HelloList({this.version,this.names});
     HelloList.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         names = JsonConverters.fromJson(json['names'],'List<String>',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
@@ -2814,17 +3014,20 @@ class HelloList implements IReturn<List<ListResult>>, IConvertible
 
 class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
 {
+    int version = 1;
     List<String> names;
 
-    HelloArray({this.names});
+    HelloArray({this.version,this.names});
     HelloArray.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         names = JsonConverters.fromJson(json['names'],'List<String>',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
@@ -2835,14 +3038,16 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
 
 class HelloWithEnum implements IConvertible
 {
+    int version = 1;
     EnumType enumProp;
     EnumType nullableEnumProp;
     EnumFlags enumFlags;
 
-    HelloWithEnum({this.enumProp,this.nullableEnumProp,this.enumFlags});
+    HelloWithEnum({this.version,this.enumProp,this.nullableEnumProp,this.enumFlags});
     HelloWithEnum.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',context);
         nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',context);
         enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',context);
@@ -2850,6 +3055,7 @@ class HelloWithEnum implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'enumProp': JsonConverters.toJson(enumProp,'EnumType',context),
         'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',context),
         'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context)
@@ -2860,17 +3066,20 @@ class HelloWithEnum implements IConvertible
 
 class HelloExternal implements IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloExternal({this.name});
+    HelloExternal({this.version,this.name});
     HelloExternal.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -2886,6 +3095,7 @@ class HelloExternal implements IConvertible
 // @DataContract
 class AllowedAttributes implements IConvertible
 {
+    int version = 1;
     /**
     * Range Description
     */
@@ -2893,15 +3103,17 @@ class AllowedAttributes implements IConvertible
     // @ApiMember(DataType="double", Description="Range Description", IsRequired=true, ParameterType="path")
     double range;
 
-    AllowedAttributes({this.range});
+    AllowedAttributes({this.version,this.range});
     AllowedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         range = JsonConverters.toDouble(json['range']);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'range': range
     };
 
@@ -2911,14 +3123,16 @@ class AllowedAttributes implements IConvertible
 // @Route("/all-types")
 class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 {
+    int version = 1;
     String name;
     AllTypes allTypes;
     AllCollectionTypes allCollectionTypes;
 
-    HelloAllTypes({this.name,this.allTypes,this.allCollectionTypes});
+    HelloAllTypes({this.version,this.name,this.allTypes,this.allCollectionTypes});
     HelloAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context);
         allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context);
@@ -2926,6 +3140,7 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name,
         'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context),
         'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
@@ -2938,17 +3153,20 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 
 class HelloString implements IReturn<String>, IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloString({this.name});
+    HelloString({this.version,this.name});
     HelloString.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -2959,17 +3177,20 @@ class HelloString implements IReturn<String>, IConvertible
 
 class HelloVoid implements IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloVoid({this.name});
+    HelloVoid({this.version,this.name});
     HelloVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -2979,22 +3200,25 @@ class HelloVoid implements IConvertible
 // @DataContract
 class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, IConvertible
 {
+    int version = 1;
     // @DataMember(Name="name", Order=1, IsRequired=true, EmitDefaultValue=false)
     String name;
 
     // @DataMember(Name="id", Order=2, EmitDefaultValue=false)
     int id;
 
-    HelloWithDataContract({this.name,this.id});
+    HelloWithDataContract({this.version,this.name,this.id});
     HelloWithDataContract.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name,
         'id': id
     };
@@ -3009,17 +3233,20 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, I
 */
 class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloWithDescription({this.name});
+    HelloWithDescription({this.version,this.name});
     HelloWithDescription.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -3030,18 +3257,21 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, ICo
 
 class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>, IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloWithInheritance({this.name});
+    HelloWithInheritance({this.version,this.name});
     HelloWithInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version,
         'name': name
     });
 
@@ -3052,18 +3282,21 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
 
 class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertible
 {
+    int version = 1;
     String result;
 
-    HelloWithGenericInheritance({this.result});
+    HelloWithGenericInheritance({this.version,this.result});
     HelloWithGenericInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         result = json['result'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version,
         'result': result
     });
 
@@ -3072,18 +3305,21 @@ class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertib
 
 class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvertible
 {
+    int version = 1;
     String result;
 
-    HelloWithGenericInheritance2({this.result});
+    HelloWithGenericInheritance2({this.version,this.result});
     HelloWithGenericInheritance2.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         result = json['result'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version,
         'result': result
     });
 
@@ -3092,30 +3328,40 @@ class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvert
 
 class HelloWithNestedInheritance extends HelloBase1<Item> implements IConvertible
 {
-    HelloWithNestedInheritance();
-    HelloWithNestedInheritance.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    int version = 1;
+
+    HelloWithNestedInheritance({this.version});
+    HelloWithNestedInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => super.toJson();
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version
+    });
+
     TypeContext context = _ctx;
 }
 
 class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloWithReturn({this.name});
+    HelloWithReturn({this.version,this.name});
     HelloWithReturn.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -3127,17 +3373,20 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, ICon
 // @Route("/helloroute")
 class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloWithRoute({this.name});
+    HelloWithRoute({this.version,this.name});
     HelloWithRoute.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -3148,17 +3397,20 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
 
 class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
 {
+    int version = 1;
     String name;
 
-    HelloWithType({this.name});
+    HelloWithType({this.version,this.name});
     HelloWithType.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name
     };
 
@@ -3169,14 +3421,16 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
 
 class HelloInterface implements IConvertible
 {
+    int version = 1;
     IPoco poco;
     IEmptyInterface emptyInterface;
     EmptyClass emptyClass;
 
-    HelloInterface({this.poco,this.emptyInterface,this.emptyClass});
+    HelloInterface({this.version,this.poco,this.emptyInterface,this.emptyClass});
     HelloInterface.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         poco = JsonConverters.fromJson(json['poco'],'IPoco',context);
         emptyInterface = JsonConverters.fromJson(json['emptyInterface'],'IEmptyInterface',context);
         emptyClass = JsonConverters.fromJson(json['emptyClass'],'EmptyClass',context);
@@ -3184,6 +3438,7 @@ class HelloInterface implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'poco': JsonConverters.toJson(poco,'IPoco',context),
         'emptyInterface': JsonConverters.toJson(emptyInterface,'IEmptyInterface',context),
         'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',context)
@@ -3194,13 +3449,20 @@ class HelloInterface implements IConvertible
 
 class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
 {
-    HelloInnerTypes();
-    HelloInnerTypes.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    HelloInnerTypes({this.version});
+    HelloInnerTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new HelloInnerTypesResponse(); }
     String getTypeName() { return "HelloInnerTypes"; }
     TypeContext context = _ctx;
@@ -3208,17 +3470,20 @@ class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
 
 class HelloBuiltin implements IConvertible
 {
+    int version = 1;
     DayOfWeek dayOfWeek;
 
-    HelloBuiltin({this.dayOfWeek});
+    HelloBuiltin({this.version,this.dayOfWeek});
     HelloBuiltin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context)
     };
 
@@ -3227,17 +3492,20 @@ class HelloBuiltin implements IConvertible
 
 class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
 {
+    int version = 1;
     int id;
 
-    HelloGet({this.id});
+    HelloGet({this.version,this.id});
     HelloGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3248,14 +3516,21 @@ class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
 
 class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, IConvertible
 {
-    HelloPost();
-    HelloPost.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    int version = 1;
+
+    HelloPost({this.version});
+    HelloPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => super.toJson();
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version
+    });
+
     createResponse() { return new HelloVerbResponse(); }
     String getTypeName() { return "HelloPost"; }
     TypeContext context = _ctx;
@@ -3263,17 +3538,20 @@ class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, 
 
 class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
 {
+    int version = 1;
     int id;
 
-    HelloPut({this.id});
+    HelloPut({this.version,this.id});
     HelloPut.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3284,17 +3562,20 @@ class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
 
 class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
 {
+    int version = 1;
     int id;
 
-    HelloDelete({this.id});
+    HelloDelete({this.version,this.id});
     HelloDelete.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3305,17 +3586,20 @@ class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
 
 class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
 {
+    int version = 1;
     int id;
 
-    HelloPatch({this.id});
+    HelloPatch({this.version,this.id});
     HelloPatch.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3326,17 +3610,20 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
 
 class HelloReturnVoid implements IReturnVoid, IConvertible
 {
+    int version = 1;
     int id;
 
-    HelloReturnVoid({this.id});
+    HelloReturnVoid({this.version,this.id});
     HelloReturnVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3347,17 +3634,20 @@ class HelloReturnVoid implements IReturnVoid, IConvertible
 
 class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
 {
+    int version = 1;
     ScopeType Operator;
 
-    EnumRequest({this.Operator});
+    EnumRequest({this.version,this.Operator});
     EnumRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'operator': JsonConverters.toJson(Operator,'ScopeType',context)
     };
 
@@ -3370,22 +3660,25 @@ class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
 // @DataContract
 class HelloZip implements IReturn<HelloZipResponse>, IConvertible
 {
+    int version = 1;
     // @DataMember
     String name;
 
     // @DataMember
     List<String> test;
 
-    HelloZip({this.name,this.test});
+    HelloZip({this.version,this.name,this.test});
     HelloZip.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         name = json['name'];
         test = JsonConverters.fromJson(json['test'],'List<String>',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'name': name,
         'test': JsonConverters.toJson(test,'List<String>',context)
     };
@@ -3398,13 +3691,20 @@ class HelloZip implements IReturn<HelloZipResponse>, IConvertible
 // @Route("/ping")
 class Ping implements IReturn<PingResponse>, IConvertible
 {
-    Ping();
-    Ping.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    Ping({this.version});
+    Ping.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new PingResponse(); }
     String getTypeName() { return "Ping"; }
     TypeContext context = _ctx;
@@ -3413,26 +3713,40 @@ class Ping implements IReturn<PingResponse>, IConvertible
 // @Route("/reset-connections")
 class ResetConnections implements IConvertible
 {
-    ResetConnections();
-    ResetConnections.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    ResetConnections({this.version});
+    ResetConnections.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     TypeContext context = _ctx;
 }
 
 // @Route("/requires-role")
 class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
 {
-    RequiresRole();
-    RequiresRole.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    RequiresRole({this.version});
+    RequiresRole.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new RequiresRoleResponse(); }
     String getTypeName() { return "RequiresRole"; }
     TypeContext context = _ctx;
@@ -3441,17 +3755,20 @@ class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
 // @Route("/return/string")
 class ReturnString implements IReturn<String>, IConvertible
 {
+    int version = 1;
     String data;
 
-    ReturnString({this.data});
+    ReturnString({this.version,this.data});
     ReturnString.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         data = json['data'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'data': data
     };
 
@@ -3463,17 +3780,20 @@ class ReturnString implements IReturn<String>, IConvertible
 // @Route("/return/bytes")
 class ReturnBytes implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     Uint8List data;
 
-    ReturnBytes({this.data});
+    ReturnBytes({this.version,this.data});
     ReturnBytes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         data = JsonConverters.fromJson(json['data'],'Uint8List',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'data': JsonConverters.toJson(data,'Uint8List',context)
     };
 
@@ -3485,17 +3805,20 @@ class ReturnBytes implements IReturn<Uint8List>, IConvertible
 // @Route("/return/stream")
 class ReturnStream implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     Uint8List data;
 
-    ReturnStream({this.data});
+    ReturnStream({this.version,this.data});
     ReturnStream.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         data = JsonConverters.fromJson(json['data'],'Uint8List',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'data': JsonConverters.toJson(data,'Uint8List',context)
     };
 
@@ -3507,13 +3830,20 @@ class ReturnStream implements IReturn<Uint8List>, IConvertible
 // @Route("/Request1", "GET")
 class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 {
-    GetRequest1();
-    GetRequest1.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    GetRequest1({this.version});
+    GetRequest1.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new List<ReturnedDto>(); }
     String getTypeName() { return "GetRequest1"; }
     TypeContext context = _ctx;
@@ -3522,13 +3852,20 @@ class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 // @Route("/Request2", "GET")
 class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 {
-    GetRequest2();
-    GetRequest2.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    GetRequest2({this.version});
+    GetRequest2.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new List<ReturnedDto>(); }
     String getTypeName() { return "GetRequest2"; }
     TypeContext context = _ctx;
@@ -3537,19 +3874,22 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 // @Route("/sendjson")
 class SendJson implements IReturn<String>, IConvertible
 {
+    int version = 1;
     int id;
     String name;
 
-    SendJson({this.id,this.name});
+    SendJson({this.version,this.id,this.name});
     SendJson.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         name = json['name'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id,
         'name': name
     };
@@ -3562,14 +3902,16 @@ class SendJson implements IReturn<String>, IConvertible
 // @Route("/sendtext")
 class SendText implements IReturn<String>, IConvertible
 {
+    int version = 1;
     int id;
     String name;
     String contentType;
 
-    SendText({this.id,this.name,this.contentType});
+    SendText({this.version,this.id,this.name,this.contentType});
     SendText.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         name = json['name'];
         contentType = json['contentType'];
@@ -3577,6 +3919,7 @@ class SendText implements IReturn<String>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id,
         'name': name,
         'contentType': contentType
@@ -3590,14 +3933,16 @@ class SendText implements IReturn<String>, IConvertible
 // @Route("/sendraw")
 class SendRaw implements IReturn<Uint8List>, IConvertible
 {
+    int version = 1;
     int id;
     String name;
     String contentType;
 
-    SendRaw({this.id,this.name,this.contentType});
+    SendRaw({this.version,this.id,this.name,this.contentType});
     SendRaw.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         name = json['name'];
         contentType = json['contentType'];
@@ -3605,6 +3950,7 @@ class SendRaw implements IReturn<Uint8List>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id,
         'name': name,
         'contentType': contentType
@@ -3617,17 +3963,20 @@ class SendRaw implements IReturn<Uint8List>, IConvertible
 
 class SendDefault implements IReturn<SendVerbResponse>, IConvertible
 {
+    int version = 1;
     int id;
 
-    SendDefault({this.id});
+    SendDefault({this.version,this.id});
     SendDefault.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3639,17 +3988,20 @@ class SendDefault implements IReturn<SendVerbResponse>, IConvertible
 // @Route("/sendrestget/{Id}", "GET")
 class SendRestGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 {
+    int version = 1;
     int id;
 
-    SendRestGet({this.id});
+    SendRestGet({this.version,this.id});
     SendRestGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3660,17 +4012,20 @@ class SendRestGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 
 class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 {
+    int version = 1;
     int id;
 
-    SendGet({this.id});
+    SendGet({this.version,this.id});
     SendGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3681,17 +4036,20 @@ class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 
 class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
 {
+    int version = 1;
     int id;
 
-    SendPost({this.id});
+    SendPost({this.version,this.id});
     SendPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3702,17 +4060,20 @@ class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
 
 class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
 {
+    int version = 1;
     int id;
 
-    SendPut({this.id});
+    SendPut({this.version,this.id});
     SendPut.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3723,17 +4084,20 @@ class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
 
 class SendReturnVoid implements IReturnVoid, IConvertible
 {
+    int version = 1;
     int id;
 
-    SendReturnVoid({this.id});
+    SendReturnVoid({this.version,this.id});
     SendReturnVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'id': id
     };
 
@@ -3745,13 +4109,20 @@ class SendReturnVoid implements IReturnVoid, IConvertible
 // @Route("/session")
 class GetSession implements IReturn<GetSessionResponse>, IConvertible
 {
-    GetSession();
-    GetSession.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    GetSession({this.version});
+    GetSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new GetSessionResponse(); }
     String getTypeName() { return "GetSession"; }
     TypeContext context = _ctx;
@@ -3760,17 +4131,20 @@ class GetSession implements IReturn<GetSessionResponse>, IConvertible
 // @Route("/session/edit/{CustomName}")
 class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
 {
+    int version = 1;
     String customName;
 
-    UpdateSession({this.customName});
+    UpdateSession({this.version,this.customName});
     UpdateSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         customName = json['customName'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'customName': customName
     };
 
@@ -3781,17 +4155,20 @@ class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
 
 class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
 {
+    int version = 1;
     List<Logger> loggers;
 
-    StoreLogs({this.loggers});
+    StoreLogs({this.version,this.loggers});
     StoreLogs.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         loggers = JsonConverters.fromJson(json['loggers'],'List<Logger>',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'version': version,
         'loggers': JsonConverters.toJson(loggers,'List<Logger>',context)
     };
 
@@ -3800,16 +4177,47 @@ class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
     TypeContext context = _ctx;
 }
 
-// @Route("/testauth")
-class TestAuth implements IReturn<TestAuthResponse>, IConvertible
+class HelloAuth implements IReturn<HelloResponse>, IConvertible
 {
-    TestAuth();
-    TestAuth.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+    String name;
+
+    HelloAuth({this.version,this.name});
+    HelloAuth.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
+        name = json['name'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version,
+        'name': name
+    };
+
+    createResponse() { return new HelloResponse(); }
+    String getTypeName() { return "HelloAuth"; }
+    TypeContext context = _ctx;
+}
+
+// @Route("/testauth")
+class TestAuth implements IReturn<TestAuthResponse>, IConvertible
+{
+    int version = 1;
+
+    TestAuth({this.version});
+    TestAuth.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        version = json['version'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new TestAuthResponse(); }
     String getTypeName() { return "TestAuth"; }
     TypeContext context = _ctx;
@@ -3818,13 +4226,20 @@ class TestAuth implements IReturn<TestAuthResponse>, IConvertible
 // @Route("/testdata/AllTypes")
 class TestDataAllTypes implements IReturn<AllTypes>, IConvertible
 {
-    TestDataAllTypes();
-    TestDataAllTypes.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    TestDataAllTypes({this.version});
+    TestDataAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new AllTypes(); }
     String getTypeName() { return "TestDataAllTypes"; }
     TypeContext context = _ctx;
@@ -3833,13 +4248,20 @@ class TestDataAllTypes implements IReturn<AllTypes>, IConvertible
 // @Route("/testdata/AllCollectionTypes")
 class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
 {
-    TestDataAllCollectionTypes();
-    TestDataAllCollectionTypes.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    TestDataAllCollectionTypes({this.version});
+    TestDataAllCollectionTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     createResponse() { return new AllCollectionTypes(); }
     String getTypeName() { return "TestDataAllCollectionTypes"; }
     TypeContext context = _ctx;
@@ -3848,43 +4270,112 @@ class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConver
 // @Route("/void-response")
 class TestVoidResponse implements IConvertible
 {
-    TestVoidResponse();
-    TestVoidResponse.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    TestVoidResponse({this.version});
+    TestVoidResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
     TypeContext context = _ctx;
 }
 
 // @Route("/null-response")
 class TestNullResponse implements IConvertible
 {
-    TestNullResponse();
-    TestNullResponse.fromJson(Map<String, dynamic> json) : super();
+    int version = 1;
+
+    TestNullResponse({this.version});
+    TestNullResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
+    Map<String, dynamic> toJson() => {
+        'version': version
+    };
+
+    TypeContext context = _ctx;
+}
+
+// @Route("/Stuff")
+// @DataContract(Namespace="http://schemas.servicestack.net/types")
+class GetStuff implements IReturn<GetStuffResponse>, IConvertible
+{
+    int version = 1;
+    // @DataMember
+    // @ApiMember(DataType="DateTime", Name="Summary Date")
+    DateTime summaryDate;
+
+    // @DataMember
+    // @ApiMember(DataType="DateTime", Name="Summary End Date")
+    DateTime summaryEndDate;
+
+    // @DataMember
+    // @ApiMember(DataType="string", Name="Symbol")
+    String symbol;
+
+    // @DataMember
+    // @ApiMember(DataType="string", Name="Email")
+    String email;
+
+    // @DataMember
+    // @ApiMember(DataType="bool", Name="Is Enabled")
+    bool isEnabled;
+
+    GetStuff({this.version,this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
+    GetStuff.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        version = json['version'];
+        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
+        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
+        symbol = json['symbol'];
+        email = json['email'];
+        isEnabled = json['isEnabled'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'version': version,
+        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
+        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
+        'symbol': symbol,
+        'email': email,
+        'isEnabled': isEnabled
+    };
+
+    createResponse() { return new GetStuffResponse(); }
+    String getTypeName() { return "GetStuff"; }
     TypeContext context = _ctx;
 }
 
 class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
 {
+    int version = 1;
     int id;
 
-    QueryPocoBase({this.id});
+    QueryPocoBase({this.version,this.id});
     QueryPocoBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version,
         'id': id
     });
 
@@ -3895,18 +4386,21 @@ class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IRetur
 
 class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IConvertible
 {
+    int version = 1;
     int id;
 
-    QueryPocoIntoBase({this.id});
+    QueryPocoIntoBase({this.version,this.id});
     QueryPocoIntoBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         id = json['id'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version,
         'id': id
     });
 
@@ -3918,14 +4412,21 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefine
 // @Route("/rockstars", "GET")
 class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
-    QueryRockstars();
-    QueryRockstars.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    int version = 1;
+
+    QueryRockstars({this.version});
+    QueryRockstars.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        version = json['version'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => super.toJson();
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'version': version
+    });
+
     createResponse() { return new QueryResponse<Rockstar>(); }
     String getTypeName() { return "QueryRockstars"; }
     TypeContext context = _ctx;
@@ -4032,6 +4533,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'List<SubType>': new TypeInfo(TypeOf.Class, create:() => new List<SubType>()),
     'Map<String,SubType>': new TypeInfo(TypeOf.Class, create:() => new Map<String,SubType>()),
     'StoreRockstars': new TypeInfo(TypeOf.Class, create:() => new StoreRockstars()),
+    'GetStuffResponse': new TypeInfo(TypeOf.Class, create:() => new GetStuffResponse()),
     'DummyTypes': new TypeInfo(TypeOf.Class, create:() => new DummyTypes()),
     'List<HelloResponse>': new TypeInfo(TypeOf.Class, create:() => new List<HelloResponse>()),
     'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
@@ -4054,7 +4556,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'ImageWriteToResponse': new TypeInfo(TypeOf.Class, create:() => new ImageWriteToResponse()),
     'ImageAsFile': new TypeInfo(TypeOf.Class, create:() => new ImageAsFile()),
     'ImageAsRedirect': new TypeInfo(TypeOf.Class, create:() => new ImageAsRedirect()),
-    'DrawImage': new TypeInfo(TypeOf.Class, create:() => new DrawImage()),
+    'HelloImage': new TypeInfo(TypeOf.Class, create:() => new HelloImage()),
     'CreateJwt': new TypeInfo(TypeOf.Class, create:() => new CreateJwt()),
     'CreateRefreshJwt': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwt()),
     'ViewLogs': new TypeInfo(TypeOf.Class, create:() => new ViewLogs()),
@@ -4116,11 +4618,13 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'GetSession': new TypeInfo(TypeOf.Class, create:() => new GetSession()),
     'UpdateSession': new TypeInfo(TypeOf.Class, create:() => new UpdateSession()),
     'StoreLogs': new TypeInfo(TypeOf.Class, create:() => new StoreLogs()),
+    'HelloAuth': new TypeInfo(TypeOf.Class, create:() => new HelloAuth()),
     'TestAuth': new TypeInfo(TypeOf.Class, create:() => new TestAuth()),
     'TestDataAllTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllTypes()),
     'TestDataAllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllCollectionTypes()),
     'TestVoidResponse': new TypeInfo(TypeOf.Class, create:() => new TestVoidResponse()),
     'TestNullResponse': new TypeInfo(TypeOf.Class, create:() => new TestNullResponse()),
+    'GetStuff': new TypeInfo(TypeOf.Class, create:() => new GetStuff()),
     'QueryPocoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoBase()),
     'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
     'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),

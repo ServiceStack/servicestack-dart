@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-04-15 22:06:11
+Date: 2018-05-01 05:12:23
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:55799
@@ -3403,7 +3403,7 @@ class QueryRequestLogs extends QueryData<RequestLogEntry> implements IReturn<Que
     TypeContext context = _ctx;
 }
 
-// @AutoQueryViewer(Name="Today's Logs", Title="Logs from Today")
+// @AutoQueryViewer(Name="Today\'s Logs", Title="Logs from Today")
 class TodayLogs extends QueryData<RequestLogEntry> implements IReturn<QueryResponse<RequestLogEntry>>, IConvertible
 {
     TodayLogs();
@@ -4152,25 +4152,33 @@ class AllowedAttributes implements IConvertible
 /**
 * Multi Line Class
 */
-// @Api(Description="Multi Line Class")
-class HelloMultiline implements IConvertible
+// @Api(Description="Multi \r\nLine \r\nClass")
+class HelloAttributeStringTest implements IConvertible
 {
     /**
     * Multi Line Property
     */
-    // @ApiMember(Description="Multi Line Property")
+    // @ApiMember(Description="Multi \r\nLine \r\nProperty")
     String overflow;
 
-    HelloMultiline({this.overflow});
-    HelloMultiline.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    /**
+    * Some \ escaped 	  chars
+    */
+    // @ApiMember(Description="Some \\ escaped \t \n chars")
+    String escapedChars;
+
+    HelloAttributeStringTest({this.overflow,this.escapedChars});
+    HelloAttributeStringTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         overflow = json['overflow'];
+        escapedChars = json['escapedChars'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'overflow': overflow
+        'overflow': overflow,
+        'escapedChars': escapedChars
     };
 
     TypeContext context = _ctx;
@@ -6638,7 +6646,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'HelloWithEnum': new TypeInfo(TypeOf.Class, create:() => new HelloWithEnum()),
     'RestrictedAttributes': new TypeInfo(TypeOf.Class, create:() => new RestrictedAttributes()),
     'AllowedAttributes': new TypeInfo(TypeOf.Class, create:() => new AllowedAttributes()),
-    'HelloMultiline': new TypeInfo(TypeOf.Class, create:() => new HelloMultiline()),
+    'HelloAttributeStringTest': new TypeInfo(TypeOf.Class, create:() => new HelloAttributeStringTest()),
     'HelloAllTypes': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypes()),
     'HelloString': new TypeInfo(TypeOf.Class, create:() => new HelloString()),
     'HelloVoid': new TypeInfo(TypeOf.Class, create:() => new HelloVoid()),
