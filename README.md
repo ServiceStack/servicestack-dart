@@ -1,5 +1,3 @@
-# servicestack-dart
-
 ![Dart Banner](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/dart/dart.png)
 
 ServiceStack's **Add ServiceStack Reference** feature allows clients to generate Native Types from a simple [@servicestack/cli command-line utility](https://github.com/ServiceStack/servicestack-cli#servicestackcli) - providing a simple way to give clients typed access to your ServiceStack Services.
