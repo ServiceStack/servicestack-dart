@@ -1,5 +1,5 @@
 name: servicestack
-version: 0.0.8
+version: 0.0.9
 author: ServiceStack, Inc <team@servicestack.net>
 description: ServiceStack's Dart library providing convenience utilities in developing Dart and flutter apps. Integrates with ServiceStack's Server features including ServiceClient, Error Handling and Validation
 homepage: https://github.com/ServiceStack/servicestack-dart
