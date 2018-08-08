@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-05-01 09:12:24
+Date: 2018-08-08 05:56:52
 Version: 5.10
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://www.techstacks.io
@@ -1441,7 +1441,6 @@ class UserVoiceComment implements IConvertible
 
 class GetOrganizationResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
     int cache;
     int id;
     String slug;
@@ -1451,12 +1450,12 @@ class GetOrganizationResponse implements IConvertible
     List<OrganizationMember> owners;
     List<OrganizationMember> moderators;
     int membersCount;
+    ResponseStatus responseStatus;
 
-    GetOrganizationResponse({this.responseStatus,this.cache,this.id,this.slug,this.organization,this.labels,this.categories,this.owners,this.moderators,this.membersCount});
+    GetOrganizationResponse({this.cache,this.id,this.slug,this.organization,this.labels,this.categories,this.owners,this.moderators,this.membersCount,this.responseStatus});
     GetOrganizationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         cache = json['cache'];
         id = json['id'];
         slug = json['slug'];
@@ -1466,11 +1465,11 @@ class GetOrganizationResponse implements IConvertible
         owners = JsonConverters.fromJson(json['owners'],'List<OrganizationMember>',context);
         moderators = JsonConverters.fromJson(json['moderators'],'List<OrganizationMember>',context);
         membersCount = json['membersCount'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'cache': cache,
         'id': id,
         'slug': slug,
@@ -1479,7 +1478,8 @@ class GetOrganizationResponse implements IConvertible
         'categories': JsonConverters.toJson(categories,'List<Category>',context),
         'owners': JsonConverters.toJson(owners,'List<OrganizationMember>',context),
         'moderators': JsonConverters.toJson(moderators,'List<OrganizationMember>',context),
-        'membersCount': membersCount
+        'membersCount': membersCount,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
     TypeContext context = _ctx;
@@ -2331,27 +2331,27 @@ class GetAllTechnologiesResponse implements IConvertible
 
 class GetTechnologyResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
     DateTime created;
     Technology technology;
     List<TechnologyStack> technologyStacks;
+    ResponseStatus responseStatus;
 
-    GetTechnologyResponse({this.responseStatus,this.created,this.technology,this.technologyStacks});
+    GetTechnologyResponse({this.created,this.technology,this.technologyStacks,this.responseStatus});
     GetTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         created = JsonConverters.fromJson(json['created'],'DateTime',context);
         technology = JsonConverters.fromJson(json['technology'],'Technology',context);
         technologyStacks = JsonConverters.fromJson(json['technologyStacks'],'List<TechnologyStack>',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'created': JsonConverters.toJson(created,'DateTime',context),
         'technology': JsonConverters.toJson(technology,'Technology',context),
-        'technologyStacks': JsonConverters.toJson(technologyStacks,'List<TechnologyStack>',context)
+        'technologyStacks': JsonConverters.toJson(technologyStacks,'List<TechnologyStack>',context),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
     TypeContext context = _ctx;

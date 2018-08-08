@@ -1,5 +1,5 @@
 /* Options:
-Date: 2018-05-01 05:12:23
+Date: 2018-08-08 01:56:56
 Version: 5.00
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:55799
@@ -140,6 +140,25 @@ class Rockstar implements IConvertible
         'firstName': firstName,
         'lastName': lastName,
         'age': age
+    };
+
+    TypeContext context = _ctx;
+}
+
+class ArrayElementInDictionary implements IConvertible
+{
+    int id;
+
+    ArrayElementInDictionary({this.id});
+    ArrayElementInDictionary.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id
     };
 
     TypeContext context = _ctx;
@@ -1071,6 +1090,16 @@ class EnumFlags
     static List<EnumFlags> get values => const [Value0,Value1,Value2,Value3,Value123];
 }
 
+enum EnumStyle
+{
+    lower,
+    UPPER,
+    PascalCase,
+    camelCase,
+    camelUPPER,
+    PascalUPPER,
+}
+
 class Poco implements IConvertible
 {
     String name;
@@ -1792,6 +1821,27 @@ class ChangeRequestResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    TypeContext context = _ctx;
+}
+
+class DiscoverTypes implements IReturn<DiscoverTypes>, IConvertible
+{
+    Map<String,List<ArrayElementInDictionary>> elementInDictionary;
+
+    DiscoverTypes({this.elementInDictionary});
+    DiscoverTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        elementInDictionary = JsonConverters.fromJson(json['elementInDictionary'],'Map<String,List<ArrayElementInDictionary>>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'elementInDictionary': JsonConverters.toJson(elementInDictionary,'Map<String,List<ArrayElementInDictionary>>',context)
+    };
+
+    createResponse() { return new DiscoverTypes(); }
+    String getTypeName() { return "DiscoverTypes"; }
     TypeContext context = _ctx;
 }
 
@@ -2823,7 +2873,7 @@ class HelloAuthenticatedResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-class Echo implements IConvertible
+class Echo implements IEcho, IConvertible
 {
     String sentence;
 
@@ -4065,8 +4115,9 @@ class HelloWithEnum implements IConvertible
     EnumWithValues enumWithValues;
     EnumType nullableEnumProp;
     EnumFlags enumFlags;
+    EnumStyle enumStyle;
 
-    HelloWithEnum({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags});
+    HelloWithEnum({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
     HelloWithEnum.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -4074,6 +4125,7 @@ class HelloWithEnum implements IConvertible
         enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'EnumWithValues',context);
         nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',context);
         enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',context);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'EnumStyle',context);
         return this;
     }
 
@@ -4081,7 +4133,8 @@ class HelloWithEnum implements IConvertible
         'enumProp': JsonConverters.toJson(enumProp,'EnumType',context),
         'enumWithValues': JsonConverters.toJson(enumWithValues,'EnumWithValues',context),
         'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',context),
-        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context)
+        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context),
+        'enumStyle': JsonConverters.toJson(enumStyle,'EnumStyle',context)
     };
 
     TypeContext context = _ctx;
@@ -5305,6 +5358,29 @@ class SwaggerVersionTest implements IConvertible
     TypeContext context = _ctx;
 }
 
+// @Route("/swagger/range")
+class SwaggerRangeTest implements IConvertible
+{
+    String intRange;
+    String doubleRange;
+
+    SwaggerRangeTest({this.intRange,this.doubleRange});
+    SwaggerRangeTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        intRange = json['intRange'];
+        doubleRange = json['doubleRange'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'intRange': intRange,
+        'doubleRange': doubleRange
+    };
+
+    TypeContext context = _ctx;
+}
+
 // @Route("/test/errorview")
 class TestErrorView implements IConvertible
 {
@@ -5533,6 +5609,52 @@ class MatchLang implements IReturn<HelloResponse>, IConvertible
 
     createResponse() { return new HelloResponse(); }
     String getTypeName() { return "MatchLang"; }
+    TypeContext context = _ctx;
+}
+
+// @Route("/reqlogstest/{Name}")
+class RequestLogsTest implements IReturn<String>, IConvertible
+{
+    String name;
+
+    RequestLogsTest({this.name});
+    RequestLogsTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    createResponse() { return ""; }
+    String getTypeName() { return "RequestLogsTest"; }
+    TypeContext context = _ctx;
+}
+
+class InProcRequest1 implements IConvertible
+{
+    InProcRequest1();
+    InProcRequest1.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+class InProcRequest2 implements IConvertible
+{
+    InProcRequest2();
+    InProcRequest2.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
     TypeContext context = _ctx;
 }
 
@@ -5792,6 +5914,32 @@ class SwaggerMultiApiResponseTest implements IReturnVoid, IConvertible
     Map<String, dynamic> toJson() => {};
     createResponse() {}
     String getTypeName() { return "SwaggerMultiApiResponseTest"; }
+    TypeContext context = _ctx;
+}
+
+// @Route("/defaultview/class")
+class DefaultViewAttr implements IConvertible
+{
+    DefaultViewAttr();
+    DefaultViewAttr.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+// @Route("/defaultview/action")
+class DefaultViewActionAttr implements IConvertible
+{
+    DefaultViewActionAttr();
+    DefaultViewActionAttr.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
     TypeContext context = _ctx;
 }
 
@@ -6454,6 +6602,7 @@ class QueryDataRockstars extends QueryData<Rockstar> implements IReturn<QueryRes
 TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'RequestLogEntry': new TypeInfo(TypeOf.Class, create:() => new RequestLogEntry()),
     'Rockstar': new TypeInfo(TypeOf.Class, create:() => new Rockstar()),
+    'ArrayElementInDictionary': new TypeInfo(TypeOf.Class, create:() => new ArrayElementInDictionary()),
     'ObjectDesign': new TypeInfo(TypeOf.Class, create:() => new ObjectDesign()),
     'IAuthTokens': new TypeInfo(TypeOf.Interface),
     'AuthUserSession': new TypeInfo(TypeOf.Class, create:() => new AuthUserSession()),
@@ -6488,6 +6637,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'EnumType': new TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
     'EnumWithValues': new TypeInfo(TypeOf.Enum, enumValues:EnumWithValues.values),
     'EnumFlags': new TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
+    'EnumStyle': new TypeInfo(TypeOf.Enum, enumValues:EnumStyle.values),
     'Poco': new TypeInfo(TypeOf.Class, create:() => new Poco()),
     'AllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new AllCollectionTypes()),
     'List<Poco>': new TypeInfo(TypeOf.Class, create:() => new List<Poco>()),
@@ -6535,6 +6685,9 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'OnlyDefinedInGenericTypeInto': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeInto()),
     'TypesGroup': new TypeInfo(TypeOf.Class, create:() => new TypesGroup()),
     'ChangeRequestResponse': new TypeInfo(TypeOf.Class, create:() => new ChangeRequestResponse()),
+    'DiscoverTypes': new TypeInfo(TypeOf.Class, create:() => new DiscoverTypes()),
+    'Map<String,List<ArrayElementInDictionary>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<ArrayElementInDictionary>>()),
+    'List<ArrayElementInDictionary>': new TypeInfo(TypeOf.Class, create:() => new List<ArrayElementInDictionary>()),
     'CustomHttpErrorResponse': new TypeInfo(TypeOf.Class, create:() => new CustomHttpErrorResponse()),
     'AlwaysThrows': new TypeInfo(TypeOf.Class, create:() => new AlwaysThrows()),
     'AlwaysThrowsFilterAttribute': new TypeInfo(TypeOf.Class, create:() => new AlwaysThrowsFilterAttribute()),
@@ -6700,6 +6853,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'MatchesId': new TypeInfo(TypeOf.Class, create:() => new MatchesId()),
     'MatchesSlug': new TypeInfo(TypeOf.Class, create:() => new MatchesSlug()),
     'SwaggerVersionTest': new TypeInfo(TypeOf.Class, create:() => new SwaggerVersionTest()),
+    'SwaggerRangeTest': new TypeInfo(TypeOf.Class, create:() => new SwaggerRangeTest()),
     'TestErrorView': new TypeInfo(TypeOf.Class, create:() => new TestErrorView()),
     'GetTimestamp': new TypeInfo(TypeOf.Class, create:() => new GetTimestamp()),
     'TestMiniverView': new TypeInfo(TypeOf.Class, create:() => new TestMiniverView()),
@@ -6712,12 +6866,17 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'DownloadGzipFile': new TypeInfo(TypeOf.Class, create:() => new DownloadGzipFile()),
     'MatchName': new TypeInfo(TypeOf.Class, create:() => new MatchName()),
     'MatchLang': new TypeInfo(TypeOf.Class, create:() => new MatchLang()),
+    'RequestLogsTest': new TypeInfo(TypeOf.Class, create:() => new RequestLogsTest()),
+    'InProcRequest1': new TypeInfo(TypeOf.Class, create:() => new InProcRequest1()),
+    'InProcRequest2': new TypeInfo(TypeOf.Class, create:() => new InProcRequest2()),
     'SwaggerTest': new TypeInfo(TypeOf.Class, create:() => new SwaggerTest()),
     'SwaggerTest2': new TypeInfo(TypeOf.Class, create:() => new SwaggerTest2()),
     'SwaggerComplex': new TypeInfo(TypeOf.Class, create:() => new SwaggerComplex()),
     'SwaggerPostTest': new TypeInfo(TypeOf.Class, create:() => new SwaggerPostTest()),
     'SwaggerPostTest2': new TypeInfo(TypeOf.Class, create:() => new SwaggerPostTest2()),
     'SwaggerMultiApiResponseTest': new TypeInfo(TypeOf.Class, create:() => new SwaggerMultiApiResponseTest()),
+    'DefaultViewAttr': new TypeInfo(TypeOf.Class, create:() => new DefaultViewAttr()),
+    'DefaultViewActionAttr': new TypeInfo(TypeOf.Class, create:() => new DefaultViewActionAttr()),
     'DynamicallyRegistered': new TypeInfo(TypeOf.Class, create:() => new DynamicallyRegistered()),
     'QueryPostgresRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryPostgresRockstars()),
     'QueryPostgresPgRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryPostgresPgRockstars()),

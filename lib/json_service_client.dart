@@ -273,7 +273,7 @@ class JsonServiceClient implements IServiceClient {
       urlFilter(req.uri.toString());
     }
 
-    HttpClientResponse res = null;
+    HttpClientResponse res;
 
     resendRequest() async {
       req = await createRequest(info);
@@ -351,7 +351,7 @@ class JsonServiceClient implements IServiceClient {
     }
     if (args != null) url = appendQueryString(url, args);
 
-    String bodyStr = null;
+    String bodyStr;
     if (hasRequestBody(method)) {
       if (body is String) {
         bodyStr = body;
@@ -366,7 +366,7 @@ class JsonServiceClient implements IServiceClient {
       req.headers.add(HttpHeaders.AUTHORIZATION, 'Bearer ' + bearerToken);
     else if (userName != null)
       req.headers.add(HttpHeaders.AUTHORIZATION,
-          'Basic ' + base64.encode(utf8.encode('${userName}:${password}')));
+          'Basic ' + base64.encode(utf8.encode('$userName:$password')));
 
     req.cookies.addAll(this.cookies);
 
@@ -489,6 +489,11 @@ class JsonServiceClient implements IServiceClient {
         (res.headers.contentLength == null && !isJson)) {
       return responseAs as T;
     }
+
+    if (res.statusCode == 204 || res.contentLength == 0) { //No Content
+      return null;
+    }
+
     return json.decode(await res.transform(utf8.decoder).join());
   }
 

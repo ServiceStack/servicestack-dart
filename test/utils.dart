@@ -6,6 +6,7 @@ import '../lib/client.dart';
 import 'dtos/test.dtos.dart';
 
 JsonServiceClient createTestClient() => 
+  //new JsonServiceClient("http://localhost:56500")  
   new JsonServiceClient("http://test.servicestack.net")
     ..exceptionFilter = (res,e) {
       if (e is WebServiceException) {
