@@ -7,7 +7,7 @@ ServiceStack's **Add ServiceStack Reference** feature allows clients to generate
 Dart ServiceStack Reference supports **all Dart platforms**, including Flutter and AngularDart or Dart Web Apps with and without Dart 2's Strong Mode - in the same optimal development workflow pioneered in [Add ServiceStack Reference](http://docs.servicestack.net/add-servicestack-reference) where it doesn't requiring any additional tooling, transformers or build steps. 
 
 Due to the lack of reflection and Mirror support, consuming JSON APIs can be quite [cumbersome in Flutter](https://flutter.io/cookbook/networking/fetch-data/). But we've been able to achieve the same productive development experience available in [all supported languages](http://docs.servicestack.net/add-servicestack-reference) where you can use the generated Dart DTOs from any remote v5.1+ ServiceStack endpoint with ServiceStack's Smart generic
-[JsonServiceClient](https://pub.dartlang.org/documentation/servicestack/0.0.7/client/JsonServiceClient-class.html) available in the [servicestack Dart package](https://pub.dartlang.org/packages/servicestack#-installing-tab-), to enable an end-to-end Typed API for calling Services by [sending and receiving native DTOs](http://docs.servicestack.net/architecture-overview#client-architecture).
+[JsonServiceClient](https://pub.dartlang.org/documentation/servicestack/latest/servicestack/JsonServiceClient-class.html) available in the [servicestack Dart package](https://pub.dartlang.org/packages/servicestack#-installing-tab-), to enable an end-to-end Typed API for calling Services by [sending and receiving native DTOs](http://docs.servicestack.net/architecture-overview#client-architecture).
 
 ### Example Usage
 
@@ -29,7 +29,7 @@ To make API calls we need to use the `JsonServiceClient`, installed by adding th
 
 ```yaml
 dependencies:
-  servicestack: "^0.0.9"
+  servicestack: "^1.0.0"
 ```
 
 Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode.org) automatically calls `flutter packages get` to add any new dependencies to your project.
@@ -37,7 +37,7 @@ Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode
 We now have everything we need to be able to make typed API requests to any of [TechStacks APIs](https://www.techstacks.io/metadata) with a shared `JsonServiceClient` instance populated with the base URL of the remote endpoint, e.g:
 
 ```dart
-import 'package:servicestack/client.dart';
+import 'package:servicestack/servicestack.dart';
 
 import 'techstacks.dtos.dart';
 
@@ -100,7 +100,7 @@ abstract class IConvertible
 }
 ```
 
-The conversion logic that handles the behind-the-scenes conversion into and out of Dart Types is maintained in the extensible [JsonConverters](https://pub.dartlang.org/documentation/servicestack/0.0.7/client/JsonConverters/Converters.html) class which lets you replace built-in converters with your own implementation or register new Converters when you want to take over handling of specific types.
+The conversion logic that handles the behind-the-scenes conversion into and out of Dart Types is maintained in the extensible [JsonConverters](https://pub.dartlang.org/documentation/servicestack/latest/servicestack/JsonConverters/Converters.html) class which lets you replace built-in converters with your own implementation or register new Converters when you want to take over handling of specific types.
 
 ### JsonServiceClient
 
@@ -120,11 +120,11 @@ Behind the scenes `JsonServiceClient` leverages the optimal [`HttpClient` in dar
 
 The `servicestack` Dart package also includes an alternative `JsonWebClient` implementation which instead performs HTTP Requests using [dart:html BrowserClient](https://webdev.dartlang.org/angular/guide/server-communication) to use the browsers built-in `XMLHttpRequest` object. Despite their implementation differences `JsonWebClient` also supports the same feature-set as the Dart VM's `JsonServiceClient` above. 
 
-AngularDart or Dart Web Apps can use `JsonWebClient` by importing `web_client.dart`, e.g: 
+AngularDart or Dart Web Apps can use `JsonWebClient` by importing `web.dart`, e.g: 
 
 ```dart
-import 'package:servicestack/client.dart';
-import 'package:servicestack/web_client.dart';
+import 'package:servicestack/servicestack.dart';
+import 'package:servicestack/web.dart';
 
 var client = new JsonWebClient("https://www.techstacks.io");
 ```
@@ -197,7 +197,7 @@ Then to use `JsonServiceClient` add the `servicestack` dependency to your apps [
   dependencies:
     flutter:
       sdk: flutter
-    servicestack: "^0.0.9"
+    servicestack: "^1.0.0"
 
 Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.io/using-packages/) to install any new dependencies in your App. 
 
@@ -221,12 +221,12 @@ Which updates all Dart references in the current directory, including any custom
     Updated: test.dtos.dart
     Updated: techstacks.dtos.dart
 
-This gives us everything we need to call Web Services in our Flutter App, by importing `package:servicestack/client.dart` containing `JsonServiceClient` as well as any generated DTOs.
+This gives us everything we need to call Web Services in our Flutter App, by importing `package:servicestack/servicestack.dart` containing `JsonServiceClient` as well as any generated DTOs.
 
 Then create new `JsonServiceClient` instances initialized with the `BaseUrl` for each of the remote endpoints we want to call:
 
 ```dart
-import 'package:servicestack/client.dart';
+import 'package:servicestack/servicestack.dart';
 
 import 'test.dtos.dart';
 import 'techstacks.dtos.dart';
@@ -484,10 +484,10 @@ To display the image we assign the response to the `imageBytes` field within the
 
 The [HelloAngularDart](https://github.com/ServiceStackApps/HelloAngularDart) project demonstrates the same functionality in an AngularDart Web App running inside a Web Browser.
 
-The only difference is having to also import `web_client.dart` containing the `JsonWebClient`:
+The only difference is having to also import `web.dart` containing the `JsonWebClient`:
 
 ```dart
-import 'package:servicestack/web_client.dart';
+import 'package:servicestack/web.dart';
 ```
 
 and changing the clients to use the `JsonWebClient` instead, e.g:
@@ -508,8 +508,8 @@ import 'dart:typed_data';
 import 'dart:convert';
 
 import 'package:angular/angular.dart';
-import 'package:servicestack/client.dart';
-import 'package:servicestack/web_client.dart';
+import 'package:servicestack/servicestack.dart';
+import 'package:servicestack/web.dart';
 
 import '../dtos/test.dtos.dart';
 import '../dtos/techstacks.dtos.dart';
@@ -632,7 +632,7 @@ BaseUrl: https://www.techstacks.io
 //AddDescriptionAsComments: True
 //IncludeTypes: 
 //ExcludeTypes: 
-//DefaultImports: package:servicestack/client.dart
+//DefaultImports: package:servicestack/servicestack.dart
 */
 ```
 
