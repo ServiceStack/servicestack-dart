@@ -1,4 +1,4 @@
-library client;
+library servicestack;
 
 import 'dart:io';
 import 'dart:async';

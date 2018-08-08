@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:http/browser_client.dart';
 import 'package:http/http.dart';
-import 'client.dart';
+import 'servicestack.dart';
 
 typedef void WebRequestFilter(Request req);
 typedef void WebResponseFilter(Response res);

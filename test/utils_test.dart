@@ -1,8 +1,7 @@
 library client_test;
 
-import '../lib/client.dart';
-
 import 'package:test/test.dart';
+import '../lib/servicestack.dart';
 
 void main() {
   test('Does parse Generic Type args', (){

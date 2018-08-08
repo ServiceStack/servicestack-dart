@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../lib/client.dart';
+import '../lib/servicestack.dart';
 
 main() {
   test('Can parse ISO 8601 DateTime', () {
