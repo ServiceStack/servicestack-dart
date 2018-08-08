@@ -1,6 +1,6 @@
 library client_test;
+import 'package:flutter_test/flutter_test.dart';
 
-import 'package:test/test.dart';
 import '../lib/servicestack.dart';
 
 void main() {
