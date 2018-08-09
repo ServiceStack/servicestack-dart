@@ -78,7 +78,7 @@ class JsonServiceClient implements IServiceClient {
     replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
     oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
     headers = {
-      HttpHeaders.ACCEPT: "application/json",
+      HttpHeaders.acceptHeader: "application/json",
     };
     client = new HttpClient();
     cookies = new List<Cookie>();
@@ -363,16 +363,16 @@ class JsonServiceClient implements IServiceClient {
     var req = await client.openUrl(method, info.uri ?? createUri(url));
 
     if (bearerToken != null)
-      req.headers.add(HttpHeaders.AUTHORIZATION, 'Bearer ' + bearerToken);
+      req.headers.add(HttpHeaders.authorizationHeader, 'Bearer ' + bearerToken);
     else if (userName != null)
-      req.headers.add(HttpHeaders.AUTHORIZATION,
+      req.headers.add(HttpHeaders.authorizationHeader,
           'Basic ' + base64.encode(utf8.encode('$userName:$password')));
 
     req.cookies.addAll(this.cookies);
 
     req.headers.chunkedTransferEncoding = false;
     headers.forEach((key, val) {
-      if (key == HttpHeaders.CONTENT_TYPE) {
+      if (key == HttpHeaders.contentTypeHeader) {
         var parts = val.split("/");
         req.headers.contentType = new ContentType(parts[0], parts[1]);
       } else {
@@ -381,7 +381,7 @@ class JsonServiceClient implements IServiceClient {
     });
 
     if (bodyStr != null) {
-      req.headers.contentType = ContentType.JSON;
+      req.headers.contentType = ContentType.json;
       req.contentLength = bodyStr.length;
     }
 

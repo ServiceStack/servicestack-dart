@@ -20,7 +20,7 @@ class DurationConverter implements IConverter
     var hasTime = t.length == 2;
     var d = splitOnFirst(t[0], 'D');
     if (d.length == 2) {
-      var day = int.parse(d[0], onError: (s) => null);
+      var day = int.tryParse(d[0]) ?? null;
       if (day != null) {
         days = day;
       }
@@ -29,7 +29,7 @@ class DurationConverter implements IConverter
     if (hasTime) {
       var h = splitOnFirst(t[1], 'H');
       if (h.length == 2) {
-        var hour = int.parse(h[0], onError: (s) => null);
+        var hour = int.tryParse(h[0]) ?? null;
         if (hour != null) {
           hours = hour;
         }
@@ -37,7 +37,7 @@ class DurationConverter implements IConverter
 
       var m = splitOnFirst(h[h.length - 1], 'M');
       if (m.length == 2) {
-        var min = int.parse(m[0], onError: (s) => null);
+        var min = int.tryParse(m[0]) ?? null;
         if (min != null) {
           minutes = min;
         }
@@ -45,7 +45,7 @@ class DurationConverter implements IConverter
 
       var s = splitOnFirst(m[m.length - 1], 'S');
       if (s.length == 2) {
-        var millis = double.parse(s[0], (s) => null);
+        var millis = double.tryParse(s[0]) ?? null;
         if (millis != null) {
           ms = millis;
         }
