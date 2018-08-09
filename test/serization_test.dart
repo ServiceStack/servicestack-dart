@@ -1,5 +1,5 @@
 library client_test;
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 import 'dtos/test.dtos.dart';
 import 'utils.dart';

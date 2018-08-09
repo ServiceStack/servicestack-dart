@@ -116,19 +116,6 @@ The `JsonServiceClient` is a smart full-featured Service Client implementation w
 
 Behind the scenes `JsonServiceClient` leverages the optimal [`HttpClient` in dart:io](https://docs.flutter.io/flutter/dart-io/HttpClient-class.html) to perform HTTP Requests in Flutter and Dart VM Apps.
 
-### JsonWebClient
-
-The `servicestack` Dart package also includes an alternative `JsonWebClient` implementation which instead performs HTTP Requests using [dart:html BrowserClient](https://webdev.dartlang.org/angular/guide/server-communication) to use the browsers built-in `XMLHttpRequest` object. Despite their implementation differences `JsonWebClient` also supports the same feature-set as the Dart VM's `JsonServiceClient` above. 
-
-AngularDart or Dart Web Apps can use `JsonWebClient` by importing `web.dart`, e.g: 
-
-```dart
-import 'package:servicestack/servicestack.dart';
-import 'package:servicestack/web.dart';
-
-var client = new JsonWebClient("https://www.techstacks.io");
-```
-
 ### IServiceClient API
 
 Both JSON Service Client variants implement the same flexible `IServiceClient` API below, use the same DTOs and implementation and throws the same structured `WebServiceException` which results in Typed API Requests being source-compatible between Dart Web Apps, Dart VM Server and AOT compiled Flutter Web Apps:
@@ -195,9 +182,7 @@ This creates a basic Flutter App which you can run in your Android Device or And
 Then to use `JsonServiceClient` add the `servicestack` dependency to your apps [pubspec.yaml](https://github.com/ServiceStackApps/HelloFlutter/blob/master/pubspec.yaml):
 
   dependencies:
-    flutter:
-      sdk: flutter
-    servicestack: "^1.0.0"
+    servicestack: "^1.0.2"
 
 Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.io/using-packages/) to install any new dependencies in your App. 
 
@@ -479,128 +464,6 @@ result != null && result != ""
 To display the image we assign the response to the `imageBytes` field within the stateful widget's `setState()` which triggers a re-render of the UI containing the generated Image displayed using the [Image widget](https://docs.flutter.io/flutter/widgets/Image-class.html):
 
 ![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/dart/flutter/helloflutter-06.png)
-
-### Angular Dart
-
-The [HelloAngularDart](https://github.com/ServiceStackApps/HelloAngularDart) project demonstrates the same functionality in an AngularDart Web App running inside a Web Browser.
-
-The only difference is having to also import `web.dart` containing the `JsonWebClient`:
-
-```dart
-import 'package:servicestack/web.dart';
-```
-
-and changing the clients to use the `JsonWebClient` instead, e.g:
-
-```dart
-var testClient = new JsonWebClient(TestBaseUrl);
-var techstacksClient = new JsonWebClient(TechStacksBaseUrl);
-```
-
-But otherwise the actual client source code for all of the Typed API requests remains exactly the same. 
-
-The `HelloAngularDart` App is contained within the [hello_world](https://github.com/ServiceStackApps/HelloAngularDart/tree/master/lib/src/hello_world) component with all Dart logic in:
-
-#### [hello_world.dart](https://github.com/ServiceStackApps/HelloAngularDart/blob/master/lib/src/hello_world/hello_world.dart)
-
-```dart
-import 'dart:typed_data';
-import 'dart:convert';
-
-import 'package:angular/angular.dart';
-import 'package:servicestack/servicestack.dart';
-import 'package:servicestack/web.dart';
-
-import '../dtos/test.dtos.dart';
-import '../dtos/techstacks.dtos.dart';
-
-@Component(
-  selector: 'hello-world',
-  styleUrls: const ['hello_world.css'],
-  templateUrl: 'hello_world.html',
-)
-class HelloWorldComponent {
-  var result = "";
-  var imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="; // 1x1 pixel
-  static const TestBaseUrl = "http://test.servicestack.net";
-  static const TechStacksBaseUrl = "https://www.techstacks.io";
-  var testClient = new JsonWebClient(TestBaseUrl);
-  var techstacksClient = new JsonWebClient(TechStacksBaseUrl);
-
-  doAsync() async {
-    var r = await testClient.get(new Hello(name: "Async"));
-    result = r.result;
-  }
-
-  doAuth() async {
-    var auth = await testClient.post(new Authenticate(
-        provider: "credentials", userName: "test", password: "test"));
-    var r = await testClient.get(new HelloAuth(name: "Auth"));
-    result = "${r.result} your JWT is: ${auth.bearerToken}";
-  }
-
-  doJWT() async {
-    var auth = await testClient.post(new Authenticate(
-        provider: "credentials", userName: "test", password: "test"));
-
-    var newClient = new JsonWebClient(TestBaseUrl)
-      ..refreshToken = auth.refreshToken;
-    var r = await newClient.get(new HelloAuth(name: "JWT"));
-    result = "${r.result} your RefreshToken is: ${auth.refreshToken}";
-  }
-
-  doQuery() async {
-    var techs = await techstacksClient
-        .get(new FindTechnologies(), args: {"slug": "flutter"});
-    var posts = await techstacksClient.get(new QueryPosts(
-        anyTechnologyIds: [techs.results[0].id],
-        types: ['Announcement', 'Showcase'])
-      ..take = 1);
-    result = "Latest Flutter Announcement:\n“${posts.results[0].title}”";
-  }
-
-  doBatch() async {
-    var requests = ['foo', 'bar', 'qux'].map((name) => new Hello(name: name));
-    var responses = await testClient.sendAll(requests);
-    result = "Batch Responses:\n${responses.map((r) => r.result).join('\n')}";
-  }
-
-  doImage() async {
-    Uint8List bytes = await testClient.get(new HelloImage(
-        name: "Flutter",
-        fontFamily: "Roboto",
-        background: "#0091EA",
-        width: 500,
-        height: 170));
-
-    result = "";
-    imageSrc = "data:image/png;base64," + base64.encode(bytes);
-  }
-}
-```
-
-#### [hello_world.html](https://github.com/ServiceStackApps/HelloAngularDart/blob/master/lib/src/hello_world/hello_world.html)
-
-Which uses this template markup to render its UI:
-
-```html
-<div>
-    <button (click)="doAsync()">Async</button>
-    <button (click)="doAuth()">Auth</button>
-    <button (click)="doJWT()">JWT</button>
-    <button (click)="doQuery()">Query</button>
-    <button (click)="doBatch()">Batch</button>
-    <button (click)="doImage()">Image</button>
-</div>
-
-<div id="result">{{result}}</div>
-
-<img src="{{imageSrc}}">
-```
-
-Where it runs a functionally equivalent App in a browser:
-
-![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/dart/angulardart/helloangulardart-01.png)
 
 
 ## DTO Customization Options 

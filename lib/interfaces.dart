@@ -1,4 +1,4 @@
-part of servicestack;
+part of client;
 
 abstract class IConverter
 {

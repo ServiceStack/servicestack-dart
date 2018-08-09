@@ -1,4 +1,4 @@
-part of servicestack;
+part of client;
 
 List<String> splitOnFirst(String s, String c) {
     if (s == null || s == "") return [s];

@@ -1,4 +1,4 @@
-part of servicestack;
+part of client;
 
 typedef void UrlFilter(String url);
 typedef Future AsyncCallbackFunction();

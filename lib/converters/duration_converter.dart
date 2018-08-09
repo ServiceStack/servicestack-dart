@@ -1,4 +1,4 @@
-part of servicestack;
+part of client;
 
 class DurationConverter implements IConverter
 {

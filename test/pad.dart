@@ -1,8 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
-
 import '../lib/servicestack.dart';
-
-import 'dtos/test.dtos.dart';
 
 JsonServiceClient createTestClient() => 
   new JsonServiceClient("http://test.servicestack.net")
@@ -20,20 +16,5 @@ main() async {
 
   print(strList.runtimeType.toString());
   print(strList2.runtimeType.toString());
-
-    var client = createTestClient();
-
-    client.urlFilter = (url) => expect(url, endsWith("ThrowValidation?jsconfig=EmitCamelCaseNames%3Afalse"));
-
-    try {
-      await client.post(new ThrowValidation(), args: { "jsconfig": "EmitCamelCaseNames:false" });
-    } on WebServiceException catch(e) {
-      expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
-      expect(e.responseStatus.message, equals("'Age' must be between 1 and 120. You entered 0."));
-      expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
-      expect(e.responseStatus.errors[1].fieldName, equals("Required"));
-      expect(e.responseStatus.errors[1].message, equals("'Required' should not be empty."));
-    }
-
 }
 
