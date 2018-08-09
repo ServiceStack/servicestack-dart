@@ -78,10 +78,10 @@ String _toString(value) => value == null ? null : value is String ? value : valu
 
 dynamic convert(dynamic value, String typeName, [TypeContext context=null]) {
   if (typeName == "int") {
-    return int.parse(_toString(value), onError: (s) => null);
+    return int.tryParse(_toString(value)) ?? null;
   }
   if (typeName == "double") {
-    return double.parse(_toString(value), (s) => null);
+    return double.tryParse(_toString(value)) ?? null;
   }
   if (typeName == "String") {
     return _toString(value);
