@@ -1,20 +1,18 @@
 part of client;
 
-class DurationConverter implements IConverter
-{
+class DurationConverter implements IConverter {
   dynamic fromJson(value, TypeContext context) {
     Duration duration = value is Duration ? value : null;
     if (duration != null) return duration;
 
     var str = value as String;
-    if (str == null)     
-      return value;
+    if (str == null) return value;
 
     int days = 0;
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
-    double ms = 0.0;      
+    double ms = 0.0;
 
     var t = splitOnFirst(str, 'T'); //strip P
     var hasTime = t.length == 2;
@@ -52,20 +50,20 @@ class DurationConverter implements IConverter
       }
 
       seconds = ms.toInt();
-      ms -= seconds;      
+      ms -= seconds;
     }
 
-    return new Duration(days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
-      milliseconds: (ms * 1000).toInt());
+    return new Duration(
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+        milliseconds: (ms * 1000).toInt());
   }
 
   toJson(dynamic value, TypeContext context) {
     Duration duration = value is Duration ? value : null;
-    if (duration == null)
-      return null;
+    if (duration == null) return null;
 
     StringBuffer sb = new StringBuffer("P");
 
@@ -78,30 +76,27 @@ class DurationConverter implements IConverter
     int days = seconds ~/ 24;
     double remainingSecs = sec + (totalSeconds - wholeSeconds);
 
-    if (days > 0)
-        sb.write("${days}D");
+    if (days > 0) sb.write("${days}D");
 
     if (days == 0 || hours + min + sec + remainingSecs > 0) {
+      sb.write("T");
+      if (hours > 0) sb.write("${hours}H");
 
-        sb.write("T");
-        if (hours > 0)
-            sb.write("${hours}H");
+      if (min > 0) sb.write("${min}M");
 
-        if (min > 0)
-            sb.write("${min}M");
-
-        if (remainingSecs > 0) {
-            String secFmt = remainingSecs.toStringAsFixed(7);
-            secFmt = trimEnd(secFmt, '0');
-            secFmt = trimEnd(secFmt, '.');
-            sb.write(secFmt);
-            sb.write("S");
-        } else if (sb.length == 2) {//PT
-            sb.write("0S");
-        }
+      if (remainingSecs > 0) {
+        String secFmt = remainingSecs.toStringAsFixed(7);
+        secFmt = trimEnd(secFmt, '0');
+        secFmt = trimEnd(secFmt, '.');
+        sb.write(secFmt);
+        sb.write("S");
+      } else if (sb.length == 2) {
+        //PT
+        sb.write("0S");
+      }
     }
 
-    String xsdDuration = sb.toString();    
+    String xsdDuration = sb.toString();
     return xsdDuration;
-  }  
+  }
 }
