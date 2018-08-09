@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../lib/servicestack.dart';
+import '../lib/client.dart';
 import 'utils.dart';
 
 import 'dtos/test.dtos.dart';

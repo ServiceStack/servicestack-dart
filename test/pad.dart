@@ -1,4 +1,4 @@
-import '../lib/servicestack.dart';
+import '../lib/client.dart';
 
 JsonServiceClient createTestClient() => 
   new JsonServiceClient("http://test.servicestack.net")

@@ -11,10 +11,10 @@ BaseUrl: https://www.techstacks.io
 //AddDescriptionAsComments: True
 //IncludeTypes: 
 //ExcludeTypes: 
-DefaultImports: ../../lib/servicestack.dart
+DefaultImports: ../../lib/client.dart
 */
 
-import '../../lib/servicestack.dart';
+import '../../lib/client.dart';
 
 enum PostType
 {
