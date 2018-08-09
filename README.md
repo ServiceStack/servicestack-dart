@@ -29,15 +29,15 @@ To make API calls we need to use the `JsonServiceClient`, installed by adding th
 
 ```yaml
 dependencies:
-  servicestack: "^1.0.0"
+  servicestack: "^1.0.2"
 ```
 
-Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode.org) automatically calls `flutter packages get` to add any new dependencies to your project.
+Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode.org) automatically calls `pub get` or `flutter packages get` (in Flutter projects) to add any new dependencies to your project.
 
 We now have everything we need to be able to make typed API requests to any of [TechStacks APIs](https://www.techstacks.io/metadata) with a shared `JsonServiceClient` instance populated with the base URL of the remote endpoint, e.g:
 
 ```dart
-import 'package:servicestack/servicestack.dart';
+import 'package:servicestack/client.dart';
 
 import 'techstacks.dtos.dart';
 
@@ -206,12 +206,12 @@ Which updates all Dart references in the current directory, including any custom
     Updated: test.dtos.dart
     Updated: techstacks.dtos.dart
 
-This gives us everything we need to call Web Services in our Flutter App, by importing `package:servicestack/servicestack.dart` containing `JsonServiceClient` as well as any generated DTOs.
+This gives us everything we need to call Web Services in our Flutter App, by importing `package:servicestack/client.dart` containing `JsonServiceClient` as well as any generated DTOs.
 
 Then create new `JsonServiceClient` instances initialized with the `BaseUrl` for each of the remote endpoints we want to call:
 
 ```dart
-import 'package:servicestack/servicestack.dart';
+import 'package:servicestack/client.dart';
 
 import 'test.dtos.dart';
 import 'techstacks.dtos.dart';
@@ -495,7 +495,7 @@ BaseUrl: https://www.techstacks.io
 //AddDescriptionAsComments: True
 //IncludeTypes: 
 //ExcludeTypes: 
-//DefaultImports: package:servicestack/servicestack.dart
+//DefaultImports: package:servicestack/client.dart
 */
 ```
 
