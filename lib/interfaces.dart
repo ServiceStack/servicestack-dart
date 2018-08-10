@@ -133,4 +133,3 @@ class WebServiceException implements Exception {
   dynamic innerException;
   ResponseStatus responseStatus;
 }
-
