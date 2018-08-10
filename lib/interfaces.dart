@@ -1,4 +1,4 @@
-part of client;
+part of servicestack;
 
 abstract class IConverter {
   dynamic toJson(dynamic value, TypeContext context);
@@ -115,3 +115,22 @@ class TypeAs {
   static String string = "";
   static Uint8List bytes = new Uint8List(0);
 }
+
+typedef void UrlFilter(String url);
+typedef Future AsyncCallbackFunction();
+
+enum WebServiceExceptionType {
+  RefreshTokenException,
+}
+
+class WebServiceException implements Exception {
+  int statusCode;
+  String statusDescription;
+  WebServiceExceptionType type;
+  String get message => responseStatus != null
+      ? responseStatus.message ?? responseStatus.errorCode
+      : statusDescription;
+  dynamic innerException;
+  ResponseStatus responseStatus;
+}
+

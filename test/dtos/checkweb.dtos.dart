@@ -11,10 +11,10 @@ BaseUrl: http://localhost:55799
 //AddDescriptionAsComments: True
 //IncludeTypes: 
 //ExcludeTypes: 
-DefaultImports: ../../lib/client.dart
+DefaultImports: ../../lib/servicestack.dart
 */
 
-import '../../lib/client.dart';
+import '../../lib/servicestack.dart';
 import 'dart:collection';
 import 'dart:typed_data';
 

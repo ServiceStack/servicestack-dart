@@ -1,4 +1,4 @@
-part of client;
+part of servicestack;
 
 List<String> splitOnFirst(String s, String c) {
   if (s == null || s == "") return [s];
@@ -125,4 +125,185 @@ String combinePaths(List<String> paths) {
   if (parts[0] == "") combinedPaths.insert(0, "");
   var ret = combinedPaths.join("/");
   return ret.length > 0 ? ret : (combinedPaths.length == 0 ? "/" : ".");
+}
+
+String nameOf(dynamic o) {
+  if (o == null) return "null";
+
+  try {
+    Function getTypeName = o.getTypeName;
+    if (getTypeName != null) return getTypeName();
+  } catch (e) {}
+
+  return o.runtimeType.toString();
+}
+
+Uri createUri(String url) {
+  if (url == null || url.length == 0) return null;
+
+  try {
+    var uri = Uri.parse(url);
+    return uri;
+  } catch (e) {
+    //sometimes Uri refuses to parse urls with encodable chars so need to manually parse + reconstruct
+    var parts = url.split("://");
+    if (parts.length != 2) throw new FormatException("Invalid URL: '${url}'");
+
+    var urlParts = splitOnFirst(parts[1], "/");
+    var relativeUrl = urlParts.length == 1 ? "/" : "/" + urlParts[1];
+
+    var relativeUrlParts = splitOnFirst(relativeUrl, "?");
+    var path = relativeUrlParts[0];
+
+    Map<String, String> query = null;
+
+    if (relativeUrlParts.length == 2) {
+      query = new Map<String, String>();
+      var qs = relativeUrlParts[1];
+      var qsParts = qs.split("&");
+      for (var qsPart in qsParts) {
+        var kvp = splitOnFirst(qsPart, "=");
+        if (kvp.length == 1) continue;
+        query[kvp[0]] = kvp[1];
+      }
+    }
+
+    return parts[0] == "https"
+        ? new Uri.https(urlParts[0], path, query)
+        : new Uri.http(urlParts[0], path, query);
+  }
+}
+
+String resolveHttpMethod(request) {
+  return request is IGet
+      ? "GET"
+      : request is IPut
+          ? "PUT"
+          : request is IDelete
+              ? "DELETE"
+              : request is IPatch
+                  ? "PATCH"
+                  : request is IOptions ? "OPTIONS" : "POST";
+}
+
+WebServiceException createErrorResponse(String errorCode, String message,
+    [WebServiceExceptionType type]) {
+  var error = new WebServiceException();
+  if (type != null) error.type = type;
+  error.responseStatus = new ResponseStatus()
+    ..errorCode = errorCode
+    ..message = message;
+  return error;
+}
+
+bool hasRequestBody(String method) => !(method == "GET" ||
+    method == "DELETE" ||
+    method == "HEAD" ||
+    method == "OPTIONS");
+
+bool isJsonObject(String str) => str != null && str.trim().startsWith("{");
+
+String appendQueryString(String url, Map<String, dynamic> args) {
+  args.forEach((key, val) {
+    if (val == null) return;
+    url += url.indexOf("?") >= 0 ? "&" : "?";
+    url += key + "=" + qsValue(val);
+  });
+  return url;
+}
+
+String qsValue(arg) {
+  if (arg == null) return "";
+  if (arg is Uint8List) {
+    return base64.encode(arg);
+  }
+  if (arg is String) {
+    return Uri.encodeComponent(arg);
+  }
+  if (arg is List) {
+    var sb = new StringBuffer();
+    for (var x in arg) {
+      if (sb.length > 0) sb.write(",");
+      sb.write(qsValue(x));
+    }
+    return sb.toString();
+  }
+  if (arg is IConvertible) {
+    arg = (arg as IConvertible).toJson();
+  }
+  if (arg is Map) {
+    var sb = new StringBuffer();
+    arg.forEach((key, val) {
+      if (val == null) return;
+      if (sb.length > 0) sb.write(",");
+      sb.write(_toString(key));
+      sb.write(":");
+      sb.write(qsValue(val));
+    });
+    return "{" + sb.toString() + "}";
+  }
+  return arg.toString();
+}
+
+Map<String, dynamic> toMap(request) {
+  try {
+    var ret = request.toJson();
+    return ret;
+  } catch (e) {
+    return null;
+  }
+}
+
+String sanitizeKey(String key) =>
+    key != null ? key.toLowerCase().replaceAll("_", "") : null;
+
+ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
+  if (obj == null) return null;
+  var to = new ResponseStatus();
+  var status = findValue(obj, "responseStatus") ?? obj;
+
+  status.forEach((key, val) {
+    var sanitizedKey = sanitizeKey(key);
+    if (sanitizedKey == "errorcode") {
+      to.errorCode = val;
+    } else if (sanitizedKey == "message") {
+      to.message = val;
+    } else if (sanitizedKey == "stacktrace") {
+      to.stackTrace = val;
+    } else if (sanitizedKey == "errors") {
+      List errors = val;
+      to.errors = new List<ResponseError>();
+      for (Map error in errors) {
+        var fieldError = new ResponseError();
+        to.errors.add(fieldError);
+        error.forEach((fieldKey, fieldVal) {
+          var sanitizedFieldKey = sanitizeKey(fieldKey);
+          if (sanitizedFieldKey == "errorcode") {
+            fieldError.errorCode = fieldVal;
+          } else if (sanitizedFieldKey == "fieldname") {
+            fieldError.fieldName = fieldVal;
+          } else if (sanitizedFieldKey == "message") {
+            fieldError.message = fieldVal;
+          } else if (sanitizedFieldKey == "meta") {
+            fieldError.meta = JsonConverters.toStringMap(fieldVal);
+          }
+        });
+      }
+    } else if (sanitizedKey == "meta") {
+      to.meta = JsonConverters.toStringMap(val);
+    }
+  });
+  return to;
+}
+
+dynamic findValue(Map<String, dynamic> map, String key) {
+  if (map != null) {
+    var findKey = sanitizeKey(key);
+    for (var k in map.keys) {
+      if (sanitizeKey(k) == findKey) {
+        return map[k];
+      }
+    }
+  }
+  return null;
 }

@@ -1,4 +1,4 @@
-part of client;
+part of servicestack;
 
 class JsonConverters {
   static Map<String, Function> TypeFactories = {};
