@@ -41,8 +41,7 @@ class WebResponseException implements Exception {
   }
 }
 
-class JsonWebClient implements IServiceClient
-{
+class JsonWebClient implements IServiceClient {
   String baseUrl;
   String replyBaseUrl;
   String oneWayBaseUrl;
@@ -71,8 +70,7 @@ class JsonWebClient implements IServiceClient
     headers = {
       "Accept": "application/json",
     };
-    client = new BrowserClient()
-      ..withCredentials = true;
+    client = new BrowserClient()..withCredentials = true;
   }
   void setCredentials(String userName, String password) {
     this.userName = userName;
@@ -85,8 +83,8 @@ class JsonWebClient implements IServiceClient
 
   Future<Map<String, dynamic>> getUrl(String path,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(
-        new SendWebContext(method: "GET", url: toAbsoluteUrl(path), args: args));
+    return sendRequest<Map<String, dynamic>>(new SendWebContext(
+        method: "GET", url: toAbsoluteUrl(path), args: args));
   }
 
   Future<T> getAs<T>(String path,
@@ -103,8 +101,9 @@ class JsonWebClient implements IServiceClient
         responseFilter: responseFilter));
   }
 
-  Future<T> post<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args}) {
-    return send<T>(request, method: "POST", body:body, args: args);
+  Future<T> post<T>(IReturn<T> request,
+      {dynamic body, Map<String, dynamic> args}) {
+    return send<T>(request, method: "POST", body: body, args: args);
   }
 
   Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
@@ -152,8 +151,9 @@ class JsonWebClient implements IServiceClient
         responseFilter: responseFilter));
   }
 
-  Future<T> put<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args}) {
-    return send<T>(request, method: "PUT", body:body, args: args);
+  Future<T> put<T>(IReturn<T> request,
+      {dynamic body, Map<String, dynamic> args}) {
+    return send<T>(request, method: "PUT", body: body, args: args);
   }
 
   Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
@@ -177,8 +177,9 @@ class JsonWebClient implements IServiceClient
         responseFilter: responseFilter));
   }
 
-  Future<T> patch<T>(IReturn<T> request, {dynamic body, Map<String, dynamic> args}) {
-    return send<T>(request, method: "PATCH", body:body, args: args);
+  Future<T> patch<T>(IReturn<T> request,
+      {dynamic body, Map<String, dynamic> args}) {
+    return send<T>(request, method: "PATCH", body: body, args: args);
   }
 
   Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
@@ -202,34 +203,34 @@ class JsonWebClient implements IServiceClient
         responseFilter: responseFilter));
   }
 
-  Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests, {WebRequestFilter requestFilter,
+  Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
+      {WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0)
-      return new List<T>();
+    if (requests == null || requests.length == 0) return new List<T>();
     var url = combinePaths([replyBaseUrl, nameOf(requests.first) + "[]"]);
 
     return this.sendRequest<List<T>>(new SendWebContext(
-      method: "POST",
-      request: requests.toList(),
-      uri: createUri(url),
-      responseAs: new List<T>(),
-      requestFilter:requestFilter,
-      responseFilter: responseFilter));
+        method: "POST",
+        request: requests.toList(),
+        uri: createUri(url),
+        responseAs: new List<T>(),
+        requestFilter: requestFilter,
+        responseFilter: responseFilter));
   }
 
-  Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests, {WebRequestFilter requestFilter,
+  Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
+      {WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0)
-      return new List<T>();
+    if (requests == null || requests.length == 0) return new List<T>();
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first) + "[]"]);
 
     await this.sendRequest<List<T>>(new SendWebContext(
-      method: "POST",
-      request: requests.toList(),
-      uri: createUri(url),
-      responseAs: new List<T>(),
-      requestFilter:requestFilter,
-      responseFilter: responseFilter));
+        method: "POST",
+        request: requests.toList(),
+        uri: createUri(url),
+        responseAs: new List<T>(),
+        requestFilter: requestFilter,
+        responseFilter: responseFilter));
   }
 
   Future<T> send<T>(IReturn<T> request,
@@ -241,7 +242,7 @@ class JsonWebClient implements IServiceClient
       WebResponseFilter responseFilter}) {
     return sendRequest<T>(new SendWebContext(
         request: request,
-        body:body,
+        body: body,
         method: method ?? resolveHttpMethod(request),
         args: args,
         responseAs: responseAs,
@@ -269,7 +270,7 @@ class JsonWebClient implements IServiceClient
       req = await createRequest(info);
       if (urlFilter != null) {
         urlFilter(req.url.toString());
-      }            
+      }
       try {
         var streamedRes = await client.send(req);
         res = await Response.fromStream(streamedRes);
@@ -288,21 +289,23 @@ class JsonWebClient implements IServiceClient
       return response;
     } on Exception catch (e) {
       if (res.statusCode == 401) {
-
         if (refreshToken != null) {
           var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
-          
-          var jwtInfo = new SendWebContext(method: "POST", request:jwtRequest, args: null, url:url);
+
+          var jwtInfo = new SendWebContext(
+              method: "POST", request: jwtRequest, args: null, url: url);
           try {
             var jwtReq = await createRequest(jwtInfo);
             var jwtStreamedRes = await client.send(jwtReq);
             var jwtRes = await Response.fromStream(jwtStreamedRes);
-            var jwtResponse = await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
+            var jwtResponse =
+                await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
             bearerToken = jwtResponse.accessToken;
             return await resendRequest();
-          } on Exception catch(jwtEx) {
-            return await handleError(res, jwtEx, WebServiceExceptionType.RefreshTokenException);
+          } on Exception catch (jwtEx) {
+            return await handleError(
+                res, jwtEx, WebServiceExceptionType.RefreshTokenException);
           }
         }
 
@@ -358,7 +361,8 @@ class JsonWebClient implements IServiceClient
     if (bearerToken != null)
       req.headers["Authorization"] = 'Bearer ' + bearerToken;
     else if (userName != null)
-      req.headers["Authorization"] = 'Basic ' + base64.encode(utf8.encode('${userName}:${password}'));
+      req.headers["Authorization"] =
+          'Basic ' + base64.encode(utf8.encode('${userName}:${password}'));
 
     headers.forEach((key, val) {
       req.headers[key] = val;
@@ -422,7 +426,8 @@ class JsonWebClient implements IServiceClient
     }
 
     var contentType = res.headers["content-type"];
-    var isJson = contentType != null && contentType.indexOf("application/json") != -1;
+    var isJson =
+        contentType != null && contentType.indexOf("application/json") != -1;
     if (isJson) {
       var jsonObj = json.decode(res.body);
       print(jsonObj);
@@ -446,17 +451,17 @@ class JsonWebClient implements IServiceClient
           var responseListType = "List<${responseType}>";
           var existingInfo = reqContext.getTypeInfo(responseListType);
           reqContext = new TypeContext(
-            typeName: responseListType,
-            types: { 
-              //List<T> in Dart 1.9 (non Strong mode) creates non generic List (dynamic)
-              responseListType: existingInfo 
-                ?? new TypeInfo(TypeOf.Class, create: () => responseAs) 
-            },
-            childContext: reqContext);
+              typeName: responseListType,
+              types: {
+                //List<T> in Dart 1.9 (non Strong mode) creates non generic List (dynamic)
+                responseListType: existingInfo ??
+                    new TypeInfo(TypeOf.Class, create: () => responseAs)
+              },
+              childContext: reqContext);
         }
-        fromMap = responseAs is List 
-          ? (json) => new ListConverter().fromJson(jsonObj, reqContext)
-          : responseAs.fromMap;
+        fromMap = responseAs is List
+            ? (json) => new ListConverter().fromJson(jsonObj, reqContext)
+            : responseAs.fromMap;
 
         var ret = fromMap(jsonObj);
         return ret;
@@ -466,8 +471,7 @@ class JsonWebClient implements IServiceClient
       }
     }
 
-    if (res.contentLength == 0 ||
-        (res.contentLength == null && !isJson)) {
+    if (res.contentLength == 0 || (res.contentLength == null && !isJson)) {
       return responseAs as T;
     }
     return json.decode(res.body);
@@ -503,5 +507,4 @@ class JsonWebClient implements IServiceClient
 
     throw raiseError(res, webEx);
   }
-  
 }
