@@ -255,12 +255,7 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T> sendRequest<T>(SendContext info) async {
-    var req = await createRequest(info);
-
-    if (urlFilter != null) {
-      urlFilter(req.uri.toString());
-    }
-
+    HttpClientRequest req;
     HttpClientResponse res;
 
     resendRequest() async {
@@ -278,6 +273,12 @@ class JsonServiceClient implements IServiceClient {
     }
 
     try {
+      req = await createRequest(info);
+
+      if (urlFilter != null) {
+        urlFilter(req.uri.toString());
+      }
+
       res = await req.close();
 
       var response = await createResponse(res, info);
