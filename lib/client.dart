@@ -60,6 +60,7 @@ class JsonServiceClient implements IServiceClient {
   ResponseExceptionFilter exceptionFilter;
   static ResponseExceptionFilter globalExceptionFilter;
   AsyncCallbackFunction onAuthenticationRequired;
+  int maxRetries;
 
   void set connectionTimeout(Duration duration) => client.connectionTimeout = duration;
   Duration get connectionTimeout => client.connectionTimeout;
@@ -72,6 +73,7 @@ class JsonServiceClient implements IServiceClient {
     };
     client = new HttpClient();
     cookies = new List<Cookie>();
+    maxRetries = 5;
   }
 
   void setCredentials(String userName, String password) {
@@ -354,7 +356,20 @@ class JsonServiceClient implements IServiceClient {
       }
     }
 
-    var req = await client.openUrl(method, info.uri ?? createUri(url));
+    HttpClientRequest req;
+    Exception firstEx;
+
+    for (var attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        req = await client.openUrl(method, info.uri ?? createUri(url));
+      } on Exception catch (e) {
+        if (firstEx == null) {
+          firstEx = e;
+        }
+      }
+    }
+    if (req == null)
+      throw firstEx;
 
     if (bearerToken != null)
       req.headers.add(HttpHeaders.authorizationHeader, 'Bearer ' + bearerToken);
