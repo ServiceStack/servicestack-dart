@@ -433,4 +433,24 @@ void main() {
     assertEchoComplexTypes(response);
   });
 
+  test('Can handle connection error', () async {
+    WebServiceException handledEx;
+    var client = new JsonServiceClient("http://unknown-zzz.net")
+      ..exceptionFilter = (res,e) {
+        if (e is WebServiceException) {
+          handledEx = e;
+        }
+      }
+      ..connectionTimeout = Duration(seconds: 1);
+
+      try {
+        var res = await client.get(new EchoTypes(Int: 1, string: "foo"));
+        fail("should throw");
+      } on WebServiceException catch(e) {
+        expect(handledEx.statusCode, 500);
+        expect(handledEx.statusDescription, startsWith("SocketException: "));
+      }
+
+  });
+
 }

@@ -61,6 +61,9 @@ class JsonServiceClient implements IServiceClient {
   static ResponseExceptionFilter globalExceptionFilter;
   AsyncCallbackFunction onAuthenticationRequired;
 
+  void set connectionTimeout(Duration duration) => client.connectionTimeout = duration;
+  Duration get connectionTimeout => client.connectionTimeout;
+
   JsonServiceClient([this.baseUrl = "/"]) {
     replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
     oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
@@ -284,7 +287,7 @@ class JsonServiceClient implements IServiceClient {
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
-      if (res.statusCode == 401) {
+      if (res != null && res.statusCode == 401) {
         if (refreshToken != null) {
           var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
@@ -497,6 +500,12 @@ class JsonServiceClient implements IServiceClient {
 
     // if (res.bodyUsed)
     //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
+
+    if (res == null)
+      throw raiseError(null, new WebServiceException()        
+        ..innerException = e
+        ..statusCode = 500
+        ..statusDescription = e.toString());
 
     var webEx = new WebServiceException()
       ..statusCode = res.statusCode
