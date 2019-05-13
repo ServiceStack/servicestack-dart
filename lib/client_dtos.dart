@@ -110,13 +110,11 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
       new TypeInfo(TypeOf.Class, create: () => new GetAccessToken()),
   'GetAccessTokenResponse':
       new TypeInfo(TypeOf.Class, create: () => new GetAccessTokenResponse()),
-   'NavItem': new TypeInfo(TypeOf.Class, create:() => new NavItem()),
    'List<NavItem>': new TypeInfo(TypeOf.Class, create:() => new List<NavItem>()),
-   'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
    'Map<String,List<NavItem>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<NavItem>>()),
-   'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
-   'Map<String,List<NavItem>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<NavItem>>()),
+   'NavItem': new TypeInfo(TypeOf.Class, create:() => new NavItem()),
    'GetNavItems': new TypeInfo(TypeOf.Class, create:() => new GetNavItems()),
+   'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
  };
 
 TypeContext _ctx =
@@ -395,6 +393,8 @@ class AuthenticateResponse implements IConvertible {
   String referrerUrl;
   String bearerToken;
   String refreshToken;
+  List<String> roles;
+  List<String> permissions;
   ResponseStatus responseStatus;
   Map<String, String> meta;
 
@@ -406,6 +406,8 @@ class AuthenticateResponse implements IConvertible {
       this.referrerUrl,
       this.bearerToken,
       this.refreshToken,
+      this.roles,
+      this.responseStatus,
       this.responseStatus,
       this.meta});
   AuthenticateResponse.fromJson(Map<String, dynamic> json) {
@@ -420,6 +422,8 @@ class AuthenticateResponse implements IConvertible {
     referrerUrl = json['referrerUrl'];
     bearerToken = json['bearerToken'];
     refreshToken = json['refreshToken'];
+    roles = JsonConverters.fromJson(json['roles'], 'List<String>', context);
+    permissions = JsonConverters.fromJson(json['permissions'], 'List<String>', context);
     responseStatus = JsonConverters.fromJson(
         json['responseStatus'], 'ResponseStatus', context);
     meta = JsonConverters.toStringMap(json['meta']);
@@ -434,6 +438,8 @@ class AuthenticateResponse implements IConvertible {
         'referrerUrl': referrerUrl,
         'bearerToken': bearerToken,
         'refreshToken': refreshToken,
+        'roles': JsonConverters.toJson(roles, 'List<String>', context)
+        'permissions': JsonConverters.toJson(permissions, 'List<String>', context),
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context),
         'meta': meta
