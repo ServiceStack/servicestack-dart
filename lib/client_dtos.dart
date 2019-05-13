@@ -110,7 +110,14 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
       new TypeInfo(TypeOf.Class, create: () => new GetAccessToken()),
   'GetAccessTokenResponse':
       new TypeInfo(TypeOf.Class, create: () => new GetAccessTokenResponse()),
-};
+   'NavItem': new TypeInfo(TypeOf.Class, create:() => new NavItem()),
+   'List<NavItem>': new TypeInfo(TypeOf.Class, create:() => new List<NavItem>()),
+   'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
+   'Map<String,List<NavItem>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<NavItem>>()),
+   'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
+   'Map<String,List<NavItem>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<NavItem>>()),
+   'GetNavItems': new TypeInfo(TypeOf.Class, create:() => new GetNavItems()),
+ };
 
 TypeContext _ctx =
     new TypeContext(typeName: 'JsonConverters', types: TypeInfos);
@@ -1012,6 +1019,92 @@ class GetAccessTokenResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context)
       };
   TypeContext context = _ctx;
+}
+
+class NavItem implements IConvertible
+{
+    String label;
+    String href;
+    bool exact;
+    String id;
+    String className;
+    String iconHtml;
+    String show;
+    String hide;
+    List<NavItem> children;
+    Map<String,String> meta;
+
+    NavItem({this.label,this.href,this.exact,this.id,this.className,this.iconHtml,this.show,this.hide,this.children,this.meta});
+    NavItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        label = json['label'];
+        href = json['href'];
+        exact = json['exact'];
+        id = json['id'];
+        className = json['className'];
+        iconHtml = json['iconHtml'];
+        show = json['show'];
+        hide = json['hide'];
+        children = JsonConverters.fromJson(json['children'],'List<NavItem>',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'label': label,
+        'href': href,
+        'exact': exact,
+        'id': id,
+        'className': className,
+        'iconHtml': iconHtml,
+        'show': show,
+        'hide': hide,
+        'children': JsonConverters.toJson(children,'List<NavItem>',context),
+        'meta': meta
+    };
+
+    TypeContext context = _ctx;
+}
+class GetNavItems implements IReturn<GetNavItemsResponse>, IConvertible
+{
+    GetNavItems();
+    GetNavItems.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() { return new GetNavItemsResponse(); }
+    String getTypeName() { return "GetNavItems"; }
+    TypeContext context = _ctx;
+}
+class GetNavItemsResponse implements IConvertible
+{
+    List<NavItem> results;
+    Map<String,List<NavItem>> navItemsMap;
+    Map<String,String> meta;
+    ResponseStatus responseStatus;
+
+    GetNavItemsResponse({this.results,this.navItemsMap,this.meta,this.responseStatus});
+    GetNavItemsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        results = JsonConverters.fromJson(json['results'],'List<NavItem>',context);
+        navItemsMap = JsonConverters.fromJson(json['navItemsMap'],'Map<String,List<NavItem>>',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'results': JsonConverters.toJson(results,'List<NavItem>',context),
+        'navItemsMap': JsonConverters.toJson(navItemsMap,'Map<String,List<NavItem>>',context),
+        'meta': meta,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
 }
 
 class Tuple<T1, T2> extends Tuple2<T1, T2> {
