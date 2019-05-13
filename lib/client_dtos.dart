@@ -407,7 +407,7 @@ class AuthenticateResponse implements IConvertible {
       this.bearerToken,
       this.refreshToken,
       this.roles,
-      this.responseStatus,
+      this.permissions,
       this.responseStatus,
       this.meta});
   AuthenticateResponse.fromJson(Map<String, dynamic> json) {
@@ -424,8 +424,7 @@ class AuthenticateResponse implements IConvertible {
     refreshToken = json['refreshToken'];
     roles = JsonConverters.fromJson(json['roles'], 'List<String>', context);
     permissions = JsonConverters.fromJson(json['permissions'], 'List<String>', context);
-    responseStatus = JsonConverters.fromJson(
-        json['responseStatus'], 'ResponseStatus', context);
+    responseStatus = JsonConverters.fromJson(json['responseStatus'], 'ResponseStatus', context);
     meta = JsonConverters.toStringMap(json['meta']);
     return this;
   }
@@ -440,8 +439,7 @@ class AuthenticateResponse implements IConvertible {
         'refreshToken': refreshToken,
         'roles': JsonConverters.toJson(roles, 'List<String>', context)
         'permissions': JsonConverters.toJson(permissions, 'List<String>', context),
-        'responseStatus':
-            JsonConverters.toJson(responseStatus, 'ResponseStatus', context),
+        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context),
         'meta': meta
       };
   TypeContext context = _ctx;
