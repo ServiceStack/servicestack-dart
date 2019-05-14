@@ -1085,15 +1085,17 @@ class GetNavItems implements IReturn<GetNavItemsResponse>, IConvertible
 }
 class GetNavItemsResponse implements IConvertible
 {
+    String baseUrl;
     List<NavItem> results;
     Map<String,List<NavItem>> navItemsMap;
     Map<String,String> meta;
     ResponseStatus responseStatus;
 
-    GetNavItemsResponse({this.results,this.navItemsMap,this.meta,this.responseStatus});
+    GetNavItemsResponse({this.baseUrl,this.results,this.navItemsMap,this.meta,this.responseStatus});
     GetNavItemsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        baseUrl = json['baseUrl'];
         results = JsonConverters.fromJson(json['results'],'List<NavItem>',context);
         navItemsMap = JsonConverters.fromJson(json['navItemsMap'],'Map<String,List<NavItem>>',context);
         meta = JsonConverters.toStringMap(json['meta']);
@@ -1102,6 +1104,7 @@ class GetNavItemsResponse implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {
+        'baseUrl': baseUrl,
         'results': JsonConverters.toJson(results,'List<NavItem>',context),
         'navItemsMap': JsonConverters.toJson(navItemsMap,'Map<String,List<NavItem>>',context),
         'meta': meta,
