@@ -51,6 +51,10 @@ main() async {
 
 Like C#, Dart has Generics and Type Inference so the `response` returned is the typed `HelloResponse` DTO giving us rich intelli-sense and compiler type safety. 
 
+#### Issues
+
+Please submit issues to https://github.com/ServiceStack/Issues
+
 ### JsonWebClient
 
 For browser projects you would instead use the `JsonWebClient` from `web_client.dart`, e.g:
