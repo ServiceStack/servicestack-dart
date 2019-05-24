@@ -148,7 +148,7 @@ void main() {
     } on WebServiceException catch (e) {
       var status = e.responseStatus;
       expect(status.errorCode, equals("Unauthorized"));
-      expect(status.message, equals("Invalid UserName or Password"));
+      expect(status.message, equals("Invalid Username or Password"));
     }
   });
 

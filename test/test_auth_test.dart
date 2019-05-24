@@ -34,9 +34,9 @@ void main(){
     var client = createTestClient();
     
     var request = new Authenticate(provider: "credentials", userName: "test", password: "test");
-    
-    var authResponse = await client.get(request);
-    
+
+    var authResponse = await client.post(request);
+
     expect(authResponse.userId, equals('1'));
     expect(authResponse.userName, equals("test"));
     expect(authResponse.sessionId, isNotNull);

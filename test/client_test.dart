@@ -165,7 +165,7 @@ void main() {
       expect(status.errors[0].fieldName, equals("Age"));
 
       expect(status.errors[1].errorCode, equals("NotEmpty"));
-      expect(status.errors[1].message, equals("'Required' should not be empty."));
+      expect(status.errors[1].message, equals("'Required' must not be empty."));
       expect(status.errors[1].fieldName, equals("Required"));
 
       expect(status.errors[2].errorCode, equals("Email"));
@@ -354,7 +354,7 @@ void main() {
       expect(e.responseStatus.message, equals("'Age' must be between 1 and 120. You entered 0."));
       expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
       expect(e.responseStatus.errors[1].fieldName, equals("Required"));
-      expect(e.responseStatus.errors[1].message, equals("'Required' should not be empty."));
+      expect(e.responseStatus.errors[1].message, equals("'Required' must not be empty."));
     }
   });
 
@@ -370,7 +370,7 @@ void main() {
       expect(e.responseStatus.message, equals("'Age' must be between 1 and 120. You entered 0."));
       expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
       expect(e.responseStatus.errors[1].fieldName, equals("Required"));
-      expect(e.responseStatus.errors[1].message, equals("'Required' should not be empty."));
+      expect(e.responseStatus.errors[1].message, equals("'Required' must not be empty."));
     }
   });
 

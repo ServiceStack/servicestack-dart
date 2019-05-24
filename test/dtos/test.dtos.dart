@@ -1,6 +1,6 @@
 /* Options:
-Date: 2018-08-08 05:56:47
-Version: 5.00
+Date: 2019-05-24 03:12:33
+Version: 5.41
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
 
@@ -206,7 +206,49 @@ class AuthUserSession implements IConvertible
     // @DataMember(Order=44)
     Map<String,String> meta;
 
-    AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta});
+    // @DataMember(Order=45)
+    List<String> audiences;
+
+    // @DataMember(Order=46)
+    List<String> scopes;
+
+    // @DataMember(Order=47)
+    String dns;
+
+    // @DataMember(Order=48)
+    String rsa;
+
+    // @DataMember(Order=49)
+    String sid;
+
+    // @DataMember(Order=50)
+    String hash;
+
+    // @DataMember(Order=51)
+    String homePhone;
+
+    // @DataMember(Order=52)
+    String mobilePhone;
+
+    // @DataMember(Order=53)
+    String webpage;
+
+    // @DataMember(Order=54)
+    bool emailConfirmed;
+
+    // @DataMember(Order=55)
+    bool phoneNumberConfirmed;
+
+    // @DataMember(Order=56)
+    bool twoFactorEnabled;
+
+    // @DataMember(Order=57)
+    String securityStamp;
+
+    // @DataMember(Order=58)
+    String type;
+
+    AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta,this.audiences,this.scopes,this.dns,this.rsa,this.sid,this.hash,this.homePhone,this.mobilePhone,this.webpage,this.emailConfirmed,this.phoneNumberConfirmed,this.twoFactorEnabled,this.securityStamp,this.type});
     AuthUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -254,6 +296,20 @@ class AuthUserSession implements IConvertible
         authProvider = json['authProvider'];
         providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',context);
         meta = JsonConverters.toStringMap(json['meta']);
+        audiences = JsonConverters.fromJson(json['audiences'],'List<String>',context);
+        scopes = JsonConverters.fromJson(json['scopes'],'List<String>',context);
+        dns = json['dns'];
+        rsa = json['rsa'];
+        sid = json['sid'];
+        hash = json['hash'];
+        homePhone = json['homePhone'];
+        mobilePhone = json['mobilePhone'];
+        webpage = json['webpage'];
+        emailConfirmed = json['emailConfirmed'];
+        phoneNumberConfirmed = json['phoneNumberConfirmed'];
+        twoFactorEnabled = json['twoFactorEnabled'];
+        securityStamp = json['securityStamp'];
+        type = json['type'];
         return this;
     }
 
@@ -301,7 +357,21 @@ class AuthUserSession implements IConvertible
         'tag': tag,
         'authProvider': authProvider,
         'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',context),
-        'meta': meta
+        'meta': meta,
+        'audiences': JsonConverters.toJson(audiences,'List<String>',context),
+        'scopes': JsonConverters.toJson(scopes,'List<String>',context),
+        'dns': dns,
+        'rsa': rsa,
+        'sid': sid,
+        'hash': hash,
+        'homePhone': homePhone,
+        'mobilePhone': mobilePhone,
+        'webpage': webpage,
+        'emailConfirmed': emailConfirmed,
+        'phoneNumberConfirmed': phoneNumberConfirmed,
+        'twoFactorEnabled': twoFactorEnabled,
+        'securityStamp': securityStamp,
+        'type': type
     };
 
     TypeContext context = _ctx;
@@ -4656,4 +4726,3 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
     'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),
 });
-

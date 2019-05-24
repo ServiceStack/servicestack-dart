@@ -419,9 +419,15 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T> createResponse<T>(HttpClientResponse res, SendContext info) async {
+    if (res == null) throw new ArgumentError.notNull("res");
     if (res.statusCode >= 300) throw new HttpResponseException(res);
 
-    mergeCookies(res.cookies);
+    try {
+      mergeCookies(res.cookies);
+    } on RangeError catch (e) {
+      //print("RangeError: " + e.toString());
+      //ignore https://github.com/dart-lang/sdk/issues/34220
+    }
 
     if (info.responseFilter != null) {
       info.responseFilter(res);
