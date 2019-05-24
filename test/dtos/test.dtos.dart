@@ -1,5 +1,5 @@
 /* Options:
-Date: 2019-05-24 03:12:33
+Date: 2019-05-24 04:10:51
 Version: 5.41
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -4726,3 +4726,4 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
     'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),
 });
+

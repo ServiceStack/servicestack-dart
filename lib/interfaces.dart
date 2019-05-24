@@ -41,7 +41,13 @@ class TypeContext {
   TypeInfo getTypeInfo(String typeName) =>
       types[typeName] ?? childContext?.getTypeInfo(typeName);
 
-  TypeInfo get typeInfo => getTypeInfo(typeName);
+  TypeInfo get typeInfo {
+    var ret = getTypeInfo(typeName);
+    if (ret == null) {
+      throw new ArgumentError("Unknown Type '${typeName}', see: ${docsDartUrl("#generating-unknown-types")}");
+    }
+    return ret;
+  }
 
   TypeContext newContext(String typeName) =>
       new TypeContext(typeName: typeName, types: types);

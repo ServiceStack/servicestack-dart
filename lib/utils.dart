@@ -307,3 +307,11 @@ dynamic findValue(Map<String, dynamic> map, String key) {
   }
   return null;
 }
+
+String docsDartUrl(String suffix) {
+  return docsUrl("dart-add-servicestack-reference${suffix}");
+}
+
+String docsUrl(String suffix) {
+  return "https://docs.servicestack.net/${suffix}";
+}
