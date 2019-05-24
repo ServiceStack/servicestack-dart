@@ -437,7 +437,7 @@ class AuthenticateResponse implements IConvertible {
         'referrerUrl': referrerUrl,
         'bearerToken': bearerToken,
         'refreshToken': refreshToken,
-        'roles': JsonConverters.toJson(roles, 'List<String>', context)
+        'roles': JsonConverters.toJson(roles, 'List<String>', context),
         'permissions': JsonConverters.toJson(permissions, 'List<String>', context),
         'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context),
         'meta': meta
