@@ -6,14 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/enum_serization_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/servicestack-dart.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/servicestack-dart.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/json_converters.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/json_converters.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/dtos/checkweb.dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/dtos/checkweb.dtos.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/enum_serization_test.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="476">
+              <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
               <folding>
                 <element signature="e#21#53#0" expanded="true" />
               </folding>
@@ -60,11 +53,7 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/utils.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -94,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/dtos/checkweb.dtos.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-697">
-              <caret line="1203" selection-start-line="1203" selection-end-line="1203" />
+            <state relative-caret-position="770">
+              <caret line="4277" column="23" selection-start-line="4277" selection-start-column="6" selection-end-line="4277" selection-end-column="23" />
               <folding>
                 <element signature="e#0#224001#0" expanded="true" />
                 <element signature="e#365#402#0" expanded="true" />
@@ -138,6 +127,9 @@
       <find>getTypeName(</find>
       <find>conver</find>
       <find>firstW</find>
+      <find>List&lt;B</find>
+      <find>int</find>
+      <find>'List&lt;int&gt;'</find>
     </findStrings>
     <replaceStrings>
       <replace>Invalid Username</replace>
@@ -159,8 +151,8 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/example/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/json_converters.dart" />
-        <option value="$PROJECT_DIR$/test/dtos/checkweb.dtos.dart" />
         <option value="$PROJECT_DIR$/test/enum_serization_test.dart" />
+        <option value="$PROJECT_DIR$/test/dtos/checkweb.dtos.dart" />
       </list>
     </option>
   </component>
@@ -346,12 +338,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="tests_in_enum_serization_test_dart - 2019.06.02 at 01h 47m 01s.xml">
-      <configuration name="tests in enum_serization_test.dart" configurationId="DartTestRunConfigurationType" />
-    </history-entry>
-    <history-entry file="Does_serialize_HelloWithEnumMap_All_in_enum_serization_test_dart - 2019.06.02 at 01h 53m 06s.xml">
-      <configuration name="Does serialize HelloWithEnumMap All in enum_serization_test.dart" configurationId="DartTestRunConfigurationType" />
-    </history-entry>
     <history-entry file="Does_serialize_HelloWithEnumMap_All_in_enum_serization_test_dart - 2019.06.02 at 02h 15m 40s.xml">
       <configuration name="Does serialize HelloWithEnumMap All in enum_serization_test.dart" configurationId="DartTestRunConfigurationType" />
     </history-entry>
@@ -376,6 +362,12 @@
     <history-entry file="tests_in_enum_serization_test_dart - 2019.06.02 at 04h 37m 36s.xml">
       <configuration name="tests in enum_serization_test.dart" configurationId="DartTestRunConfigurationType" />
     </history-entry>
+    <history-entry file="tests_in_enum_serization_test_dart - 2019.06.02 at 04h 38m 51s.xml">
+      <configuration name="tests in enum_serization_test.dart" configurationId="DartTestRunConfigurationType" />
+    </history-entry>
+    <history-entry file="tests_in_servicestack-dart - 2019.06.02 at 04h 39m 17s.xml">
+      <configuration name="tests in servicestack-dart" configurationId="DartTestRunConfigurationType" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -388,7 +380,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1720" height="1888" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.23855421" />
@@ -399,7 +390,7 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Dart Analysis" order="0" weight="0.32948643" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" visible="true" weight="0.32948643" />
+      <window_info anchor="bottom" id="Run" order="1" weight="0.32948643" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32948643" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.32948643" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32948643" />
@@ -664,38 +655,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.5/lib/src/backend/declarer.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="168" column="15" selection-start-line="168" selection-start-column="15" selection-end-line="168" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/utils.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3/lib/src/stack_zone_specification.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/interfaces.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="379">
           <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/tools/flutter/bin/cache/dart-sdk/lib/collection/list.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -719,23 +682,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/dtos/checkweb.dtos.dart">
+    <entry file="file://C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/test_api-0.2.5/lib/src/backend/declarer.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-697">
-          <caret line="1203" selection-start-line="1203" selection-end-line="1203" />
+        <state relative-caret-position="379">
+          <caret line="168" column="15" selection-start-line="168" selection-start-column="15" selection-end-line="168" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.9.3/lib/src/stack_zone_specification.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/tools/flutter/bin/cache/dart-sdk/lib/collection/list.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/utils.dart">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/enum_serization_test.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
           <folding>
-            <element signature="e#0#224001#0" expanded="true" />
-            <element signature="e#365#402#0" expanded="true" />
+            <element signature="e#21#53#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/enum_serization_test.dart">
+    <entry file="file://$PROJECT_DIR$/test/dtos/checkweb.dtos.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="770">
+          <caret line="4277" column="23" selection-start-line="4277" selection-start-column="6" selection-end-line="4277" selection-end-column="23" />
           <folding>
-            <element signature="e#21#53#0" expanded="true" />
+            <element signature="e#0#224001#0" expanded="true" />
+            <element signature="e#365#402#0" expanded="true" />
           </folding>
         </state>
       </provider>
