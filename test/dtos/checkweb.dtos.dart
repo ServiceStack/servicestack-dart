@@ -1,16 +1,16 @@
 /* Options:
-Date: 2018-08-08 01:56:56
-Version: 5.00
+Date: 2019-06-02 04:19:38
+Version: 5.51
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:55799
 
-//GlobalNamespace: 
+//GlobalNamespace:
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion: 
+//AddImplicitVersion:
 //AddDescriptionAsComments: True
-//IncludeTypes: 
-//ExcludeTypes: 
+//IncludeTypes:
+//ExcludeTypes:
 DefaultImports: ../../lib/servicestack.dart
 */
 
@@ -45,8 +45,9 @@ class RequestLogEntry implements IConvertible
     String exceptionSource;
     dynamic exceptionData;
     Duration requestDuration;
+    Map<String,String> meta;
 
-    RequestLogEntry({this.id,this.dateTime,this.statusCode,this.statusDescription,this.httpMethod,this.absoluteUri,this.pathInfo,this.requestBody,this.requestDto,this.userAuthId,this.sessionId,this.ipAddress,this.forwardedFor,this.referer,this.headers,this.formData,this.items,this.session,this.responseDto,this.errorResponse,this.exceptionSource,this.exceptionData,this.requestDuration});
+    RequestLogEntry({this.id,this.dateTime,this.statusCode,this.statusDescription,this.httpMethod,this.absoluteUri,this.pathInfo,this.requestBody,this.requestDto,this.userAuthId,this.sessionId,this.ipAddress,this.forwardedFor,this.referer,this.headers,this.formData,this.items,this.session,this.responseDto,this.errorResponse,this.exceptionSource,this.exceptionData,this.requestDuration,this.meta});
     RequestLogEntry.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -73,6 +74,7 @@ class RequestLogEntry implements IConvertible
         exceptionSource = json['exceptionSource'];
         exceptionData = JsonConverters.fromJson(json['exceptionData'],'dynamic',context);
         requestDuration = JsonConverters.fromJson(json['requestDuration'],'Duration',context);
+        meta = JsonConverters.toStringMap(json['meta']);
         return this;
     }
 
@@ -99,7 +101,8 @@ class RequestLogEntry implements IConvertible
         'errorResponse': JsonConverters.toJson(errorResponse,'dynamic',context),
         'exceptionSource': exceptionSource,
         'exceptionData': JsonConverters.toJson(exceptionData,'dynamic',context),
-        'requestDuration': JsonConverters.toJson(requestDuration,'Duration',context)
+        'requestDuration': JsonConverters.toJson(requestDuration,'Duration',context),
+        'meta': meta
     };
 
     TypeContext context = _ctx;
@@ -331,7 +334,49 @@ class AuthUserSession implements IConvertible
     // @DataMember(Order=44)
     Map<String,String> meta;
 
-    AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta});
+    // @DataMember(Order=45)
+    List<String> audiences;
+
+    // @DataMember(Order=46)
+    List<String> scopes;
+
+    // @DataMember(Order=47)
+    String dns;
+
+    // @DataMember(Order=48)
+    String rsa;
+
+    // @DataMember(Order=49)
+    String sid;
+
+    // @DataMember(Order=50)
+    String hash;
+
+    // @DataMember(Order=51)
+    String homePhone;
+
+    // @DataMember(Order=52)
+    String mobilePhone;
+
+    // @DataMember(Order=53)
+    String webpage;
+
+    // @DataMember(Order=54)
+    bool emailConfirmed;
+
+    // @DataMember(Order=55)
+    bool phoneNumberConfirmed;
+
+    // @DataMember(Order=56)
+    bool twoFactorEnabled;
+
+    // @DataMember(Order=57)
+    String securityStamp;
+
+    // @DataMember(Order=58)
+    String type;
+
+    AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta,this.audiences,this.scopes,this.dns,this.rsa,this.sid,this.hash,this.homePhone,this.mobilePhone,this.webpage,this.emailConfirmed,this.phoneNumberConfirmed,this.twoFactorEnabled,this.securityStamp,this.type});
     AuthUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -379,6 +424,20 @@ class AuthUserSession implements IConvertible
         authProvider = json['authProvider'];
         providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',context);
         meta = JsonConverters.toStringMap(json['meta']);
+        audiences = JsonConverters.fromJson(json['audiences'],'List<String>',context);
+        scopes = JsonConverters.fromJson(json['scopes'],'List<String>',context);
+        dns = json['dns'];
+        rsa = json['rsa'];
+        sid = json['sid'];
+        hash = json['hash'];
+        homePhone = json['homePhone'];
+        mobilePhone = json['mobilePhone'];
+        webpage = json['webpage'];
+        emailConfirmed = json['emailConfirmed'];
+        phoneNumberConfirmed = json['phoneNumberConfirmed'];
+        twoFactorEnabled = json['twoFactorEnabled'];
+        securityStamp = json['securityStamp'];
+        type = json['type'];
         return this;
     }
 
@@ -426,7 +485,21 @@ class AuthUserSession implements IConvertible
         'tag': tag,
         'authProvider': authProvider,
         'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',context),
-        'meta': meta
+        'meta': meta,
+        'audiences': JsonConverters.toJson(audiences,'List<String>',context),
+        'scopes': JsonConverters.toJson(scopes,'List<String>',context),
+        'dns': dns,
+        'rsa': rsa,
+        'sid': sid,
+        'hash': hash,
+        'homePhone': homePhone,
+        'mobilePhone': mobilePhone,
+        'webpage': webpage,
+        'emailConfirmed': emailConfirmed,
+        'phoneNumberConfirmed': phoneNumberConfirmed,
+        'twoFactorEnabled': twoFactorEnabled,
+        'securityStamp': securityStamp,
+        'type': type
     };
 
     TypeContext context = _ctx;
@@ -975,6 +1048,33 @@ class AutoQueryOperation implements IConvertible
     TypeContext context = _ctx;
 }
 
+class RecursiveNode implements IReturn<RecursiveNode>, IConvertible
+{
+    int id;
+    String text;
+    List<RecursiveNode> children;
+
+    RecursiveNode({this.id,this.text,this.children});
+    RecursiveNode.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        text = json['text'];
+        children = JsonConverters.fromJson(json['children'],'List<RecursiveNode>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'text': text,
+        'children': JsonConverters.toJson(children,'List<RecursiveNode>',context)
+    };
+
+    createResponse() { return new RecursiveNode(); }
+    String getTypeName() { return "RecursiveNode"; }
+    TypeContext context = _ctx;
+}
+
 class NativeTypesTestService implements IConvertible
 {
     NativeTypesTestService();
@@ -1071,6 +1171,7 @@ enum EnumType
 
 enum EnumWithValues
 {
+    None,
     Value1,
     Value2,
 }
@@ -1081,8 +1182,8 @@ class EnumFlags
     static const EnumFlags Value0 = const EnumFlags._(0);
     static const EnumFlags Value1 = const EnumFlags._(1);
     static const EnumFlags Value2 = const EnumFlags._(2);
-    static const EnumFlags Value3 = const EnumFlags._(3);
-    static const EnumFlags Value123 = const EnumFlags._(3);
+    static const EnumFlags Value3 = const EnumFlags._(4);
+    static const EnumFlags Value123 = const EnumFlags._(7);
 
     final int _value;
     const EnumFlags._(this._value);
@@ -1453,6 +1554,18 @@ enum DayOfWeek
     Thursday,
     Friday,
     Saturday,
+}
+
+// @DataContract
+enum ShortDays
+{
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday,
 }
 
 // @DataContract
@@ -2118,6 +2231,28 @@ class AutoQueryMetadataResponse implements IConvertible
         'meta': meta
     };
 
+    TypeContext context = _ctx;
+}
+
+class TestAttributeExport implements IReturn<TestAttributeExport>, IConvertible
+{
+    // @Display(AutoGenerateField=true, AutoGenerateFilter=true, ShortName="UnitMeasKey")
+    int unitMeasKey;
+
+    TestAttributeExport({this.unitMeasKey});
+    TestAttributeExport.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        unitMeasKey = json['unitMeasKey'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'unitMeasKey': unitMeasKey
+    };
+
+    createResponse() { return new TestAttributeExport(); }
+    String getTypeName() { return "TestAttributeExport"; }
     TypeContext context = _ctx;
 }
 
@@ -4140,6 +4275,68 @@ class HelloWithEnum implements IConvertible
     TypeContext context = _ctx;
 }
 
+class HelloWithEnumList implements IConvertible
+{
+    List<EnumType> enumProp;
+    List<EnumWithValues> enumWithValues;
+    List<EnumType> nullableEnumProp;
+    List<EnumFlags> enumFlags;
+    List<EnumStyle> enumStyle;
+
+    HelloWithEnumList({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
+    HelloWithEnumList.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        enumProp = JsonConverters.fromJson(json['enumProp'],'List<EnumType>',context);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'List<EnumWithValues>',context);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'List<EnumType>',context);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'List<EnumFlags>',context);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'List<EnumStyle>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'enumProp': JsonConverters.toJson(enumProp,'List<EnumType>',context),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'List<EnumWithValues>',context),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'List<EnumType>',context),
+        'enumFlags': JsonConverters.toJson(enumFlags,'List<EnumFlags>',context),
+        'enumStyle': JsonConverters.toJson(enumStyle,'List<EnumStyle>',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class HelloWithEnumMap implements IConvertible
+{
+    Map<EnumType,EnumType> enumProp;
+    Map<EnumWithValues,EnumWithValues> enumWithValues;
+    Map<EnumType,EnumType> nullableEnumProp;
+    Map<EnumFlags,EnumFlags> enumFlags;
+    Map<EnumStyle,EnumStyle> enumStyle;
+
+    HelloWithEnumMap({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
+    HelloWithEnumMap.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        enumProp = JsonConverters.fromJson(json['enumProp'],'Map<EnumType,EnumType>',context);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'Map<EnumWithValues,EnumWithValues>',context);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'Map<EnumType,EnumType>',context);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'Map<EnumFlags,EnumFlags>',context);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'Map<EnumStyle,EnumStyle>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'enumProp': JsonConverters.toJson(enumProp,'Map<EnumType,EnumType>',context),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'Map<EnumWithValues,EnumWithValues>',context),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'Map<EnumType,EnumType>',context),
+        'enumFlags': JsonConverters.toJson(enumFlags,'Map<EnumFlags,EnumFlags>',context),
+        'enumStyle': JsonConverters.toJson(enumStyle,'Map<EnumStyle,EnumStyle>',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
 class RestrictedAttributes implements IConvertible
 {
     int id;
@@ -4692,17 +4889,20 @@ class HelloDictionary implements IReturn<Map<String,String>>, IConvertible
 class HelloBuiltin implements IConvertible
 {
     DayOfWeek dayOfWeek;
+    ShortDays shortDays;
 
-    HelloBuiltin({this.dayOfWeek});
+    HelloBuiltin({this.dayOfWeek,this.shortDays});
     HelloBuiltin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',context);
+        shortDays = JsonConverters.fromJson(json['shortDays'],'ShortDays',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context)
+        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context),
+        'shortDays': JsonConverters.toJson(shortDays,'ShortDays',context)
     };
 
     TypeContext context = _ctx;
@@ -6629,6 +6829,8 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'List<AutoQueryConvention>': new TypeInfo(TypeOf.Class, create:() => new List<AutoQueryConvention>()),
     'AutoQueryViewerUserInfo': new TypeInfo(TypeOf.Class, create:() => new AutoQueryViewerUserInfo()),
     'AutoQueryOperation': new TypeInfo(TypeOf.Class, create:() => new AutoQueryOperation()),
+    'RecursiveNode': new TypeInfo(TypeOf.Class, create:() => new RecursiveNode()),
+    'List<RecursiveNode>': new TypeInfo(TypeOf.Class, create:() => new List<RecursiveNode>()),
     'NativeTypesTestService': new TypeInfo(TypeOf.Class, create:() => new NativeTypesTestService()),
     'NestedClass': new TypeInfo(TypeOf.Class, create:() => new NestedClass()),
     'ListResult': new TypeInfo(TypeOf.Class, create:() => new ListResult()),
@@ -6642,6 +6844,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'AllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new AllCollectionTypes()),
     'List<Poco>': new TypeInfo(TypeOf.Class, create:() => new List<Poco>()),
     'Uint8List': new TypeInfo(TypeOf.Class, create:() => new Uint8List(0)),
+    'List<int>': new TypeInfo(TypeOf.Class, create:() => new List<int>()),
     'List<DateTime>': new TypeInfo(TypeOf.Class, create:() => new List<DateTime>()),
     'Map<String,List<Poco>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Poco>>()),
     'Map<String,List<Map<String,Poco>>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Map<String,Poco>>>()),
@@ -6666,6 +6869,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'InnerEnum': new TypeInfo(TypeOf.Enum, enumValues:InnerEnum.values),
     'InnerTypeItem': new TypeInfo(TypeOf.Class, create:() => new InnerTypeItem()),
     'DayOfWeek': new TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
+    'ShortDays': new TypeInfo(TypeOf.Enum, enumValues:ShortDays.values),
     'ScopeType': new TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
     'IEcho': new TypeInfo(TypeOf.Interface),
     'CacheControl': new TypeInfo(TypeOf.Enum, enumValues:CacheControl.values),
@@ -6704,6 +6908,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'AutoQueryMetadataResponse': new TypeInfo(TypeOf.Class, create:() => new AutoQueryMetadataResponse()),
     'List<AutoQueryOperation>': new TypeInfo(TypeOf.Class, create:() => new List<AutoQueryOperation>()),
     'List<MetadataType>': new TypeInfo(TypeOf.Class, create:() => new List<MetadataType>()),
+    'TestAttributeExport': new TypeInfo(TypeOf.Class, create:() => new TestAttributeExport()),
     'HelloACodeGenTestResponse': new TypeInfo(TypeOf.Class, create:() => new HelloACodeGenTestResponse()),
     'HelloResponse': new TypeInfo(TypeOf.Class, create:() => new HelloResponse()),
     'HelloAnnotatedResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAnnotatedResponse()),
@@ -6797,6 +7002,16 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'HelloReturnList': new TypeInfo(TypeOf.Class, create:() => new HelloReturnList()),
     'HelloExisting': new TypeInfo(TypeOf.Class, create:() => new HelloExisting()),
     'HelloWithEnum': new TypeInfo(TypeOf.Class, create:() => new HelloWithEnum()),
+    'HelloWithEnumList': new TypeInfo(TypeOf.Class, create:() => new HelloWithEnumList()),
+    'List<EnumType>': new TypeInfo(TypeOf.Class, create:() => new List<EnumType>()),
+    'List<EnumWithValues>': new TypeInfo(TypeOf.Class, create:() => new List<EnumWithValues>()),
+    'List<EnumFlags>': new TypeInfo(TypeOf.Class, create:() => new List<EnumFlags>()),
+    'List<EnumStyle>': new TypeInfo(TypeOf.Class, create:() => new List<EnumStyle>()),
+    'HelloWithEnumMap': new TypeInfo(TypeOf.Class, create:() => new HelloWithEnumMap()),
+    'Map<EnumType,EnumType>': new TypeInfo(TypeOf.Class, create:() => new Map<EnumType,EnumType>()),
+    'Map<EnumWithValues,EnumWithValues>': new TypeInfo(TypeOf.Class, create:() => new Map<EnumWithValues,EnumWithValues>()),
+    'Map<EnumFlags,EnumFlags>': new TypeInfo(TypeOf.Class, create:() => new Map<EnumFlags,EnumFlags>()),
+    'Map<EnumStyle,EnumStyle>': new TypeInfo(TypeOf.Class, create:() => new Map<EnumStyle,EnumStyle>()),
     'RestrictedAttributes': new TypeInfo(TypeOf.Class, create:() => new RestrictedAttributes()),
     'AllowedAttributes': new TypeInfo(TypeOf.Class, create:() => new AllowedAttributes()),
     'HelloAttributeStringTest': new TypeInfo(TypeOf.Class, create:() => new HelloAttributeStringTest()),
@@ -6905,4 +7120,3 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'QueryAllTypes': new TypeInfo(TypeOf.Class, create:() => new QueryAllTypes()),
     'QueryDataRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryDataRockstars()),
 });
-

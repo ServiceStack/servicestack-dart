@@ -84,6 +84,17 @@ class JsonConverters {
 String _toString(value) =>
     value == null ? null : value is String ? value : value.toString();
 
+String getTypeName(value) =>
+  value.runtimeType.toString();
+
+bool _equals(left,right) {
+  if (left == right)
+    return true;
+  if (left != null && right != null)
+    return left.toString() == right.toString();
+  return false;
+}
+
 dynamic convert(dynamic value, String typeName, [TypeContext context = null]) {
   if (typeName == "int") {
     return int.tryParse(_toString(value)) ?? null;
@@ -103,23 +114,28 @@ dynamic convert(dynamic value, String typeName, [TypeContext context = null]) {
   }
   if (context != null) {
     var typeInfo = context.getTypeInfo(typeName);
-    if (typeInfo?.canCreate == true) {
-      var o = typeInfo.createInstance();
-      if (o is List) {
-        var converter = JsonConverters.get("List");
-        return converter.fromJson(value, context.newContext(typeName));
-      } else if (o is Map) {
-        var converter = JsonConverters.get("Map");
-        return converter.fromJson(value, context.newContext(typeName));
-      }
-      try {
-        if (context != null && o is IConvertible) {
-          o.context = context;
+    if (typeInfo != null) {
+      if (typeInfo.type == TypeOf.Enum) {
+        var o = JsonConverters.enumConverter.fromJson(value, context.newContext(typeName));
+        return o;
+      } else if (typeInfo.canCreate == true) {
+        var o = typeInfo.createInstance();
+        if (o is List) {
+          var converter = JsonConverters.get("List");
+          return converter.fromJson(value, context.newContext(typeName));
+        } else if (o is Map) {
+          var converter = JsonConverters.get("Map");
+          return converter.fromJson(value, context.newContext(typeName));
         }
-        var ret = o.fromMap(value);
-        return ret;
-      } catch (e) {
-        rethrow;
+        try {
+          if (context != null && o is IConvertible) {
+            o.context = context;
+          }
+          var ret = o.fromMap(value);
+          return ret;
+        } catch (e) {
+          rethrow;
+        }
       }
     }
   }
@@ -140,15 +156,25 @@ dynamic populate(dynamic to, dynamic from, [TypeContext context = null]) {
 }
 
 class EnumConverter implements IConverter {
-  toJson(value, TypeContext context) {
-    if (value == null) return null;
-    return rightPart(value.toString(), ".");
+  toJson(enumValue, TypeContext context) {
+    return toEnumValue(enumValue);
+  }
+
+  toEnumValue(enumValue) {
+    if (enumValue == null)
+      return null;
+    try {
+      return enumValue.value;
+    } catch(e) {
+      return rightPart(enumValue.toString(), ".");
+    }
   }
 
   fromJson(value, TypeContext context) {
-    if (value == null) return null;
+    if (value == null)
+      return null;
     var ret = context.typeInfo.enumValues
-        .firstWhere((x) => rightPart(x.toString(), ".") == value);
+      .firstWhere((x) => _equals(toEnumValue(x), value), orElse: null);
     return ret;
   }
 }
@@ -170,7 +196,8 @@ class DefaultConverter implements IConverter {
     if (value == null || !context.typeInfo.canCreate) return value;
 
     var o = context.typeInfo.createInstance();
-    if (value.runtimeType == o.runtimeType) return value;
+    if (value.runtimeType == o.runtimeType)
+      return value;
 
     return populate(o, value, context);
   }
@@ -217,7 +244,16 @@ class MapConverter implements IConverter {
     Map map = value is Map ? value : null;
     var to = {};
     if (map != null) {
-      map.forEach((key, val) => to[key.toString()] = val);
+      map.forEach((key, val) {
+        var keyConverter = JsonConverters.resolve(getTypeName(key), context);
+        var mapKey = keyConverter != null
+          ? keyConverter.toJson(key, context)
+          : key;
+        var valueConverter = val != null ? JsonConverters.resolve(getTypeName(val), context) : null;
+        to[mapKey.toString()] = valueConverter != null
+            ? valueConverter.toJson(val, context)
+            : val;
+      });
       return to;
     }
     return value;
@@ -230,11 +266,12 @@ class MapConverter implements IConverter {
       return value;
     }
 
-    var toArgTypes = getGenericArgs(o.runtimeType.toString());
+    var toArgTypes = getGenericArgs(getTypeName(o));
 
     Map map = value;
-    map.forEach((key, val) => o[convert(key, toArgTypes[0], context)] =
-        convert(val, toArgTypes[1], context));
+    map.forEach((key, val) {
+      o[convert(key, toArgTypes[0], context)] = convert(val, toArgTypes[1], context);
+    });
 
     return o;
   }
@@ -242,24 +279,34 @@ class MapConverter implements IConverter {
 
 class ListConverter implements IConverter {
   toJson(value, TypeContext context) {
-    if (value == null) return null;
+    if (value == null)
+      return null;
     List list = value is List ? value : null;
     var to = [];
     if (list != null) {
-      list.forEach((x) => to.add(x));
+      for (var x in list) {
+        var converter = JsonConverters.resolve(getTypeName(x), context);
+        if (converter != null) {
+          var item = converter.toJson(x, context);
+          to.add(item);
+        } else {
+          to.add(x);
+        }
+      }
       return to;
     }
     return value;
   }
 
   fromJson(value, TypeContext context) {
-    if (value == null) return null;
+    if (value == null)
+      return null;
     var o = context.typeInfo.createInstance();
     if (value.runtimeType == o.runtimeType) {
       return value;
     }
 
-    var genericArgs = getGenericArgs(o.runtimeType.toString());
+    var genericArgs = getGenericArgs(getTypeName(o));
     var toArgType = genericArgs.length > 0 ? genericArgs[0] : 'dynamic';
 
     List list = value;
