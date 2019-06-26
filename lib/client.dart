@@ -447,7 +447,7 @@ class JsonServiceClient implements IServiceClient {
     }
 
     if (responseAs is String) {
-      var bodyStr = await res.transform(utf8.decoder).join();
+      var bodyStr = await res.cast<List<int>>().transform(utf8.decoder).join();
       return bodyStr as T;
     }
 
@@ -459,7 +459,7 @@ class JsonServiceClient implements IServiceClient {
     var isJson =
         contentType != null && contentType.indexOf("application/json") != -1;
     if (isJson) {
-      var jsonObj = json.decode(await res.transform(utf8.decoder).join());
+      var jsonObj = json.decode(await res.cast<List<int>>().transform(utf8.decoder).join());
       if (responseAs == null) {
         return jsonObj as T;
       }
@@ -510,7 +510,7 @@ class JsonServiceClient implements IServiceClient {
       return null;
     }
 
-    return json.decode(await res.transform(utf8.decoder).join());
+    return json.decode(await res.cast<List<int>>().transform(utf8.decoder).join());
   }
 
   handleError(HttpClientResponse holdRes, Exception e,
@@ -534,7 +534,7 @@ class JsonServiceClient implements IServiceClient {
       ..type = type;
 
     try {
-      String str = await res.transform(utf8.decoder).join();
+      String str = await res.cast<List<int>>().transform(utf8.decoder).join();
       if (!isJsonObject(str)) {
         webEx.responseStatus = createErrorResponse(
                 res.statusCode.toString(), res.reasonPhrase, type)
