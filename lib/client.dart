@@ -391,7 +391,7 @@ class JsonServiceClient implements IServiceClient {
 
     if (bodyStr != null) {
       req.headers.contentType = ContentType.json;
-      req.contentLength = bodyStr.length;
+      req.contentLength = utf8.encode(bodyStr).length;
     }
 
     if (info.requestFilter != null) {

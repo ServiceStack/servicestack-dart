@@ -25,6 +25,14 @@ void main() {
     expect(response.result, equals("Hello, World!"));
   });
 
+  test('Can SEND umlauts', () async {
+    var client = createTestClient();
+    var request = new Hello(name: "üöäß");
+    HelloResponse response = await client.post(request);
+
+    expect(response.result, equals("Hello, üöäß!"));
+  });
+
   test('Does fire Request and Response Filters', () async {
     var client = createTestClient();
     var events = new List<String>();
