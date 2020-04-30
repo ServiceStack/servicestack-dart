@@ -13,7 +13,7 @@ main() {
   test('Can parse ISO 8601 DateTime with Timezone', () {
     var converter = new DateTimeConverter();
 
-    DateTime dateTime = converter.fromJson("2018-04-09T19:43:34.740590+00:00", null);
+    DateTime dateTime = converter.fromJson("2018-04-09T19:43:34.740590+01:00", null);
 
     expect("2018-04-09T19:43:34.740590+01:00", dateTime.toIso8601String());
   });
