@@ -227,9 +227,21 @@ class DateTimeConverter implements IConverter {
       }
       var hasSecFraction = strDate.indexOf(".") >= 0;
       if (hasSecFraction) {
-        var secFraction = lastLeftPart(strDate, ".");
+        var secFraction = lastRightPart(strDate, ".");
+        bool isUtc = secFraction.endsWith('Z');
+        if (isUtc) {
+          secFraction = secFraction.substring(0, secFraction.length-1);
+        }
+        String tz = '';
+        if (secFraction.contains('+')) {
+          tz = '+' + rightPart(secFraction, '+');
+          secFraction = leftPart(secFraction, '+');
+        } else if (secFraction.contains('-')) {
+          tz = '-' + rightPart(secFraction, '-');
+          secFraction = leftPart(secFraction, '-');
+        }
         if (secFraction.length > 6) {
-          strDate = strDate.substring(0, strDate.length - 2);
+          strDate = lastLeftPart(strDate, '.') + '.' + secFraction.substring(0,6) + tz + (isUtc ? 'Z' : '');
         }
       }
       return DateTime.parse(strDate);
