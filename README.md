@@ -211,7 +211,7 @@ Then to use `JsonServiceClient` add the `servicestack` dependency to your apps [
 
 ```yaml
 dependencies:
-  servicestack: ^1.0.10
+  servicestack: ^1.0.13
 ```
 
 Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.io/using-packages/) to install any new dependencies in your App. 
