@@ -489,7 +489,7 @@ class JsonServiceClient implements IServiceClient {
               childContext: reqContext);
         }
         fromMap = responseAs is List
-            ? (json) => new ListConverter().fromJson(jsonObj, reqContext)
+            ? (json) => JsonConverters.fromJson(json, responseAs.runtimeType.toString(), reqContext)
             : responseAs.fromMap;
 
         var ret = fromMap(jsonObj);

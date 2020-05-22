@@ -140,6 +140,44 @@ class GetFoos extends PagedAndOrderedRequest implements IReturn<PagedResult<FooL
     TypeContext context = _ctx;
 }
 
+class Item implements IConvertible
+{
+    String id;
+
+    Item({this.id});
+    Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id
+    };
+
+    TypeContext context = _ctx;
+}
+
+class GetItemsRequest implements IReturn<List<Item>>, IConvertible {
+    GetItemsRequest();
+    GetItemsRequest.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() {
+        return new List<Item>();
+    }
+
+    String getTypeName() {
+        return "GetItemsRequest";
+    }
+
+    TypeContext context = _ctx;
+}
+
 TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'FooListDto': new TypeInfo(TypeOf.Class, create:() => new FooListDto()),
     'PagedRequest': new TypeInfo(TypeOf.AbstractClass),
@@ -148,5 +186,7 @@ TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInf
     'UnknownTypes': new TypeInfo(TypeOf.Class, create:() => new UnknownTypes()),
     'List<FooListDto>': new TypeInfo(TypeOf.Class, create:() => new List<FooListDto>()),
     'GetFoos': new TypeInfo(TypeOf.Class, create:() => new GetFoos()),
+    'Item': new TypeInfo(TypeOf.Class, create: () => new Item()),
+    'List<Item>': new TypeInfo(TypeOf.Class, create: () => new List<Item>()),
 });
 
