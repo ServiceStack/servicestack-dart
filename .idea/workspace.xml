@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/issues/dartrefsandbox.dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/issues/dartrefsandbox.dtos.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Dart Test.Can parse ISO 8601 DateTime with Timezone in converter_test.dart">
+  <component name="RunManager" selected="Dart Test.Can deserialize naked list in dartrefsandbox_test.dart">
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -83,10 +85,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Can parse ISO 8601 DateTime in converter_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/converter_test.dart" />
+    <configuration name="Can deserialize naked list in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can parse ISO 8601 DateTime" />
+      <option name="testName" value="Can deserialize naked list" />
       <method v="2" />
     </configuration>
     <configuration name="Can parse ISO 8601 DateTime with Timezone in converter_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
@@ -95,15 +97,15 @@
       <option name="testName" value="Can parse ISO 8601 DateTime with Timezone" />
       <method v="2" />
     </configuration>
-    <configuration name="Can parse ISO 8601 DateTime with UTC in converter_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/converter_test.dart" />
+    <configuration name="description in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can parse ISO 8601 DateTime with UTC" />
+      <option name="testName" value="description" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in converter_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/converter_test.dart" />
-      <option name="testName" value="converter_test.dart" />
+    <configuration name="tests in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" />
+      <option name="testName" value="dartrefsandbox_test.dart" />
       <method v="2" />
     </configuration>
     <configuration name="tests in servicestack-dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
@@ -122,10 +124,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Dart Test.Can deserialize naked list in dartrefsandbox_test.dart" />
+        <item itemvalue="Dart Test.tests in dartrefsandbox_test.dart" />
+        <item itemvalue="Dart Test.description in dartrefsandbox_test.dart" />
+        <item itemvalue="Dart Test.tests in servicestack-dart" />
         <item itemvalue="Dart Test.Can parse ISO 8601 DateTime with Timezone in converter_test.dart" />
-        <item itemvalue="Dart Test.tests in converter_test.dart" />
-        <item itemvalue="Dart Test.Can parse ISO 8601 DateTime with UTC in converter_test.dart" />
-        <item itemvalue="Dart Test.Can parse ISO 8601 DateTime in converter_test.dart" />
       </list>
     </recent_temporary>
   </component>
@@ -159,7 +162,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
