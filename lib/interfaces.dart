@@ -19,6 +19,11 @@ enum TypeOf {
   Enum,
 }
 
+class ClientConfig
+{
+  static ClientFilter initClient;
+}
+
 class TypeInfo {
   Function create;
   TypeOf type;
@@ -124,6 +129,7 @@ class TypeAs {
 
 typedef void UrlFilter(String url);
 typedef Future AsyncCallbackFunction();
+typedef void ClientFilter(IServiceClient client);
 
 enum WebServiceExceptionType {
   RefreshTokenException,

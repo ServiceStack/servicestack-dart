@@ -9,6 +9,17 @@ typedef void RequestFilter(HttpClientRequest req);
 typedef void ResponseFilter(HttpClientResponse res);
 typedef void ResponseExceptionFilter(HttpClientResponse res, Exception e);
 
+class ClientFactory
+{
+  static IServiceClient create([String baseUrl = "/"]) {
+    var client = new JsonServiceClient(baseUrl);
+    if (ClientConfig.initClient != null)  {
+      ClientConfig.initClient(client);
+    }
+    return client;
+  }
+}
+
 class SendContext {
   String method;
   dynamic request;

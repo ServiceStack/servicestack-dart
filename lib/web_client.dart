@@ -10,6 +10,17 @@ typedef void WebRequestFilter(Request req);
 typedef void WebResponseFilter(Response res);
 typedef void WebResponseExceptionFilter(Response res, Exception e);
 
+class ClientFactory
+{
+  static IServiceClient create([String baseUrl = "/"]) {
+    var client = new JsonWebClient(baseUrl);
+    if (ClientConfig.initClient != null)  {
+      ClientConfig.initClient(client);
+    }
+    return client;
+  }
+}
+
 class SendWebContext {
   String method;
   dynamic request;
