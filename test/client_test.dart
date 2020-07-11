@@ -461,4 +461,15 @@ void main() {
 
   });
 
+  test('Can handle naked List', () async {
+    var client = createTestClient();
+
+    var request = HelloList()
+      ..names = ['A','B','C'];
+
+    var response = await client.get(request);
+
+    expect(response.length, equals(3));
+  });
+
 }
