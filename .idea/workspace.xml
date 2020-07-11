@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/client_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/client_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/dtos/test.dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/dtos/test.dtos.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Dart Test.Can deserialize naked list in dartrefsandbox_test.dart">
+  <component name="RunManager" selected="Dart Test.Can handle naked List in client_test.dart">
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -88,10 +91,10 @@
       <option name="testName" value="Can deserialize naked list" />
       <method v="2" />
     </configuration>
-    <configuration name="Can parse ISO 8601 DateTime with Timezone in converter_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/converter_test.dart" />
+    <configuration name="Can handle naked List in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can parse ISO 8601 DateTime with Timezone" />
+      <option name="testName" value="Can handle naked List" />
       <method v="2" />
     </configuration>
     <configuration name="description in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
@@ -121,11 +124,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Dart Test.Can handle naked List in client_test.dart" />
         <item itemvalue="Dart Test.Can deserialize naked list in dartrefsandbox_test.dart" />
         <item itemvalue="Dart Test.tests in dartrefsandbox_test.dart" />
         <item itemvalue="Dart Test.description in dartrefsandbox_test.dart" />
         <item itemvalue="Dart Test.tests in servicestack-dart" />
-        <item itemvalue="Dart Test.Can parse ISO 8601 DateTime with Timezone in converter_test.dart" />
       </list>
     </recent_temporary>
   </component>
