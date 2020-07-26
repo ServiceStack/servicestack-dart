@@ -45,15 +45,15 @@ class JsonConverters {
   }
 
   static dynamic fromJson(dynamic value, String typeName, TypeContext context) {
-    var newContext = new TypeContext(
-        types: context.types, typeName: typeName, childContext: _ctx);
+    var newContext = new TypeContext(types: context.types, typeName: typeName,
+        childContext: context.childContext)..addChildContext(_ctx);
     var converter = resolve(typeName, newContext);
     return converter.fromJson(value, newContext);
   }
 
   static dynamic toJson(dynamic value, String typeName, TypeContext context) {
-    var newContext = new TypeContext(
-        types: context.types, typeName: typeName, childContext: _ctx);
+    var newContext = new TypeContext(types: context.types, typeName: typeName,
+        childContext: context.childContext)..addChildContext(_ctx);
     var converter = resolve(typeName, newContext);
     return converter.toJson(value, newContext);
   }

@@ -43,7 +43,7 @@ void main() {
     request.Bool = false;
     request.Int = 0;
     var requestUrl = appendQueryString(TEST_URL, toMap(request));
-    expect(requestUrl, equals(TEST_URL + "?version=1&bool=false&int=0"));
+    expect(requestUrl, equals(TEST_URL + "?bool=false&int=0"));
   });
 
 }

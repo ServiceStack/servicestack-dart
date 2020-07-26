@@ -204,11 +204,13 @@ bool hasRequestBody(String method) => !(method == "GET" ||
 bool isJsonObject(String str) => str != null && str.trim().startsWith("{");
 
 String appendQueryString(String url, Map<String, dynamic> args) {
-  args.forEach((key, val) {
-    if (val == null) return;
-    url += url.indexOf("?") >= 0 ? "&" : "?";
-    url += key + "=" + qsValue(val);
-  });
+  if (args != null) {
+    args.forEach((key, val) {
+      if (val == null) return;
+      url += url.indexOf("?") >= 0 ? "&" : "?";
+      url += key + "=" + qsValue(val);
+    });
+  }
   return url;
 }
 

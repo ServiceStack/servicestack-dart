@@ -31,6 +31,8 @@ class TypeInfo {
   TypeInfo(this.type, {this.create, this.enumValues});
   createInstance() => this.create();
   bool get canCreate => create != null;
+  dynamic _instance;
+  defaultInstance() { return _instance ?? (canCreate ? _instance = createInstance() : null); }
 }
 
 class TypeContext {
@@ -38,13 +40,42 @@ class TypeContext {
   Map<String, TypeInfo> types;
   String typeName;
   TypeContext childContext;
+  bool hasInit = false;
 
-  TypeContext({this.library, this.types, this.typeName, this.childContext});
+  TypeContext({this.library, this.types, this.typeName, this.childContext}) {}
 
   List<String> get genericArgs => getGenericArgs(typeName);
 
-  TypeInfo getTypeInfo(String typeName) =>
-      types[typeName] ?? childContext?.getTypeInfo(typeName);
+  TypeContext init() {
+    // runtimeType.toString() different in alt platforms https://forums.servicestack.net/t/dart-client-client-mapping-issue-in-release-build/8754
+    // As workaround add additional entries using instance runtimeType.toString() as keys
+    if (this.types == null || this.hasInit || this.types.containsKey("__init")) return this;
+
+    var keys = this.types.keys.where((x) => x.indexOf('<') >= 0).toList(growable:false);
+    for (var k in keys) {
+      var info = this.types[k];
+      try {
+        if (info.type == TypeOf.Class && info.canCreate) {
+          var instance = info.defaultInstance();
+          var instanceKey = instance?.runtimeType.toString();
+          if (instanceKey != null && !this.types.containsKey(instanceKey)) {
+            this.types[instanceKey] = info;
+          }
+        }
+      } catch (e) {
+        print("TypeContext.init(): " + e);
+      }
+    }
+
+    this.hasInit = true;
+    this.types["__init"] = new TypeInfo(TypeOf.Interface);
+    return this;
+  }
+
+  TypeInfo getTypeInfo(String typeName) {
+    this.init();
+    return types[typeName] ?? childContext?.getTypeInfo(typeName);
+  }
 
   TypeInfo get typeInfo {
     var ret = getTypeInfo(typeName);
@@ -57,14 +88,23 @@ class TypeContext {
   TypeContext newContext(String typeName) =>
       new TypeContext(typeName: typeName, types: types);
 
-  static TypeContext combine(String typeName, TypeContext parentContext,
-          TypeContext childContext) =>
+  static TypeContext combine(String typeName, TypeContext parentContext, TypeContext childContext) =>
       parentContext != null
           ? new TypeContext(
               typeName: typeName,
               types: parentContext.types,
               childContext: childContext)
           : new TypeContext(typeName: typeName, types: childContext.types);
+
+  void addChildContext(TypeContext childContext) {
+    if (this.childContext == null) {
+      this.childContext = childContext;
+    } else {
+      this.childContext = new TypeContext(
+          types: this.childContext.types,
+          childContext: childContext);
+    }
+  }
 }
 
 abstract class IServiceClient {
