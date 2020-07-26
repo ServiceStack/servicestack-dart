@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/client_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/client_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/dtos/test.dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/dtos/test.dtos.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/interfaces.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/interfaces.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/json_converters.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/json_converters.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/json_service_client_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/json_service_client_test.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,13 +28,13 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\src\servicestack-dart\test\issues" />
-      <recent name="C:\src\servicestack-dart\test\issues\dart-ref" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\src\servicestack-dart\example" />
       <recent name="C:\src\servicestack-dart\test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\src\servicestack-dart\test\issues" />
+      <recent name="C:\src\servicestack-dart\test\issues\dart-ref" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -48,7 +49,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Dart Test.Can handle naked List in client_test.dart">
+  <component name="RunManager" selected="Dart Test.tests in servicestack-dart">
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -85,27 +86,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Can deserialize naked list in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" />
-      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can deserialize naked list" />
-      <method v="2" />
-    </configuration>
     <configuration name="Can handle naked List in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
       <option name="testName" value="Can handle naked List" />
       <method v="2" />
     </configuration>
-    <configuration name="description in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" />
+    <configuration name="Can sendAll batch request in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="description" />
+      <option name="testName" value="Can sendAll batch request" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in dartrefsandbox_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" />
-      <option name="testName" value="dartrefsandbox_test.dart" />
+    <configuration name="Should generate default value in json_service_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/json_service_client_test.dart" />
+      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
+      <option name="testName" value="Should generate default value" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
+      <option name="testName" value="client_test.dart" />
       <method v="2" />
     </configuration>
     <configuration name="tests in servicestack-dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
@@ -124,11 +125,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Dart Test.Can handle naked List in client_test.dart" />
-        <item itemvalue="Dart Test.Can deserialize naked list in dartrefsandbox_test.dart" />
-        <item itemvalue="Dart Test.tests in dartrefsandbox_test.dart" />
-        <item itemvalue="Dart Test.description in dartrefsandbox_test.dart" />
         <item itemvalue="Dart Test.tests in servicestack-dart" />
+        <item itemvalue="Dart Test.Can sendAll batch request in client_test.dart" />
+        <item itemvalue="Dart Test.tests in client_test.dart" />
+        <item itemvalue="Dart Test.Should generate default value in json_service_client_test.dart" />
+        <item itemvalue="Dart Test.Can handle naked List in client_test.dart" />
       </list>
     </recent_temporary>
   </component>
@@ -183,6 +184,31 @@
           <line>227</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/utils.dart</url>
+          <line>254</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/test/client_test.dart</url>
+          <line>303</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>501</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/json_converters.dart</url>
+          <line>98</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/json_converters.dart</url>
+          <line>47</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -194,6 +220,8 @@
         <watch expression="x.runtimeType.toString()" />
         <watch expression="lastLeftPart(strDate, '.') + '.' + secFraction.substring(0,5) + tz" language="Dart" />
         <watch expression="secFraction.substring(0,5)" language="Dart" />
+        <watch expression="this.types[k]" language="Dart" />
+        <watch expression="responseAs.runtimeType.toString()" language="Dart" />
       </configuration>
     </watches-manager>
   </component>
