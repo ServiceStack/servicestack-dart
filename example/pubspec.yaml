@@ -4,7 +4,7 @@ author: ServiceStack, Inc <team@servicestack.net>
 description: ServiceStack Dart Test
 homepage: https://github.com/ServiceStack/servicestack-dart
 environment:
-  sdk: '>=2.0.0-dev.61.0 <3.0.0'
+  sdk: ">=2.7.0 <3.0.0"
 dependencies:
   http: ^0.12.0
-  servicestack: ^1.0.9
+  servicestack: ^1.0.15

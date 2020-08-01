@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/ztest.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/Generated.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner/GeneratedPluginRegistrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client_dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client_dtos.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/interfaces.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/interfaces.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/json_converters.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/json_converters.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,22 +25,26 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1bGl8paROl2RtdmmMpVXGLqNqPw" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\src\servicestack-dart\example" />
-      <recent name="C:\src\servicestack-dart\test" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\src\servicestack-dart\test\issues" />
       <recent name="C:\src\servicestack-dart\test\issues\dart-ref" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\src\servicestack-dart\test" />
+      <recent name="C:\src\servicestack-dart\example" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -47,7 +59,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Dart Test.tests in servicestack-dart">
+  <component name="RunManager" selected="Dart Test.test1 in ztest.dart">
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -84,32 +96,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Can handle naked List in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
-      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can handle naked List" />
-      <method v="2" />
-    </configuration>
     <configuration name="Can sendAll batch request in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
       <option name="testName" value="Can sendAll batch request" />
       <method v="2" />
     </configuration>
-    <configuration name="Should generate default value in json_service_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/json_service_client_test.dart" />
+    <configuration name="test1 in ztest.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/ztest.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Should generate default value" />
+      <option name="testName" value="test1" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
-      <option name="testName" value="client_test.dart" />
+    <configuration name="test2 in ztest.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/ztest.dart" />
+      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
+      <option name="testName" value="test2" />
       <method v="2" />
     </configuration>
     <configuration name="tests in servicestack-dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$" />
       <option name="scope" value="FOLDER" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in ztest.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/ztest.dart" />
+      <option name="testName" value="client_test" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="TestNG">
@@ -123,11 +135,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Dart Test.test1 in ztest.dart" />
+        <item itemvalue="Dart Test.tests in ztest.dart" />
+        <item itemvalue="Dart Test.test2 in ztest.dart" />
         <item itemvalue="Dart Test.tests in servicestack-dart" />
         <item itemvalue="Dart Test.Can sendAll batch request in client_test.dart" />
-        <item itemvalue="Dart Test.tests in client_test.dart" />
-        <item itemvalue="Dart Test.Should generate default value in json_service_client_test.dart" />
-        <item itemvalue="Dart Test.Can handle naked List in client_test.dart" />
       </list>
     </recent_temporary>
   </component>
@@ -169,17 +181,20 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/json_converters.dart</url>
-          <line>246</line>
+          <line>254</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/json_converters.dart</url>
-          <line>227</line>
+          <line>235</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
@@ -199,8 +214,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/json_converters.dart</url>
-          <line>98</line>
+          <line>106</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/test/ztest.dart</url>
+          <line>12</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/test/ztest.dart</url>
+          <line>8</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>480</line>
+          <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/json_converters.dart</url>
+          <line>37</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -214,6 +249,7 @@
         <watch expression="lastLeftPart(strDate, '.') + '.' + secFraction.substring(0,5) + tz" language="Dart" />
         <watch expression="secFraction.substring(0,5)" language="Dart" />
         <watch expression="this.types[k]" language="Dart" />
+        <watch expression="responseAs.runtimeType.toString()" language="Dart" />
         <watch expression="responseAs.runtimeType.toString()" language="Dart" />
       </configuration>
     </watches-manager>
