@@ -17,7 +17,9 @@ class JsonConverters {
     'Duration': new DurationConverter(),
     'DateTime': new DateTimeConverter(),
     'List': new ListConverter(),
+    '_GrowableList': new ListConverter(),
     'Map': new MapConverter(),
+    '_InternalLinkedHashMap': new MapConverter(),
     'KeyValuePair': new KeyValuePairConverter(),
   };
 
