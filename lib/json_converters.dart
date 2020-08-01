@@ -3,6 +3,12 @@ part of servicestack;
 class JsonConverters {
   static Map<String, Function> TypeFactories = {};
 
+  static GetJson getJson = defaultGetJson;
+
+  static dynamic defaultGetJson(Map<String,dynamic> map, String propertyName) {
+    return map[propertyName] ?? map[propertyName.substring(0,1).toUpperCase() + propertyName.substring(1)];
+  }
+
   static void addTypes(Map<String, Function> types) {
     TypeFactories.addAll(types);
   }

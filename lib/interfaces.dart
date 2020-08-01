@@ -170,6 +170,7 @@ class TypeAs {
 typedef void UrlFilter(String url);
 typedef Future AsyncCallbackFunction();
 typedef void ClientFilter(IServiceClient client);
+typedef dynamic GetJson(Map<String,dynamic> map, String propertyName);
 
 enum WebServiceExceptionType {
   RefreshTokenException,
