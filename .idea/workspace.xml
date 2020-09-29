@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test/cofigure_client_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/interfaces.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/interfaces.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/web_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/web_client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/cofigure_client_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/cofigure_client_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +52,7 @@
       <recent name="C:\src\servicestack-dart\example" />
     </key>
   </component>
-  <component name="RunManager" selected="Dart Test.tests in cofigure_client_test.dart">
+  <component name="RunManager" selected="Dart Test.Can configure client with kDebugMode in cofigure_client_test.dart">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -97,6 +95,12 @@
       <option name="testName" value="Can configure client" />
       <method v="2" />
     </configuration>
+    <configuration name="Can configure client with kDebugMode in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
+      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
+      <option name="testName" value="Can configure client with kDebugMode" />
+      <method v="2" />
+    </configuration>
     <configuration name="Can populate ClientOptions in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
@@ -106,11 +110,6 @@
     <configuration name="tests in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
       <option name="testName" value="cofigure_client_test.dart" />
-      <method v="2" />
-    </configuration>
-    <configuration name="tests in servicestack-dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$" />
-      <option name="scope" value="FOLDER" />
       <method v="2" />
     </configuration>
     <configuration name="tests in ztest.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
@@ -129,6 +128,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Dart Test.Can configure client with kDebugMode in cofigure_client_test.dart" />
         <item itemvalue="Dart Test.tests in cofigure_client_test.dart" />
         <item itemvalue="Dart Test.Can populate ClientOptions in cofigure_client_test.dart" />
         <item itemvalue="Dart Test.Can configure client in cofigure_client_test.dart" />
@@ -185,22 +185,22 @@
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
     <state x="1488" y="696" key="FileChooserDialogImpl/0.0.3413.1880@0.0.3413.1880" timestamp="1600669024354" />
-    <state width="3369" height="540" key="GridCell.Tab.0.bottom" timestamp="1601391810705">
+    <state width="3369" height="540" key="GridCell.Tab.0.bottom" timestamp="1601393627639">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.bottom/0.0.3413.1880@0.0.3413.1880" timestamp="1601391810705" />
-    <state width="3369" height="540" key="GridCell.Tab.0.center" timestamp="1601391810704">
+    <state width="3369" height="540" key="GridCell.Tab.0.bottom/0.0.3413.1880@0.0.3413.1880" timestamp="1601393627639" />
+    <state width="3369" height="540" key="GridCell.Tab.0.center" timestamp="1601393627639">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.center/0.0.3413.1880@0.0.3413.1880" timestamp="1601391810704" />
-    <state width="3369" height="540" key="GridCell.Tab.0.left" timestamp="1601391810704">
+    <state width="3369" height="540" key="GridCell.Tab.0.center/0.0.3413.1880@0.0.3413.1880" timestamp="1601393627639" />
+    <state width="3369" height="540" key="GridCell.Tab.0.left" timestamp="1601393627638">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.left/0.0.3413.1880@0.0.3413.1880" timestamp="1601391810704" />
-    <state width="3369" height="540" key="GridCell.Tab.0.right" timestamp="1601391810704">
+    <state width="3369" height="540" key="GridCell.Tab.0.left/0.0.3413.1880@0.0.3413.1880" timestamp="1601393627638" />
+    <state width="3369" height="540" key="GridCell.Tab.0.right" timestamp="1601393627639">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.right/0.0.3413.1880@0.0.3413.1880" timestamp="1601391810704" />
+    <state width="3369" height="540" key="GridCell.Tab.0.right/0.0.3413.1880@0.0.3413.1880" timestamp="1601393627639" />
     <state width="1236" height="944" key="XDebugger.FullValuePopup" timestamp="1601390147137">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
@@ -209,10 +209,10 @@
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
     <state x="1517" y="858" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3413.1880@0.0.3413.1880" timestamp="1601386733387" />
-    <state x="1364" y="451" key="run.anything.popup" timestamp="1601388941690">
+    <state x="1364" y="451" key="run.anything.popup" timestamp="1601393447788">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state x="1364" y="451" key="run.anything.popup/0.0.3413.1880@0.0.3413.1880" timestamp="1601388941690" />
+    <state x="1364" y="451" key="run.anything.popup/0.0.3413.1880@0.0.3413.1880" timestamp="1601393447788" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

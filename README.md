@@ -1,47 +1,49 @@
 ![Dart Banner](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/dart/dart.png)
 
-ServiceStack's **Add ServiceStack Reference** feature allows clients to generate Native Types from a simple [@servicestack/cli command-line utility](https://github.com/ServiceStack/servicestack-cli#servicestackcli) - providing a simple way to give clients typed access to your ServiceStack Services.
+ServiceStack's **Add ServiceStack Reference** feature allows clients to generate Native Types from a simple [x dotnet tool](https://docs.servicestack.net/dotnet-tool)  - providing a simple way to give clients typed access to your ServiceStack Services.
 
 ### Dart ServiceStack Reference
 
-Dart ServiceStack Reference supports **all Dart platforms**, including Flutter and AngularDart or Dart Web Apps with and without Dart 2's Strong Mode - in the same optimal development workflow pioneered in [Add ServiceStack Reference](http://docs.servicestack.net/add-servicestack-reference) where it doesn't requiring any additional tooling, transformers or build steps. 
+Dart ServiceStack Reference supports **all Dart platforms**, including Flutter and AngularDart or Dart Web Apps with and without Dart 2's Strong Mode - in the same optimal development workflow pioneered in [Add ServiceStack Reference](https://docs.servicestack.net/add-servicestack-reference) where it doesn't requiring any additional tooling, transformers or build steps. 
 
-Due to the lack of reflection and Mirror support, consuming JSON APIs can be quite [cumbersome in Flutter](https://flutter.io/cookbook/networking/fetch-data/). But we've been able to achieve the same productive development experience available in [all supported languages](http://docs.servicestack.net/add-servicestack-reference) where you can use the generated Dart DTOs from any remote v5.1+ ServiceStack endpoint with ServiceStack's Smart generic
-[JsonServiceClient](https://pub.dartlang.org/documentation/servicestack/latest/servicestack/JsonServiceClient-class.html) available in the [servicestack Dart package](https://pub.dartlang.org/packages/servicestack#-installing-tab-), to enable an end-to-end Typed API for calling Services by [sending and receiving native DTOs](http://docs.servicestack.net/architecture-overview#client-architecture).
+Due to the lack of reflection and Mirror support, consuming JSON APIs can be quite [cumbersome in Flutter](https://flutter.io/cookbook/networking/fetch-data/). But we've been able to achieve the same productive development experience available in [all supported languages](https://docs.servicestack.net/add-servicestack-reference) where you can use the generated Dart DTOs from any remote v5.1+ ServiceStack endpoint with ServiceStack's Smart generic
+[JsonServiceClient](https://pub.dartlang.org/documentation/servicestack/latest/servicestack/JsonServiceClient-class.html) available in the [servicestack Dart package](https://pub.dartlang.org/packages/servicestack#-installing-tab-), to enable an end-to-end Typed API for calling Services by [sending and receiving native DTOs](https://docs.servicestack.net/architecture-overview#client-architecture).
 
 ### Example Usage
 
-You can use the same [@servicestack/cli](https://github.com/ServiceStack/servicestack-cli#servicestackcli) simple command-line utility to easily Add and Update ServiceStack References for all supported languages:
+You can use the same [x dotnet tool](https://docs.servicestack.net/dotnet-tool) simple command-line utility to easily Add and Update ServiceStack References for all supported languages:
 
-    $ npm install -g @servicestack/cli
+Install [.NET Core](https://dotnet.microsoft.com/download) then install the `x` dotnet tool:
 
-This makes the `dart-ref` script globally available in your `PATH` which you can execute with the URL of the remote ServiceStack Instance you want to generated DTOs for, e.g:
+    $ dotnet tool install --global x
 
-    $ dart-ref https://www.techstacks.io
+You can then execute `x dart` with the URL of the remote ServiceStack Instance you want to generated DTOs for, e.g:
 
-This will generate Dart DTOs for the [entire TechStacks API](https://www.techstacks.io/metadata):
+    $ x dart https://techstacks.io
 
-    Saved to: techstacks.dtos.dart
+This will generate Dart DTOs for the [entire TechStacks API](https://techstacks.io/metadata):
 
-> If no name is specified in the 2nd argument, it's inferred from the URL, in this case it uses `techstacks`.
+    Saved to: dtos.dart
+
+> If no name is specified in the 2nd argument, it uses `dtos` if it doesn't already exist, otherwise falls back to infer it from the URL.
 
 To make API calls we need to use the `JsonServiceClient`, installed by adding the [servicestack](https://pub.dartlang.org/packages/servicestack#-installing-tab-) package to our Dart projects `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  servicestack: ^1.0.16
+  servicestack: ^1.0.17
 ```
 
 Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode.org) automatically calls `pub get` or `flutter packages get` (in Flutter projects) to add any new dependencies to your project.
 
-We now have everything we need to be able to make typed API requests to any of [TechStacks APIs](https://www.techstacks.io/metadata) with a shared `JsonServiceClient` instance populated with the base URL of the remote endpoint, e.g:
+We now have everything we need to be able to make typed API requests to any of [TechStacks APIs](https://techstacks.io/metadata) with a shared `JsonServiceClient` instance populated with the base URL of the remote endpoint, e.g:
 
 ```dart
 import 'package:servicestack/client.dart';
 
-import 'techstacks.dtos.dart';
+import 'dtos.dart';
 
-var client = new JsonServiceClient("https://www.techstacks.io");
+var client = new JsonServiceClient("https://techstacks.io");
 
 main() async {
   var response = await client.get(new GetTechnology(slug: "flutter"));
@@ -55,21 +57,93 @@ Like C#, Dart has Generics and Type Inference so the `response` returned is the 
 
 Please submit issues to https://github.com/ServiceStack/Issues
 
+### Platform neutral code
+
+Both **dart:io** `JsonServiceClient` and **dart:html** `JsonWebClient` implement the same shared `IServiceClient` interface which support a platform-neutral source-compatible API using the
+`ClientFactory` APIs, e.g: 
+
+```dart
+import 'package:servicestack/web_client.dart' if (dart.library.io) 'package:servicestack/client.dart';
+
+main() async {
+  var client = ClientFactory.create('https://techstacks.io');
+  var response = await client.get(new GetTechnology(slug: "flutter"));
+  print("${response.technology.name}: ${response.technology.vendorUrl}");
+}
+```
+
+For advanced configuration you can use the `createWith(ClientOptions)` API, e.g you can use `dev.servicestack.com` which resolves to `10.0.2.2` 
+which in Android you can use to access `127.0.0.1` of the host OS allowing you to access your local development server.
+
+In this example we'll create either a typed Service Client to our local development server in **Debug** during development (ignoring its self-signed certificate)
+and our production server in **Release** mode: 
+
+```dart
+import 'package:servicestack/web_client.dart' if (dart.library.io) 'package:servicestack/client.dart';
+import 'package:flutter/foundation.dart';
+
+main() async {
+  var client = kDebugMode
+    ? ClientFactory.createWith(ClientOptions(baseUrl:'https://dev.servicestack.com:5001', ignoreCert:true))
+    : ClientFactory.create('https://techstacks.io');
+}
+```
+
+> Tip: if you add a `127.0.0.1 dev.servicestack.com` mapping in your OS's `hosts` file you'll be able to use `https://dev.servicestack.com` to access your dev server in your Host OS as well. 
+
+### Shared Initialization Configuration
+
+For more advanced configuration you can use the `ClientConfig.initClient` client factory filter to customize all service client instances 
+as done in this example to configure all client instances with any previously saved JWT Bearer & Refresh Tokens to enable authenticated access:
+
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:servicestack/web_client.dart' if (dart.library.io) 'package:servicestack/client.dart';
+
+SharedPreferences prefs;
+AuthenticateResponse auth;
+IServiceClient client;
+
+Future<void> main() async {
+  prefs = await SharedPreferences.getInstance();
+
+  var json = prefs.get('auth');
+  auth = json != null
+    ? AuthenticateResponse.fromJson(json)
+    : null;
+
+  var client = kDebugMode
+    ? ClientFactory.createWith(ClientOptions(baseUrl:'https://dev.servicestack.com:5001', ignoreCert:true))
+    : ClientFactory.create('https://techstacks.io');
+
+  ClientConfig.initClient = (client) {
+    if (auth != null) {
+      client.bearerToken = auth.bearerToken;
+      client.refreshToken = auth.refreshToken;
+    }
+  };
+
+  runApp(MyApp());
+}
+```
+
 ### JsonWebClient
 
-For browser projects you would instead use the `JsonWebClient` from `web_client.dart`, e.g:
+For browser projects you can use the `JsonWebClient` from `web_client.dart` directly, e.g:
 
 ```dart
 import 'package:servicestack/web_client.dart';
 
-var client = new JsonWebClient("https://www.techstacks.io");
+var client = new JsonWebClient("https://techstacks.io");
 ```
 
 The `JsonWebClient` performs HTTP Requests using [dart:html BrowserClient](https://webdev.dartlang.org/angular/guide/server-communication) to use the browsers built-in `XMLHttpRequest` object. Despite their implementation differences `JsonWebClient` also supports the same feature-set as the Dart VM's `JsonServiceClient` above. 
 
 #### Concrete-specific functionality
 
-In addition to implementing the `IServiceClient` above, each Service Client includes additional concrete specific functionality allowing for finer-grained access to their underlying HTTP Clients, e.g. as the Request/Response filters have different Type signatures (dart:io's `HttpClientResponse` vs Browser's `Response`) they can't be declared in the shared `IServiceClient` interface, but thanks to Dart's type inference many of the extended concrete APIs are still source-compatible, e.g:
+In addition to implementing the `IServiceClient` above, each Service Client includes additional concrete specific functionality allowing for finer-grained access to their underlying HTTP Clients, 
+e.g. as the Request/Response filters have different Type signatures (dart:io's `HttpClientResponse` vs Browser's `Response`) they can't be declared in the shared `IServiceClient` interface, but thanks to Dart's type inference many of the extended concrete APIs are still source-compatible, e.g:
 
 ```dart
 var vmClient = new JsonServiceClient(baseUrl)
@@ -134,11 +208,11 @@ The conversion logic that handles the behind-the-scenes conversion into and out 
 
 The `JsonServiceClient` is a smart full-featured Service Client implementation with a number of high-level features that make consuming ServiceStack APIs a seamless experience, with built-in support for:
 
- - HTTP Basic Auth (inc. [API Key support](http://docs.servicestack.net/api-key-authprovider))
- - [Cookies, Sessions and Credential Auth](http://docs.servicestack.net/sessions)
- - [JWT, including using RefreshTokens to auto-fetch new JWT Bearer Tokens](http://docs.servicestack.net/jwt-authprovider)
- - [Structured Error Handling](http://docs.servicestack.net/error-handling)
- - [Auto Batched Requests](http://docs.servicestack.net/auto-batched-requests)
+ - HTTP Basic Auth (inc. [API Key support](https://docs.servicestack.net/api-key-authprovider))
+ - [Cookies, Sessions and Credential Auth](https://docs.servicestack.net/sessions)
+ - [JWT, including using RefreshTokens to auto-fetch new JWT Bearer Tokens](https://docs.servicestack.net/jwt-authprovider)
+ - [Structured Error Handling](https://docs.servicestack.net/error-handling)
+ - [Auto Batched Requests](https://docs.servicestack.net/auto-batched-requests)
  - Global and per-instance Request, Response and Exception Filters
  - `onAuthenticationRequired` hook to handle re-authentication and transparent replay of failed 401 requests
 
@@ -211,7 +285,7 @@ Then to use `JsonServiceClient` add the `servicestack` dependency to your apps [
 
 ```yaml
 dependencies:
-  servicestack: ^1.0.16
+  servicestack: ^1.0.17
 ```
 
 Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.io/using-packages/) to install any new dependencies in your App. 
@@ -219,12 +293,12 @@ Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.
 Our App will be making API calls to 2 different ServiceStack instances which we'll need to get typed DTOs for using the `dart-ref` command-line utility:
 
     cd lib
-    dart-ref https://www.techstacks.io
+    dart-ref https://techstacks.io
     dart-ref http://test.servicestack.net test
 
 Which will save the DTOs for each endpoint in different files:
 
-    Saved to: techstacks.dtos.dart
+    Saved to: dtos.dart
     Saved to: test.dtos.dart
 
 Incidentally you can get the latest version for all Dart Service References by running `dart-ref` without arguments:
@@ -234,7 +308,7 @@ Incidentally you can get the latest version for all Dart Service References by r
 Which updates all Dart references in the current directory, including any customization options available in the header of each file:
 
     Updated: test.dtos.dart
-    Updated: techstacks.dtos.dart
+    Updated: dtos.dart
 
 This gives us everything we need to call Web Services in our Flutter App, by importing `package:servicestack/client.dart` containing `JsonServiceClient` as well as any generated DTOs.
 
@@ -244,10 +318,10 @@ Then create new `JsonServiceClient` instances initialized with the `BaseUrl` for
 import 'package:servicestack/client.dart';
 
 import 'test.dtos.dart';
-import 'techstacks.dtos.dart';
+import 'dtos.dart';
 
 const TestBaseUrl = "http://test.servicestack.net";
-const TechStacksBaseUrl = "https://www.techstacks.io";
+const TechStacksBaseUrl = "https://techstacks.io";
 
 var testClient = new JsonServiceClient(TestBaseUrl);
 var techstacksClient = new JsonServiceClient(TechStacksBaseUrl);
@@ -318,7 +392,7 @@ This results in displaying the contents of the `result` String in a `Text` widge
 
 #### Authenticated Requests
 
-This example shows how to make Authenticated Requests where first the `JsonServiceClient` instance is authenticated by sending a `Authenticate` request with valid Username/Password credentials which is validated against the servers configured [CredentialsAuthProvider](http://docs.servicestack.net/authentication-and-authorization#auth-providers). If successful this will return [Session Cookies](http://docs.servicestack.net/sessions) containing a reference to the Authenticated UserSession stored on the server. The Cookies are automatically saved on the `JsonServiceClient` instance and re-sent on subsequent requests which is how it's able to make an Authenticated request to the [protected `HelloAuth` Service](https://github.com/ServiceStack/Test/blob/3cc559d8de79e1c70ff7f4327458040ca055dea3/src/Test/Test.ServiceInterface/TestAuthService.cs#L18-L19):
+This example shows how to make Authenticated Requests where first the `JsonServiceClient` instance is authenticated by sending a `Authenticate` request with valid Username/Password credentials which is validated against the servers configured [CredentialsAuthProvider](https://docs.servicestack.net/authentication-and-authorization#auth-providers). If successful this will return [Session Cookies](https://docs.servicestack.net/sessions) containing a reference to the Authenticated UserSession stored on the server. The Cookies are automatically saved on the `JsonServiceClient` instance and re-sent on subsequent requests which is how it's able to make an Authenticated request to the [protected `HelloAuth` Service](https://github.com/ServiceStack/Test/blob/3cc559d8de79e1c70ff7f4327458040ca055dea3/src/Test/Test.ServiceInterface/TestAuthService.cs#L18-L19):
 
 ```dart
 new RaisedButton(
@@ -343,11 +417,11 @@ If the Username and Password were valid it will display the result of the `Hello
 
 ![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/dart/flutter/helloflutter-02.png)
 
-JWT's encapsulate a signed, stateless Authenticated UserSession which is able to Authenticate with remote Services that have an `JwtAuthProvider` registered with the same AES or RSA Key used to sign the JWT Token. As they enable [Authentication with stateless Services they're ideal for use in Microservices](http://docs.servicestack.net/jwt-authprovider#stateless-auth-microservices).
+JWT's encapsulate a signed, stateless Authenticated UserSession which is able to Authenticate with remote Services that have an `JwtAuthProvider` registered with the same AES or RSA Key used to sign the JWT Token. As they enable [Authentication with stateless Services they're ideal for use in Microservices](https://docs.servicestack.net/jwt-authprovider#stateless-auth-microservices).
 
 #### JWT RefreshToken Requests
 
-The JWT sample shows an example of authenticating via JWT, but instead of configuring the `JsonServiceClient` instance with the JWT BearerToken above (and what's needed to make JWT Authenticated Requests), it's only populating the [long-lived RefreshToken](http://docs.servicestack.net/jwt-authprovider#refresh-tokens) which the client automatically uses behind the scenes to fetch a new JWT Bearer Token from the remote ServiceStack endpoint, which if the User is still allowed to Sign In will populate the instance with a new JWT Bearer Token encapsulated with the latest UserSession.
+The JWT sample shows an example of authenticating via JWT, but instead of configuring the `JsonServiceClient` instance with the JWT BearerToken above (and what's needed to make JWT Authenticated Requests), it's only populating the [long-lived RefreshToken](https://docs.servicestack.net/jwt-authprovider#refresh-tokens) which the client automatically uses behind the scenes to fetch a new JWT Bearer Token from the remote ServiceStack endpoint, which if the User is still allowed to Sign In will populate the instance with a new JWT Bearer Token encapsulated with the latest UserSession.
 
 ```dart
 new RaisedButton(
@@ -376,7 +450,7 @@ The RefreshToken is smaller than a JWT Bearer Token as it just contains a signed
 
 #### AutoQuery Requests
 
-[AutoQuery](http://docs.servicestack.net/autoquery-rdbms) lets us effortlessly creating queryable high-performance RDBMS APIs with just a Request DTO class definition, e.g:
+[AutoQuery](https://docs.servicestack.net/autoquery-rdbms) lets us effortlessly creating queryable high-performance RDBMS APIs with just a Request DTO class definition, e.g:
 
 ```csharp
 [Route("/technology/search")]
@@ -389,7 +463,7 @@ public class FindTechnologies : QueryDb<Technology>
 
 ServiceStack takes care of creating the implementation for this Service from this definition which queries the `Technology` RDBMS table. 
 
-Any properties added to the AutoQuery Request DTO will be generated in the Dart `FindTechnologies` Request DTO. However AutoQuery also lets you query any other property on the `Technology` table using any of the configured [Implicit Conventions](http://docs.servicestack.net/autoquery-rdbms#implicit-conventions). 
+Any properties added to the AutoQuery Request DTO will be generated in the Dart `FindTechnologies` Request DTO. However AutoQuery also lets you query any other property on the `Technology` table using any of the configured [Implicit Conventions](https://docs.servicestack.net/autoquery-rdbms#implicit-conventions). 
 
 We can include any additional arguments that are not explicitly defined on the Request DTO using the optional `args` parameter available in each `IServiceClient` API.
 
@@ -414,13 +488,13 @@ new RaisedButton(
 ),
 ```
 
-The 2nd Request calls the `QueryPosts` AutoQuery Service highlighting the Service Client's support for [sending complex type arguments on the QueryString](http://docs.servicestack.net/serialization-deserialization#passing-complex-objects-in-the-query-string) and an example of using Dart's method cascade operator to populate the `take` field in  the [inherited QueryBase class](http://docs.servicestack.net/autoquery-rdbms#iquery).
+The 2nd Request calls the `QueryPosts` AutoQuery Service highlighting the Service Client's support for [sending complex type arguments on the QueryString](https://docs.servicestack.net/serialization-deserialization#passing-complex-objects-in-the-query-string) and an example of using Dart's method cascade operator to populate the `take` field in  the [inherited QueryBase class](https://docs.servicestack.net/autoquery-rdbms#iquery).
 
 ![](https://raw.githubusercontent.com/ServiceStack/docs/master/docs/images/dart/flutter/helloflutter-04.png)
 
 #### Auto Batched Requests
 
-The `sendAll` and `sendAllOneWay` APIs lets you use ServiceStack's [Auto Batched Requests](http://docs.servicestack.net/auto-batched-requests) feature to batch multiple Requests DTOs of the same Type in a single Request that returns all Responses in a single Response, e.g:
+The `sendAll` and `sendAllOneWay` APIs lets you use ServiceStack's [Auto Batched Requests](https://docs.servicestack.net/auto-batched-requests) feature to batch multiple Requests DTOs of the same Type in a single Request that returns all Responses in a single Response, e.g:
 
 ```dart
 new RaisedButton(
@@ -461,7 +535,7 @@ public class DummyTypesService : Service
 
 #### Binary Requests
 
-Most API Requests typically involve sending a populated Request DTO that returns a Typed Response DTO although ServiceStack Services can also [return raw data](http://docs.servicestack.net/service-return-types) like `String`, `byte[]` and `Stream` responses which the `JsonServiceClient` also seamlessly supports where instead of returning a Typed DTO it returns the raw HTTP Body as a `String` for Request DTOs implementing `IReturn<String>` or an `Uint8List` for any binary responses (e.g. Services implementing `IReturn<byte[]>` or `IReturn<Stream>`).
+Most API Requests typically involve sending a populated Request DTO that returns a Typed Response DTO although ServiceStack Services can also [return raw data](https://docs.servicestack.net/service-return-types) like `String`, `byte[]` and `Stream` responses which the `JsonServiceClient` also seamlessly supports where instead of returning a Typed DTO it returns the raw HTTP Body as a `String` for Request DTOs implementing `IReturn<String>` or an `Uint8List` for any binary responses (e.g. Services implementing `IReturn<byte[]>` or `IReturn<Stream>`).
 
 This example calls the [`HelloImage` Service](https://github.com/ServiceStack/Test/blob/90678a1d57ac63daaafea7322e0a4f542a93488f/src/Test/Test.ServiceInterface/ImageService.cs#L137) which dynamically creates and returns an image based on the different properties on the incoming `HelloImage` Request DTO. As it implements `IReturn<byte[]>` the `JsonServiceClient` returns the binary contents of the HTTP Response in a `Uint8List` - the preferred type for bytes in Dart.
 
@@ -526,7 +600,7 @@ import 'package:angular/angular.dart';
 import 'package:servicestack/web_client.dart';
 
 import '../dtos/test.dtos.dart';
-import '../dtos/techstacks.dtos.dart';
+import '../dtos/dtos.dart';
 
 @Component(
   selector: 'hello-world',
@@ -537,7 +611,7 @@ class HelloWorldComponent {
   var result = "";
   var imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="; // 1x1 pixel
   static const TestBaseUrl = "http://test.servicestack.net";
-  static const TechStacksBaseUrl = "https://www.techstacks.io";
+  static const TechStacksBaseUrl = "https://techstacks.io";
   var testClient = new JsonWebClient(TestBaseUrl);
   var techstacksClient = new JsonWebClient(TechStacksBaseUrl);
 
@@ -636,7 +710,7 @@ to override any server defaults.
 Date: 2018-05-01 08:09:24
 Version: 5.10
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: https://www.techstacks.io
+BaseUrl: https://techstacks.io
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True

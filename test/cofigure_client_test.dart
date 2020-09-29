@@ -3,6 +3,13 @@ import '../lib/web_client.dart' if (dart.library.io) '../lib/client.dart';
 
 void main() {
 
+  test('Can configure client with kDebugMode', () async {
+    var kDebugMode = true;
+    var client = kDebugMode
+      ? ClientFactory.createWith(ClientOptions(baseUrl: 'https://dev.servicestack.com:5001', ignoreCert: true))
+      : ClientFactory.create('https://techstacks.io');
+  });
+
   test('Can configure client', () async {
     var options = ClientOptions(baseUrl: 'https://dev.servicestack.com:5001', ignoreCert: true);
     var client = ClientFactory.createWith(options);
