@@ -55,9 +55,9 @@ Like C#, Dart has Generics and Type Inference so the `response` returned is the 
 
 #### Issues
 
-Please submit issues to https://github.com/ServiceStack/Issues
+Please submit issues to [github.com/ServiceStack/Issues](https://github.com/ServiceStack/Issues).
 
-### Platform neutral code
+### Platform neutral usage
 
 Both **dart:io** `JsonServiceClient` and **dart:html** `JsonWebClient` implement the same shared `IServiceClient` interface which support a platform-neutral source-compatible API using the
 `ClientFactory` APIs, e.g: 
@@ -113,7 +113,7 @@ Future<void> main() async {
     ? AuthenticateResponse.fromJson(json)
     : null;
 
-  var client = kDebugMode
+  client = kDebugMode
     ? ClientFactory.createWith(ClientOptions(baseUrl:'https://dev.servicestack.com:5001', ignoreCert:true))
     : ClientFactory.create('https://techstacks.io');
 
@@ -290,20 +290,20 @@ dependencies:
 
 Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.io/using-packages/) to install any new dependencies in your App. 
 
-Our App will be making API calls to 2 different ServiceStack instances which we'll need to get typed DTOs for using the `dart-ref` command-line utility:
+Our App will be making API calls to 2 different ServiceStack instances which we'll need to get typed DTOs for using the `x` command-line utility:
 
-    cd lib
-    dart-ref https://techstacks.io
-    dart-ref http://test.servicestack.net test
+    $ cd lib
+    $ x dart https://techstacks.io
+    $ x dart http://test.servicestack.net test
 
 Which will save the DTOs for each endpoint in different files:
 
     Saved to: dtos.dart
     Saved to: test.dtos.dart
 
-Incidentally you can get the latest version for all Dart Service References by running `dart-ref` without arguments:
+Incidentally you can get the latest version for all Dart Service References by running `x dart` without arguments:
 
-    dart-ref
+    $ x dart
 
 Which updates all Dart references in the current directory, including any customization options available in the header of each file:
 
