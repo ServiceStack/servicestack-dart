@@ -31,7 +31,7 @@ To make API calls we need to use the `JsonServiceClient`, installed by adding th
 
 ```yaml
 dependencies:
-  servicestack: ^1.0.17
+  servicestack: ^1.0.18
 ```
 
 Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode.org) automatically calls `pub get` or `flutter packages get` (in Flutter projects) to add any new dependencies to your project.
@@ -89,7 +89,7 @@ main() async {
 }
 ```
 
-> Tip: if you add a `127.0.0.1 dev.servicestack.com` mapping in your OS's `hosts` file you'll be able to use `https://dev.servicestack.com` to access your dev server in your Host OS as well. 
+> Tip: if you add a `127.0.0.1 dev.servicestack.com` mapping in your OS's `hosts` file you'll also be able to use `dev.servicestack.com` to access your local dev server in your Host OS. 
 
 ### Shared Initialization Configuration
 
@@ -97,25 +97,12 @@ For more advanced configuration you can use the `ClientConfig.initClient` client
 as done in this example to configure all client instances with any previously saved JWT Bearer & Refresh Tokens to enable authenticated access:
 
 ```dart
-import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:servicestack/web_client.dart' if (dart.library.io) 'package:servicestack/client.dart';
-
 SharedPreferences prefs;
-AuthenticateResponse auth;
 IServiceClient client;
+AuthenticateResponse auth;
 
 Future<void> main() async {
-  prefs = await SharedPreferences.getInstance();
-
-  var json = prefs.get('auth');
-  auth = json != null
-    ? AuthenticateResponse.fromJson(json)
-    : null;
-
-  client = kDebugMode
-    ? ClientFactory.createWith(ClientOptions(baseUrl:'https://dev.servicestack.com:5001', ignoreCert:true))
-    : ClientFactory.create('https://techstacks.io');
+  runApp(MyApp());
 
   ClientConfig.initClient = (client) {
     if (auth != null) {
@@ -124,7 +111,15 @@ Future<void> main() async {
     }
   };
 
-  runApp(MyApp());
+  prefs = await SharedPreferences.getInstance();
+
+  var json = prefs.getString('auth');
+  auth = json != null
+      ? AuthenticateResponse.fromJson(jsonDecode(json))
+      : null;
+
+  client = ClientFactory.createWith(ClientOptions(
+      baseUrl:'https://dev.servicestack.com:5001', ignoreCert:kDebugMode));
 }
 ```
 
@@ -285,7 +280,7 @@ Then to use `JsonServiceClient` add the `servicestack` dependency to your apps [
 
 ```yaml
 dependencies:
-  servicestack: ^1.0.17
+  servicestack: ^1.0.18
 ```
 
 Saving `pubspec.yaml` automatically runs [flutter packages get](https://flutter.io/using-packages/) to install any new dependencies in your App. 
