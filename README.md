@@ -25,7 +25,7 @@ This will generate Dart DTOs for the [entire TechStacks API](https://techstacks.
 
     Saved to: dtos.dart
 
-> If no name is specified in the 2nd argument, it uses `dtos` if it doesn't already exist, otherwise falls back to infer it from the URL.
+> If no name is specified in the 2nd argument, it uses `dtos` if it doesn't exist, otherwise falls back to infer it from the URL.
 
 To make API calls we need to use the `JsonServiceClient`, installed by adding the [servicestack](https://pub.dartlang.org/packages/servicestack#-installing-tab-) package to our Dart projects `pubspec.yaml`:
 
