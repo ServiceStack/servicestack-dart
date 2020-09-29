@@ -11,10 +11,27 @@ typedef void ResponseExceptionFilter(HttpClientResponse res, Exception e);
 
 class ClientFactory
 {
-  static IServiceClient create([String baseUrl = "/"]) {
+  static IServiceClient create([String baseUrl = "/", ClientOptions options=null]) {
     var client = new JsonServiceClient(baseUrl);
     if (ClientConfig.initClient != null)  {
       ClientConfig.initClient(client);
+    }
+    return client;
+  }
+
+  static IServiceClient createWith(ClientOptions options) {
+    var client = create(options.baseUrl);
+    if (client is JsonServiceClient) {
+      if (options.ignoreCertificatesFor != null && options.ignoreCertificatesFor.isNotEmpty) {
+        var ignoreCerts = toHostsMap(options.ignoreCertificatesFor);
+        client.client.badCertificateCallback = (cert, host, port) {
+          if (ignoreCerts.containsKey(host)) {
+            var ignorePort = ignoreCerts[host];
+            return ignorePort == null || ignorePort == port;
+          }
+          return false;
+        };
+      }
     }
     return client;
   }

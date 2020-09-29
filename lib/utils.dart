@@ -317,3 +317,26 @@ String docsDartUrl(String suffix) {
 String docsUrl(String suffix) {
   return "https://docs.servicestack.net/${suffix}";
 }
+
+Map<String,int> toHostsMap(List<String> urls) {
+  var to = Map<String,int>();
+  urls.forEach((hostname) {
+    var host = hostname;
+    int port = null;
+    if (host.indexOf('://') >= 0) {
+      host = rightPart(host, '://');
+    }
+    if (host.indexOf('/') >= 0) {
+      host = leftPart(host, '/');
+    }
+    if (host.indexOf('?') >= 0) {
+      host = leftPart(host, '?');
+    }
+    if (host.indexOf(':') >= 0) {
+      port = int.parse(rightPart(host, ':'));
+      host = leftPart(host, ':');
+    }
+    to[host] = port;
+  });
+  return to;
+}

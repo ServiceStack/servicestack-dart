@@ -19,6 +19,11 @@ class ClientFactory
     }
     return client;
   }
+
+  static IServiceClient createWith(ClientOptions options) {
+    var client = create(options.baseUrl);
+    return client;
+  }
 }
 
 class SendWebContext {

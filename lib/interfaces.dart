@@ -24,6 +24,17 @@ class ClientConfig
   static ClientFilter initClient;
 }
 
+class ClientOptions
+{
+  String baseUrl;
+  List<String> ignoreCertificatesFor=[];
+  ClientOptions({this.baseUrl="/", bool ignoreCert=false}) {
+    if (ignoreCert) {
+      ignoreCertificatesFor = [this.baseUrl];
+    }
+  }
+}
+
 class TypeInfo {
   Function create;
   TypeOf type;
