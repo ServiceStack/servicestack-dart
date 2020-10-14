@@ -125,6 +125,8 @@ abstract class IServiceClient {
   String userName;
   String password;
 
+  void clearCookies();
+
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic> args});
 
   Future<Map<String, dynamic>> getUrl(String path, {Map<String, dynamic> args});

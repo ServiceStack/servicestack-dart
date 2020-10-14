@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:html';
 import 'package:http/browser_client.dart';
 import 'package:http/http.dart';
 import './servicestack.dart';
@@ -88,9 +89,20 @@ class JsonWebClient implements IServiceClient {
     };
     client = new BrowserClient()..withCredentials = true;
   }
+  
   void setCredentials(String userName, String password) {
     this.userName = userName;
     this.password = password;
+  }
+
+  void clearCookies() {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
   }
 
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic> args}) {

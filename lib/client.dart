@@ -109,6 +109,10 @@ class JsonServiceClient implements IServiceClient {
     this.password = password;
   }
 
+  void clearCookies() {
+    this.cookies?.clear();
+  }
+
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic> args}) {
     return send<T>(request, method: "GET", args: args);
   }
