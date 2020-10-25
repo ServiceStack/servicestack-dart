@@ -822,14 +822,14 @@ class GetApiKeysResponse implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    results = JsonConverters.fromJson(JsonConverters.getJson(json, 'results'), 'Duration', context);
+    results = JsonConverters.fromJson(JsonConverters.getJson(json, 'results'), 'List<UserApiKey>', context);
     responseStatus = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results, 'Duration', context),
+        'results': JsonConverters.toJson(results, 'List<UserApiKey>', context),
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context)
       };
