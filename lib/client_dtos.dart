@@ -785,7 +785,7 @@ class GetEventSubscribers implements IConvertible {
   TypeContext context = _ctx;
 }
 
-class GetApiKeys implements IConvertible {
+class GetApiKeys implements IReturn<GetApiKeysResponse>, IGet, IConvertible {
   String environment;
 
   GetApiKeys({this.environment});
@@ -800,6 +800,16 @@ class GetApiKeys implements IConvertible {
 
   Map<String, dynamic> toJson() => {'environment': environment};
   TypeContext context = _ctx;
+
+  @override
+  GetApiKeysResponse createResponse() {
+    return new GetApiKeysResponse();
+  }
+
+  @override
+  String getTypeName() {
+    return "GetApiKeys";
+  }
 }
 
 class GetApiKeysResponse implements IConvertible {
