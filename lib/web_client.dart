@@ -11,11 +11,10 @@ typedef void WebRequestFilter(Request req);
 typedef void WebResponseFilter(Response res);
 typedef void WebResponseExceptionFilter(Response res, Exception e);
 
-class ClientFactory
-{
+class ClientFactory {
   static IServiceClient create([String baseUrl = "/"]) {
     var client = new JsonWebClient(baseUrl);
-    if (ClientConfig.initClient != null)  {
+    if (ClientConfig.initClient != null) {
       ClientConfig.initClient(client);
     }
     return client;
@@ -89,19 +88,14 @@ class JsonWebClient implements IServiceClient {
     };
     client = new BrowserClient()..withCredentials = true;
   }
-  
-  void setCredentials(String userName, String password) {
-    this.userName = userName;
-    this.password = password;
-  }
 
   void clearCookies() {
     var cookies = document.cookie.split(";");
     for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
   }
 
@@ -414,14 +408,6 @@ class JsonWebClient implements IServiceClient {
       req.body = bodyStr;
     }
     return req;
-  }
-
-  String createUrlFromDto<T>(String method, dynamic request) {
-    var url = combinePaths([this.replyBaseUrl, nameOf(request)]);
-
-    if (!hasRequestBody(method)) url = appendQueryString(url, toMap(request));
-
-    return url;
   }
 
   Future<T> createResponse<T>(Response res, SendWebContext info) async {

@@ -9,11 +9,11 @@ typedef void RequestFilter(HttpClientRequest req);
 typedef void ResponseFilter(HttpClientResponse res);
 typedef void ResponseExceptionFilter(HttpClientResponse res, Exception e);
 
-class ClientFactory
-{
-  static IServiceClient create([String baseUrl = "/", ClientOptions options=null]) {
+class ClientFactory {
+  static IServiceClient create(
+      [String baseUrl = "/", ClientOptions options = null]) {
     var client = new JsonServiceClient(baseUrl);
-    if (ClientConfig.initClient != null)  {
+    if (ClientConfig.initClient != null) {
       ClientConfig.initClient(client);
     }
     return client;
@@ -22,7 +22,8 @@ class ClientFactory
   static IServiceClient createWith(ClientOptions options) {
     var client = create(options.baseUrl);
     if (client is JsonServiceClient) {
-      if (options.ignoreCertificatesFor != null && options.ignoreCertificatesFor.isNotEmpty) {
+      if (options.ignoreCertificatesFor != null &&
+          options.ignoreCertificatesFor.isNotEmpty) {
         var ignoreCerts = toHostsMap(options.ignoreCertificatesFor);
         client.client.badCertificateCallback = (cert, host, port) {
           if (ignoreCerts.containsKey(host)) {
@@ -90,7 +91,8 @@ class JsonServiceClient implements IServiceClient {
   AsyncCallbackFunction onAuthenticationRequired;
   int maxRetries;
 
-  void set connectionTimeout(Duration duration) => client.connectionTimeout = duration;
+  void set connectionTimeout(Duration duration) =>
+      client.connectionTimeout = duration;
   Duration get connectionTimeout => client.connectionTimeout;
 
   JsonServiceClient([this.baseUrl = "/"]) {
@@ -102,11 +104,6 @@ class JsonServiceClient implements IServiceClient {
     client = new HttpClient();
     cookies = new List<Cookie>();
     maxRetries = 5;
-  }
-
-  void setCredentials(String userName, String password) {
-    this.userName = userName;
-    this.password = password;
   }
 
   void clearCookies() {
@@ -284,13 +281,6 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  String toAbsoluteUrl(String relativeOrAbsoluteUrl) {
-    return relativeOrAbsoluteUrl.startsWith("http://") ||
-            relativeOrAbsoluteUrl.startsWith("https://")
-        ? relativeOrAbsoluteUrl
-        : combinePaths([baseUrl, relativeOrAbsoluteUrl]);
-  }
-
   Future<T> sendRequest<T>(SendContext info) async {
     HttpClientRequest req;
     HttpClientResponse res;
@@ -400,8 +390,7 @@ class JsonServiceClient implements IServiceClient {
         }
       }
     }
-    if (req == null)
-      throw firstEx;
+    if (req == null) throw firstEx;
 
     if (bearerToken != null)
       req.headers.add(HttpHeaders.authorizationHeader, 'Bearer ' + bearerToken);
@@ -440,14 +429,6 @@ class JsonServiceClient implements IServiceClient {
       req.write(bodyStr);
     }
     return req;
-  }
-
-  String createUrlFromDto<T>(String method, dynamic request) {
-    var url = combinePaths([this.replyBaseUrl, nameOf(request)]);
-
-    if (!hasRequestBody(method)) url = appendQueryString(url, toMap(request));
-
-    return url;
   }
 
   Future<T> createResponse<T>(HttpClientResponse res, SendContext info) async {
@@ -521,7 +502,8 @@ class JsonServiceClient implements IServiceClient {
               childContext: reqContext);
         }
         fromMap = responseAs is List
-            ? (json) => JsonConverters.fromJson(json, responseAs.runtimeType.toString(), reqContext)
+            ? (json) => JsonConverters.fromJson(
+                json, responseAs.runtimeType.toString(), reqContext)
             : responseAs.fromMap;
 
         var ret = fromMap(jsonObj);
@@ -555,10 +537,12 @@ class JsonServiceClient implements IServiceClient {
     //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
 
     if (res == null)
-      throw raiseError(null, new WebServiceException()        
-        ..innerException = e
-        ..statusCode = 500
-        ..statusDescription = e.toString());
+      throw raiseError(
+          null,
+          new WebServiceException()
+            ..innerException = e
+            ..statusCode = 500
+            ..statusDescription = e.toString());
 
     var webEx = new WebServiceException()
       ..statusCode = res.statusCode

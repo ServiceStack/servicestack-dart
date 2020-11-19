@@ -126,6 +126,9 @@ class TypeContext {
 
 abstract class IServiceClient {
   String baseUrl;
+  String replyBaseUrl;
+  String oneWayBaseUrl;
+
   String bearerToken;
   String refreshToken;
   String userName;
@@ -206,4 +209,28 @@ class WebServiceException implements Exception {
       : statusDescription;
   dynamic innerException;
   ResponseStatus responseStatus;
+}
+
+extension ServiceClientExtensions on IServiceClient {
+  void setCredentials(String userName, String password) {
+    this.userName = userName;
+    this.password = password;
+  }
+
+  String createUrlFromDto<T>(String method, dynamic request) {
+    var url = combinePaths([this.replyBaseUrl, nameOf(request)]);
+
+    if (!hasRequestBody(method)) {
+      url = appendQueryString(url, toMap(request));
+    }
+
+    return url;
+  }
+
+  String toAbsoluteUrl(String relativeOrAbsoluteUrl) {
+    return relativeOrAbsoluteUrl.startsWith("http://") ||
+            relativeOrAbsoluteUrl.startsWith("https://")
+        ? relativeOrAbsoluteUrl
+        : combinePaths([this.baseUrl, relativeOrAbsoluteUrl]);
+  }
 }
