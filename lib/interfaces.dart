@@ -19,16 +19,14 @@ enum TypeOf {
   Enum,
 }
 
-class ClientConfig
-{
+class ClientConfig {
   static ClientFilter initClient;
 }
 
-class ClientOptions
-{
+class ClientOptions {
   String baseUrl;
-  List<String> ignoreCertificatesFor=[];
-  ClientOptions({this.baseUrl="/", bool ignoreCert=false}) {
+  List<String> ignoreCertificatesFor = [];
+  ClientOptions({this.baseUrl = "/", bool ignoreCert = false}) {
     if (ignoreCert) {
       ignoreCertificatesFor = [this.baseUrl];
     }
@@ -43,7 +41,9 @@ class TypeInfo {
   createInstance() => this.create();
   bool get canCreate => create != null;
   dynamic _instance;
-  defaultInstance() { return _instance ?? (canCreate ? _instance = createInstance() : null); }
+  defaultInstance() {
+    return _instance ?? (canCreate ? _instance = createInstance() : null);
+  }
 }
 
 class TypeContext {
@@ -60,9 +60,14 @@ class TypeContext {
   TypeContext init() {
     // runtimeType.toString() different in alt platforms https://forums.servicestack.net/t/dart-client-client-mapping-issue-in-release-build/8754
     // As workaround add additional entries using instance runtimeType.toString() as keys
-    if (this.types == null || this.hasInit || this.types.containsKey("__init")) return this;
+    if (this.types == null || this.hasInit || this.types.containsKey("__init"))
+      return this;
 
-    var keys = this.types.keys.where((x) => x.indexOf('<') >= 0).toList(growable:false);
+    var keys = this
+        .types
+        .keys
+        .where((x) => x.indexOf('<') >= 0)
+        .toList(growable: false);
     for (var k in keys) {
       var info = this.types[k];
       try {
@@ -91,7 +96,8 @@ class TypeContext {
   TypeInfo get typeInfo {
     var ret = getTypeInfo(typeName);
     if (ret == null) {
-      throw new ArgumentError("Unknown Type '${typeName}', see: ${docsDartUrl("#generating-unknown-types")}");
+      throw new ArgumentError(
+          "Unknown Type '${typeName}', see: ${docsDartUrl("#generating-unknown-types")}");
     }
     return ret;
   }
@@ -99,7 +105,8 @@ class TypeContext {
   TypeContext newContext(String typeName) =>
       new TypeContext(typeName: typeName, types: types);
 
-  static TypeContext combine(String typeName, TypeContext parentContext, TypeContext childContext) =>
+  static TypeContext combine(String typeName, TypeContext parentContext,
+          TypeContext childContext) =>
       parentContext != null
           ? new TypeContext(
               typeName: typeName,
@@ -112,8 +119,7 @@ class TypeContext {
       this.childContext = childContext;
     } else {
       this.childContext = new TypeContext(
-          types: this.childContext.types,
-          childContext: childContext);
+          types: this.childContext.types, childContext: childContext);
     }
   }
 }
@@ -124,6 +130,8 @@ abstract class IServiceClient {
   String refreshToken;
   String userName;
   String password;
+
+  AsyncCallbackFunction onAuthenticationRequired;
 
   void clearCookies();
 
@@ -183,7 +191,7 @@ class TypeAs {
 typedef void UrlFilter(String url);
 typedef Future AsyncCallbackFunction();
 typedef void ClientFilter(IServiceClient client);
-typedef dynamic GetJson(Map<String,dynamic> map, String propertyName);
+typedef dynamic GetJson(Map<String, dynamic> map, String propertyName);
 
 enum WebServiceExceptionType {
   RefreshTokenException,
