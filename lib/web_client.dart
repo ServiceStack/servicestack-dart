@@ -272,13 +272,6 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  String toAbsoluteUrl(String relativeOrAbsoluteUrl) {
-    return relativeOrAbsoluteUrl.startsWith("http://") ||
-            relativeOrAbsoluteUrl.startsWith("https://")
-        ? relativeOrAbsoluteUrl
-        : combinePaths([baseUrl, relativeOrAbsoluteUrl]);
-  }
-
   Future<T> sendRequest<T>(SendWebContext info) async {
     var req = await createRequest(info);
 
