@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="" />
+    <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gistrun/vars.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/inspect.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/repos.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/inspect_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +32,6 @@
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -32,6 +39,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -46,7 +54,7 @@
       <recent name="C:\src\servicestack-dart\example" />
     </key>
   </component>
-  <component name="RunManager" selected="Dart Test.Can configure client with kDebugMode in cofigure_client_test.dart">
+  <component name="RunManager" selected="Dart Test.tests in servicestack-dart">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -83,32 +91,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Can configure client in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
-      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can configure client" />
-      <method v="2" />
-    </configuration>
     <configuration name="Can configure client with kDebugMode in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
       <option name="testName" value="Can configure client with kDebugMode" />
       <method v="2" />
     </configuration>
-    <configuration name="Can populate ClientOptions in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
+    <configuration name="Can dump objects in inspect_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/inspect_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can populate ClientOptions" />
+      <option name="testName" value="Can dump objects" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
-      <option name="testName" value="cofigure_client_test.dart" />
+    <configuration name="Does serialize HelloWithEnum EnumFlags in enum_serization_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/enum_serization_test.dart" />
+      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
+      <option name="testName" value="Does serialize HelloWithEnum EnumFlags" />
       <method v="2" />
     </configuration>
-    <configuration name="tests in ztest.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/ztest.dart" />
-      <option name="testName" value="client_test" />
+    <configuration name="tests in inspect_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/inspect_test.dart" />
+      <option name="testName" value="inspect_test.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in servicestack-dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$" />
+      <option name="scope" value="FOLDER" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="TestNG">
@@ -122,10 +130,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Dart Test.tests in servicestack-dart" />
+        <item itemvalue="Dart Test.tests in inspect_test.dart" />
+        <item itemvalue="Dart Test.Does serialize HelloWithEnum EnumFlags in enum_serization_test.dart" />
+        <item itemvalue="Dart Test.Can dump objects in inspect_test.dart" />
         <item itemvalue="Dart Test.Can configure client with kDebugMode in cofigure_client_test.dart" />
-        <item itemvalue="Dart Test.tests in cofigure_client_test.dart" />
-        <item itemvalue="Dart Test.Can populate ClientOptions in cofigure_client_test.dart" />
-        <item itemvalue="Dart Test.Can configure client in cofigure_client_test.dart" />
       </list>
     </recent_temporary>
   </component>
@@ -159,58 +168,33 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="542" height="466" key="DebuggerActiveHint" timestamp="1601390197136">
+    <state width="1660" height="537" key="GridCell.Tab.0.bottom" timestamp="1613416123976">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="542" height="466" key="DebuggerActiveHint/0.0.3413.1880@0.0.3413.1880" timestamp="1601390197136" />
-    <state x="1488" y="696" key="FileChooserDialogImpl" timestamp="1600669024354">
+    <state width="1660" height="537" key="GridCell.Tab.0.bottom/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123976" />
+    <state width="1660" height="537" key="GridCell.Tab.0.center" timestamp="1613416123975">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state x="1488" y="696" key="FileChooserDialogImpl/0.0.3413.1880@0.0.3413.1880" timestamp="1600669024354" />
-    <state width="3369" height="540" key="GridCell.Tab.0.bottom" timestamp="1601403802773">
+    <state width="1660" height="537" key="GridCell.Tab.0.center/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123975" />
+    <state width="1660" height="537" key="GridCell.Tab.0.left" timestamp="1613416123975">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.bottom/0.0.3413.1880@0.0.3413.1880" timestamp="1601403802773" />
-    <state width="3369" height="540" key="GridCell.Tab.0.center" timestamp="1601403802773">
+    <state width="1660" height="537" key="GridCell.Tab.0.left/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123975" />
+    <state width="1660" height="537" key="GridCell.Tab.0.right" timestamp="1613416123976">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.center/0.0.3413.1880@0.0.3413.1880" timestamp="1601403802773" />
-    <state width="3369" height="540" key="GridCell.Tab.0.left" timestamp="1601403802773">
-      <screen x="0" y="0" width="3413" height="1880" />
-    </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.left/0.0.3413.1880@0.0.3413.1880" timestamp="1601403802773" />
-    <state width="3369" height="540" key="GridCell.Tab.0.right" timestamp="1601403802773">
-      <screen x="0" y="0" width="3413" height="1880" />
-    </state>
-    <state width="3369" height="540" key="GridCell.Tab.0.right/0.0.3413.1880@0.0.3413.1880" timestamp="1601403802773" />
-    <state width="1236" height="944" key="XDebugger.FullValuePopup" timestamp="1601390147137">
-      <screen x="0" y="0" width="3413" height="1880" />
-    </state>
-    <state width="1236" height="944" key="XDebugger.FullValuePopup/0.0.3413.1880@0.0.3413.1880" timestamp="1601390147137" />
-    <state x="1517" y="858" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601386733387">
-      <screen x="0" y="0" width="3413" height="1880" />
-    </state>
-    <state x="1517" y="858" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.3413.1880@0.0.3413.1880" timestamp="1601386733387" />
-    <state x="2255" y="672" width="609" height="536" key="find.popup" timestamp="1601402257914">
-      <screen x="0" y="0" width="3413" height="1880" />
-    </state>
-    <state x="2255" y="672" width="609" height="536" key="find.popup/0.0.3413.1880@0.0.3413.1880" timestamp="1601402257914" />
-    <state x="1364" y="451" key="run.anything.popup" timestamp="1601393447788">
-      <screen x="0" y="0" width="3413" height="1880" />
-    </state>
-    <state x="1364" y="451" key="run.anything.popup/0.0.3413.1880@0.0.3413.1880" timestamp="1601393447788" />
+    <state width="1660" height="537" key="GridCell.Tab.0.right/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123976" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
