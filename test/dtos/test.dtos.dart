@@ -1,6 +1,6 @@
 /* Options:
-Date: 2020-07-11 02:52:36
-Version: 5.8
+Date: 2021-02-26 09:27:46
+Version: 5.103
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
 
@@ -17,46 +17,6 @@ DefaultImports: ../../lib/servicestack.dart
 import '../../lib/servicestack.dart';
 import 'dart:collection';
 import 'dart:typed_data';
-
-enum ExternalEnum
-{
-    Foo,
-    Bar,
-    Baz,
-}
-
-enum ExternalEnum2
-{
-    Uno,
-    Due,
-    Tre,
-}
-
-class ExternalType implements IConvertible
-{
-    ExternalEnum2 externalEnum2;
-
-    ExternalType({this.externalEnum2});
-    ExternalType.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        externalEnum2 = JsonConverters.fromJson(json['externalEnum2'],'ExternalEnum2',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'externalEnum2': JsonConverters.toJson(externalEnum2,'ExternalEnum2',context)
-    };
-
-    TypeContext context = _ctx;
-}
-
-enum ExternalEnum3
-{
-    Un,
-    Deux,
-    Trois,
-}
 
 abstract class IAuthTokens
 {
@@ -579,6 +539,100 @@ class SubType implements IConvertible
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name
+    };
+
+    TypeContext context = _ctx;
+}
+
+abstract class AllTypesBase
+{
+    int id;
+    int nullableId;
+    int byte;
+    int short;
+    int Int;
+    int long;
+    int uShort;
+    int uInt;
+    int uLong;
+    double float;
+    double Double;
+    double decimal;
+    String string;
+    DateTime dateTime;
+    Duration timeSpan;
+    DateTime dateTimeOffset;
+    String guid;
+    String char;
+    KeyValuePair<String,String> keyValuePair;
+    DateTime nullableDateTime;
+    Duration nullableTimeSpan;
+    List<String> stringList;
+    List<String> stringArray;
+    Map<String,String> stringMap;
+    Map<int,String> intStringMap;
+    SubType subType;
+
+    AllTypesBase({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
+    AllTypesBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        nullableId = json['nullableId'];
+        byte = json['byte'];
+        short = json['short'];
+        Int = json['int'];
+        long = json['long'];
+        uShort = json['uShort'];
+        uInt = json['uInt'];
+        uLong = json['uLong'];
+        float = JsonConverters.toDouble(json['float']);
+        Double = JsonConverters.toDouble(json['double']);
+        decimal = JsonConverters.toDouble(json['decimal']);
+        string = json['string'];
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context);
+        guid = json['guid'];
+        char = json['char'];
+        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String,String>',context);
+        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',context);
+        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
+        subType = JsonConverters.fromJson(json['subType'],'SubType',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'nullableId': nullableId,
+        'byte': byte,
+        'short': short,
+        'int': Int,
+        'long': long,
+        'uShort': uShort,
+        'uInt': uInt,
+        'uLong': uLong,
+        'float': float,
+        'double': Double,
+        'decimal': decimal,
+        'string': string,
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context),
+        'guid': guid,
+        'char': char,
+        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String,String>',context),
+        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',context),
+        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
+        'stringMap': stringMap,
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context),
+        'subType': JsonConverters.toJson(subType,'SubType',context)
     };
 
     TypeContext context = _ctx;
@@ -1130,63 +1184,6 @@ class ThrowBusinessErrorResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-class ExternalOperationResponse implements IConvertible
-{
-    String result;
-
-    ExternalOperationResponse({this.result});
-    ExternalOperationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
-
-    TypeContext context = _ctx;
-}
-
-class ExternalOperation2Response implements IConvertible
-{
-    ExternalType externalType;
-
-    ExternalOperation2Response({this.externalType});
-    ExternalOperation2Response.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        externalType = JsonConverters.fromJson(json['externalType'],'ExternalType',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'externalType': JsonConverters.toJson(externalType,'ExternalType',context)
-    };
-
-    TypeContext context = _ctx;
-}
-
-class ExternalReturnTypeResponse implements IConvertible
-{
-    ExternalEnum3 externalEnum3;
-
-    ExternalReturnTypeResponse({this.externalEnum3});
-    ExternalReturnTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        externalEnum3 = JsonConverters.fromJson(json['externalEnum3'],'ExternalEnum3',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'externalEnum3': JsonConverters.toJson(externalEnum3,'ExternalEnum3',context)
-    };
-
-    TypeContext context = _ctx;
-}
-
 class Account implements IConvertible
 {
     String name;
@@ -1383,7 +1380,7 @@ class HelloAnnotatedResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-class AllTypes implements IConvertible
+class AllTypes implements IReturn<AllTypes>, IConvertible
 {
     int id;
     int nullableId;
@@ -1474,6 +1471,8 @@ class AllTypes implements IConvertible
         'subType': JsonConverters.toJson(subType,'SubType',context)
     };
 
+    createResponse() { return new AllTypes(); }
+    String getTypeName() { return "AllTypes"; }
     TypeContext context = _ctx;
 }
 
@@ -1538,6 +1537,26 @@ class HelloAllTypesResponse implements IConvertible
         'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context),
         'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
     };
+
+    TypeContext context = _ctx;
+}
+
+class SubAllTypes extends AllTypesBase implements IConvertible
+{
+    int hierarchy;
+
+    SubAllTypes({this.hierarchy});
+    SubAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        hierarchy = json['hierarchy'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'hierarchy': hierarchy
+    });
 
     TypeContext context = _ctx;
 }
@@ -1887,6 +1906,47 @@ class GetSessionResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
+// @DataContract(Namespace="http://schemas.servicestack.net/types")
+class GetStuffResponse implements IConvertible
+{
+    // @DataMember
+    DateTime summaryDate;
+
+    // @DataMember
+    DateTime summaryEndDate;
+
+    // @DataMember
+    String symbol;
+
+    // @DataMember
+    String email;
+
+    // @DataMember
+    bool isEnabled;
+
+    GetStuffResponse({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
+    GetStuffResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
+        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
+        symbol = json['symbol'];
+        email = json['email'];
+        isEnabled = json['isEnabled'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
+        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
+        'symbol': symbol,
+        'email': email,
+        'isEnabled': isEnabled
+    };
+
+    TypeContext context = _ctx;
+}
+
 class StoreLogsResponse implements IConvertible
 {
     List<Logger> existingLogs;
@@ -2158,44 +2218,27 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     TypeContext context = _ctx;
 }
 
-// @DataContract(Namespace="http://schemas.servicestack.net/types")
-class GetStuffResponse implements IConvertible
+class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 {
-    // @DataMember
-    DateTime summaryDate;
+    int statusCode;
+    String statusDescription;
 
-    // @DataMember
-    DateTime summaryEndDate;
-
-    // @DataMember
-    String symbol;
-
-    // @DataMember
-    String email;
-
-    // @DataMember
-    bool isEnabled;
-
-    GetStuffResponse({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
-    GetStuffResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    CustomHttpError({this.statusCode,this.statusDescription});
+    CustomHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
-        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
-        symbol = json['symbol'];
-        email = json['email'];
-        isEnabled = json['isEnabled'];
+        statusCode = json['statusCode'];
+        statusDescription = json['statusDescription'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
-        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
-        'symbol': symbol,
-        'email': email,
-        'isEnabled': isEnabled
+        'statusCode': statusCode,
+        'statusDescription': statusDescription
     };
 
+    createResponse() { return new CustomHttpErrorResponse(); }
+    String getTypeName() { return "CustomHttpError"; }
     TypeContext context = _ctx;
 }
 
@@ -2221,30 +2264,6 @@ class DummyTypes implements IConvertible
         'arrayResult': JsonConverters.toJson(arrayResult,'List<ArrayResult>',context)
     };
 
-    TypeContext context = _ctx;
-}
-
-class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
-{
-    int statusCode;
-    String statusDescription;
-
-    CustomHttpError({this.statusCode,this.statusDescription});
-    CustomHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        statusCode = json['statusCode'];
-        statusDescription = json['statusDescription'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'statusCode': statusCode,
-        'statusDescription': statusDescription
-    };
-
-    createResponse() { return new CustomHttpErrorResponse(); }
-    String getTypeName() { return "CustomHttpError"; }
     TypeContext context = _ctx;
 }
 
@@ -2378,94 +2397,6 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
     Map<String, dynamic> toJson() => {};
     createResponse() { return new ThrowBusinessErrorResponse(); }
     String getTypeName() { return "ThrowBusinessError"; }
-    TypeContext context = _ctx;
-}
-
-class ExternalOperation implements IReturn<ExternalOperationResponse>, IConvertible
-{
-    int id;
-    String name;
-    ExternalEnum externalEnum;
-
-    ExternalOperation({this.id,this.name,this.externalEnum});
-    ExternalOperation.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        name = json['name'];
-        externalEnum = JsonConverters.fromJson(json['externalEnum'],'ExternalEnum',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'externalEnum': JsonConverters.toJson(externalEnum,'ExternalEnum',context)
-    };
-
-    createResponse() { return new ExternalOperationResponse(); }
-    String getTypeName() { return "ExternalOperation"; }
-    TypeContext context = _ctx;
-}
-
-class ExternalOperation2 implements IReturn<ExternalOperation2Response>, IConvertible
-{
-    int id;
-
-    ExternalOperation2({this.id});
-    ExternalOperation2.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id
-    };
-
-    createResponse() { return new ExternalOperation2Response(); }
-    String getTypeName() { return "ExternalOperation2"; }
-    TypeContext context = _ctx;
-}
-
-class ExternalOperation3 implements IReturn<ExternalReturnTypeResponse>, IConvertible
-{
-    int id;
-
-    ExternalOperation3({this.id});
-    ExternalOperation3.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id
-    };
-
-    createResponse() { return new ExternalReturnTypeResponse(); }
-    String getTypeName() { return "ExternalOperation3"; }
-    TypeContext context = _ctx;
-}
-
-class ExternalOperation4 implements IConvertible
-{
-    int id;
-
-    ExternalOperation4({this.id});
-    ExternalOperation4.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id
-    };
-
     TypeContext context = _ctx;
 }
 
@@ -3144,6 +3075,28 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 
     createResponse() { return new HelloAllTypesResponse(); }
     String getTypeName() { return "HelloAllTypes"; }
+    TypeContext context = _ctx;
+}
+
+class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, IConvertible
+{
+    int hierarchy;
+
+    HelloSubAllTypes({this.hierarchy});
+    HelloSubAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        hierarchy = json['hierarchy'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'hierarchy': hierarchy
+    });
+
+    createResponse() { return new SubAllTypes(); }
+    String getTypeName() { return "HelloSubAllTypes"; }
     TypeContext context = _ctx;
 }
 
@@ -3990,6 +3943,55 @@ class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
     TypeContext context = _ctx;
 }
 
+// @Route("/Stuff")
+// @DataContract(Namespace="http://schemas.servicestack.net/types")
+class GetStuff implements IReturn<GetStuffResponse>, IConvertible
+{
+    // @DataMember
+    // @ApiMember(DataType="DateTime", Name="Summary Date")
+    DateTime summaryDate;
+
+    // @DataMember
+    // @ApiMember(DataType="DateTime", Name="Summary End Date")
+    DateTime summaryEndDate;
+
+    // @DataMember
+    // @ApiMember(DataType="string", Name="Symbol")
+    String symbol;
+
+    // @DataMember
+    // @ApiMember(DataType="string", Name="Email")
+    String email;
+
+    // @DataMember
+    // @ApiMember(DataType="bool", Name="Is Enabled")
+    bool isEnabled;
+
+    GetStuff({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
+    GetStuff.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
+        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
+        symbol = json['symbol'];
+        email = json['email'];
+        isEnabled = json['isEnabled'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
+        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
+        'symbol': symbol,
+        'email': email,
+        'isEnabled': isEnabled
+    };
+
+    createResponse() { return new GetStuffResponse(); }
+    String getTypeName() { return "GetStuff"; }
+    TypeContext context = _ctx;
+}
+
 class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
 {
     List<Logger> loggers;
@@ -4103,55 +4105,6 @@ class TestNullResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-// @Route("/Stuff")
-// @DataContract(Namespace="http://schemas.servicestack.net/types")
-class GetStuff implements IReturn<GetStuffResponse>, IConvertible
-{
-    // @DataMember
-    // @ApiMember(DataType="DateTime", Name="Summary Date")
-    DateTime summaryDate;
-
-    // @DataMember
-    // @ApiMember(DataType="DateTime", Name="Summary End Date")
-    DateTime summaryEndDate;
-
-    // @DataMember
-    // @ApiMember(DataType="string", Name="Symbol")
-    String symbol;
-
-    // @DataMember
-    // @ApiMember(DataType="string", Name="Email")
-    String email;
-
-    // @DataMember
-    // @ApiMember(DataType="bool", Name="Is Enabled")
-    bool isEnabled;
-
-    GetStuff({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
-    GetStuff.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
-        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
-        symbol = json['symbol'];
-        email = json['email'];
-        isEnabled = json['isEnabled'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
-        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
-        'symbol': symbol,
-        'email': email,
-        'isEnabled': isEnabled
-    };
-
-    createResponse() { return new GetStuffResponse(); }
-    String getTypeName() { return "GetStuff"; }
-    TypeContext context = _ctx;
-}
-
 class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
 {
     int id;
@@ -4213,10 +4166,6 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
 }
 
 TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
-    'ExternalEnum': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum.values),
-    'ExternalEnum2': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum2.values),
-    'ExternalType': new TypeInfo(TypeOf.Class, create:() => new ExternalType()),
-    'ExternalEnum3': new TypeInfo(TypeOf.Enum, enumValues:ExternalEnum3.values),
     'IAuthTokens': new TypeInfo(TypeOf.Interface),
     'AuthUserSession': new TypeInfo(TypeOf.Class, create:() => new AuthUserSession()),
     'List<IAuthTokens>': new TypeInfo(TypeOf.Class, create:() => new List<IAuthTokens>()),
@@ -4232,6 +4181,8 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'EnumType': new TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
     'EnumFlags': new TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
     'SubType': new TypeInfo(TypeOf.Class, create:() => new SubType()),
+    'AllTypesBase': new TypeInfo(TypeOf.AbstractClass),
+    'Map<int,String>': new TypeInfo(TypeOf.Class, create:() => new Map<int,String>()),
     'HelloBase': new TypeInfo(TypeOf.AbstractClass),
     'HelloResponseBase': new TypeInfo(TypeOf.AbstractClass),
     'Poco': new TypeInfo(TypeOf.Class, create:() => new Poco()),
@@ -4264,9 +4215,6 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'ThrowTypeResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowTypeResponse()),
     'ThrowValidationResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowValidationResponse()),
     'ThrowBusinessErrorResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessErrorResponse()),
-    'ExternalOperationResponse': new TypeInfo(TypeOf.Class, create:() => new ExternalOperationResponse()),
-    'ExternalOperation2Response': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation2Response()),
-    'ExternalReturnTypeResponse': new TypeInfo(TypeOf.Class, create:() => new ExternalReturnTypeResponse()),
     'Account': new TypeInfo(TypeOf.Class, create:() => new Account()),
     'Project': new TypeInfo(TypeOf.Class, create:() => new Project()),
     'CreateJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateJwtResponse()),
@@ -4278,7 +4226,6 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'HelloResponse': new TypeInfo(TypeOf.Class, create:() => new HelloResponse()),
     'HelloAnnotatedResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAnnotatedResponse()),
     'AllTypes': new TypeInfo(TypeOf.Class, create:() => new AllTypes()),
-    'Map<int,String>': new TypeInfo(TypeOf.Class, create:() => new Map<int,String>()),
     'AllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new AllCollectionTypes()),
     'List<Poco>': new TypeInfo(TypeOf.Class, create:() => new List<Poco>()),
     'Map<String,List<Poco>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Poco>>()),
@@ -4286,6 +4233,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'List<Map<String,Poco>>': new TypeInfo(TypeOf.Class, create:() => new List<Map<String,Poco>>()),
     'Map<String,Poco>': new TypeInfo(TypeOf.Class, create:() => new Map<String,Poco>()),
     'HelloAllTypesResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypesResponse()),
+    'SubAllTypes': new TypeInfo(TypeOf.Class, create:() => new SubAllTypes()),
     'HelloDateTime': new TypeInfo(TypeOf.Class, create:() => new HelloDateTime()),
     'HelloWithDataContractResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContractResponse()),
     'HelloWithDescriptionResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDescriptionResponse()),
@@ -4303,6 +4251,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'RequiresRoleResponse': new TypeInfo(TypeOf.Class, create:() => new RequiresRoleResponse()),
     'SendVerbResponse': new TypeInfo(TypeOf.Class, create:() => new SendVerbResponse()),
     'GetSessionResponse': new TypeInfo(TypeOf.Class, create:() => new GetSessionResponse()),
+    'GetStuffResponse': new TypeInfo(TypeOf.Class, create:() => new GetStuffResponse()),
     'StoreLogsResponse': new TypeInfo(TypeOf.Class, create:() => new StoreLogsResponse()),
     'List<Logger>': new TypeInfo(TypeOf.Class, create:() => new List<Logger>()),
     'TestAuthResponse': new TypeInfo(TypeOf.Class, create:() => new TestAuthResponse()),
@@ -4315,22 +4264,17 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'List<SubType>': new TypeInfo(TypeOf.Class, create:() => new List<SubType>()),
     'Map<String,SubType>': new TypeInfo(TypeOf.Class, create:() => new Map<String,SubType>()),
     'StoreRockstars': new TypeInfo(TypeOf.Class, create:() => new StoreRockstars()),
-    'GetStuffResponse': new TypeInfo(TypeOf.Class, create:() => new GetStuffResponse()),
+    'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
     'DummyTypes': new TypeInfo(TypeOf.Class, create:() => new DummyTypes()),
     'List<HelloResponse>': new TypeInfo(TypeOf.Class, create:() => new List<HelloResponse>()),
     'List<ListResult>': new TypeInfo(TypeOf.Class, create:() => new List<ListResult>()),
     'List<ArrayResult>': new TypeInfo(TypeOf.Class, create:() => new List<ArrayResult>()),
-    'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
     'ThrowHttpError': new TypeInfo(TypeOf.Class, create:() => new ThrowHttpError()),
     'Throw404': new TypeInfo(TypeOf.Class, create:() => new Throw404()),
     'ThrowCustom400': new TypeInfo(TypeOf.Class, create:() => new ThrowCustom400()),
     'ThrowType': new TypeInfo(TypeOf.Class, create:() => new ThrowType()),
     'ThrowValidation': new TypeInfo(TypeOf.Class, create:() => new ThrowValidation()),
     'ThrowBusinessError': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessError()),
-    'ExternalOperation': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation()),
-    'ExternalOperation2': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation2()),
-    'ExternalOperation3': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation3()),
-    'ExternalOperation4': new TypeInfo(TypeOf.Class, create:() => new ExternalOperation4()),
     'RootPathRoutes': new TypeInfo(TypeOf.Class, create:() => new RootPathRoutes()),
     'GetAccount': new TypeInfo(TypeOf.Class, create:() => new GetAccount()),
     'GetProject': new TypeInfo(TypeOf.Class, create:() => new GetProject()),
@@ -4360,6 +4304,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'RestrictedAttributes': new TypeInfo(TypeOf.Class, create:() => new RestrictedAttributes()),
     'AllowedAttributes': new TypeInfo(TypeOf.Class, create:() => new AllowedAttributes()),
     'HelloAllTypes': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypes()),
+    'HelloSubAllTypes': new TypeInfo(TypeOf.Class, create:() => new HelloSubAllTypes()),
     'HelloString': new TypeInfo(TypeOf.Class, create:() => new HelloString()),
     'HelloVoid': new TypeInfo(TypeOf.Class, create:() => new HelloVoid()),
     'HelloWithDataContract': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContract()),
@@ -4402,6 +4347,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'SendReturnVoid': new TypeInfo(TypeOf.Class, create:() => new SendReturnVoid()),
     'GetSession': new TypeInfo(TypeOf.Class, create:() => new GetSession()),
     'UpdateSession': new TypeInfo(TypeOf.Class, create:() => new UpdateSession()),
+    'GetStuff': new TypeInfo(TypeOf.Class, create:() => new GetStuff()),
     'StoreLogs': new TypeInfo(TypeOf.Class, create:() => new StoreLogs()),
     'HelloAuth': new TypeInfo(TypeOf.Class, create:() => new HelloAuth()),
     'TestAuth': new TypeInfo(TypeOf.Class, create:() => new TestAuth()),
@@ -4409,8 +4355,11 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'TestDataAllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllCollectionTypes()),
     'TestVoidResponse': new TypeInfo(TypeOf.Class, create:() => new TestVoidResponse()),
     'TestNullResponse': new TypeInfo(TypeOf.Class, create:() => new TestNullResponse()),
-    'GetStuff': new TypeInfo(TypeOf.Class, create:() => new GetStuff()),
     'QueryPocoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoBase()),
+    'List<OnlyDefinedInGenericType>': new TypeInfo(TypeOf.Class, create:() => new List<OnlyDefinedInGenericType>()),
     'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
+    'List<OnlyDefinedInGenericTypeInto>': new TypeInfo(TypeOf.Class, create:() => new List<OnlyDefinedInGenericTypeInto>()),
     'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),
+    'List<Rockstar>': new TypeInfo(TypeOf.Class, create:() => new List<Rockstar>()),
 });
+

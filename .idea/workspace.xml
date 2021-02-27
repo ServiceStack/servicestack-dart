@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="91692f4d-1176-4b45-bcc3-48a548cb68e0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gistrun/vars.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/inspect.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repos.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/inspect_test.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/issues/leakingconnections_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/interfaces.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/interfaces.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/web_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/web_client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/client_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/client_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/dtos/techstacks.dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/dtos/techstacks.dtos.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/dtos/test.dtos.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/dtos/test.dtos.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/issues/dartrefsandbox_test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/utils.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +44,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/apps/AcmeJava" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -91,27 +95,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Can configure client with kDebugMode in cofigure_client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/cofigure_client_test.dart" />
+    <configuration name="Can POST Hello in client_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/client_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can configure client with kDebugMode" />
+      <option name="testName" value="Can POST Hello" />
       <method v="2" />
     </configuration>
-    <configuration name="Can dump objects in inspect_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/inspect_test.dart" />
+    <configuration name="Run requests in periodic timer to test connection leak in leakingconnections_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/issues/leakingconnections_test.dart" />
       <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Can dump objects" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Does serialize HelloWithEnum EnumFlags in enum_serization_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
-      <option name="filePath" value="$PROJECT_DIR$/test/enum_serization_test.dart" />
-      <option name="scope" value="GROUP_OR_TEST_BY_NAME" />
-      <option name="testName" value="Does serialize HelloWithEnum EnumFlags" />
+      <option name="testName" value="Run requests in periodic timer to test connection leak" />
       <method v="2" />
     </configuration>
     <configuration name="tests in inspect_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
       <option name="filePath" value="$PROJECT_DIR$/test/inspect_test.dart" />
       <option name="testName" value="inspect_test.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tests in leakingconnections_test.dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
+      <option name="filePath" value="$PROJECT_DIR$/test/issues/leakingconnections_test.dart" />
+      <option name="testName" value="leakingconnections_test.dart" />
       <method v="2" />
     </configuration>
     <configuration name="tests in servicestack-dart" type="DartTestRunConfigurationType" factoryName="Dart Test" temporary="true" nameIsGenerated="true">
@@ -131,10 +134,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Dart Test.tests in servicestack-dart" />
+        <item itemvalue="Dart Test.Can POST Hello in client_test.dart" />
+        <item itemvalue="Dart Test.tests in leakingconnections_test.dart" />
+        <item itemvalue="Dart Test.Run requests in periodic timer to test connection leak in leakingconnections_test.dart" />
         <item itemvalue="Dart Test.tests in inspect_test.dart" />
-        <item itemvalue="Dart Test.Does serialize HelloWithEnum EnumFlags in enum_serization_test.dart" />
-        <item itemvalue="Dart Test.Can dump objects in inspect_test.dart" />
-        <item itemvalue="Dart Test.Can configure client with kDebugMode in cofigure_client_test.dart" />
       </list>
     </recent_temporary>
   </component>
@@ -179,24 +182,99 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1660" height="537" key="GridCell.Tab.0.bottom" timestamp="1613416123976">
+    <state width="420" height="466" key="DebuggerActiveHint" timestamp="1614395531390">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="1660" height="537" key="GridCell.Tab.0.bottom/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123976" />
-    <state width="1660" height="537" key="GridCell.Tab.0.center" timestamp="1613416123975">
+    <state width="420" height="466" key="DebuggerActiveHint/0.0.3413.1880@0.0.3413.1880" timestamp="1614395531390" />
+    <state x="641" y="695" key="FileChooserDialogImpl" timestamp="1613483102156">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="1660" height="537" key="GridCell.Tab.0.center/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123975" />
-    <state width="1660" height="537" key="GridCell.Tab.0.left" timestamp="1613416123975">
+    <state x="641" y="695" key="FileChooserDialogImpl/0.0.3413.1880@0.0.3413.1880" timestamp="1613483102156" />
+    <state width="1660" height="539" key="GridCell.Tab.0.bottom" timestamp="1614398883274">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="1660" height="537" key="GridCell.Tab.0.left/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123975" />
-    <state width="1660" height="537" key="GridCell.Tab.0.right" timestamp="1613416123976">
+    <state width="1660" height="539" key="GridCell.Tab.0.bottom/0.0.3413.1880@0.0.3413.1880" timestamp="1614398883274" />
+    <state width="1660" height="539" key="GridCell.Tab.0.center" timestamp="1614398883273">
       <screen x="0" y="0" width="3413" height="1880" />
     </state>
-    <state width="1660" height="537" key="GridCell.Tab.0.right/0.0.3413.1880@0.0.3413.1880" timestamp="1613416123976" />
+    <state width="1660" height="539" key="GridCell.Tab.0.center/0.0.3413.1880@0.0.3413.1880" timestamp="1614398883273" />
+    <state width="1660" height="539" key="GridCell.Tab.0.left" timestamp="1614398883273">
+      <screen x="0" y="0" width="3413" height="1880" />
+    </state>
+    <state width="1660" height="539" key="GridCell.Tab.0.left/0.0.3413.1880@0.0.3413.1880" timestamp="1614398883273" />
+    <state width="1660" height="539" key="GridCell.Tab.0.right" timestamp="1614398883273">
+      <screen x="0" y="0" width="3413" height="1880" />
+    </state>
+    <state width="1660" height="539" key="GridCell.Tab.0.right/0.0.3413.1880@0.0.3413.1880" timestamp="1614398883273" />
+    <state x="495" y="555" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1614392057779">
+      <screen x="0" y="0" width="3413" height="1880" />
+    </state>
+    <state x="495" y="555" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.3413.1880@0.0.3413.1880" timestamp="1614392057779" />
+    <state x="566" y="673" width="587" height="534" key="find.popup" timestamp="1614395827875">
+      <screen x="0" y="0" width="3413" height="1880" />
+    </state>
+    <state x="566" y="673" width="587" height="534" key="find.popup/0.0.3413.1880@0.0.3413.1880" timestamp="1614395827875" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>309</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/test/issues/leakingconnections_test.dart</url>
+          <line>16</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/test/issues/leakingconnections_test.dart</url>
+          <line>17</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>545</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>319</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>317</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>323</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>324</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/test/issues/leakingconnections_test.dart</url>
+          <line>23</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/test/issues/leakingconnections_test.dart</url>
+          <line>34</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/client.dart</url>
+          <line>488</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="DartTestRunConfigurationType">
         <watch expression="runtimeGenericTypeDefs(this,[0])" />

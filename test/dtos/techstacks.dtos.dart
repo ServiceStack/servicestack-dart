@@ -1,6 +1,6 @@
 /* Options:
-Date: 2019-05-24 04:11:08
-Version: 5.51
+Date: 2021-02-26 08:27:42
+Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://www.techstacks.io
 
@@ -3060,7 +3060,7 @@ class DummyTypes implements IConvertible
 }
 
 // @Route("/orgs/{Id}", "GET")
-class GetOrganization implements IReturn<GetOrganizationResponse>, IConvertible
+class GetOrganization implements IReturn<GetOrganizationResponse>, IGet, IConvertible
 {
     int id;
 
@@ -3082,7 +3082,7 @@ class GetOrganization implements IReturn<GetOrganizationResponse>, IConvertible
 }
 
 // @Route("/organizations/{Slug}", "GET")
-class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IConvertible
+class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IGet, IConvertible
 {
     String slug;
 
@@ -3104,7 +3104,7 @@ class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IConver
 }
 
 // @Route("/orgs/{Id}/members", "GET")
-class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>, IConvertible
+class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>, IGet, IConvertible
 {
     int id;
 
@@ -3126,7 +3126,7 @@ class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>,
 }
 
 // @Route("/orgs/{Id}/admin", "GET")
-class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, IConvertible
+class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, IGet, IConvertible
 {
     int id;
 
@@ -3148,7 +3148,7 @@ class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, ICo
 }
 
 // @Route("/orgs/posts/new", "POST")
-class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTechnologyResponse>, IConvertible
+class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTechnologyResponse>, IPost, IConvertible
 {
     int technologyId;
     int techStackId;
@@ -3173,7 +3173,7 @@ class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTe
 }
 
 // @Route("/orgs", "POST")
-class CreateOrganization implements IReturn<CreateOrganizationResponse>, IConvertible
+class CreateOrganization implements IReturn<CreateOrganizationResponse>, IPost, IConvertible
 {
     String name;
     String slug;
@@ -3210,7 +3210,7 @@ class CreateOrganization implements IReturn<CreateOrganizationResponse>, IConver
 }
 
 // @Route("/orgs/{Id}", "PUT")
-class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IConvertible
+class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IPut, IConvertible
 {
     int id;
     String slug;
@@ -3286,7 +3286,7 @@ class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IConver
 }
 
 // @Route("/orgs/{Id}", "DELETE")
-class DeleteOrganization implements IReturnVoid, IConvertible
+class DeleteOrganization implements IReturnVoid, IDelete, IConvertible
 {
     int id;
 
@@ -3308,7 +3308,7 @@ class DeleteOrganization implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{Id}/lock", "PUT")
-class LockOrganization implements IReturnVoid, IConvertible
+class LockOrganization implements IReturnVoid, IPut, IConvertible
 {
     int id;
     bool lock;
@@ -3336,7 +3336,7 @@ class LockOrganization implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/labels", "POST")
-class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IConvertible
+class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPost, IConvertible
 {
     int organizationId;
     String slug;
@@ -3367,7 +3367,7 @@ class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IConve
 }
 
 // @Route("/orgs/{OrganizationId}/members/{Slug}", "PUT")
-class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, IConvertible
+class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPut, IConvertible
 {
     int organizationId;
     String slug;
@@ -3398,7 +3398,7 @@ class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, ICo
 }
 
 // @Route("/orgs/{OrganizationId}/labels/{Slug}", "DELETE")
-class RemoveOrganizationLabel implements IReturnVoid, IConvertible
+class RemoveOrganizationLabel implements IReturnVoid, IDelete, IConvertible
 {
     int organizationId;
     String slug;
@@ -3423,7 +3423,7 @@ class RemoveOrganizationLabel implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/categories", "POST")
-class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse>, IConvertible
+class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse>, IPost, IConvertible
 {
     int organizationId;
     String slug;
@@ -3457,7 +3457,7 @@ class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse
 }
 
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "PUT")
-class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryResponse>, IConvertible
+class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryResponse>, IPut, IConvertible
 {
     int organizationId;
     int id;
@@ -3494,7 +3494,7 @@ class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryRe
 }
 
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "DELETE")
-class DeleteOrganizationCategory implements IReturnVoid, IConvertible
+class DeleteOrganizationCategory implements IReturnVoid, IDelete, IConvertible
 {
     int organizationId;
     int id;
@@ -3519,7 +3519,7 @@ class DeleteOrganizationCategory implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/members", "POST")
-class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, IConvertible
+class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, IPost, IConvertible
 {
     int organizationId;
     String userName;
@@ -3562,7 +3562,7 @@ class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, I
 }
 
 // @Route("/orgs/{OrganizationId}/members/{Id}", "PUT")
-class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberResponse>, IConvertible
+class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberResponse>, IPut, IConvertible
 {
     int organizationId;
     int userId;
@@ -3605,7 +3605,7 @@ class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberRespon
 }
 
 // @Route("/orgs/{OrganizationId}/members/{UserId}", "DELETE")
-class RemoveOrganizationMember implements IReturnVoid, IConvertible
+class RemoveOrganizationMember implements IReturnVoid, IDelete, IConvertible
 {
     int organizationId;
     int userId;
@@ -3630,7 +3630,7 @@ class RemoveOrganizationMember implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/members/set", "POST")
-class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>, IConvertible
+class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>, IPost, IConvertible
 {
     int organizationId;
     List<String> githubUserNames;
@@ -3679,7 +3679,7 @@ class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>,
 }
 
 // @Route("/orgs/{OrganizationId}/invites", "GET")
-class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvitesResponse>, IConvertible
+class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvitesResponse>, IGet, IConvertible
 {
     int organizationId;
 
@@ -3701,7 +3701,7 @@ class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvit
 }
 
 // @Route("/orgs/{OrganizationId}/invites", "POST")
-class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemberInviteResponse>, IConvertible
+class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemberInviteResponse>, IPost, IConvertible
 {
     int organizationId;
 
@@ -3723,7 +3723,7 @@ class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemb
 }
 
 // @Route("/orgs/{OrganizationId}/invites/{UserId}", "PUT")
-class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMemberInviteResponse>, IConvertible
+class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMemberInviteResponse>, IPut, IConvertible
 {
     int organizationId;
     String userName;
@@ -3754,7 +3754,7 @@ class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMember
 }
 
 // @Route("/posts", "GET")
-class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>, IConvertible
+class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>, IGet, IConvertible
 {
     List<int> ids;
     int organizationId;
@@ -3792,7 +3792,7 @@ class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>,
 }
 
 // @Route("/posts/{Id}", "GET")
-class GetPost implements IReturn<GetPostResponse>, IConvertible
+class GetPost implements IReturn<GetPostResponse>, IGet, IConvertible
 {
     int id;
     String include;
@@ -3817,7 +3817,7 @@ class GetPost implements IReturn<GetPostResponse>, IConvertible
 }
 
 // @Route("/posts", "POST")
-class CreatePost implements IReturn<CreatePostResponse>, IConvertible
+class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
 {
     int organizationId;
     PostType type;
@@ -3887,7 +3887,7 @@ class CreatePost implements IReturn<CreatePostResponse>, IConvertible
 }
 
 // @Route("/posts/{Id}", "PUT")
-class UpdatePost implements IReturn<UpdatePostResponse>, IConvertible
+class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
 {
     int id;
     int organizationId;
@@ -3951,7 +3951,7 @@ class UpdatePost implements IReturn<UpdatePostResponse>, IConvertible
 }
 
 // @Route("/posts/{Id}", "DELETE")
-class DeletePost implements IReturn<DeletePostResponse>, IConvertible
+class DeletePost implements IReturn<DeletePostResponse>, IDelete, IConvertible
 {
     int id;
 
@@ -3973,7 +3973,7 @@ class DeletePost implements IReturn<DeletePostResponse>, IConvertible
 }
 
 // @Route("/posts/{Id}/lock", "PUT")
-class LockPost implements IReturnVoid, IConvertible
+class LockPost implements IReturnVoid, IPut, IConvertible
 {
     int id;
     bool lock;
@@ -4001,7 +4001,7 @@ class LockPost implements IReturnVoid, IConvertible
 }
 
 // @Route("/posts/{Id}/hide", "PUT")
-class HidePost implements IReturnVoid, IConvertible
+class HidePost implements IReturnVoid, IPut, IConvertible
 {
     int id;
     bool hide;
@@ -4029,7 +4029,7 @@ class HidePost implements IReturnVoid, IConvertible
 }
 
 // @Route("/posts/{Id}/status/{Status}", "PUT")
-class ChangeStatusPost implements IReturnVoid, IConvertible
+class ChangeStatusPost implements IReturnVoid, IPut, IConvertible
 {
     int id;
     String status;
@@ -4057,7 +4057,7 @@ class ChangeStatusPost implements IReturnVoid, IConvertible
 }
 
 // @Route("/posts/{PostId}/report/{Id}", "POST")
-class ActionPostReport implements IReturnVoid, IConvertible
+class ActionPostReport implements IReturnVoid, IPost, IConvertible
 {
     int postId;
     int id;
@@ -4085,7 +4085,7 @@ class ActionPostReport implements IReturnVoid, IConvertible
 }
 
 // @Route("/posts/{PostId}/comments", "POST")
-class CreatePostComment implements IReturn<CreatePostCommentResponse>, IConvertible
+class CreatePostComment implements IReturn<CreatePostCommentResponse>, IPost, IConvertible
 {
     int postId;
     int replyId;
@@ -4113,7 +4113,7 @@ class CreatePostComment implements IReturn<CreatePostCommentResponse>, IConverti
 }
 
 // @Route("/posts/{PostId}/comments/{Id}", "PUT")
-class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IConvertible
+class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IPut, IConvertible
 {
     int id;
     int postId;
@@ -4141,7 +4141,7 @@ class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IConverti
 }
 
 // @Route("/posts/{PostId}/comments/{Id}", "DELETE")
-class DeletePostComment implements IReturn<DeletePostCommentResponse>, IConvertible
+class DeletePostComment implements IReturn<DeletePostCommentResponse>, IDelete, IConvertible
 {
     int id;
     int postId;
@@ -4166,7 +4166,7 @@ class DeletePostComment implements IReturn<DeletePostCommentResponse>, IConverti
 }
 
 // @Route("/posts/{PostId}/comments/{PostCommentId}/report/{Id}", "POST")
-class ActionPostCommentReport implements IReturnVoid, IConvertible
+class ActionPostCommentReport implements IReturnVoid, IPost, IConvertible
 {
     int id;
     int postCommentId;
@@ -4197,7 +4197,7 @@ class ActionPostCommentReport implements IReturnVoid, IConvertible
 }
 
 // @Route("/user/comments/votes")
-class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse>, IConvertible
+class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse>, IGet, IConvertible
 {
     int postId;
 
@@ -4218,8 +4218,8 @@ class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse
     TypeContext context = _ctx;
 }
 
-// @Route("/posts/{PostId}/comments/{Id}/pin", "UPDATE")
-class PinPostComment implements IReturn<PinPostCommentResponse>, IConvertible
+// @Route("/posts/{PostId}/comments/{Id}/pin", "PUT")
+class PinPostComment implements IReturn<PinPostCommentResponse>, IPut, IConvertible
 {
     int id;
     int postId;
@@ -4247,7 +4247,7 @@ class PinPostComment implements IReturn<PinPostCommentResponse>, IConvertible
 }
 
 // @Route("/users/by-email")
-class GetUsersByEmails implements IReturn<GetUsersByEmailsResponse>, IConvertible
+class GetUsersByEmails implements IReturn<GetUsersByEmailsResponse>, IGet, IConvertible
 {
     List<String> emails;
 
@@ -4269,7 +4269,7 @@ class GetUsersByEmails implements IReturn<GetUsersByEmailsResponse>, IConvertibl
 }
 
 // @Route("/user/posts/activity")
-class GetUserPostActivity implements IReturn<GetUserPostActivityResponse>, IConvertible
+class GetUserPostActivity implements IReturn<GetUserPostActivityResponse>, IGet, IConvertible
 {
     GetUserPostActivity();
     GetUserPostActivity.fromJson(Map<String, dynamic> json) : super();
@@ -4284,7 +4284,7 @@ class GetUserPostActivity implements IReturn<GetUserPostActivityResponse>, IConv
 }
 
 // @Route("/user/organizations")
-class GetUserOrganizations implements IReturn<GetUserOrganizationsResponse>, IConvertible
+class GetUserOrganizations implements IReturn<GetUserOrganizationsResponse>, IGet, IConvertible
 {
     GetUserOrganizations();
     GetUserOrganizations.fromJson(Map<String, dynamic> json) : super();
@@ -4299,7 +4299,7 @@ class GetUserOrganizations implements IReturn<GetUserOrganizationsResponse>, ICo
 }
 
 // @Route("/posts/{Id}/vote", "PUT")
-class UserPostVote implements IReturn<UserPostVoteResponse>, IConvertible
+class UserPostVote implements IReturn<UserPostVoteResponse>, IPut, IConvertible
 {
     int id;
     int weight;
@@ -4324,7 +4324,7 @@ class UserPostVote implements IReturn<UserPostVoteResponse>, IConvertible
 }
 
 // @Route("/posts/{Id}/favorite", "PUT")
-class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IConvertible
+class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IPut, IConvertible
 {
     int id;
 
@@ -4346,7 +4346,7 @@ class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IConvertibl
 }
 
 // @Route("/posts/{Id}/report", "PUT")
-class UserPostReport implements IReturn<UserPostReportResponse>, IConvertible
+class UserPostReport implements IReturn<UserPostReportResponse>, IPut, IConvertible
 {
     int id;
     FlagType flagType;
@@ -4374,7 +4374,7 @@ class UserPostReport implements IReturn<UserPostReportResponse>, IConvertible
 }
 
 // @Route("/posts/{PostId}/comments/{Id}", "GET")
-class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IConvertible
+class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IGet, IConvertible
 {
     int id;
     int postId;
@@ -4402,7 +4402,7 @@ class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IConv
 }
 
 // @Route("/posts/{PostId}/comments/{Id}/report", "PUT")
-class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, IConvertible
+class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, IPut, IConvertible
 {
     int id;
     int postId;
@@ -4433,7 +4433,7 @@ class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, I
 }
 
 // @Route("/prerender/{Path*}", "PUT")
-class StorePreRender implements IReturnVoid, IConvertible
+class StorePreRender implements IReturnVoid, IPut, IConvertible
 {
     String path;
 
@@ -4455,7 +4455,7 @@ class StorePreRender implements IReturnVoid, IConvertible
 }
 
 // @Route("/prerender/{Path*}", "GET")
-class GetPreRender implements IReturn<String>, IConvertible
+class GetPreRender implements IReturn<String>, IGet, IConvertible
 {
     String path;
 
@@ -4477,7 +4477,7 @@ class GetPreRender implements IReturn<String>, IConvertible
 }
 
 // @Route("/my-session")
-class SessionInfo implements IReturn<SessionInfoResponse>, IConvertible
+class SessionInfo implements IReturn<SessionInfoResponse>, IGet, IConvertible
 {
     SessionInfo();
     SessionInfo.fromJson(Map<String, dynamic> json) : super();
@@ -4492,7 +4492,7 @@ class SessionInfo implements IReturn<SessionInfoResponse>, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/subscribe", "PUT")
-class SubscribeToOrganization implements IReturnVoid, IConvertible
+class SubscribeToOrganization implements IReturnVoid, IPut, IConvertible
 {
     int organizationId;
     List<PostType> postTypes;
@@ -4520,7 +4520,7 @@ class SubscribeToOrganization implements IReturnVoid, IConvertible
 }
 
 // @Route("/posts/{PostId}/subscribe", "PUT")
-class SubscribeToPost implements IReturnVoid, IConvertible
+class SubscribeToPost implements IReturnVoid, IPut, IConvertible
 {
     int postId;
 
@@ -4542,7 +4542,7 @@ class SubscribeToPost implements IReturnVoid, IConvertible
 }
 
 // @Route("/orgs/{OrganizationId}/subscribe", "DELETE")
-class DeleteOrganizationSubscription implements IReturnVoid, IConvertible
+class DeleteOrganizationSubscription implements IReturnVoid, IDelete, IConvertible
 {
     int organizationId;
 
@@ -4564,7 +4564,7 @@ class DeleteOrganizationSubscription implements IReturnVoid, IConvertible
 }
 
 // @Route("/posts/{PostId}/subscribe", "DELETE")
-class DeletePostSubscription implements IReturnVoid, IConvertible
+class DeletePostSubscription implements IReturnVoid, IDelete, IConvertible
 {
     int postId;
 
@@ -4586,7 +4586,7 @@ class DeletePostSubscription implements IReturnVoid, IConvertible
 }
 
 // @Route("/technology/{Slug}/previous-versions", "GET")
-class GetTechnologyPreviousVersions implements IReturn<GetTechnologyPreviousVersionsResponse>, IConvertible
+class GetTechnologyPreviousVersions implements IReturn<GetTechnologyPreviousVersionsResponse>, IGet, IConvertible
 {
     String slug;
 
@@ -4608,7 +4608,7 @@ class GetTechnologyPreviousVersions implements IReturn<GetTechnologyPreviousVers
 }
 
 // @Route("/technology", "GET")
-class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IConvertible
+class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IGet, IConvertible
 {
     GetAllTechnologies();
     GetAllTechnologies.fromJson(Map<String, dynamic> json) : super();
@@ -4624,7 +4624,7 @@ class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IConver
 
 // @Route("/technology/search")
 // @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies")
-class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IConvertible
+class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
 {
     String name;
     String nameContains;
@@ -4650,7 +4650,7 @@ class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResp
 }
 
 // @Route("/technology/query")
-class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IConvertible
+class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
 {
     QueryTechnology();
     QueryTechnology.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -4666,7 +4666,7 @@ class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryRespo
 }
 
 // @Route("/technology/{Slug}")
-class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, IConvertible
+class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, IGet, IConvertible
 {
     String slug;
 
@@ -4688,7 +4688,7 @@ class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, I
 }
 
 // @Route("/technology/{Slug}/favorites")
-class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetailsResponse>, IConvertible
+class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetailsResponse>, IGet, IConvertible
 {
     String slug;
 
@@ -4710,7 +4710,7 @@ class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetai
 }
 
 // @Route("/technology", "POST")
-class CreateTechnology implements IReturn<CreateTechnologyResponse>, IConvertible
+class CreateTechnology implements IReturn<CreateTechnologyResponse>, IPost, IConvertible
 {
     String name;
     String slug;
@@ -4756,7 +4756,7 @@ class CreateTechnology implements IReturn<CreateTechnologyResponse>, IConvertibl
 }
 
 // @Route("/technology/{Id}", "PUT")
-class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IConvertible
+class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IPut, IConvertible
 {
     int id;
     String name;
@@ -4802,7 +4802,7 @@ class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IConvertibl
 }
 
 // @Route("/technology/{Id}", "DELETE")
-class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IConvertible
+class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IDelete, IConvertible
 {
     int id;
 
@@ -4824,7 +4824,7 @@ class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IConvertibl
 }
 
 // @Route("/techstacks/{Slug}/previous-versions", "GET")
-class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPreviousVersionsResponse>, IConvertible
+class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPreviousVersionsResponse>, IGet, IConvertible
 {
     String slug;
 
@@ -4846,7 +4846,7 @@ class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPr
 }
 
 // @Route("/pagestats/{Type}/{Slug}")
-class GetPageStats implements IReturn<GetPageStatsResponse>, IConvertible
+class GetPageStats implements IReturn<GetPageStatsResponse>, IGet, IConvertible
 {
     String type;
     String slug;
@@ -4874,7 +4874,7 @@ class GetPageStats implements IReturn<GetPageStatsResponse>, IConvertible
 }
 
 // @Route("/cache/clear")
-class ClearCache implements IReturn<String>, IConvertible
+class ClearCache implements IReturn<String>, IGet, IConvertible
 {
     ClearCache();
     ClearCache.fromJson(Map<String, dynamic> json) : super();
@@ -4889,7 +4889,7 @@ class ClearCache implements IReturn<String>, IConvertible
 }
 
 // @Route("/tasks/hourly")
-class HourlyTask implements IReturn<HourlyTaskResponse>, IConvertible
+class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
 {
     bool force;
 
@@ -4912,7 +4912,7 @@ class HourlyTask implements IReturn<HourlyTaskResponse>, IConvertible
 
 // @Route("/techstacks/search")
 // @AutoQueryViewer(DefaultSearchField="Description", DefaultSearchText="ServiceStack", DefaultSearchType="Contains", Description="Explore different Technology Stacks", IconUrl="material-icons:cloud", Title="Find Technology Stacks")
-class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IConvertible
+class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
 {
     String nameContains;
 
@@ -4935,7 +4935,7 @@ class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryR
 }
 
 // @Route("/techstacks/query")
-class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IConvertible
+class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
 {
     QueryTechStacks();
     QueryTechStacks.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -4951,7 +4951,7 @@ class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<Query
 }
 
 // @Route("/overview")
-class Overview implements IReturn<OverviewResponse>, IConvertible
+class Overview implements IReturn<OverviewResponse>, IGet, IConvertible
 {
     bool reload;
 
@@ -4973,7 +4973,7 @@ class Overview implements IReturn<OverviewResponse>, IConvertible
 }
 
 // @Route("/app-overview")
-class AppOverview implements IReturn<AppOverviewResponse>, IConvertible
+class AppOverview implements IReturn<AppOverviewResponse>, IGet, IConvertible
 {
     bool reload;
 
@@ -4995,7 +4995,7 @@ class AppOverview implements IReturn<AppOverviewResponse>, IConvertible
 }
 
 // @Route("/techstacks", "GET")
-class GetAllTechnologyStacks implements IReturn<GetAllTechnologyStacksResponse>, IConvertible
+class GetAllTechnologyStacks implements IReturn<GetAllTechnologyStacksResponse>, IGet, IConvertible
 {
     GetAllTechnologyStacks();
     GetAllTechnologyStacks.fromJson(Map<String, dynamic> json) : super();
@@ -5010,7 +5010,7 @@ class GetAllTechnologyStacks implements IReturn<GetAllTechnologyStacksResponse>,
 }
 
 // @Route("/techstacks/{Slug}", "GET")
-class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegisterStats, IConvertible
+class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegisterStats, IGet, IConvertible
 {
     String slug;
 
@@ -5032,7 +5032,7 @@ class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegist
 }
 
 // @Route("/techstacks/{Slug}/favorites")
-class GetTechnologyStackFavoriteDetails implements IReturn<GetTechnologyStackFavoriteDetailsResponse>, IConvertible
+class GetTechnologyStackFavoriteDetails implements IReturn<GetTechnologyStackFavoriteDetailsResponse>, IGet, IConvertible
 {
     String slug;
 
@@ -5054,7 +5054,7 @@ class GetTechnologyStackFavoriteDetails implements IReturn<GetTechnologyStackFav
 }
 
 // @Route("/config")
-class GetConfig implements IReturn<GetConfigResponse>, IConvertible
+class GetConfig implements IReturn<GetConfigResponse>, IGet, IConvertible
 {
     GetConfig();
     GetConfig.fromJson(Map<String, dynamic> json) : super();
@@ -5069,7 +5069,7 @@ class GetConfig implements IReturn<GetConfigResponse>, IConvertible
 }
 
 // @Route("/techstacks", "POST")
-class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, IConvertible
+class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, IPost, IConvertible
 {
     String name;
     String slug;
@@ -5115,7 +5115,7 @@ class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, I
 }
 
 // @Route("/techstacks/{Id}", "PUT")
-class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, IConvertible
+class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, IPut, IConvertible
 {
     int id;
     String name;
@@ -5161,7 +5161,7 @@ class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, I
 }
 
 // @Route("/techstacks/{Id}", "DELETE")
-class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, IConvertible
+class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, IDelete, IConvertible
 {
     int id;
 
@@ -5183,7 +5183,7 @@ class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, I
 }
 
 // @Route("/favorites/techtacks", "GET")
-class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, IConvertible
+class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, IGet, IConvertible
 {
     int technologyStackId;
 
@@ -5205,7 +5205,7 @@ class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, ICo
 }
 
 // @Route("/favorites/techtacks/{TechnologyStackId}", "PUT")
-class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IConvertible
+class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IPut, IConvertible
 {
     int technologyStackId;
 
@@ -5227,7 +5227,7 @@ class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IConve
 }
 
 // @Route("/favorites/techtacks/{TechnologyStackId}", "DELETE")
-class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IConvertible
+class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IDelete, IConvertible
 {
     int technologyStackId;
 
@@ -5249,7 +5249,7 @@ class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, ICo
 }
 
 // @Route("/favorites/technology", "GET")
-class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse>, IConvertible
+class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse>, IGet, IConvertible
 {
     int technologyId;
 
@@ -5271,7 +5271,7 @@ class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse
 }
 
 // @Route("/favorites/technology/{TechnologyId}", "PUT")
-class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IConvertible
+class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IPut, IConvertible
 {
     int technologyId;
 
@@ -5293,7 +5293,7 @@ class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, ICon
 }
 
 // @Route("/favorites/technology/{TechnologyId}", "DELETE")
-class RemoveFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IConvertible
+class RemoveFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IDelete, IConvertible
 {
     int technologyId;
 
@@ -5315,7 +5315,7 @@ class RemoveFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, I
 }
 
 // @Route("/my-feed")
-class GetUserFeed implements IReturn<GetUserFeedResponse>, IConvertible
+class GetUserFeed implements IReturn<GetUserFeedResponse>, IGet, IConvertible
 {
     GetUserFeed();
     GetUserFeed.fromJson(Map<String, dynamic> json) : super();
@@ -5330,7 +5330,7 @@ class GetUserFeed implements IReturn<GetUserFeedResponse>, IConvertible
 }
 
 // @Route("/users/karma", "GET")
-class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IConvertible
+class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IGet, IConvertible
 {
     List<int> userIds;
 
@@ -5352,7 +5352,7 @@ class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IConvertible
 }
 
 // @Route("/userinfo/{UserName}")
-class GetUserInfo implements IReturn<GetUserInfoResponse>, IConvertible
+class GetUserInfo implements IReturn<GetUserInfoResponse>, IGet, IConvertible
 {
     String userName;
 
@@ -5374,7 +5374,7 @@ class GetUserInfo implements IReturn<GetUserInfoResponse>, IConvertible
 }
 
 // @Route("/users/{UserName}/avatar", "GET")
-class UserAvatar implements IConvertible
+class UserAvatar implements IGet, IConvertible
 {
     String userName;
 
@@ -5454,7 +5454,7 @@ class MqStatus implements IReturn<String>, IConvertible
 }
 
 // @Route("/sync/discourse/{Site}")
-class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IConvertible
+class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IPost, IConvertible
 {
     String site;
 
@@ -5476,7 +5476,7 @@ class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IConverti
 }
 
 // @Route("/admin/technology/{TechnologyId}/logo")
-class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IConvertible
+class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IPut, IConvertible
 {
     int technologyId;
     bool approved;
@@ -5501,7 +5501,7 @@ class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IConvertible
 }
 
 // @Route("/admin/techstacks/{TechnologyStackId}/lock")
-class LockTechStack implements IReturn<LockStackResponse>, IConvertible
+class LockTechStack implements IReturn<LockStackResponse>, IPut, IConvertible
 {
     int technologyStackId;
     bool isLocked;
@@ -5526,7 +5526,7 @@ class LockTechStack implements IReturn<LockStackResponse>, IConvertible
 }
 
 // @Route("/admin/technology/{TechnologyId}/lock")
-class LockTech implements IReturn<LockStackResponse>, IConvertible
+class LockTech implements IReturn<LockStackResponse>, IPut, IConvertible
 {
     int technologyId;
     bool isLocked;
@@ -5572,7 +5572,7 @@ class EmailTest implements IReturn<EmailTestRespoonse>, IConvertible
     TypeContext context = _ctx;
 }
 
-class ImportUser implements IReturn<ImportUserResponse>, IConvertible
+class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
 {
     String userName;
     String email;
@@ -5627,7 +5627,7 @@ class ImportUser implements IReturn<ImportUserResponse>, IConvertible
 }
 
 // @Route("/import/uservoice/suggestion")
-class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResponse>, IConvertible
+class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResponse>, IPost, IConvertible
 {
     int organizationId;
     String url;
@@ -5703,7 +5703,7 @@ class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResp
 }
 
 // @Route("/posts/comment", "GET")
-class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryResponse<PostComment>>, IConvertible
+class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryResponse<PostComment>>, IGet, IConvertible
 {
     int userId;
     int postId;
