@@ -76,6 +76,7 @@ class JsonWebClient implements IServiceClient {
   static WebResponseExceptionFilter globalExceptionFilter;
   AsyncCallbackFunction onAuthenticationRequired;
   BrowserClient client;
+  int maxRetries;
 
   set withCredentials(bool value) => client.withCredentials = value;
   get withCredentials => client.withCredentials;
@@ -87,6 +88,7 @@ class JsonWebClient implements IServiceClient {
       "Accept": "application/json",
     };
     client = new BrowserClient()..withCredentials = true;
+    maxRetries = 5;
   }
 
   void clearCookies() {
@@ -272,6 +274,28 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  Future<T> _resendRequest<T>(SendWebContext info) async {
+    var req = await createRequest(info);
+    if (urlFilter != null) {
+      urlFilter(req.url.toString());
+    }
+
+    Response res;
+    try {
+      var streamedRes = await client.send(req);
+      res = await Response.fromStream(streamedRes);
+    } on Exception catch (e) {
+      return await handleError(null, e);
+    }
+
+    try {
+      var response = await createResponse(res, info);
+      return response;
+    } on Exception catch (e) {
+      return await handleError(res, e);
+    }
+  }
+
   Future<T> sendRequest<T>(SendWebContext info) async {
     var req = await createRequest(info);
 
@@ -280,26 +304,14 @@ class JsonWebClient implements IServiceClient {
     }
 
     Response res = null;
-
-    resendRequest() async {
-      req = await createRequest(info);
-      if (urlFilter != null) {
-        urlFilter(req.url.toString());
-      }
-      try {
-        var streamedRes = await client.send(req);
-        res = await Response.fromStream(streamedRes);
-        var response = await createResponse(res, info);
-        return response;
-      } on Exception catch (e) {
-        return await handleError(res, e);
-      }
-    }
-
     try {
       var streamedRes = await client.send(req);
       res = await Response.fromStream(streamedRes);
+    } on Exception catch (e) {
+      return await handleError(null, e);
+    }
 
+    try {
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
@@ -317,7 +329,7 @@ class JsonWebClient implements IServiceClient {
             var jwtResponse =
                 await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
             bearerToken = jwtResponse.accessToken;
-            return await resendRequest();
+            return await _resendRequest(info);
           } on Exception catch (jwtEx) {
             return await handleError(
                 res, jwtEx, WebServiceExceptionType.RefreshTokenException);
@@ -326,7 +338,7 @@ class JsonWebClient implements IServiceClient {
 
         if (onAuthenticationRequired != null) {
           await onAuthenticationRequired();
-          return await resendRequest();
+          return await _resendRequest(info);
         }
       }
 
@@ -371,7 +383,21 @@ class JsonWebClient implements IServiceClient {
       }
     }
 
-    var req = new Request(method, info.uri ?? createUri(url));
+    Request req;
+    Exception firstEx;
+    var uri = info.uri ?? createUri(url);
+
+    for (var attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        req = new Request(method, uri);
+        break;
+      } on Exception catch (e) {
+        if (firstEx == null) {
+          firstEx = e;
+        }
+      }
+    }
+    if (req == null) throw firstEx;
 
     if (bearerToken != null)
       req.headers["Authorization"] = 'Bearer ' + bearerToken;
@@ -513,5 +539,10 @@ class JsonWebClient implements IServiceClient {
     }
 
     throw raiseError(res, webEx);
+  }
+
+  @override
+  void close({bool force = false}) {
+    client.close();
   }
 }

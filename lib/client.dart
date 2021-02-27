@@ -79,7 +79,7 @@ class JsonServiceClient implements IServiceClient {
   String refreshTokenUri;
   String userName;
   String password;
-  HttpClient client;
+  HttpClient _client;
   List<Cookie> cookies;
   RequestFilter requestFilter;
   ResponseFilter responseFilter;
@@ -91,6 +91,9 @@ class JsonServiceClient implements IServiceClient {
   AsyncCallbackFunction onAuthenticationRequired;
   int maxRetries;
 
+  void set client(HttpClient client) => _client = client;
+  HttpClient get client => _client ??= new HttpClient();
+
   void set connectionTimeout(Duration duration) =>
       client.connectionTimeout = duration;
   Duration get connectionTimeout => client.connectionTimeout;
@@ -101,7 +104,6 @@ class JsonServiceClient implements IServiceClient {
     headers = {
       HttpHeaders.acceptHeader: "application/json",
     };
-    client = new HttpClient();
     cookies = new List<Cookie>();
     maxRetries = 5;
   }
@@ -281,37 +283,48 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  Future<T> sendRequest<T>(SendContext info) async {
-    HttpClientRequest req;
-    HttpClientResponse res;
+  Future<T> _resendRequest<T>(info) async {
+    var req = await createRequest(info);
+    if (urlFilter != null) {
+      urlFilter(req.uri.toString());
+    }
 
-    resendRequest() async {
-      req = await createRequest(info);
-      if (urlFilter != null) {
-        urlFilter(req.uri.toString());
-      }
-      try {
-        res = await req.close();
-        var response = await createResponse(res, info);
-        return response;
-      } on Exception catch (e) {
-        return await handleError(res, e);
-      }
+    HttpClientResponse res;
+    try {
+      res = await req.close();
+    } on Exception catch (e) {
+      return await handleError(null, e);
     }
 
     try {
-      req = await createRequest(info);
-
-      if (urlFilter != null) {
-        urlFilter(req.uri.toString());
-      }
-
-      res = await req.close();
-
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
-      if (res != null && res.statusCode == 401) {
+      return await handleError(res, e);
+    }
+  }
+
+  Future<T> sendRequest<T>(SendContext info) async {
+    var req = await createRequest(info);
+
+    if (urlFilter != null) {
+      urlFilter(req.uri.toString());
+    }
+
+    int statusCode = -1;
+    HttpClientResponse res;
+    try {
+      res = await req.close();
+      statusCode = res.statusCode;
+    } on Exception catch (e) {
+      return await handleError(null, e);
+    }
+
+    try {
+      var response = await createResponse(res, info);
+      return response;
+    } on Exception catch (e) {
+      if (statusCode == 401) {
         if (refreshToken != null) {
           var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
@@ -324,7 +337,7 @@ class JsonServiceClient implements IServiceClient {
             var jwtResponse =
                 await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
             bearerToken = jwtResponse.accessToken;
-            return await resendRequest();
+            return await _resendRequest(info);
           } on Exception catch (jwtEx) {
             return await handleError(
                 res, jwtEx, WebServiceExceptionType.RefreshTokenException);
@@ -333,10 +346,9 @@ class JsonServiceClient implements IServiceClient {
 
         if (onAuthenticationRequired != null) {
           await onAuthenticationRequired();
-          return await resendRequest();
+          return await _resendRequest(info);
         }
       }
-
       return await handleError(res, e);
     }
   }
@@ -380,10 +392,12 @@ class JsonServiceClient implements IServiceClient {
 
     HttpClientRequest req;
     Exception firstEx;
+    var uri = info.uri ?? createUri(url);
 
     for (var attempt = 0; attempt < maxRetries; attempt++) {
       try {
-        req = await client.openUrl(method, info.uri ?? createUri(url));
+        req = await client.openUrl(method, uri);
+        break;
       } on Exception catch (e) {
         if (firstEx == null) {
           firstEx = e;
@@ -410,9 +424,12 @@ class JsonServiceClient implements IServiceClient {
       }
     });
 
+
     if (bodyStr != null) {
       req.headers.contentType = ContentType.json;
+      // var bodyBytes = bodyStr != null ? utf8.encode(bodyStr) : null;
       req.contentLength = utf8.encode(bodyStr).length;
+      req.write(bodyStr);
     }
 
     if (info.requestFilter != null) {
@@ -423,10 +440,6 @@ class JsonServiceClient implements IServiceClient {
     }
     if (globalRequestFilter != null) {
       globalRequestFilter(req);
-    }
-
-    if (bodyStr != null) {
-      req.write(bodyStr);
     }
     return req;
   }
@@ -460,19 +473,20 @@ class JsonServiceClient implements IServiceClient {
     }
 
     if (responseAs is String) {
-      var bodyStr = await utf8.decoder.bind(res).join();
+      var bodyStr = await readFully(res);
       return bodyStr as T;
     }
 
     if (responseAs is Uint8List) {
-      return (await consolidateHttpClientResponseBytes(res)) as T;
+      return (await readFullyAsBytes(res)) as T;
     }
 
     var contentType = res.headers.contentType.toString();
     var isJson =
         contentType != null && contentType.indexOf("application/json") != -1;
     if (isJson) {
-      var jsonObj = json.decode(await utf8.decoder.bind(res).join());
+      var jsonStr = await readFully(res);
+      var jsonObj = json.decode(jsonStr);
       if (responseAs == null) {
         return jsonObj as T;
       }
@@ -524,7 +538,7 @@ class JsonServiceClient implements IServiceClient {
       return null;
     }
 
-    return json.decode(await utf8.decoder.bind(res).join());
+    return json.decode(await readFully(res));
   }
 
   handleError(HttpClientResponse holdRes, Exception e,
@@ -550,7 +564,7 @@ class JsonServiceClient implements IServiceClient {
       ..type = type;
 
     try {
-      String str = await utf8.decoder.bind(res).join();
+      String str = await readFully(res);
       if (!isJsonObject(str)) {
         webEx.responseStatus = createErrorResponse(
                 res.statusCode.toString(), res.reasonPhrase, type)
@@ -573,11 +587,22 @@ class JsonServiceClient implements IServiceClient {
       this.cookies.add(cookie);
     }
   }
+
+  @override
+  void close({bool force = false}) {
+    if (_client == null) return;
+    _client.close(force: force);
+    _client = null;
+  }
+}
+
+Future<String> readFully(HttpClientResponse response) async {
+  String body = await response.transform(utf8.decoder).join();
+  return body;
 }
 
 //https://docs.flutter.io/flutter/foundation/consolidateHttpClientResponseBytes.html
-Future<Uint8List> consolidateHttpClientResponseBytes(
-    HttpClientResponse response) {
+Future<Uint8List> readFullyAsBytes(HttpClientResponse response) {
   assert(response.contentLength != null);
   final Completer<Uint8List> completer = new Completer<Uint8List>.sync();
   if (response.contentLength == -1) {

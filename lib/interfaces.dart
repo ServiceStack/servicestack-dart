@@ -184,6 +184,8 @@ abstract class IServiceClient {
 
   Future<T> send<T>(IReturn<T> request,
       {String method, Map<String, dynamic> args, T responseAs});
+
+  void close({bool force = false});
 }
 
 class TypeAs {
