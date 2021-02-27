@@ -275,13 +275,13 @@ class JsonWebClient implements IServiceClient {
   }
 
   Future<T> _resendRequest<T>(SendWebContext info) async {
-    var req = await createRequest(info);
-    if (urlFilter != null) {
-      urlFilter(req.url.toString());
-    }
-
     Response res;
     try {
+      var req = await createRequest(info);
+      if (urlFilter != null) {
+        urlFilter(req.url.toString());
+      }
+
       var streamedRes = await client.send(req);
       res = await Response.fromStream(streamedRes);
     } on Exception catch (e) {
@@ -297,14 +297,14 @@ class JsonWebClient implements IServiceClient {
   }
 
   Future<T> sendRequest<T>(SendWebContext info) async {
-    var req = await createRequest(info);
-
-    if (urlFilter != null) {
-      urlFilter(req.url.toString());
-    }
-
     Response res = null;
     try {
+      var req = await createRequest(info);
+
+      if (urlFilter != null) {
+        urlFilter(req.url.toString());
+      }
+
       var streamedRes = await client.send(req);
       res = await Response.fromStream(streamedRes);
     } on Exception catch (e) {

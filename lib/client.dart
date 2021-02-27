@@ -284,13 +284,13 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T> _resendRequest<T>(info) async {
-    var req = await createRequest(info);
-    if (urlFilter != null) {
-      urlFilter(req.uri.toString());
-    }
-
     HttpClientResponse res;
     try {
+      var req = await createRequest(info);
+      if (urlFilter != null) {
+        urlFilter(req.uri.toString());
+      }
+
       res = await req.close();
     } on Exception catch (e) {
       return await handleError(null, e);
@@ -305,15 +305,15 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T> sendRequest<T>(SendContext info) async {
-    var req = await createRequest(info);
-
-    if (urlFilter != null) {
-      urlFilter(req.uri.toString());
-    }
-
     int statusCode = -1;
     HttpClientResponse res;
     try {
+      var req = await createRequest(info);
+
+      if (urlFilter != null) {
+        urlFilter(req.uri.toString());
+      }
+
       res = await req.close();
       statusCode = res.statusCode;
     } on Exception catch (e) {
@@ -423,7 +423,6 @@ class JsonServiceClient implements IServiceClient {
         req.headers.add(key, val);
       }
     });
-
 
     if (bodyStr != null) {
       req.headers.contentType = ContentType.json;
