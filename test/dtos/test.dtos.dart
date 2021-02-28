@@ -1,6 +1,6 @@
 /* Options:
-Date: 2021-02-26 09:27:46
-Version: 5.103
+Date: 2021-02-28 14:47:31
+Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
 
@@ -1139,27 +1139,27 @@ class ThrowTypeResponse implements IConvertible
 
 class ThrowValidationResponse implements IConvertible
 {
+    ResponseStatus responseStatus;
     int age;
     String required;
     String email;
-    ResponseStatus responseStatus;
 
-    ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
+    ThrowValidationResponse({this.responseStatus,this.age,this.required,this.email});
     ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         age = json['age'];
         required = json['required'];
         email = json['email'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'age': age,
         'required': required,
-        'email': email,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'email': email
     };
 
     TypeContext context = _ctx;
@@ -1220,6 +1220,28 @@ class Project implements IConvertible
     Map<String, dynamic> toJson() => {
         'account': account,
         'name': name
+    };
+
+    TypeContext context = _ctx;
+}
+
+class SecuredResponse implements IConvertible
+{
+    String result;
+    ResponseStatus responseStatus;
+
+    SecuredResponse({this.result,this.responseStatus});
+    SecuredResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        result = json['result'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'result': result,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
     TypeContext context = _ctx;
@@ -2637,6 +2659,29 @@ class HelloImage implements IReturn<Uint8List>, IConvertible
     TypeContext context = _ctx;
 }
 
+// @Route("/secured")
+// @ValidateRequest(Validator="IsAuthenticated")
+class Secured implements IReturn<SecuredResponse>, IConvertible
+{
+    String name;
+
+    Secured({this.name});
+    Secured.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    createResponse() { return new SecuredResponse(); }
+    String getTypeName() { return "Secured"; }
+    TypeContext context = _ctx;
+}
+
 // @Route("/jwt")
 class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IConvertible
 {
@@ -2682,6 +2727,21 @@ class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertibl
 
     createResponse() { return new CreateRefreshJwtResponse(); }
     String getTypeName() { return "CreateRefreshJwt"; }
+    TypeContext context = _ctx;
+}
+
+// @Route("/jwt-invalidate")
+class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible
+{
+    InvalidateLastAccessToken();
+    InvalidateLastAccessToken.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() { return new EmptyResponse(); }
+    String getTypeName() { return "InvalidateLastAccessToken"; }
     TypeContext context = _ctx;
 }
 
@@ -4217,6 +4277,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'ThrowBusinessErrorResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessErrorResponse()),
     'Account': new TypeInfo(TypeOf.Class, create:() => new Account()),
     'Project': new TypeInfo(TypeOf.Class, create:() => new Project()),
+    'SecuredResponse': new TypeInfo(TypeOf.Class, create:() => new SecuredResponse()),
     'CreateJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateJwtResponse()),
     'CreateRefreshJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwtResponse()),
     'MetadataTestResponse': new TypeInfo(TypeOf.Class, create:() => new MetadataTestResponse()),
@@ -4285,8 +4346,10 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'ImageAsFile': new TypeInfo(TypeOf.Class, create:() => new ImageAsFile()),
     'ImageAsRedirect': new TypeInfo(TypeOf.Class, create:() => new ImageAsRedirect()),
     'HelloImage': new TypeInfo(TypeOf.Class, create:() => new HelloImage()),
+    'Secured': new TypeInfo(TypeOf.Class, create:() => new Secured()),
     'CreateJwt': new TypeInfo(TypeOf.Class, create:() => new CreateJwt()),
     'CreateRefreshJwt': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwt()),
+    'InvalidateLastAccessToken': new TypeInfo(TypeOf.Class, create:() => new InvalidateLastAccessToken()),
     'ViewLogs': new TypeInfo(TypeOf.Class, create:() => new ViewLogs()),
     'MetadataTest': new TypeInfo(TypeOf.Class, create:() => new MetadataTest()),
     'MetadataTestArray': new TypeInfo(TypeOf.Class, create:() => new MetadataTestArray()),

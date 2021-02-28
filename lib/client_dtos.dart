@@ -115,6 +115,10 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
    'NavItem': new TypeInfo(TypeOf.Class, create:() => new NavItem()),
    'GetNavItems': new TypeInfo(TypeOf.Class, create:() => new GetNavItems()),
    'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
+   'EmptyResponse': new TypeInfo(TypeOf.Class, create:() => new EmptyResponse()),
+   'IdResponse': new TypeInfo(TypeOf.Class, create:() => new IdResponse()),
+   'StringResponse': new TypeInfo(TypeOf.Class, create:() => new StringResponse()),
+   'StringsResponse': new TypeInfo(TypeOf.Class, create:() => new StringsResponse()),
  };
 
 TypeContext _ctx =
@@ -1191,5 +1195,114 @@ class KeyValuePair<K, V> implements IConvertible {
   }
 
   Map<String, dynamic> toJson() => {'key': key, 'value': value};
+  TypeContext context = _ctx;
+}
+
+// @DataContract
+class EmptyResponse implements IConvertible
+{
+  // @DataMember(Order=1)
+  ResponseStatus responseStatus;
+
+  EmptyResponse({this.responseStatus});
+  EmptyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+  fromMap(Map<String, dynamic> json) {
+    responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+  };
+
+  TypeContext context = _ctx;
+}
+
+// @DataContract
+class IdResponse implements IConvertible
+{
+  // @DataMember(Order=1)
+  String id;
+
+  // @DataMember(Order=2)
+  ResponseStatus responseStatus;
+
+  IdResponse({this.id,this.responseStatus});
+  IdResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+  fromMap(Map<String, dynamic> json) {
+    id = json['id'];
+    responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+  };
+
+  TypeContext context = _ctx;
+}
+
+// @DataContract
+class StringResponse implements IConvertible
+{
+  // @DataMember(Order=1)
+  String results;
+
+  // @DataMember(Order=2)
+  Map<String,String> meta;
+
+  // @DataMember(Order=3)
+  ResponseStatus responseStatus;
+
+  StringResponse({this.results,this.meta,this.responseStatus});
+  StringResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+  fromMap(Map<String, dynamic> json) {
+    results = json['results'];
+    meta = JsonConverters.toStringMap(json['meta']);
+    responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'results': results,
+    'meta': meta,
+    'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+  };
+
+  TypeContext context = _ctx;
+}
+
+// @DataContract
+class StringsResponse implements IConvertible
+{
+  // @DataMember(Order=1)
+  List<String> results;
+
+  // @DataMember(Order=2)
+  Map<String,String> meta;
+
+  // @DataMember(Order=3)
+  ResponseStatus responseStatus;
+
+  StringsResponse({this.results,this.meta,this.responseStatus});
+  StringsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+  fromMap(Map<String, dynamic> json) {
+    results = JsonConverters.fromJson(json['results'],'List<String>',context);
+    meta = JsonConverters.toStringMap(json['meta']);
+    responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'results': JsonConverters.toJson(results,'List<String>',context),
+    'meta': meta,
+    'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+  };
+
   TypeContext context = _ctx;
 }
