@@ -152,6 +152,29 @@ void main() {
     }
   });
 
+  test('Does fetch AccessToken using RefreshTokenCookies', () async {
+    var client = createTestClient();
+    var authResponse = await client.post(new Authenticate(
+        provider: "credentials", userName: "test", password: "test"));
+
+    var initialAccessToken = client.cookies.firstWhere((x) => x.name == 'ss-tok');
+    var initialRefreshToken = client.cookies.firstWhere((x) => x.name == 'ss-reftok');
+    expect(initialAccessToken, isNotNull);
+    expect(initialRefreshToken, isNotNull);
+
+    var request = Secured()..name="test";
+    var response = await client.send(request);
+    expect(response.result, equals(request.name));
+
+    await client.post(new InvalidateLastAccessToken());
+
+    response = await client.send(request);
+    expect(response.result, equals(request.name));
+
+    var latestAccessToken = client.cookies.firstWhere((x) => x.name == 'ss-tok');
+    expect(latestAccessToken, isNot(equals(initialAccessToken)));
+  });
+
   test('Invalid RefreshToken throws RefreshTokenException ErrorResponse',
       () async {
     var client = createTestClient();

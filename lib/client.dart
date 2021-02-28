@@ -77,6 +77,7 @@ class JsonServiceClient implements IServiceClient {
   String bearerToken;
   String refreshToken;
   String refreshTokenUri;
+  bool useTokenCookie;
   String userName;
   String password;
   HttpClient _client;
@@ -106,6 +107,7 @@ class JsonServiceClient implements IServiceClient {
     };
     cookies = new List<Cookie>();
     maxRetries = 5;
+    useTokenCookie = false;
   }
 
   void clearCookies() {
@@ -325,7 +327,8 @@ class JsonServiceClient implements IServiceClient {
       return response;
     } on Exception catch (e) {
       if (statusCode == 401) {
-        if (refreshToken != null) {
+        var hasRefreshTokenCookie = cookies.any((x) => x.name == "ss-reftok");
+        if (refreshToken != null || useTokenCookie || hasRefreshTokenCookie) {
           var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
 
@@ -466,6 +469,14 @@ class JsonServiceClient implements IServiceClient {
 
     var responseAs = info.responseAs ??
         (info.request != null ? info.request.createResponse() : null);
+
+    res.headers.forEach((key, value) {
+      if (key.toLowerCase() == "x-cookies") {
+        if (value.any((v) => v.split(',').indexOf('ss-reftok') >= 0)) {
+          useTokenCookie = true;
+        }
+      }
+    });
 
     if (res.contentLength == 1) {
       return responseAs;

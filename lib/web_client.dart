@@ -67,6 +67,7 @@ class JsonWebClient implements IServiceClient {
   String refreshTokenUri;
   String userName;
   String password;
+  bool useTokenCookie;
   WebRequestFilter requestFilter;
   WebResponseFilter responseFilter;
   static WebRequestFilter globalRequestFilter;
@@ -89,6 +90,7 @@ class JsonWebClient implements IServiceClient {
     };
     client = new BrowserClient()..withCredentials = true;
     maxRetries = 5;
+    useTokenCookie = false;
   }
 
   void clearCookies() {
@@ -316,7 +318,7 @@ class JsonWebClient implements IServiceClient {
       return response;
     } on Exception catch (e) {
       if (res.statusCode == 401) {
-        if (refreshToken != null) {
+        if (refreshToken != null || useTokenCookie) {
           var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
 
@@ -444,6 +446,14 @@ class JsonWebClient implements IServiceClient {
 
     var responseAs = info.responseAs ??
         (info.request != null ? info.request.createResponse() : null);
+
+    res.headers.forEach((key, value) {
+      if (key.toLowerCase() == "x-cookies") {
+        if (value.split(',').indexOf('ss-reftok') >= 0) {
+          useTokenCookie = true;
+        }
+      }
+    });
 
     if (res.contentLength == 1) {
       return responseAs;
