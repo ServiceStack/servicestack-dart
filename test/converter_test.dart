@@ -25,4 +25,9 @@ main() {
 
     expect(dateTime.toIso8601String(), "2018-04-09T19:43:34.740590Z"); //only 6ms precision
   });
+
+  test('Can parse XSD Duration', () {
+    var duration = DurationConverter.fromXsdDuration("PT1H");
+    expect(duration, Duration(hours: 1));
+  });
 }

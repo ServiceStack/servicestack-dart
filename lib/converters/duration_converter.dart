@@ -4,9 +4,12 @@ class DurationConverter implements IConverter {
   dynamic fromJson(value, TypeContext context) {
     Duration duration = value is Duration ? value : null;
     if (duration != null) return duration;
+    return fromXsdDuration(value as String);
+  }
 
-    var str = value as String;
-    if (str == null) return value;
+  static Duration fromXsdDuration(String str) {
+    if (str == null)
+      return null;
 
     int days = 0;
     int hours = 0;
@@ -59,6 +62,7 @@ class DurationConverter implements IConverter {
         minutes: minutes,
         seconds: seconds,
         milliseconds: (ms * 1000).toInt());
+
   }
 
   toJson(dynamic value, TypeContext context) {
