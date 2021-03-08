@@ -1,3 +1,8 @@
+## 1.0.26 
+
+* Add Inspect for quickly viewing API responses
+* Added host.dart abstraction with IO + Web providers
+
 ## 1.0.25 
 
 * Downgrade **http** dependency to stable 0.12.2
