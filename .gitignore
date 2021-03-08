@@ -1,5 +1,6 @@
 # Custom
 *.log
+.gistrun/
 
 # See https://www.dartlang.org/guides/libraries/private-files
 
