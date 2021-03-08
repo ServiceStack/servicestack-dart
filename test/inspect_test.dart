@@ -34,25 +34,27 @@ class GithubRepo {
 
 void main() {
 
-  test('Can use Inspect', () {
-    var json = File('test_resources/repos.json').readAsStringSync();
-    Iterable repos = jsonDecode(json);
+  group('Inspect tests', (){
+    test('Can use Inspect', () {
+      var json = File('test_resources/repos.json').readAsStringSync();
+      Iterable repos = jsonDecode(json);
 
-    final orgRepos = repos.map((e) => GithubRepo.fromJson(e)).toList();
-    orgRepos.sort((a, b) => b.watchers - a.watchers);
+      final orgRepos = repos.map((e) => GithubRepo.fromJson(e)).toList();
+      orgRepos.sort((a, b) => b.watchers - a.watchers);
 
-    var dump = Inspect.dump(orgRepos.take(3));
-    expect(dump, isNotEmpty);
-    var orgName = 'dart-lang';
-    print('Top 3 ${orgName} Github Repos:');
-    print(dump);
+      var dump = Inspect.dump(orgRepos.take(3));
+      expect(dump, isNotEmpty);
+      var orgName = 'dart-lang';
+      print('Top 3 ${orgName} Github Repos:');
+      print(dump);
 
-    var table = Inspect.dumpTable(orgRepos.take(10));
-    print('\nTop 10 ${orgName} Github Repos:');
-    expect(table, isNotEmpty);
-    print(table);
+      var table = Inspect.dumpTable(orgRepos.take(10));
+      print('\nTop 10 ${orgName} Github Repos:');
+      expect(table, isNotEmpty);
+      print(table);
 
-    Inspect.vars({'orgRepos': orgRepos});
+      Inspect.vars({'orgRepos': orgRepos});
+    });
   });
 
 }
