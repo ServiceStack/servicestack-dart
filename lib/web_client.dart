@@ -444,8 +444,9 @@ class JsonWebClient implements IServiceClient {
       globalResponseFilter(res);
     }
 
+    var request = info.request;
     var responseAs = info.responseAs ??
-        (info.request != null ? info.request.createResponse() : null);
+        (request != null ? request.createResponse() : null);
 
     res.headers.forEach((key, value) {
       if (key.toLowerCase() == "x-cookies") {
@@ -473,40 +474,11 @@ class JsonWebClient implements IServiceClient {
         contentType != null && contentType.indexOf("application/json") != -1;
     if (isJson) {
       var jsonObj = json.decode(res.body);
-      print(jsonObj);
       if (responseAs == null) {
         return jsonObj as T;
       }
       try {
-        Function fromMap;
-
-        TypeContext reqContext;
-        if (info.request is IConvertible) {
-          reqContext = (info.request as IConvertible).context;
-          if (responseAs is IConvertible) {
-            responseAs.context = reqContext;
-          }
-        } else if (info.request is List) {
-          var firstRequest = info.request[0];
-          var firstResponse = firstRequest.createResponse();
-          reqContext = (firstRequest as IConvertible).context;
-          var responseType = firstResponse.runtimeType.toString();
-          var responseListType = "List<${responseType}>";
-          var existingInfo = reqContext.getTypeInfo(responseListType);
-          reqContext = new TypeContext(
-              typeName: responseListType,
-              types: {
-                //List<T> in Dart 1.9 (non Strong mode) creates non generic List (dynamic)
-                responseListType: existingInfo ??
-                    new TypeInfo(TypeOf.Class, create: () => responseAs)
-              },
-              childContext: reqContext);
-        }
-        fromMap = responseAs is List
-            ? (json) => new ListConverter().fromJson(jsonObj, reqContext)
-            : responseAs.fromMap;
-
-        var ret = fromMap(jsonObj);
+        var ret = convertTo(request, responseAs, jsonObj);
         return ret;
       } on Exception catch (e) {
         raiseError(res, e);

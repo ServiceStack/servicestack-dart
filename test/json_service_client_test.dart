@@ -31,7 +31,7 @@ void main() {
   test('Can serialize dates correctly via get request', () async {
     var client = createTestClient();
 
-    var request = new EchoTypes(dateTime: new DateTime.utc(2015,1,1));
+    var request = new EchoTypes(dateTime: DateTime.utc(2015,1,1));
 
     var response = await client.get(request);
 
@@ -39,11 +39,17 @@ void main() {
   });
 
   test('Should generate default value', () {
-    var request = new HelloTypes();
+    var request = HelloTypes();
     request.Bool = false;
     request.Int = 0;
     var requestUrl = appendQueryString(TEST_URL, toMap(request));
     expect(requestUrl, equals(TEST_URL + "?bool=false&int=0"));
+  });
+
+  test('Can serialize raw list', () async {
+    var client = createTestClient();
+    var response = await client.get(RawBazRequest());
+    expect(response.length, equals(2));
   });
 
 }

@@ -163,6 +163,47 @@ dynamic populate(dynamic to, dynamic from, [TypeContext context = null]) {
   return null;
 }
 
+dynamic convertTo(dynamic request, dynamic responseAs, dynamic jsonObj) {
+  TypeContext reqContext;
+  if (request is IConvertible) {
+    reqContext = request.context;
+  } else if (request is List) {
+    var firstRequest = request[0];
+    var firstResponse = firstRequest.createResponse();
+    var elementType = firstResponse.runtimeType.toString();
+    reqContext = createListContext((firstRequest as IConvertible).context, "List<${elementType}>", responseAs);
+  }
+  if (responseAs is List) {
+    String listType;
+    try {
+      listType = request.getResponseTypeName();
+    } on NoSuchMethodError {
+      listType = responseAs.runtimeType.toString();
+    }
+    reqContext = createListContext(reqContext, listType, responseAs);
+    return new ListConverter().fromJson(jsonObj, reqContext);
+  }
+  if (reqContext != null && responseAs is IConvertible) {
+    responseAs.context = reqContext;
+  }
+  var fromMap = responseAs.fromMap;
+  var ret = fromMap(jsonObj);
+  return ret;
+}
+
+TypeContext createListContext(TypeContext reqContext, String listType, dynamic responseAs) {
+  var existingInfo = reqContext.getTypeInfo(listType);
+  reqContext = new TypeContext(
+      typeName: listType,
+      types: {
+        //List<T> in Dart 1.9 (non Strong mode) creates non generic List (dynamic)
+        listType: existingInfo ??
+            new TypeInfo(TypeOf.Class, create: () => responseAs)
+      },
+      childContext: reqContext);
+  return reqContext;
+}
+
 class EnumConverter implements IConverter {
   toJson(enumValue, TypeContext context) {
     return toEnumValue(enumValue);

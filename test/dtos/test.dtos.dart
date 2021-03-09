@@ -1,5 +1,5 @@
 /* Options:
-Date: 2021-02-28 14:47:31
+Date: 2021-03-09 20:01:12
 Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -17,6 +17,94 @@ DefaultImports: ../../lib/servicestack.dart
 import '../../lib/servicestack.dart';
 import 'dart:collection';
 import 'dart:typed_data';
+
+class CustomType implements IConvertible
+{
+    int id;
+    String name;
+
+    CustomType({this.id,this.name});
+    CustomType.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name
+    };
+
+    TypeContext context = _ctx;
+}
+
+class SetterType implements IConvertible
+{
+    int id;
+    String name;
+
+    SetterType({this.id,this.name});
+    SetterType.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name
+    };
+
+    TypeContext context = _ctx;
+}
+
+class Bar implements IConvertible
+{
+    String name;
+    String description;
+
+    Bar({this.name,this.description});
+    Bar.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        description = json['description'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'description': description
+    };
+
+    TypeContext context = _ctx;
+}
+
+class Baz implements IConvertible
+{
+    String name;
+    String description;
+
+    Baz({this.name,this.description});
+    Baz.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        description = json['description'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'description': description
+    };
+
+    TypeContext context = _ctx;
+}
 
 abstract class IAuthTokens
 {
@@ -381,7 +469,7 @@ class MetadataTestChild implements IConvertible
 class MenuItemExampleItem implements IConvertible
 {
     // @DataMember(Order=1)
-    // @ApiMember()
+    // @apiMember()
     String name1;
 
     MenuItemExampleItem({this.name1});
@@ -402,7 +490,7 @@ class MenuItemExampleItem implements IConvertible
 class MenuItemExample implements IConvertible
 {
     // @DataMember(Order=1)
-    // @ApiMember()
+    // @apiMember()
     String name1;
 
     MenuItemExampleItem menuItemExampleItem;
@@ -428,7 +516,7 @@ class MenuItemExample implements IConvertible
 class MenuExample implements IConvertible
 {
     // @DataMember(Order=1)
-    // @ApiMember()
+    // @apiMember()
     MenuItemExample menuItemExample1;
 
     MenuExample({this.menuItemExample1});
@@ -509,7 +597,7 @@ enum EnumType
     Value2,
 }
 
-// @Flags()
+// @flags()
 class EnumFlags
 {
     static const EnumFlags Value1 = const EnumFlags._(1);
@@ -638,6 +726,25 @@ abstract class AllTypesBase
     TypeContext context = _ctx;
 }
 
+class Poco implements IConvertible
+{
+    String name;
+
+    Poco({this.name});
+    Poco.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    TypeContext context = _ctx;
+}
+
 abstract class HelloBase
 {
     int id;
@@ -671,25 +778,6 @@ abstract class HelloResponseBase
 
     Map<String, dynamic> toJson() => {
         'refId': refId
-    };
-
-    TypeContext context = _ctx;
-}
-
-class Poco implements IConvertible
-{
-    String name;
-
-    Poco({this.name});
-    Poco.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name': name
     };
 
     TypeContext context = _ctx;
@@ -1096,6 +1184,156 @@ class TypesGroup implements IConvertible
     TypeContext context = _ctx;
 }
 
+class ChatMessage implements IConvertible
+{
+    int id;
+    String channel;
+    String fromUserId;
+    String fromName;
+    String displayName;
+    String message;
+    String userAuthId;
+    bool private;
+
+    ChatMessage({this.id,this.channel,this.fromUserId,this.fromName,this.displayName,this.message,this.userAuthId,this.private});
+    ChatMessage.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        channel = json['channel'];
+        fromUserId = json['fromUserId'];
+        fromName = json['fromName'];
+        displayName = json['displayName'];
+        message = json['message'];
+        userAuthId = json['userAuthId'];
+        private = json['private'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'channel': channel,
+        'fromUserId': fromUserId,
+        'fromName': fromName,
+        'displayName': displayName,
+        'message': message,
+        'userAuthId': userAuthId,
+        'private': private
+    };
+
+    TypeContext context = _ctx;
+}
+
+class GetChatHistoryResponse implements IConvertible
+{
+    List<ChatMessage> results;
+    ResponseStatus responseStatus;
+
+    GetChatHistoryResponse({this.results,this.responseStatus});
+    GetChatHistoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        results = JsonConverters.fromJson(json['results'],'List<ChatMessage>',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'results': JsonConverters.toJson(results,'List<ChatMessage>',context),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class GetUserDetailsResponse implements IConvertible
+{
+    String provider;
+    String userId;
+    String userName;
+    String fullName;
+    String displayName;
+    String firstName;
+    String lastName;
+    String company;
+    String email;
+    String phoneNumber;
+    DateTime birthDate;
+    String birthDateRaw;
+    String address;
+    String address2;
+    String city;
+    String state;
+    String country;
+    String culture;
+    String gender;
+    String language;
+    String mailAddress;
+    String nickname;
+    String postalCode;
+    String timeZone;
+
+    GetUserDetailsResponse({this.provider,this.userId,this.userName,this.fullName,this.displayName,this.firstName,this.lastName,this.company,this.email,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone});
+    GetUserDetailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        provider = json['provider'];
+        userId = json['userId'];
+        userName = json['userName'];
+        fullName = json['fullName'];
+        displayName = json['displayName'];
+        firstName = json['firstName'];
+        lastName = json['lastName'];
+        company = json['company'];
+        email = json['email'];
+        phoneNumber = json['phoneNumber'];
+        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',context);
+        birthDateRaw = json['birthDateRaw'];
+        address = json['address'];
+        address2 = json['address2'];
+        city = json['city'];
+        state = json['state'];
+        country = json['country'];
+        culture = json['culture'];
+        gender = json['gender'];
+        language = json['language'];
+        mailAddress = json['mailAddress'];
+        nickname = json['nickname'];
+        postalCode = json['postalCode'];
+        timeZone = json['timeZone'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'provider': provider,
+        'userId': userId,
+        'userName': userName,
+        'fullName': fullName,
+        'displayName': displayName,
+        'firstName': firstName,
+        'lastName': lastName,
+        'company': company,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'birthDate': JsonConverters.toJson(birthDate,'DateTime',context),
+        'birthDateRaw': birthDateRaw,
+        'address': address,
+        'address2': address2,
+        'city': city,
+        'state': state,
+        'country': country,
+        'culture': culture,
+        'gender': gender,
+        'language': language,
+        'mailAddress': mailAddress,
+        'nickname': nickname,
+        'postalCode': postalCode,
+        'timeZone': timeZone
+    };
+
+    TypeContext context = _ctx;
+}
+
 class CustomHttpErrorResponse implements IConvertible
 {
     String custom;
@@ -1113,6 +1351,25 @@ class CustomHttpErrorResponse implements IConvertible
     Map<String, dynamic> toJson() => {
         'custom': custom,
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class Foo implements IConvertible
+{
+    List<Bar> bars;
+
+    Foo({this.bars});
+    Foo.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        bars = JsonConverters.fromJson(json['bars'],'List<Bar>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'bars': JsonConverters.toJson(bars,'List<Bar>',context)
     };
 
     TypeContext context = _ctx;
@@ -1139,27 +1396,27 @@ class ThrowTypeResponse implements IConvertible
 
 class ThrowValidationResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
     int age;
     String required;
     String email;
+    ResponseStatus responseStatus;
 
-    ThrowValidationResponse({this.responseStatus,this.age,this.required,this.email});
+    ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
     ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         age = json['age'];
         required = json['required'];
         email = json['email'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
         'age': age,
         'required': required,
-        'email': email
+        'email': email,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
     TypeContext context = _ctx;
@@ -1320,7 +1577,7 @@ class GetExampleResponse implements IConvertible
     ResponseStatus responseStatus;
 
     // @DataMember(Order=2)
-    // @ApiMember()
+    // @apiMember()
     MenuExample menuExample1;
 
     GetExampleResponse({this.responseStatus,this.menuExample1});
@@ -1493,23 +1750,29 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
         'subType': JsonConverters.toJson(subType,'SubType',context)
     };
 
-    createResponse() { return new AllTypes(); }
-    String getTypeName() { return "AllTypes"; }
+    createResponse() => AllTypes();
+    getResponseTypeName() => "AllTypes";
+    getTypeName() => "AllTypes";
     TypeContext context = _ctx;
 }
 
-class AllCollectionTypes implements IConvertible
+class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
 {
     List<int> intArray;
     List<int> intList;
     List<String> stringArray;
     List<String> stringList;
+    List<double> floatArray;
+    List<double> doubleList;
+    Uint8List byteArray;
+    List<String> charArray;
+    List<double> decimalList;
     List<Poco> pocoArray;
     List<Poco> pocoList;
     Map<String,List<Poco>> pocoLookup;
     Map<String,List<Map<String,Poco>>> pocoLookupMap;
 
-    AllCollectionTypes({this.intArray,this.intList,this.stringArray,this.stringList,this.pocoArray,this.pocoList,this.pocoLookup,this.pocoLookupMap});
+    AllCollectionTypes({this.intArray,this.intList,this.stringArray,this.stringList,this.floatArray,this.doubleList,this.byteArray,this.charArray,this.decimalList,this.pocoArray,this.pocoList,this.pocoLookup,this.pocoLookupMap});
     AllCollectionTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -1517,6 +1780,11 @@ class AllCollectionTypes implements IConvertible
         intList = JsonConverters.fromJson(json['intList'],'List<int>',context);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
+        floatArray = JsonConverters.fromJson(json['floatArray'],'List<double>',context);
+        doubleList = JsonConverters.fromJson(json['doubleList'],'List<double>',context);
+        byteArray = JsonConverters.fromJson(json['byteArray'],'Uint8List',context);
+        charArray = JsonConverters.fromJson(json['charArray'],'List<String>',context);
+        decimalList = JsonConverters.fromJson(json['decimalList'],'List<double>',context);
         pocoArray = JsonConverters.fromJson(json['pocoArray'],'List<Poco>',context);
         pocoList = JsonConverters.fromJson(json['pocoList'],'List<Poco>',context);
         pocoLookup = JsonConverters.fromJson(json['pocoLookup'],'Map<String,List<Poco>>',context);
@@ -1529,12 +1797,20 @@ class AllCollectionTypes implements IConvertible
         'intList': JsonConverters.toJson(intList,'List<int>',context),
         'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
         'stringList': JsonConverters.toJson(stringList,'List<String>',context),
+        'floatArray': JsonConverters.toJson(floatArray,'List<double>',context),
+        'doubleList': JsonConverters.toJson(doubleList,'List<double>',context),
+        'byteArray': JsonConverters.toJson(byteArray,'Uint8List',context),
+        'charArray': JsonConverters.toJson(charArray,'List<String>',context),
+        'decimalList': JsonConverters.toJson(decimalList,'List<double>',context),
         'pocoArray': JsonConverters.toJson(pocoArray,'List<Poco>',context),
         'pocoList': JsonConverters.toJson(pocoList,'List<Poco>',context),
         'pocoLookup': JsonConverters.toJson(pocoLookup,'Map<String,List<Poco>>',context),
         'pocoLookupMap': JsonConverters.toJson(pocoLookupMap,'Map<String,List<Map<String,Poco>>>',context)
     };
 
+    createResponse() => AllCollectionTypes();
+    getResponseTypeName() => "AllCollectionTypes";
+    getTypeName() => "AllCollectionTypes";
     TypeContext context = _ctx;
 }
 
@@ -1599,8 +1875,9 @@ class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
         'dateTime': JsonConverters.toJson(dateTime,'DateTime',context)
     };
 
-    createResponse() { return new HelloDateTime(); }
-    String getTypeName() { return "HelloDateTime"; }
+    createResponse() => HelloDateTime();
+    getResponseTypeName() => "HelloDateTime";
+    getTypeName() => "HelloDateTime";
     TypeContext context = _ctx;
 }
 
@@ -1808,8 +2085,9 @@ class HelloTypes implements IReturn<HelloTypes>, IConvertible
         'int': Int
     };
 
-    createResponse() { return new HelloTypes(); }
-    String getTypeName() { return "HelloTypes"; }
+    createResponse() => HelloTypes();
+    getResponseTypeName() => "HelloTypes";
+    getTypeName() => "HelloTypes";
     TypeContext context = _ctx;
 }
 
@@ -2038,8 +2316,9 @@ class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
         'id': id
     };
 
-    createResponse() { return new RequiresAdmin(); }
-    String getTypeName() { return "RequiresAdmin"; }
+    createResponse() => RequiresAdmin();
+    getResponseTypeName() => "RequiresAdmin";
+    getTypeName() => "RequiresAdmin";
     TypeContext context = _ctx;
 }
 
@@ -2061,8 +2340,9 @@ class CustomRoute implements IReturn<CustomRoute>, IConvertible
         'data': data
     };
 
-    createResponse() { return new CustomRoute(); }
-    String getTypeName() { return "CustomRoute"; }
+    createResponse() => CustomRoute();
+    getResponseTypeName() => "CustomRoute";
+    getTypeName() => "CustomRoute";
     TypeContext context = _ctx;
 }
 
@@ -2083,8 +2363,9 @@ class Wait implements IReturn<Wait>, IConvertible
         'forMs': forMs
     };
 
-    createResponse() { return new Wait(); }
-    String getTypeName() { return "Wait"; }
+    createResponse() => Wait();
+    getResponseTypeName() => "Wait";
+    getTypeName() => "Wait";
     TypeContext context = _ctx;
 }
 
@@ -2150,8 +2431,9 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
         'char': char
     };
 
-    createResponse() { return new EchoTypes(); }
-    String getTypeName() { return "EchoTypes"; }
+    createResponse() => EchoTypes();
+    getResponseTypeName() => "EchoTypes";
+    getTypeName() => "EchoTypes";
     TypeContext context = _ctx;
 }
 
@@ -2181,8 +2463,9 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
         'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context)
     };
 
-    createResponse() { return new EchoCollections(); }
-    String getTypeName() { return "EchoCollections"; }
+    createResponse() => EchoCollections();
+    getResponseTypeName() => "EchoCollections";
+    getTypeName() => "EchoCollections";
     TypeContext context = _ctx;
 }
 
@@ -2215,8 +2498,9 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
         'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context)
     };
 
-    createResponse() { return new EchoComplexTypes(); }
-    String getTypeName() { return "EchoComplexTypes"; }
+    createResponse() => EchoComplexTypes();
+    getResponseTypeName() => "EchoComplexTypes";
+    getTypeName() => "EchoComplexTypes";
     TypeContext context = _ctx;
 }
 
@@ -2235,8 +2519,187 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new StoreRockstars(); }
-    String getTypeName() { return "StoreRockstars"; }
+    createResponse() => StoreRockstars();
+    getResponseTypeName() => "StoreRockstars";
+    getTypeName() => "StoreRockstars";
+    TypeContext context = _ctx;
+}
+
+// @Route("/channels/{Channel}/raw")
+class PostRawToChannel implements IReturnVoid, IConvertible
+{
+    String from;
+    String toUserId;
+    String channel;
+    String message;
+    String selector;
+
+    PostRawToChannel({this.from,this.toUserId,this.channel,this.message,this.selector});
+    PostRawToChannel.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        from = json['from'];
+        toUserId = json['toUserId'];
+        channel = json['channel'];
+        message = json['message'];
+        selector = json['selector'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'from': from,
+        'toUserId': toUserId,
+        'channel': channel,
+        'message': message,
+        'selector': selector
+    };
+
+    createResponse() {}
+    getTypeName() => "PostRawToChannel";
+    TypeContext context = _ctx;
+}
+
+// @Route("/channels/{Channel}/chat")
+class PostChatToChannel implements IReturn<ChatMessage>, IConvertible
+{
+    String from;
+    String toUserId;
+    String channel;
+    String message;
+    String selector;
+
+    PostChatToChannel({this.from,this.toUserId,this.channel,this.message,this.selector});
+    PostChatToChannel.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        from = json['from'];
+        toUserId = json['toUserId'];
+        channel = json['channel'];
+        message = json['message'];
+        selector = json['selector'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'from': from,
+        'toUserId': toUserId,
+        'channel': channel,
+        'message': message,
+        'selector': selector
+    };
+
+    createResponse() => ChatMessage();
+    getResponseTypeName() => "ChatMessage";
+    getTypeName() => "PostChatToChannel";
+    TypeContext context = _ctx;
+}
+
+// @Route("/chathistory")
+class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible
+{
+    List<String> channels;
+    int afterId;
+    int take;
+
+    GetChatHistory({this.channels,this.afterId,this.take});
+    GetChatHistory.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        channels = JsonConverters.fromJson(json['channels'],'List<String>',context);
+        afterId = json['afterId'];
+        take = json['take'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'channels': JsonConverters.toJson(channels,'List<String>',context),
+        'afterId': afterId,
+        'take': take
+    };
+
+    createResponse() => GetChatHistoryResponse();
+    getResponseTypeName() => "GetChatHistoryResponse";
+    getTypeName() => "GetChatHistory";
+    TypeContext context = _ctx;
+}
+
+// @Route("/reset")
+class ClearChatHistory implements IReturnVoid, IConvertible
+{
+    ClearChatHistory();
+    ClearChatHistory.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() {}
+    getTypeName() => "ClearChatHistory";
+    TypeContext context = _ctx;
+}
+
+// @Route("/reset-serverevents")
+class ResetServerEvents implements IReturnVoid, IConvertible
+{
+    ResetServerEvents();
+    ResetServerEvents.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() {}
+    getTypeName() => "ResetServerEvents";
+    TypeContext context = _ctx;
+}
+
+// @Route("/channels/{Channel}/object")
+class PostObjectToChannel implements IReturnVoid, IConvertible
+{
+    String toUserId;
+    String channel;
+    String selector;
+    CustomType customType;
+    SetterType setterType;
+
+    PostObjectToChannel({this.toUserId,this.channel,this.selector,this.customType,this.setterType});
+    PostObjectToChannel.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        toUserId = json['toUserId'];
+        channel = json['channel'];
+        selector = json['selector'];
+        customType = JsonConverters.fromJson(json['customType'],'CustomType',context);
+        setterType = JsonConverters.fromJson(json['setterType'],'SetterType',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'toUserId': toUserId,
+        'channel': channel,
+        'selector': selector,
+        'customType': JsonConverters.toJson(customType,'CustomType',context),
+        'setterType': JsonConverters.toJson(setterType,'SetterType',context)
+    };
+
+    createResponse() {}
+    getTypeName() => "PostObjectToChannel";
+    TypeContext context = _ctx;
+}
+
+// @Route("/account")
+class GetUserDetails implements IReturn<GetUserDetailsResponse>, IConvertible
+{
+    GetUserDetails();
+    GetUserDetails.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() => GetUserDetailsResponse();
+    getResponseTypeName() => "GetUserDetailsResponse";
+    getTypeName() => "GetUserDetails";
     TypeContext context = _ctx;
 }
 
@@ -2259,8 +2722,39 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
         'statusDescription': statusDescription
     };
 
-    createResponse() { return new CustomHttpErrorResponse(); }
-    String getTypeName() { return "CustomHttpError"; }
+    createResponse() => CustomHttpErrorResponse();
+    getResponseTypeName() => "CustomHttpErrorResponse";
+    getTypeName() => "CustomHttpError";
+    TypeContext context = _ctx;
+}
+
+class FooRequest implements IReturn<Foo>, IConvertible
+{
+    FooRequest();
+    FooRequest.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() => Foo();
+    getResponseTypeName() => "Foo";
+    getTypeName() => "FooRequest";
+    TypeContext context = _ctx;
+}
+
+class RawBazRequest implements IReturn<List<Baz>>, IConvertible
+{
+    RawBazRequest();
+    RawBazRequest.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() => List<Baz>();
+    getResponseTypeName() => "List<Baz>";
+    getTypeName() => "RawBazRequest";
     TypeContext context = _ctx;
 }
 
@@ -2374,8 +2868,9 @@ class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
         'message': message
     };
 
-    createResponse() { return new ThrowTypeResponse(); }
-    String getTypeName() { return "ThrowType"; }
+    createResponse() => ThrowTypeResponse();
+    getResponseTypeName() => "ThrowTypeResponse";
+    getTypeName() => "ThrowType";
     TypeContext context = _ctx;
 }
 
@@ -2402,8 +2897,9 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
         'email': email
     };
 
-    createResponse() { return new ThrowValidationResponse(); }
-    String getTypeName() { return "ThrowValidation"; }
+    createResponse() => ThrowValidationResponse();
+    getResponseTypeName() => "ThrowValidationResponse";
+    getTypeName() => "ThrowValidation";
     TypeContext context = _ctx;
 }
 
@@ -2417,8 +2913,9 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new ThrowBusinessErrorResponse(); }
-    String getTypeName() { return "ThrowBusinessError"; }
+    createResponse() => ThrowBusinessErrorResponse();
+    getResponseTypeName() => "ThrowBusinessErrorResponse";
+    getTypeName() => "ThrowBusinessError";
     TypeContext context = _ctx;
 }
 
@@ -2457,8 +2954,9 @@ class GetAccount implements IReturn<Account>, IConvertible
         'account': account
     };
 
-    createResponse() { return new Account(); }
-    String getTypeName() { return "GetAccount"; }
+    createResponse() => Account();
+    getResponseTypeName() => "Account";
+    getTypeName() => "GetAccount";
     TypeContext context = _ctx;
 }
 
@@ -2481,8 +2979,9 @@ class GetProject implements IReturn<Project>, IConvertible
         'project': project
     };
 
-    createResponse() { return new Project(); }
-    String getTypeName() { return "GetProject"; }
+    createResponse() => Project();
+    getResponseTypeName() => "Project";
+    getTypeName() => "GetProject";
     TypeContext context = _ctx;
 }
 
@@ -2503,8 +3002,9 @@ class ImageAsStream implements IReturn<Uint8List>, IConvertible
         'format': format
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ImageAsStream"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ImageAsStream";
     TypeContext context = _ctx;
 }
 
@@ -2525,8 +3025,9 @@ class ImageAsBytes implements IReturn<Uint8List>, IConvertible
         'format': format
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ImageAsBytes"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ImageAsBytes";
     TypeContext context = _ctx;
 }
 
@@ -2547,8 +3048,9 @@ class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
         'format': format
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ImageAsCustomResult"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ImageAsCustomResult";
     TypeContext context = _ctx;
 }
 
@@ -2569,8 +3071,9 @@ class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
         'format': format
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ImageWriteToResponse"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ImageWriteToResponse";
     TypeContext context = _ctx;
 }
 
@@ -2591,8 +3094,9 @@ class ImageAsFile implements IReturn<Uint8List>, IConvertible
         'format': format
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ImageAsFile"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ImageAsFile";
     TypeContext context = _ctx;
 }
 
@@ -2654,8 +3158,9 @@ class HelloImage implements IReturn<Uint8List>, IConvertible
         'background': background
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "HelloImage"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "HelloImage";
     TypeContext context = _ctx;
 }
 
@@ -2677,8 +3182,9 @@ class Secured implements IReturn<SecuredResponse>, IConvertible
         'name': name
     };
 
-    createResponse() { return new SecuredResponse(); }
-    String getTypeName() { return "Secured"; }
+    createResponse() => SecuredResponse();
+    getResponseTypeName() => "SecuredResponse";
+    getTypeName() => "Secured";
     TypeContext context = _ctx;
 }
 
@@ -2700,8 +3206,9 @@ class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, I
         'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
     });
 
-    createResponse() { return new CreateJwtResponse(); }
-    String getTypeName() { return "CreateJwt"; }
+    createResponse() => CreateJwtResponse();
+    getResponseTypeName() => "CreateJwtResponse";
+    getTypeName() => "CreateJwt";
     TypeContext context = _ctx;
 }
 
@@ -2725,8 +3232,9 @@ class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertibl
         'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
     };
 
-    createResponse() { return new CreateRefreshJwtResponse(); }
-    String getTypeName() { return "CreateRefreshJwt"; }
+    createResponse() => CreateRefreshJwtResponse();
+    getResponseTypeName() => "CreateRefreshJwtResponse";
+    getTypeName() => "CreateRefreshJwt";
     TypeContext context = _ctx;
 }
 
@@ -2740,8 +3248,9 @@ class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new EmptyResponse(); }
-    String getTypeName() { return "InvalidateLastAccessToken"; }
+    createResponse() => EmptyResponse();
+    getResponseTypeName() => "EmptyResponse";
+    getTypeName() => "InvalidateLastAccessToken";
     TypeContext context = _ctx;
 }
 
@@ -2762,8 +3271,9 @@ class ViewLogs implements IReturn<String>, IConvertible
         'clear': clear
     };
 
-    createResponse() { return ""; }
-    String getTypeName() { return "ViewLogs"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "ViewLogs";
     TypeContext context = _ctx;
 }
 
@@ -2784,8 +3294,9 @@ class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
         'id': id
     };
 
-    createResponse() { return new MetadataTestResponse(); }
-    String getTypeName() { return "MetadataTest"; }
+    createResponse() => MetadataTestResponse();
+    getResponseTypeName() => "MetadataTestResponse";
+    getTypeName() => "MetadataTest";
     TypeContext context = _ctx;
 }
 
@@ -2806,8 +3317,9 @@ class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertibl
         'id': id
     };
 
-    createResponse() { return new List<MetadataTestChild>(); }
-    String getTypeName() { return "MetadataTestArray"; }
+    createResponse() => List<MetadataTestChild>();
+    getResponseTypeName() => "List<MetadataTestChild>";
+    getTypeName() => "MetadataTestArray";
     TypeContext context = _ctx;
 }
 
@@ -2822,8 +3334,9 @@ class GetExample implements IReturn<GetExampleResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetExampleResponse(); }
-    String getTypeName() { return "GetExample"; }
+    createResponse() => GetExampleResponse();
+    getResponseTypeName() => "GetExampleResponse";
+    getTypeName() => "GetExample";
     TypeContext context = _ctx;
 }
 
@@ -2844,8 +3357,9 @@ class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
         'take': take
     };
 
-    createResponse() { return new GetRandomIdsResponse(); }
-    String getTypeName() { return "GetRandomIds"; }
+    createResponse() => GetRandomIdsResponse();
+    getResponseTypeName() => "GetRandomIdsResponse";
+    getTypeName() => "GetRandomIds";
     TypeContext context = _ctx;
 }
 
@@ -2913,7 +3427,7 @@ class ReturnHtml implements IConvertible
 // @Route("/hello/{Name}")
 class Hello implements IReturn<HelloResponse>, IConvertible
 {
-    // @Required()
+    // @required()
     String name;
 
     String title;
@@ -2932,8 +3446,9 @@ class Hello implements IReturn<HelloResponse>, IConvertible
         'title': title
     };
 
-    createResponse() { return new HelloResponse(); }
-    String getTypeName() { return "Hello"; }
+    createResponse() => HelloResponse();
+    getResponseTypeName() => "HelloResponse";
+    getTypeName() => "Hello";
     TypeContext context = _ctx;
 }
 
@@ -2958,8 +3473,9 @@ class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
         'name': name
     };
 
-    createResponse() { return new HelloAnnotatedResponse(); }
-    String getTypeName() { return "HelloAnnotated"; }
+    createResponse() => HelloAnnotatedResponse();
+    getResponseTypeName() => "HelloAnnotatedResponse";
+    getTypeName() => "HelloAnnotated";
     TypeContext context = _ctx;
 }
 
@@ -2982,8 +3498,9 @@ class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
         'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',context)
     };
 
-    createResponse() { return new HelloResponse(); }
-    String getTypeName() { return "HelloWithNestedClass"; }
+    createResponse() => HelloResponse();
+    getResponseTypeName() => "HelloResponse";
+    getTypeName() => "HelloWithNestedClass";
     TypeContext context = _ctx;
 }
 
@@ -3003,8 +3520,9 @@ class HelloList implements IReturn<List<ListResult>>, IConvertible
         'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
-    createResponse() { return new List<ListResult>(); }
-    String getTypeName() { return "HelloList"; }
+    createResponse() => List<ListResult>();
+    getResponseTypeName() => "List<ListResult>";
+    getTypeName() => "HelloList";
     TypeContext context = _ctx;
 }
 
@@ -3024,8 +3542,9 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
         'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
-    createResponse() { return new List<ArrayResult>(); }
-    String getTypeName() { return "HelloArray"; }
+    createResponse() => List<ArrayResult>();
+    getResponseTypeName() => "List<ArrayResult>";
+    getTypeName() => "HelloArray";
     TypeContext context = _ctx;
 }
 
@@ -3133,8 +3652,9 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
         'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
     };
 
-    createResponse() { return new HelloAllTypesResponse(); }
-    String getTypeName() { return "HelloAllTypes"; }
+    createResponse() => HelloAllTypesResponse();
+    getResponseTypeName() => "HelloAllTypesResponse";
+    getTypeName() => "HelloAllTypes";
     TypeContext context = _ctx;
 }
 
@@ -3155,8 +3675,9 @@ class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, ICo
         'hierarchy': hierarchy
     });
 
-    createResponse() { return new SubAllTypes(); }
-    String getTypeName() { return "HelloSubAllTypes"; }
+    createResponse() => SubAllTypes();
+    getResponseTypeName() => "SubAllTypes";
+    getTypeName() => "HelloSubAllTypes";
     TypeContext context = _ctx;
 }
 
@@ -3176,8 +3697,9 @@ class HelloString implements IReturn<String>, IConvertible
         'name': name
     };
 
-    createResponse() { return ""; }
-    String getTypeName() { return "HelloString"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "HelloString";
     TypeContext context = _ctx;
 }
 
@@ -3223,8 +3745,9 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, I
         'id': id
     };
 
-    createResponse() { return new HelloWithDataContractResponse(); }
-    String getTypeName() { return "HelloWithDataContract"; }
+    createResponse() => HelloWithDataContractResponse();
+    getResponseTypeName() => "HelloWithDataContractResponse";
+    getTypeName() => "HelloWithDataContract";
     TypeContext context = _ctx;
 }
 
@@ -3247,8 +3770,9 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, ICo
         'name': name
     };
 
-    createResponse() { return new HelloWithDescriptionResponse(); }
-    String getTypeName() { return "HelloWithDescription"; }
+    createResponse() => HelloWithDescriptionResponse();
+    getResponseTypeName() => "HelloWithDescriptionResponse";
+    getTypeName() => "HelloWithDescription";
     TypeContext context = _ctx;
 }
 
@@ -3269,8 +3793,9 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
         'name': name
     });
 
-    createResponse() { return new HelloWithInheritanceResponse(); }
-    String getTypeName() { return "HelloWithInheritance"; }
+    createResponse() => HelloWithInheritanceResponse();
+    getResponseTypeName() => "HelloWithInheritanceResponse";
+    getTypeName() => "HelloWithInheritance";
     TypeContext context = _ctx;
 }
 
@@ -3343,8 +3868,9 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, ICon
         'name': name
     };
 
-    createResponse() { return new HelloWithAlternateReturnResponse(); }
-    String getTypeName() { return "HelloWithReturn"; }
+    createResponse() => HelloWithAlternateReturnResponse();
+    getResponseTypeName() => "HelloWithAlternateReturnResponse";
+    getTypeName() => "HelloWithReturn";
     TypeContext context = _ctx;
 }
 
@@ -3365,8 +3891,9 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
         'name': name
     };
 
-    createResponse() { return new HelloWithRouteResponse(); }
-    String getTypeName() { return "HelloWithRoute"; }
+    createResponse() => HelloWithRouteResponse();
+    getResponseTypeName() => "HelloWithRouteResponse";
+    getTypeName() => "HelloWithRoute";
     TypeContext context = _ctx;
 }
 
@@ -3386,8 +3913,9 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
         'name': name
     };
 
-    createResponse() { return new HelloWithTypeResponse(); }
-    String getTypeName() { return "HelloWithType"; }
+    createResponse() => HelloWithTypeResponse();
+    getResponseTypeName() => "HelloWithTypeResponse";
+    getTypeName() => "HelloWithType";
     TypeContext context = _ctx;
 }
 
@@ -3425,8 +3953,9 @@ class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new HelloInnerTypesResponse(); }
-    String getTypeName() { return "HelloInnerTypes"; }
+    createResponse() => HelloInnerTypesResponse();
+    getResponseTypeName() => "HelloInnerTypesResponse";
+    getTypeName() => "HelloInnerTypes";
     TypeContext context = _ctx;
 }
 
@@ -3465,8 +3994,9 @@ class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
         'id': id
     };
 
-    createResponse() { return new HelloVerbResponse(); }
-    String getTypeName() { return "HelloGet"; }
+    createResponse() => HelloVerbResponse();
+    getResponseTypeName() => "HelloVerbResponse";
+    getTypeName() => "HelloGet";
     TypeContext context = _ctx;
 }
 
@@ -3480,8 +4010,9 @@ class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, 
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    createResponse() { return new HelloVerbResponse(); }
-    String getTypeName() { return "HelloPost"; }
+    createResponse() => HelloVerbResponse();
+    getResponseTypeName() => "HelloVerbResponse";
+    getTypeName() => "HelloPost";
     TypeContext context = _ctx;
 }
 
@@ -3501,8 +4032,9 @@ class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
         'id': id
     };
 
-    createResponse() { return new HelloVerbResponse(); }
-    String getTypeName() { return "HelloPut"; }
+    createResponse() => HelloVerbResponse();
+    getResponseTypeName() => "HelloVerbResponse";
+    getTypeName() => "HelloPut";
     TypeContext context = _ctx;
 }
 
@@ -3522,8 +4054,9 @@ class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
         'id': id
     };
 
-    createResponse() { return new HelloVerbResponse(); }
-    String getTypeName() { return "HelloDelete"; }
+    createResponse() => HelloVerbResponse();
+    getResponseTypeName() => "HelloVerbResponse";
+    getTypeName() => "HelloDelete";
     TypeContext context = _ctx;
 }
 
@@ -3543,8 +4076,9 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
         'id': id
     };
 
-    createResponse() { return new HelloVerbResponse(); }
-    String getTypeName() { return "HelloPatch"; }
+    createResponse() => HelloVerbResponse();
+    getResponseTypeName() => "HelloVerbResponse";
+    getTypeName() => "HelloPatch";
     TypeContext context = _ctx;
 }
 
@@ -3565,7 +4099,7 @@ class HelloReturnVoid implements IReturnVoid, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "HelloReturnVoid"; }
+    getTypeName() => "HelloReturnVoid";
     TypeContext context = _ctx;
 }
 
@@ -3585,8 +4119,9 @@ class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
         'operator': JsonConverters.toJson(Operator,'ScopeType',context)
     };
 
-    createResponse() { return new EnumResponse(); }
-    String getTypeName() { return "EnumRequest"; }
+    createResponse() => EnumResponse();
+    getResponseTypeName() => "EnumResponse";
+    getTypeName() => "EnumRequest";
     TypeContext context = _ctx;
 }
 
@@ -3614,8 +4149,9 @@ class HelloZip implements IReturn<HelloZipResponse>, IConvertible
         'test': JsonConverters.toJson(test,'List<String>',context)
     };
 
-    createResponse() { return new HelloZipResponse(); }
-    String getTypeName() { return "HelloZip"; }
+    createResponse() => HelloZipResponse();
+    getResponseTypeName() => "HelloZipResponse";
+    getTypeName() => "HelloZip";
     TypeContext context = _ctx;
 }
 
@@ -3629,8 +4165,9 @@ class Ping implements IReturn<PingResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new PingResponse(); }
-    String getTypeName() { return "Ping"; }
+    createResponse() => PingResponse();
+    getResponseTypeName() => "PingResponse";
+    getTypeName() => "Ping";
     TypeContext context = _ctx;
 }
 
@@ -3657,8 +4194,9 @@ class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new RequiresRoleResponse(); }
-    String getTypeName() { return "RequiresRole"; }
+    createResponse() => RequiresRoleResponse();
+    getResponseTypeName() => "RequiresRoleResponse";
+    getTypeName() => "RequiresRole";
     TypeContext context = _ctx;
 }
 
@@ -3679,8 +4217,9 @@ class ReturnString implements IReturn<String>, IConvertible
         'data': data
     };
 
-    createResponse() { return ""; }
-    String getTypeName() { return "ReturnString"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "ReturnString";
     TypeContext context = _ctx;
 }
 
@@ -3701,8 +4240,9 @@ class ReturnBytes implements IReturn<Uint8List>, IConvertible
         'data': JsonConverters.toJson(data,'Uint8List',context)
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ReturnBytes"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ReturnBytes";
     TypeContext context = _ctx;
 }
 
@@ -3723,8 +4263,9 @@ class ReturnStream implements IReturn<Uint8List>, IConvertible
         'data': JsonConverters.toJson(data,'Uint8List',context)
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "ReturnStream"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "ReturnStream";
     TypeContext context = _ctx;
 }
 
@@ -3738,8 +4279,9 @@ class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new List<ReturnedDto>(); }
-    String getTypeName() { return "GetRequest1"; }
+    createResponse() => List<ReturnedDto>();
+    getResponseTypeName() => "List<ReturnedDto>";
+    getTypeName() => "GetRequest1";
     TypeContext context = _ctx;
 }
 
@@ -3753,8 +4295,9 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new List<ReturnedDto>(); }
-    String getTypeName() { return "GetRequest2"; }
+    createResponse() => List<ReturnedDto>();
+    getResponseTypeName() => "List<ReturnedDto>";
+    getTypeName() => "GetRequest2";
     TypeContext context = _ctx;
 }
 
@@ -3778,8 +4321,9 @@ class SendJson implements IReturn<String>, IConvertible
         'name': name
     };
 
-    createResponse() { return ""; }
-    String getTypeName() { return "SendJson"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "SendJson";
     TypeContext context = _ctx;
 }
 
@@ -3806,8 +4350,9 @@ class SendText implements IReturn<String>, IConvertible
         'contentType': contentType
     };
 
-    createResponse() { return ""; }
-    String getTypeName() { return "SendText"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "SendText";
     TypeContext context = _ctx;
 }
 
@@ -3834,8 +4379,9 @@ class SendRaw implements IReturn<Uint8List>, IConvertible
         'contentType': contentType
     };
 
-    createResponse() { return new Uint8List(0); }
-    String getTypeName() { return "SendRaw"; }
+    createResponse() => Uint8List(0);
+    getResponseTypeName() => "Uint8List";
+    getTypeName() => "SendRaw";
     TypeContext context = _ctx;
 }
 
@@ -3855,8 +4401,9 @@ class SendDefault implements IReturn<SendVerbResponse>, IConvertible
         'id': id
     };
 
-    createResponse() { return new SendVerbResponse(); }
-    String getTypeName() { return "SendDefault"; }
+    createResponse() => SendVerbResponse();
+    getResponseTypeName() => "SendVerbResponse";
+    getTypeName() => "SendDefault";
     TypeContext context = _ctx;
 }
 
@@ -3877,8 +4424,9 @@ class SendRestGet implements IReturn<SendVerbResponse>, IGet, IConvertible
         'id': id
     };
 
-    createResponse() { return new SendVerbResponse(); }
-    String getTypeName() { return "SendRestGet"; }
+    createResponse() => SendVerbResponse();
+    getResponseTypeName() => "SendVerbResponse";
+    getTypeName() => "SendRestGet";
     TypeContext context = _ctx;
 }
 
@@ -3898,8 +4446,9 @@ class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
         'id': id
     };
 
-    createResponse() { return new SendVerbResponse(); }
-    String getTypeName() { return "SendGet"; }
+    createResponse() => SendVerbResponse();
+    getResponseTypeName() => "SendVerbResponse";
+    getTypeName() => "SendGet";
     TypeContext context = _ctx;
 }
 
@@ -3919,8 +4468,9 @@ class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
         'id': id
     };
 
-    createResponse() { return new SendVerbResponse(); }
-    String getTypeName() { return "SendPost"; }
+    createResponse() => SendVerbResponse();
+    getResponseTypeName() => "SendVerbResponse";
+    getTypeName() => "SendPost";
     TypeContext context = _ctx;
 }
 
@@ -3940,8 +4490,9 @@ class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
         'id': id
     };
 
-    createResponse() { return new SendVerbResponse(); }
-    String getTypeName() { return "SendPut"; }
+    createResponse() => SendVerbResponse();
+    getResponseTypeName() => "SendVerbResponse";
+    getTypeName() => "SendPut";
     TypeContext context = _ctx;
 }
 
@@ -3962,7 +4513,7 @@ class SendReturnVoid implements IReturnVoid, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "SendReturnVoid"; }
+    getTypeName() => "SendReturnVoid";
     TypeContext context = _ctx;
 }
 
@@ -3976,8 +4527,9 @@ class GetSession implements IReturn<GetSessionResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetSessionResponse(); }
-    String getTypeName() { return "GetSession"; }
+    createResponse() => GetSessionResponse();
+    getResponseTypeName() => "GetSessionResponse";
+    getTypeName() => "GetSession";
     TypeContext context = _ctx;
 }
 
@@ -3998,8 +4550,9 @@ class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
         'customName': customName
     };
 
-    createResponse() { return new GetSessionResponse(); }
-    String getTypeName() { return "UpdateSession"; }
+    createResponse() => GetSessionResponse();
+    getResponseTypeName() => "GetSessionResponse";
+    getTypeName() => "UpdateSession";
     TypeContext context = _ctx;
 }
 
@@ -4047,8 +4600,9 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
         'isEnabled': isEnabled
     };
 
-    createResponse() { return new GetStuffResponse(); }
-    String getTypeName() { return "GetStuff"; }
+    createResponse() => GetStuffResponse();
+    getResponseTypeName() => "GetStuffResponse";
+    getTypeName() => "GetStuff";
     TypeContext context = _ctx;
 }
 
@@ -4068,8 +4622,9 @@ class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
         'loggers': JsonConverters.toJson(loggers,'List<Logger>',context)
     };
 
-    createResponse() { return new StoreLogsResponse(); }
-    String getTypeName() { return "StoreLogs"; }
+    createResponse() => StoreLogsResponse();
+    getResponseTypeName() => "StoreLogsResponse";
+    getTypeName() => "StoreLogs";
     TypeContext context = _ctx;
 }
 
@@ -4089,8 +4644,9 @@ class HelloAuth implements IReturn<HelloResponse>, IConvertible
         'name': name
     };
 
-    createResponse() { return new HelloResponse(); }
-    String getTypeName() { return "HelloAuth"; }
+    createResponse() => HelloResponse();
+    getResponseTypeName() => "HelloResponse";
+    getTypeName() => "HelloAuth";
     TypeContext context = _ctx;
 }
 
@@ -4104,8 +4660,9 @@ class TestAuth implements IReturn<TestAuthResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new TestAuthResponse(); }
-    String getTypeName() { return "TestAuth"; }
+    createResponse() => TestAuthResponse();
+    getResponseTypeName() => "TestAuthResponse";
+    getTypeName() => "TestAuth";
     TypeContext context = _ctx;
 }
 
@@ -4119,8 +4676,9 @@ class TestDataAllTypes implements IReturn<AllTypes>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new AllTypes(); }
-    String getTypeName() { return "TestDataAllTypes"; }
+    createResponse() => AllTypes();
+    getResponseTypeName() => "AllTypes";
+    getTypeName() => "TestDataAllTypes";
     TypeContext context = _ctx;
 }
 
@@ -4134,8 +4692,9 @@ class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConver
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new AllCollectionTypes(); }
-    String getTypeName() { return "TestDataAllCollectionTypes"; }
+    createResponse() => AllCollectionTypes();
+    getResponseTypeName() => "AllCollectionTypes";
+    getTypeName() => "TestDataAllCollectionTypes";
     TypeContext context = _ctx;
 }
 
@@ -4182,8 +4741,9 @@ class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IRetur
         'id': id
     });
 
-    createResponse() { return new QueryResponse<OnlyDefinedInGenericType>(); }
-    String getTypeName() { return "QueryPocoBase"; }
+    createResponse() => QueryResponse<OnlyDefinedInGenericType>();
+    getResponseTypeName() => "QueryResponse<OnlyDefinedInGenericType>";
+    getTypeName() => "QueryPocoBase";
     TypeContext context = _ctx;
 }
 
@@ -4204,8 +4764,9 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefine
         'id': id
     });
 
-    createResponse() { return new QueryResponse<OnlyDefinedInGenericTypeInto>(); }
-    String getTypeName() { return "QueryPocoIntoBase"; }
+    createResponse() => QueryResponse<OnlyDefinedInGenericTypeInto>();
+    getResponseTypeName() => "QueryResponse<OnlyDefinedInGenericTypeInto>";
+    getTypeName() => "QueryPocoIntoBase";
     TypeContext context = _ctx;
 }
 
@@ -4220,209 +4781,234 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    createResponse() { return new QueryResponse<Rockstar>(); }
-    String getTypeName() { return "QueryRockstars"; }
+    createResponse() => QueryResponse<Rockstar>();
+    getResponseTypeName() => "QueryResponse<Rockstar>";
+    getTypeName() => "QueryRockstars";
     TypeContext context = _ctx;
 }
 
 TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
-    'IAuthTokens': new TypeInfo(TypeOf.Interface),
-    'AuthUserSession': new TypeInfo(TypeOf.Class, create:() => new AuthUserSession()),
-    'List<IAuthTokens>': new TypeInfo(TypeOf.Class, create:() => new List<IAuthTokens>()),
-    'MetadataTestNestedChild': new TypeInfo(TypeOf.Class, create:() => new MetadataTestNestedChild()),
-    'MetadataTestChild': new TypeInfo(TypeOf.Class, create:() => new MetadataTestChild()),
-    'List<MetadataTestNestedChild>': new TypeInfo(TypeOf.Class, create:() => new List<MetadataTestNestedChild>()),
-    'MenuItemExampleItem': new TypeInfo(TypeOf.Class, create:() => new MenuItemExampleItem()),
-    'MenuItemExample': new TypeInfo(TypeOf.Class, create:() => new MenuItemExample()),
-    'MenuExample': new TypeInfo(TypeOf.Class, create:() => new MenuExample()),
-    'NestedClass': new TypeInfo(TypeOf.Class, create:() => new NestedClass()),
-    'ListResult': new TypeInfo(TypeOf.Class, create:() => new ListResult()),
-    'ArrayResult': new TypeInfo(TypeOf.Class, create:() => new ArrayResult()),
-    'EnumType': new TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
-    'EnumFlags': new TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
-    'SubType': new TypeInfo(TypeOf.Class, create:() => new SubType()),
-    'AllTypesBase': new TypeInfo(TypeOf.AbstractClass),
-    'Map<int,String>': new TypeInfo(TypeOf.Class, create:() => new Map<int,String>()),
-    'HelloBase': new TypeInfo(TypeOf.AbstractClass),
-    'HelloResponseBase': new TypeInfo(TypeOf.AbstractClass),
-    'Poco': new TypeInfo(TypeOf.Class, create:() => new Poco()),
-    'HelloBase1<T>': new TypeInfo(TypeOf.AbstractClass),
-    'Item': new TypeInfo(TypeOf.Class, create:() => new Item()),
-    'HelloWithReturnResponse': new TypeInfo(TypeOf.AbstractClass),
-    'HelloType': new TypeInfo(TypeOf.Class, create:() => new HelloType()),
-    'IPoco': new TypeInfo(TypeOf.Interface),
-    'IEmptyInterface': new TypeInfo(TypeOf.Interface),
-    'EmptyClass': new TypeInfo(TypeOf.Class, create:() => new EmptyClass()),
-    'InnerType': new TypeInfo(TypeOf.Class, create:() => new InnerType()),
-    'InnerEnum': new TypeInfo(TypeOf.Enum, enumValues:InnerEnum.values),
-    'DayOfWeek': new TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
-    'ScopeType': new TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
-    'PingService': new TypeInfo(TypeOf.Class, create:() => new PingService()),
-    'ReturnedDto': new TypeInfo(TypeOf.Class, create:() => new ReturnedDto()),
-    'CustomUserSession': new TypeInfo(TypeOf.Class, create:() => new CustomUserSession()),
-    'UnAuthInfo': new TypeInfo(TypeOf.Class, create:() => new UnAuthInfo()),
-    'Channel': new TypeInfo(TypeOf.Class, create:() => new Channel()),
-    'Device': new TypeInfo(TypeOf.Class, create:() => new Device()),
-    'List<Channel>': new TypeInfo(TypeOf.Class, create:() => new List<Channel>()),
-    'Logger': new TypeInfo(TypeOf.Class, create:() => new Logger()),
-    'List<Device>': new TypeInfo(TypeOf.Class, create:() => new List<Device>()),
-    'Rockstar': new TypeInfo(TypeOf.Class, create:() => new Rockstar()),
-    'OnlyDefinedInGenericType': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericType()),
-    'OnlyDefinedInGenericTypeFrom': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeFrom()),
-    'OnlyDefinedInGenericTypeInto': new TypeInfo(TypeOf.Class, create:() => new OnlyDefinedInGenericTypeInto()),
-    'TypesGroup': new TypeInfo(TypeOf.Class, create:() => new TypesGroup()),
-    'CustomHttpErrorResponse': new TypeInfo(TypeOf.Class, create:() => new CustomHttpErrorResponse()),
-    'ThrowTypeResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowTypeResponse()),
-    'ThrowValidationResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowValidationResponse()),
-    'ThrowBusinessErrorResponse': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessErrorResponse()),
-    'Account': new TypeInfo(TypeOf.Class, create:() => new Account()),
-    'Project': new TypeInfo(TypeOf.Class, create:() => new Project()),
-    'SecuredResponse': new TypeInfo(TypeOf.Class, create:() => new SecuredResponse()),
-    'CreateJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateJwtResponse()),
-    'CreateRefreshJwtResponse': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwtResponse()),
-    'MetadataTestResponse': new TypeInfo(TypeOf.Class, create:() => new MetadataTestResponse()),
-    'List<MetadataTestChild>': new TypeInfo(TypeOf.Class, create:() => new List<MetadataTestChild>()),
-    'GetExampleResponse': new TypeInfo(TypeOf.Class, create:() => new GetExampleResponse()),
-    'GetRandomIdsResponse': new TypeInfo(TypeOf.Class, create:() => new GetRandomIdsResponse()),
-    'HelloResponse': new TypeInfo(TypeOf.Class, create:() => new HelloResponse()),
-    'HelloAnnotatedResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAnnotatedResponse()),
-    'AllTypes': new TypeInfo(TypeOf.Class, create:() => new AllTypes()),
-    'AllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new AllCollectionTypes()),
-    'List<Poco>': new TypeInfo(TypeOf.Class, create:() => new List<Poco>()),
-    'Map<String,List<Poco>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Poco>>()),
-    'Map<String,List<Map<String,Poco>>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<Map<String,Poco>>>()),
-    'List<Map<String,Poco>>': new TypeInfo(TypeOf.Class, create:() => new List<Map<String,Poco>>()),
-    'Map<String,Poco>': new TypeInfo(TypeOf.Class, create:() => new Map<String,Poco>()),
-    'HelloAllTypesResponse': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypesResponse()),
-    'SubAllTypes': new TypeInfo(TypeOf.Class, create:() => new SubAllTypes()),
-    'HelloDateTime': new TypeInfo(TypeOf.Class, create:() => new HelloDateTime()),
-    'HelloWithDataContractResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContractResponse()),
-    'HelloWithDescriptionResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithDescriptionResponse()),
-    'HelloWithInheritanceResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithInheritanceResponse()),
-    'HelloWithAlternateReturnResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithAlternateReturnResponse()),
-    'HelloWithRouteResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithRouteResponse()),
-    'HelloWithTypeResponse': new TypeInfo(TypeOf.Class, create:() => new HelloWithTypeResponse()),
-    'HelloInnerTypesResponse': new TypeInfo(TypeOf.Class, create:() => new HelloInnerTypesResponse()),
-    'HelloVerbResponse': new TypeInfo(TypeOf.Class, create:() => new HelloVerbResponse()),
-    'EnumResponse': new TypeInfo(TypeOf.Class, create:() => new EnumResponse()),
-    'HelloTypes': new TypeInfo(TypeOf.Class, create:() => new HelloTypes()),
-    'HelloZipResponse': new TypeInfo(TypeOf.Class, create:() => new HelloZipResponse()),
-    'PingResponse': new TypeInfo(TypeOf.Class, create:() => new PingResponse()),
-    'Map<String,ResponseStatus>': new TypeInfo(TypeOf.Class, create:() => new Map<String,ResponseStatus>()),
-    'RequiresRoleResponse': new TypeInfo(TypeOf.Class, create:() => new RequiresRoleResponse()),
-    'SendVerbResponse': new TypeInfo(TypeOf.Class, create:() => new SendVerbResponse()),
-    'GetSessionResponse': new TypeInfo(TypeOf.Class, create:() => new GetSessionResponse()),
-    'GetStuffResponse': new TypeInfo(TypeOf.Class, create:() => new GetStuffResponse()),
-    'StoreLogsResponse': new TypeInfo(TypeOf.Class, create:() => new StoreLogsResponse()),
-    'List<Logger>': new TypeInfo(TypeOf.Class, create:() => new List<Logger>()),
-    'TestAuthResponse': new TypeInfo(TypeOf.Class, create:() => new TestAuthResponse()),
-    'RequiresAdmin': new TypeInfo(TypeOf.Class, create:() => new RequiresAdmin()),
-    'CustomRoute': new TypeInfo(TypeOf.Class, create:() => new CustomRoute()),
-    'Wait': new TypeInfo(TypeOf.Class, create:() => new Wait()),
-    'EchoTypes': new TypeInfo(TypeOf.Class, create:() => new EchoTypes()),
-    'EchoCollections': new TypeInfo(TypeOf.Class, create:() => new EchoCollections()),
-    'EchoComplexTypes': new TypeInfo(TypeOf.Class, create:() => new EchoComplexTypes()),
-    'List<SubType>': new TypeInfo(TypeOf.Class, create:() => new List<SubType>()),
-    'Map<String,SubType>': new TypeInfo(TypeOf.Class, create:() => new Map<String,SubType>()),
-    'StoreRockstars': new TypeInfo(TypeOf.Class, create:() => new StoreRockstars()),
-    'CustomHttpError': new TypeInfo(TypeOf.Class, create:() => new CustomHttpError()),
-    'DummyTypes': new TypeInfo(TypeOf.Class, create:() => new DummyTypes()),
-    'List<HelloResponse>': new TypeInfo(TypeOf.Class, create:() => new List<HelloResponse>()),
-    'List<ListResult>': new TypeInfo(TypeOf.Class, create:() => new List<ListResult>()),
-    'List<ArrayResult>': new TypeInfo(TypeOf.Class, create:() => new List<ArrayResult>()),
-    'ThrowHttpError': new TypeInfo(TypeOf.Class, create:() => new ThrowHttpError()),
-    'Throw404': new TypeInfo(TypeOf.Class, create:() => new Throw404()),
-    'ThrowCustom400': new TypeInfo(TypeOf.Class, create:() => new ThrowCustom400()),
-    'ThrowType': new TypeInfo(TypeOf.Class, create:() => new ThrowType()),
-    'ThrowValidation': new TypeInfo(TypeOf.Class, create:() => new ThrowValidation()),
-    'ThrowBusinessError': new TypeInfo(TypeOf.Class, create:() => new ThrowBusinessError()),
-    'RootPathRoutes': new TypeInfo(TypeOf.Class, create:() => new RootPathRoutes()),
-    'GetAccount': new TypeInfo(TypeOf.Class, create:() => new GetAccount()),
-    'GetProject': new TypeInfo(TypeOf.Class, create:() => new GetProject()),
-    'ImageAsStream': new TypeInfo(TypeOf.Class, create:() => new ImageAsStream()),
-    'ImageAsBytes': new TypeInfo(TypeOf.Class, create:() => new ImageAsBytes()),
-    'ImageAsCustomResult': new TypeInfo(TypeOf.Class, create:() => new ImageAsCustomResult()),
-    'ImageWriteToResponse': new TypeInfo(TypeOf.Class, create:() => new ImageWriteToResponse()),
-    'ImageAsFile': new TypeInfo(TypeOf.Class, create:() => new ImageAsFile()),
-    'ImageAsRedirect': new TypeInfo(TypeOf.Class, create:() => new ImageAsRedirect()),
-    'HelloImage': new TypeInfo(TypeOf.Class, create:() => new HelloImage()),
-    'Secured': new TypeInfo(TypeOf.Class, create:() => new Secured()),
-    'CreateJwt': new TypeInfo(TypeOf.Class, create:() => new CreateJwt()),
-    'CreateRefreshJwt': new TypeInfo(TypeOf.Class, create:() => new CreateRefreshJwt()),
-    'InvalidateLastAccessToken': new TypeInfo(TypeOf.Class, create:() => new InvalidateLastAccessToken()),
-    'ViewLogs': new TypeInfo(TypeOf.Class, create:() => new ViewLogs()),
-    'MetadataTest': new TypeInfo(TypeOf.Class, create:() => new MetadataTest()),
-    'MetadataTestArray': new TypeInfo(TypeOf.Class, create:() => new MetadataTestArray()),
-    'GetExample': new TypeInfo(TypeOf.Class, create:() => new GetExample()),
-    'GetRandomIds': new TypeInfo(TypeOf.Class, create:() => new GetRandomIds()),
-    'TextFileTest': new TypeInfo(TypeOf.Class, create:() => new TextFileTest()),
-    'ReturnText': new TypeInfo(TypeOf.Class, create:() => new ReturnText()),
-    'ReturnHtml': new TypeInfo(TypeOf.Class, create:() => new ReturnHtml()),
-    'Hello': new TypeInfo(TypeOf.Class, create:() => new Hello()),
-    'HelloAnnotated': new TypeInfo(TypeOf.Class, create:() => new HelloAnnotated()),
-    'HelloWithNestedClass': new TypeInfo(TypeOf.Class, create:() => new HelloWithNestedClass()),
-    'HelloList': new TypeInfo(TypeOf.Class, create:() => new HelloList()),
-    'HelloArray': new TypeInfo(TypeOf.Class, create:() => new HelloArray()),
-    'HelloWithEnum': new TypeInfo(TypeOf.Class, create:() => new HelloWithEnum()),
-    'RestrictedAttributes': new TypeInfo(TypeOf.Class, create:() => new RestrictedAttributes()),
-    'AllowedAttributes': new TypeInfo(TypeOf.Class, create:() => new AllowedAttributes()),
-    'HelloAllTypes': new TypeInfo(TypeOf.Class, create:() => new HelloAllTypes()),
-    'HelloSubAllTypes': new TypeInfo(TypeOf.Class, create:() => new HelloSubAllTypes()),
-    'HelloString': new TypeInfo(TypeOf.Class, create:() => new HelloString()),
-    'HelloVoid': new TypeInfo(TypeOf.Class, create:() => new HelloVoid()),
-    'HelloWithDataContract': new TypeInfo(TypeOf.Class, create:() => new HelloWithDataContract()),
-    'HelloWithDescription': new TypeInfo(TypeOf.Class, create:() => new HelloWithDescription()),
-    'HelloWithInheritance': new TypeInfo(TypeOf.Class, create:() => new HelloWithInheritance()),
-    'HelloWithGenericInheritance': new TypeInfo(TypeOf.Class, create:() => new HelloWithGenericInheritance()),
-    'HelloWithGenericInheritance2': new TypeInfo(TypeOf.Class, create:() => new HelloWithGenericInheritance2()),
-    'HelloWithNestedInheritance': new TypeInfo(TypeOf.Class, create:() => new HelloWithNestedInheritance()),
-    'HelloWithReturn': new TypeInfo(TypeOf.Class, create:() => new HelloWithReturn()),
-    'HelloWithRoute': new TypeInfo(TypeOf.Class, create:() => new HelloWithRoute()),
-    'HelloWithType': new TypeInfo(TypeOf.Class, create:() => new HelloWithType()),
-    'HelloInterface': new TypeInfo(TypeOf.Class, create:() => new HelloInterface()),
-    'HelloInnerTypes': new TypeInfo(TypeOf.Class, create:() => new HelloInnerTypes()),
-    'HelloBuiltin': new TypeInfo(TypeOf.Class, create:() => new HelloBuiltin()),
-    'HelloGet': new TypeInfo(TypeOf.Class, create:() => new HelloGet()),
-    'HelloPost': new TypeInfo(TypeOf.Class, create:() => new HelloPost()),
-    'HelloPut': new TypeInfo(TypeOf.Class, create:() => new HelloPut()),
-    'HelloDelete': new TypeInfo(TypeOf.Class, create:() => new HelloDelete()),
-    'HelloPatch': new TypeInfo(TypeOf.Class, create:() => new HelloPatch()),
-    'HelloReturnVoid': new TypeInfo(TypeOf.Class, create:() => new HelloReturnVoid()),
-    'EnumRequest': new TypeInfo(TypeOf.Class, create:() => new EnumRequest()),
-    'HelloZip': new TypeInfo(TypeOf.Class, create:() => new HelloZip()),
-    'Ping': new TypeInfo(TypeOf.Class, create:() => new Ping()),
-    'ResetConnections': new TypeInfo(TypeOf.Class, create:() => new ResetConnections()),
-    'RequiresRole': new TypeInfo(TypeOf.Class, create:() => new RequiresRole()),
-    'ReturnString': new TypeInfo(TypeOf.Class, create:() => new ReturnString()),
-    'ReturnBytes': new TypeInfo(TypeOf.Class, create:() => new ReturnBytes()),
-    'Uint8List': new TypeInfo(TypeOf.Class, create:() => new Uint8List(0)),
-    'ReturnStream': new TypeInfo(TypeOf.Class, create:() => new ReturnStream()),
-    'GetRequest1': new TypeInfo(TypeOf.Class, create:() => new GetRequest1()),
-    'GetRequest2': new TypeInfo(TypeOf.Class, create:() => new GetRequest2()),
-    'SendJson': new TypeInfo(TypeOf.Class, create:() => new SendJson()),
-    'SendText': new TypeInfo(TypeOf.Class, create:() => new SendText()),
-    'SendRaw': new TypeInfo(TypeOf.Class, create:() => new SendRaw()),
-    'SendDefault': new TypeInfo(TypeOf.Class, create:() => new SendDefault()),
-    'SendRestGet': new TypeInfo(TypeOf.Class, create:() => new SendRestGet()),
-    'SendGet': new TypeInfo(TypeOf.Class, create:() => new SendGet()),
-    'SendPost': new TypeInfo(TypeOf.Class, create:() => new SendPost()),
-    'SendPut': new TypeInfo(TypeOf.Class, create:() => new SendPut()),
-    'SendReturnVoid': new TypeInfo(TypeOf.Class, create:() => new SendReturnVoid()),
-    'GetSession': new TypeInfo(TypeOf.Class, create:() => new GetSession()),
-    'UpdateSession': new TypeInfo(TypeOf.Class, create:() => new UpdateSession()),
-    'GetStuff': new TypeInfo(TypeOf.Class, create:() => new GetStuff()),
-    'StoreLogs': new TypeInfo(TypeOf.Class, create:() => new StoreLogs()),
-    'HelloAuth': new TypeInfo(TypeOf.Class, create:() => new HelloAuth()),
-    'TestAuth': new TypeInfo(TypeOf.Class, create:() => new TestAuth()),
-    'TestDataAllTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllTypes()),
-    'TestDataAllCollectionTypes': new TypeInfo(TypeOf.Class, create:() => new TestDataAllCollectionTypes()),
-    'TestVoidResponse': new TypeInfo(TypeOf.Class, create:() => new TestVoidResponse()),
-    'TestNullResponse': new TypeInfo(TypeOf.Class, create:() => new TestNullResponse()),
-    'QueryPocoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoBase()),
-    'List<OnlyDefinedInGenericType>': new TypeInfo(TypeOf.Class, create:() => new List<OnlyDefinedInGenericType>()),
-    'QueryPocoIntoBase': new TypeInfo(TypeOf.Class, create:() => new QueryPocoIntoBase()),
-    'List<OnlyDefinedInGenericTypeInto>': new TypeInfo(TypeOf.Class, create:() => new List<OnlyDefinedInGenericTypeInto>()),
-    'QueryRockstars': new TypeInfo(TypeOf.Class, create:() => new QueryRockstars()),
-    'List<Rockstar>': new TypeInfo(TypeOf.Class, create:() => new List<Rockstar>()),
+    'CustomType': TypeInfo(TypeOf.Class, create:() => CustomType()),
+    'SetterType': TypeInfo(TypeOf.Class, create:() => SetterType()),
+    'Bar': TypeInfo(TypeOf.Class, create:() => Bar()),
+    'Baz': TypeInfo(TypeOf.Class, create:() => Baz()),
+    'IAuthTokens': TypeInfo(TypeOf.Interface),
+    'AuthUserSession': TypeInfo(TypeOf.Class, create:() => AuthUserSession()),
+    'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => List<IAuthTokens>()),
+    'MetadataTestNestedChild': TypeInfo(TypeOf.Class, create:() => MetadataTestNestedChild()),
+    'MetadataTestChild': TypeInfo(TypeOf.Class, create:() => MetadataTestChild()),
+    'List<MetadataTestNestedChild>': TypeInfo(TypeOf.Class, create:() => List<MetadataTestNestedChild>()),
+    'MenuItemExampleItem': TypeInfo(TypeOf.Class, create:() => MenuItemExampleItem()),
+    'MenuItemExample': TypeInfo(TypeOf.Class, create:() => MenuItemExample()),
+    'MenuExample': TypeInfo(TypeOf.Class, create:() => MenuExample()),
+    'NestedClass': TypeInfo(TypeOf.Class, create:() => NestedClass()),
+    'ListResult': TypeInfo(TypeOf.Class, create:() => ListResult()),
+    'ArrayResult': TypeInfo(TypeOf.Class, create:() => ArrayResult()),
+    'EnumType': TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
+    'EnumFlags': TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
+    'SubType': TypeInfo(TypeOf.Class, create:() => SubType()),
+    'AllTypesBase': TypeInfo(TypeOf.AbstractClass),
+    'Map<int,String>': TypeInfo(TypeOf.Class, create:() => Map<int,String>()),
+    'Poco': TypeInfo(TypeOf.Class, create:() => Poco()),
+    'HelloBase': TypeInfo(TypeOf.AbstractClass),
+    'HelloResponseBase': TypeInfo(TypeOf.AbstractClass),
+    'HelloBase1<T>': TypeInfo(TypeOf.AbstractClass),
+    'Item': TypeInfo(TypeOf.Class, create:() => Item()),
+    'HelloWithReturnResponse': TypeInfo(TypeOf.AbstractClass),
+    'HelloType': TypeInfo(TypeOf.Class, create:() => HelloType()),
+    'IPoco': TypeInfo(TypeOf.Interface),
+    'IEmptyInterface': TypeInfo(TypeOf.Interface),
+    'EmptyClass': TypeInfo(TypeOf.Class, create:() => EmptyClass()),
+    'InnerType': TypeInfo(TypeOf.Class, create:() => InnerType()),
+    'InnerEnum': TypeInfo(TypeOf.Enum, enumValues:InnerEnum.values),
+    'DayOfWeek': TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
+    'ScopeType': TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
+    'PingService': TypeInfo(TypeOf.Class, create:() => PingService()),
+    'ReturnedDto': TypeInfo(TypeOf.Class, create:() => ReturnedDto()),
+    'CustomUserSession': TypeInfo(TypeOf.Class, create:() => CustomUserSession()),
+    'UnAuthInfo': TypeInfo(TypeOf.Class, create:() => UnAuthInfo()),
+    'Channel': TypeInfo(TypeOf.Class, create:() => Channel()),
+    'Device': TypeInfo(TypeOf.Class, create:() => Device()),
+    'List<Channel>': TypeInfo(TypeOf.Class, create:() => List<Channel>()),
+    'Logger': TypeInfo(TypeOf.Class, create:() => Logger()),
+    'List<Device>': TypeInfo(TypeOf.Class, create:() => List<Device>()),
+    'Rockstar': TypeInfo(TypeOf.Class, create:() => Rockstar()),
+    'OnlyDefinedInGenericType': TypeInfo(TypeOf.Class, create:() => OnlyDefinedInGenericType()),
+    'OnlyDefinedInGenericTypeFrom': TypeInfo(TypeOf.Class, create:() => OnlyDefinedInGenericTypeFrom()),
+    'OnlyDefinedInGenericTypeInto': TypeInfo(TypeOf.Class, create:() => OnlyDefinedInGenericTypeInto()),
+    'TypesGroup': TypeInfo(TypeOf.Class, create:() => TypesGroup()),
+    'ChatMessage': TypeInfo(TypeOf.Class, create:() => ChatMessage()),
+    'GetChatHistoryResponse': TypeInfo(TypeOf.Class, create:() => GetChatHistoryResponse()),
+    'List<ChatMessage>': TypeInfo(TypeOf.Class, create:() => List<ChatMessage>()),
+    'GetUserDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetUserDetailsResponse()),
+    'CustomHttpErrorResponse': TypeInfo(TypeOf.Class, create:() => CustomHttpErrorResponse()),
+    'Foo': TypeInfo(TypeOf.Class, create:() => Foo()),
+    'List<Bar>': TypeInfo(TypeOf.Class, create:() => List<Bar>()),
+    'ThrowTypeResponse': TypeInfo(TypeOf.Class, create:() => ThrowTypeResponse()),
+    'ThrowValidationResponse': TypeInfo(TypeOf.Class, create:() => ThrowValidationResponse()),
+    'ThrowBusinessErrorResponse': TypeInfo(TypeOf.Class, create:() => ThrowBusinessErrorResponse()),
+    'Account': TypeInfo(TypeOf.Class, create:() => Account()),
+    'Project': TypeInfo(TypeOf.Class, create:() => Project()),
+    'SecuredResponse': TypeInfo(TypeOf.Class, create:() => SecuredResponse()),
+    'CreateJwtResponse': TypeInfo(TypeOf.Class, create:() => CreateJwtResponse()),
+    'CreateRefreshJwtResponse': TypeInfo(TypeOf.Class, create:() => CreateRefreshJwtResponse()),
+    'MetadataTestResponse': TypeInfo(TypeOf.Class, create:() => MetadataTestResponse()),
+    'List<MetadataTestChild>': TypeInfo(TypeOf.Class, create:() => List<MetadataTestChild>()),
+    'GetExampleResponse': TypeInfo(TypeOf.Class, create:() => GetExampleResponse()),
+    'GetRandomIdsResponse': TypeInfo(TypeOf.Class, create:() => GetRandomIdsResponse()),
+    'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
+    'HelloAnnotatedResponse': TypeInfo(TypeOf.Class, create:() => HelloAnnotatedResponse()),
+    'AllTypes': TypeInfo(TypeOf.Class, create:() => AllTypes()),
+    'AllCollectionTypes': TypeInfo(TypeOf.Class, create:() => AllCollectionTypes()),
+    'Uint8List': TypeInfo(TypeOf.Class, create:() => Uint8List(0)),
+    'List<Poco>': TypeInfo(TypeOf.Class, create:() => List<Poco>()),
+    'Map<String,List<Poco>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Poco>>()),
+    'Map<String,List<Map<String,Poco>>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Map<String,Poco>>>()),
+    'List<Map<String,Poco>>': TypeInfo(TypeOf.Class, create:() => List<Map<String,Poco>>()),
+    'Map<String,Poco>': TypeInfo(TypeOf.Class, create:() => Map<String,Poco>()),
+    'HelloAllTypesResponse': TypeInfo(TypeOf.Class, create:() => HelloAllTypesResponse()),
+    'SubAllTypes': TypeInfo(TypeOf.Class, create:() => SubAllTypes()),
+    'HelloDateTime': TypeInfo(TypeOf.Class, create:() => HelloDateTime()),
+    'HelloWithDataContractResponse': TypeInfo(TypeOf.Class, create:() => HelloWithDataContractResponse()),
+    'HelloWithDescriptionResponse': TypeInfo(TypeOf.Class, create:() => HelloWithDescriptionResponse()),
+    'HelloWithInheritanceResponse': TypeInfo(TypeOf.Class, create:() => HelloWithInheritanceResponse()),
+    'HelloWithAlternateReturnResponse': TypeInfo(TypeOf.Class, create:() => HelloWithAlternateReturnResponse()),
+    'HelloWithRouteResponse': TypeInfo(TypeOf.Class, create:() => HelloWithRouteResponse()),
+    'HelloWithTypeResponse': TypeInfo(TypeOf.Class, create:() => HelloWithTypeResponse()),
+    'HelloInnerTypesResponse': TypeInfo(TypeOf.Class, create:() => HelloInnerTypesResponse()),
+    'HelloVerbResponse': TypeInfo(TypeOf.Class, create:() => HelloVerbResponse()),
+    'EnumResponse': TypeInfo(TypeOf.Class, create:() => EnumResponse()),
+    'HelloTypes': TypeInfo(TypeOf.Class, create:() => HelloTypes()),
+    'HelloZipResponse': TypeInfo(TypeOf.Class, create:() => HelloZipResponse()),
+    'PingResponse': TypeInfo(TypeOf.Class, create:() => PingResponse()),
+    'Map<String,ResponseStatus>': TypeInfo(TypeOf.Class, create:() => Map<String,ResponseStatus>()),
+    'RequiresRoleResponse': TypeInfo(TypeOf.Class, create:() => RequiresRoleResponse()),
+    'SendVerbResponse': TypeInfo(TypeOf.Class, create:() => SendVerbResponse()),
+    'GetSessionResponse': TypeInfo(TypeOf.Class, create:() => GetSessionResponse()),
+    'GetStuffResponse': TypeInfo(TypeOf.Class, create:() => GetStuffResponse()),
+    'StoreLogsResponse': TypeInfo(TypeOf.Class, create:() => StoreLogsResponse()),
+    'List<Logger>': TypeInfo(TypeOf.Class, create:() => List<Logger>()),
+    'TestAuthResponse': TypeInfo(TypeOf.Class, create:() => TestAuthResponse()),
+    'RequiresAdmin': TypeInfo(TypeOf.Class, create:() => RequiresAdmin()),
+    'CustomRoute': TypeInfo(TypeOf.Class, create:() => CustomRoute()),
+    'Wait': TypeInfo(TypeOf.Class, create:() => Wait()),
+    'EchoTypes': TypeInfo(TypeOf.Class, create:() => EchoTypes()),
+    'EchoCollections': TypeInfo(TypeOf.Class, create:() => EchoCollections()),
+    'EchoComplexTypes': TypeInfo(TypeOf.Class, create:() => EchoComplexTypes()),
+    'List<SubType>': TypeInfo(TypeOf.Class, create:() => List<SubType>()),
+    'Map<String,SubType>': TypeInfo(TypeOf.Class, create:() => Map<String,SubType>()),
+    'StoreRockstars': TypeInfo(TypeOf.Class, create:() => StoreRockstars()),
+    'PostRawToChannel': TypeInfo(TypeOf.Class, create:() => PostRawToChannel()),
+    'PostChatToChannel': TypeInfo(TypeOf.Class, create:() => PostChatToChannel()),
+    'GetChatHistory': TypeInfo(TypeOf.Class, create:() => GetChatHistory()),
+    'ClearChatHistory': TypeInfo(TypeOf.Class, create:() => ClearChatHistory()),
+    'ResetServerEvents': TypeInfo(TypeOf.Class, create:() => ResetServerEvents()),
+    'PostObjectToChannel': TypeInfo(TypeOf.Class, create:() => PostObjectToChannel()),
+    'GetUserDetails': TypeInfo(TypeOf.Class, create:() => GetUserDetails()),
+    'CustomHttpError': TypeInfo(TypeOf.Class, create:() => CustomHttpError()),
+    'FooRequest': TypeInfo(TypeOf.Class, create:() => FooRequest()),
+    'List<Baz>': TypeInfo(TypeOf.Class, create:() => List<Baz>()),
+    'RawBazRequest': TypeInfo(TypeOf.Class, create:() => RawBazRequest()),
+    'DummyTypes': TypeInfo(TypeOf.Class, create:() => DummyTypes()),
+    'List<HelloResponse>': TypeInfo(TypeOf.Class, create:() => List<HelloResponse>()),
+    'List<ListResult>': TypeInfo(TypeOf.Class, create:() => List<ListResult>()),
+    'List<ArrayResult>': TypeInfo(TypeOf.Class, create:() => List<ArrayResult>()),
+    'ThrowHttpError': TypeInfo(TypeOf.Class, create:() => ThrowHttpError()),
+    'Throw404': TypeInfo(TypeOf.Class, create:() => Throw404()),
+    'ThrowCustom400': TypeInfo(TypeOf.Class, create:() => ThrowCustom400()),
+    'ThrowType': TypeInfo(TypeOf.Class, create:() => ThrowType()),
+    'ThrowValidation': TypeInfo(TypeOf.Class, create:() => ThrowValidation()),
+    'ThrowBusinessError': TypeInfo(TypeOf.Class, create:() => ThrowBusinessError()),
+    'RootPathRoutes': TypeInfo(TypeOf.Class, create:() => RootPathRoutes()),
+    'GetAccount': TypeInfo(TypeOf.Class, create:() => GetAccount()),
+    'GetProject': TypeInfo(TypeOf.Class, create:() => GetProject()),
+    'ImageAsStream': TypeInfo(TypeOf.Class, create:() => ImageAsStream()),
+    'ImageAsBytes': TypeInfo(TypeOf.Class, create:() => ImageAsBytes()),
+    'ImageAsCustomResult': TypeInfo(TypeOf.Class, create:() => ImageAsCustomResult()),
+    'ImageWriteToResponse': TypeInfo(TypeOf.Class, create:() => ImageWriteToResponse()),
+    'ImageAsFile': TypeInfo(TypeOf.Class, create:() => ImageAsFile()),
+    'ImageAsRedirect': TypeInfo(TypeOf.Class, create:() => ImageAsRedirect()),
+    'HelloImage': TypeInfo(TypeOf.Class, create:() => HelloImage()),
+    'Secured': TypeInfo(TypeOf.Class, create:() => Secured()),
+    'CreateJwt': TypeInfo(TypeOf.Class, create:() => CreateJwt()),
+    'CreateRefreshJwt': TypeInfo(TypeOf.Class, create:() => CreateRefreshJwt()),
+    'InvalidateLastAccessToken': TypeInfo(TypeOf.Class, create:() => InvalidateLastAccessToken()),
+    'ViewLogs': TypeInfo(TypeOf.Class, create:() => ViewLogs()),
+    'MetadataTest': TypeInfo(TypeOf.Class, create:() => MetadataTest()),
+    'MetadataTestArray': TypeInfo(TypeOf.Class, create:() => MetadataTestArray()),
+    'GetExample': TypeInfo(TypeOf.Class, create:() => GetExample()),
+    'GetRandomIds': TypeInfo(TypeOf.Class, create:() => GetRandomIds()),
+    'TextFileTest': TypeInfo(TypeOf.Class, create:() => TextFileTest()),
+    'ReturnText': TypeInfo(TypeOf.Class, create:() => ReturnText()),
+    'ReturnHtml': TypeInfo(TypeOf.Class, create:() => ReturnHtml()),
+    'Hello': TypeInfo(TypeOf.Class, create:() => Hello()),
+    'HelloAnnotated': TypeInfo(TypeOf.Class, create:() => HelloAnnotated()),
+    'HelloWithNestedClass': TypeInfo(TypeOf.Class, create:() => HelloWithNestedClass()),
+    'HelloList': TypeInfo(TypeOf.Class, create:() => HelloList()),
+    'HelloArray': TypeInfo(TypeOf.Class, create:() => HelloArray()),
+    'HelloWithEnum': TypeInfo(TypeOf.Class, create:() => HelloWithEnum()),
+    'RestrictedAttributes': TypeInfo(TypeOf.Class, create:() => RestrictedAttributes()),
+    'AllowedAttributes': TypeInfo(TypeOf.Class, create:() => AllowedAttributes()),
+    'HelloAllTypes': TypeInfo(TypeOf.Class, create:() => HelloAllTypes()),
+    'HelloSubAllTypes': TypeInfo(TypeOf.Class, create:() => HelloSubAllTypes()),
+    'HelloString': TypeInfo(TypeOf.Class, create:() => HelloString()),
+    'HelloVoid': TypeInfo(TypeOf.Class, create:() => HelloVoid()),
+    'HelloWithDataContract': TypeInfo(TypeOf.Class, create:() => HelloWithDataContract()),
+    'HelloWithDescription': TypeInfo(TypeOf.Class, create:() => HelloWithDescription()),
+    'HelloWithInheritance': TypeInfo(TypeOf.Class, create:() => HelloWithInheritance()),
+    'HelloWithGenericInheritance': TypeInfo(TypeOf.Class, create:() => HelloWithGenericInheritance()),
+    'HelloWithGenericInheritance2': TypeInfo(TypeOf.Class, create:() => HelloWithGenericInheritance2()),
+    'HelloWithNestedInheritance': TypeInfo(TypeOf.Class, create:() => HelloWithNestedInheritance()),
+    'HelloWithReturn': TypeInfo(TypeOf.Class, create:() => HelloWithReturn()),
+    'HelloWithRoute': TypeInfo(TypeOf.Class, create:() => HelloWithRoute()),
+    'HelloWithType': TypeInfo(TypeOf.Class, create:() => HelloWithType()),
+    'HelloInterface': TypeInfo(TypeOf.Class, create:() => HelloInterface()),
+    'HelloInnerTypes': TypeInfo(TypeOf.Class, create:() => HelloInnerTypes()),
+    'HelloBuiltin': TypeInfo(TypeOf.Class, create:() => HelloBuiltin()),
+    'HelloGet': TypeInfo(TypeOf.Class, create:() => HelloGet()),
+    'HelloPost': TypeInfo(TypeOf.Class, create:() => HelloPost()),
+    'HelloPut': TypeInfo(TypeOf.Class, create:() => HelloPut()),
+    'HelloDelete': TypeInfo(TypeOf.Class, create:() => HelloDelete()),
+    'HelloPatch': TypeInfo(TypeOf.Class, create:() => HelloPatch()),
+    'HelloReturnVoid': TypeInfo(TypeOf.Class, create:() => HelloReturnVoid()),
+    'EnumRequest': TypeInfo(TypeOf.Class, create:() => EnumRequest()),
+    'HelloZip': TypeInfo(TypeOf.Class, create:() => HelloZip()),
+    'Ping': TypeInfo(TypeOf.Class, create:() => Ping()),
+    'ResetConnections': TypeInfo(TypeOf.Class, create:() => ResetConnections()),
+    'RequiresRole': TypeInfo(TypeOf.Class, create:() => RequiresRole()),
+    'ReturnString': TypeInfo(TypeOf.Class, create:() => ReturnString()),
+    'ReturnBytes': TypeInfo(TypeOf.Class, create:() => ReturnBytes()),
+    'ReturnStream': TypeInfo(TypeOf.Class, create:() => ReturnStream()),
+    'List<ReturnedDto>': TypeInfo(TypeOf.Class, create:() => List<ReturnedDto>()),
+    'GetRequest1': TypeInfo(TypeOf.Class, create:() => GetRequest1()),
+    'GetRequest2': TypeInfo(TypeOf.Class, create:() => GetRequest2()),
+    'SendJson': TypeInfo(TypeOf.Class, create:() => SendJson()),
+    'SendText': TypeInfo(TypeOf.Class, create:() => SendText()),
+    'SendRaw': TypeInfo(TypeOf.Class, create:() => SendRaw()),
+    'SendDefault': TypeInfo(TypeOf.Class, create:() => SendDefault()),
+    'SendRestGet': TypeInfo(TypeOf.Class, create:() => SendRestGet()),
+    'SendGet': TypeInfo(TypeOf.Class, create:() => SendGet()),
+    'SendPost': TypeInfo(TypeOf.Class, create:() => SendPost()),
+    'SendPut': TypeInfo(TypeOf.Class, create:() => SendPut()),
+    'SendReturnVoid': TypeInfo(TypeOf.Class, create:() => SendReturnVoid()),
+    'GetSession': TypeInfo(TypeOf.Class, create:() => GetSession()),
+    'UpdateSession': TypeInfo(TypeOf.Class, create:() => UpdateSession()),
+    'GetStuff': TypeInfo(TypeOf.Class, create:() => GetStuff()),
+    'StoreLogs': TypeInfo(TypeOf.Class, create:() => StoreLogs()),
+    'HelloAuth': TypeInfo(TypeOf.Class, create:() => HelloAuth()),
+    'TestAuth': TypeInfo(TypeOf.Class, create:() => TestAuth()),
+    'TestDataAllTypes': TypeInfo(TypeOf.Class, create:() => TestDataAllTypes()),
+    'TestDataAllCollectionTypes': TypeInfo(TypeOf.Class, create:() => TestDataAllCollectionTypes()),
+    'TestVoidResponse': TypeInfo(TypeOf.Class, create:() => TestVoidResponse()),
+    'TestNullResponse': TypeInfo(TypeOf.Class, create:() => TestNullResponse()),
+    'QueryResponse<OnlyDefinedInGenericType>': TypeInfo(TypeOf.Class, create:() => QueryResponse<OnlyDefinedInGenericType>()),
+    'QueryPocoBase': TypeInfo(TypeOf.Class, create:() => QueryPocoBase()),
+    'List<OnlyDefinedInGenericType>': TypeInfo(TypeOf.Class, create:() => List<OnlyDefinedInGenericType>()),
+    'QueryResponse<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => QueryResponse<OnlyDefinedInGenericTypeInto>()),
+    'QueryPocoIntoBase': TypeInfo(TypeOf.Class, create:() => QueryPocoIntoBase()),
+    'List<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => List<OnlyDefinedInGenericTypeInto>()),
+    'QueryResponse<Rockstar>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Rockstar>()),
+    'QueryRockstars': TypeInfo(TypeOf.Class, create:() => QueryRockstars()),
+    'List<Rockstar>': TypeInfo(TypeOf.Class, create:() => List<Rockstar>()),
 });
 
