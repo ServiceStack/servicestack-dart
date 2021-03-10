@@ -295,6 +295,7 @@ class JsonServiceClient implements IServiceClient {
 
       res = await req.close();
     } on Exception catch (e) {
+      Log.debug("_resendRequest() createRequest: $e");
       return await handleError(null, e);
     }
 
@@ -302,6 +303,7 @@ class JsonServiceClient implements IServiceClient {
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
+      Log.debug("_resendRequest() createResponse: $e");
       return await handleError(res, e);
     }
   }
@@ -319,6 +321,7 @@ class JsonServiceClient implements IServiceClient {
       res = await req.close();
       statusCode = res.statusCode;
     } on Exception catch (e) {
+      Log.debug("sendRequest() createResponse: $e");
       return await handleError(null, e);
     }
 
@@ -326,6 +329,8 @@ class JsonServiceClient implements IServiceClient {
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
+      var debug = Log.isDebugEnabled();
+      if (debug) Log.debug("sendRequest(): statusCode:$statusCode, $e");
       if (statusCode == 401) {
         var hasRefreshTokenCookie = cookies.any((x) => x.name == "ss-reftok");
         if (refreshToken != null || useTokenCookie || hasRefreshTokenCookie) {
@@ -340,8 +345,10 @@ class JsonServiceClient implements IServiceClient {
             var jwtResponse =
                 await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
             bearerToken = jwtResponse.accessToken;
+            if (debug) Log.debug("sendRequest(): bearerToken refreshed");
             return await _resendRequest(info);
           } on Exception catch (jwtEx) {
+            if (debug) Log.debug("sendRequest(): jwtEx: $jwtEx");
             return await handleError(
                 res, jwtEx, WebServiceExceptionType.RefreshTokenException);
           }
@@ -401,7 +408,8 @@ class JsonServiceClient implements IServiceClient {
       try {
         req = await client.openUrl(method, uri);
         break;
-      } on Exception catch (e) {
+      } on Exception catch (e,trace) {
+        Log.debug("createRequest(): $e\n$trace");
         if (firstEx == null) {
           firstEx = e;
         }
@@ -455,7 +463,7 @@ class JsonServiceClient implements IServiceClient {
     try {
       mergeCookies(res.cookies);
     } on RangeError catch (e) {
-      //print("RangeError: " + e.toString());
+      Log.debug("[RangeError] createResponse(): " + e.toString());
       //ignore https://github.com/dart-lang/sdk/issues/34220
     }
 
@@ -506,7 +514,8 @@ class JsonServiceClient implements IServiceClient {
       try {
         var ret = convertTo(request, responseAs, jsonObj);
         return ret;
-      } on Exception catch (e) {
+      } on Exception catch (e, trace) {
+        Log.error("createResponse(): $e\n$trace", e);
         raiseError(res, e);
         return jsonObj;
       }
@@ -557,7 +566,8 @@ class JsonServiceClient implements IServiceClient {
         var jsonObj = json.decode(str);
         webEx.responseStatus = createResponseStatus(jsonObj);
       }
-    } on Exception catch (e) {
+    } on Exception catch (e,trace) {
+      Log.warn("handleError(): $e\n$trace");
       webEx.innerException = e;
     }
 

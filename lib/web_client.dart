@@ -232,7 +232,7 @@ class JsonWebClient implements IServiceClient {
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return List<T>();
+    if (requests == null || requests.length == 0) return <T>[];
     var url = combinePaths([replyBaseUrl, nameOf(requests.first) + "[]"]);
 
     return this.sendRequest<List<T>>(SendWebContext(
@@ -247,14 +247,14 @@ class JsonWebClient implements IServiceClient {
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return List<T>();
+    if (requests == null || requests.length == 0) return <T>[];
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first) + "[]"]);
 
     await this.sendRequest<List<T>>(SendWebContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: List<T>(),
+        responseAs: <T>[],
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
@@ -287,6 +287,7 @@ class JsonWebClient implements IServiceClient {
       var streamedRes = await client.send(req);
       res = await Response.fromStream(streamedRes);
     } on Exception catch (e) {
+      Log.debug("_resendRequest() createRequest: $e");
       return await handleError(null, e);
     }
 
@@ -294,6 +295,7 @@ class JsonWebClient implements IServiceClient {
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
+      Log.debug("_resendRequest() createResponse: $e");
       return await handleError(res, e);
     }
   }
@@ -310,6 +312,7 @@ class JsonWebClient implements IServiceClient {
       var streamedRes = await client.send(req);
       res = await Response.fromStream(streamedRes);
     } on Exception catch (e) {
+      Log.debug("sendRequest() createResponse: $e");
       return await handleError(null, e);
     }
 
@@ -317,6 +320,8 @@ class JsonWebClient implements IServiceClient {
       var response = await createResponse(res, info);
       return response;
     } on Exception catch (e) {
+      var debug = Log.isDebugEnabled();
+      if (debug) Log.debug("sendRequest(): statusCode:${res.statusCode}, $e");
       if (res.statusCode == 401) {
         if (refreshToken != null || useTokenCookie) {
           var jwtRequest = GetAccessToken(refreshToken: this.refreshToken);
@@ -331,8 +336,10 @@ class JsonWebClient implements IServiceClient {
             var jwtResponse =
                 await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
             bearerToken = jwtResponse.accessToken;
+            if (debug) Log.debug("sendRequest(): bearerToken refreshed");
             return await _resendRequest(info);
           } on Exception catch (jwtEx) {
+            if (debug) Log.debug("sendRequest(): jwtEx: $jwtEx");
             return await handleError(
                 res, jwtEx, WebServiceExceptionType.RefreshTokenException);
           }
@@ -393,7 +400,8 @@ class JsonWebClient implements IServiceClient {
       try {
         req = Request(method, uri);
         break;
-      } on Exception catch (e) {
+      } on Exception catch (e, trace) {
+        Log.debug("createRequest(): $e\n$trace");
         if (firstEx == null) {
           firstEx = e;
         }
@@ -478,7 +486,8 @@ class JsonWebClient implements IServiceClient {
       try {
         var ret = convertTo(request, responseAs, jsonObj);
         return ret;
-      } on Exception catch (e) {
+      } on Exception catch (e, trace) {
+        Log.error("createResponse(): $e\n$trace", e);
         raiseError(res, e);
         return jsonObj as T;
       }
@@ -514,7 +523,8 @@ class JsonWebClient implements IServiceClient {
         var jsonObj = json.decode(str);
         webEx.responseStatus = createResponseStatus(jsonObj);
       }
-    } on Exception catch (e) {
+    } on Exception catch (e, trace) {
+      Log.warn("handleError(): $e\n$trace");
       webEx.innerException = e;
     }
 
