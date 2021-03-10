@@ -301,6 +301,17 @@ void main() {
     expect(str, equals("foo"));
   });
 
+  test('Can deserialize nested list', () async {
+    var client = createTestClient();
+    var response = await client.get(FooRequest());
+    expect(response.bars.length, equals(2));
+
+    expect(response.runtimeType.toString(), equals(FooRequest().getResponseTypeName()));
+    expect(response.bars.first.runtimeType.toString(), equals("Bar"));
+    var allNames = response.bars.map((x) => x.name);
+    expect(allNames, equals(["bar item 1", "bar item 2"]));
+  });
+
   test('Can deserialize naked list', () async {
     var client = createTestClient();
     var response = await client.get(RawBazRequest());

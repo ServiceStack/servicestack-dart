@@ -289,7 +289,7 @@ class QueryResponse<T> implements IConvertible {
         'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context)
       };
 
-  getTypeName() => "QueryResponse<T>";
+  getTypeName() => "QueryResponse<${T}>";
   TypeContext context = _ctx;
 }
 

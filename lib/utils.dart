@@ -96,7 +96,9 @@ List<String> splitGenericArgs(String argsString) {
 }
 
 List<String> runtimeGenericTypeDefs(instance, List<int> indexes) {
-  var genericArgs = getGenericArgs(instance.runtimeType.toString());
+  var genericArgs = getGenericArgs(nameOf(instance));
+  // Generic classes return QueryResponse<Reified> vs QueryResponse<T> if default getTypeName() => "QueryResponse<T>" is used
+  // var genericArgs = getGenericArgs(instance.runtimeType.toString());
   var argTypes = <String>[];
   indexes.forEach((i) => argTypes.add(genericArgs[i]));
   return argTypes;
@@ -127,13 +129,28 @@ String combinePaths(List<String> paths) {
   return ret.length > 0 ? ret : (combinedPaths.length == 0 ? "/" : ".");
 }
 
+bool isMinified(String type) => type.startsWith("minified:");
+bool containsMinified(String type) => type.indexOf("minified:") >= 0; //e.g. List<minified:...>
+
 String nameOf(dynamic o) {
   if (o == null) return "null";
 
   try {
-    Function getTypeName = o.getTypeName;
-    if (getTypeName != null) return getTypeName();
-  } catch (e) {}
+    if (o is List) {
+      var first = o.length > 0 ? o[0] : null;
+      if (first != null) {
+        var elementType = nameOf(first);
+        Log.debug("nameOf: List<$elementType>");
+        if (!isMinified(elementType))
+          return "List<$elementType>";
+      }
+    } else {
+      Function getTypeName = o.getTypeName;
+      if (getTypeName != null) return getTypeName();
+    }
+  } catch (e) {
+    Log.debug("ignored nameOf error: $e, falling back to o.runtimeType: ${o.runtimeType}");
+  }
 
   return o.runtimeType.toString();
 }

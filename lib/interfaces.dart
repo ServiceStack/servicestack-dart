@@ -61,32 +61,55 @@ class TypeContext {
   List<String> get genericArgs => getGenericArgs(typeName);
 
   TypeInfo getTypeInfo(String typeName) {
-    if (!isMinified(typeName)) {
+    if (!containsMinified(typeName)) {
       var typeInfo = types[typeName] ?? childContext?.getTypeInfo(typeName);
       Log.debug("getTypeInfo(): $typeName => $typeInfo");
       return typeInfo;
     } else {
-      if (isMinified(typeName)) {
-        if (EnableMinifiedTypes) {
-          initMinified();
-          var minifiedTypeInfo = MinifiedTypes[typeName];
-          if (minifiedTypeInfo != null) {
-            String originalType = "";
-            if (Log.isDebugEnabled()) {
-              for (var entry in types.entries) {
-                if (entry.value == minifiedTypeInfo) {
-                  originalType = ", original: '${entry.key}'";
-                }
+      if (EnableMinifiedTypes) {
+        initMinified();
+        var useTypeName = typeName;
+        if (!isMinified(typeName)) {
+          useTypeName = deminifyTypeName(typeName);
+          if (!containsMinified(useTypeName)) {
+            return getTypeInfo(useTypeName);
+          }
+        }
+        var minifiedTypeInfo = MinifiedTypes[useTypeName];
+        if (minifiedTypeInfo != null) {
+          String originalType = "";
+          if (Log.isDebugEnabled()) {
+            for (var entry in types.entries) {
+              if (entry.value == minifiedTypeInfo) {
+                originalType = ", original: '${entry.key}'";
               }
             }
-            Log.debug("Found TypeInfo for Minified Type: '${typeName}'${originalType}");
-            return minifiedTypeInfo;
           }
+          Log.debug("Found TypeInfo for Minified Type: '${useTypeName}'${originalType}");
+          return minifiedTypeInfo;
         }
       }
     }
     Log.error("Could not find TypeInfo for Minified Type: ${typeName}");
     return null;
+  }
+
+  deminifyTypeName(String typeName) {
+    var args = getGenericArgs(typeName);
+    var sb = StringBuffer();
+    for (var arg in args) {
+      var useTypeName = resolveMinifiedTypeName(arg) ?? arg;
+      if (sb.length > 0) sb.write(',');
+      sb.write(useTypeName);
+    }
+    var genericType = leftPart(typeName,'<'); //only supports 1 level generic types
+    var resolvedTypeName = "$genericType<${sb.toString()}>";
+    if (containsMinified(resolvedTypeName)) {
+      Log.warn("deminifyTypeName(): Failed to deminify '$typeName' => '$resolvedTypeName'");
+    } else {
+      Log.debug("deminifyTypeName(): '$typeName' => '$resolvedTypeName'");
+    }
+    return resolvedTypeName;
   }
 
   initMinified() {

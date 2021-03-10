@@ -93,7 +93,18 @@ class JsonConverters {
 String _toString(value) =>
     value == null ? null : value is String ? value : value.toString();
 
-String getTypeName(value) => nameOf(value);
+String getTypeName(value, TypeContext context) {
+  var typeName = nameOf(value);
+  if (isMinified(typeName)) {
+    var originalType = context.resolveMinifiedTypeName(typeName);
+    if (Log.isDebugEnabled()) Log.debug("getTypeName(): Found minified type $typeName => $originalType");
+    if (originalType != null)
+      return originalType;
+    Log.warn("getTypeName(): Could not resolve minified type '$typeName', falling back to context.typeName '${context.typeName}'");
+    return context.typeName;
+  }
+  return typeName;
+}
 
 bool _equals(left,right) {
   if (left == right)
@@ -104,6 +115,10 @@ bool _equals(left,right) {
 }
 
 dynamic convert(dynamic value, String typeName, [TypeContext context = null]) {
+  if (typeName == "dynamic") {
+    Log.warn("convert(): skipping converting '${value.runtimeType}' to 'dynamic' type");
+    return value;
+  }
   if (typeName == "int") {
     return int.tryParse(_toString(value)) ?? null;
   }
@@ -141,7 +156,8 @@ dynamic convert(dynamic value, String typeName, [TypeContext context = null]) {
           }
           var ret = o.fromMap(value);
           return ret;
-        } catch (e) {
+        } catch (e, trace) {
+          Log.error("convert(): $e\n$trace", e);
           rethrow;
         }
       }
@@ -169,7 +185,9 @@ String getResponseType(dynamic request, dynamic responseAs) {
     if (getResponseTypeName != null) {
       return getResponseTypeName();
     }
-  } catch (e) {}
+  } catch (e, trace) {
+    Log.error("getResponseType(): $e\n$trace", e);
+  }
   return nameOf(responseAs);
 }
 
@@ -221,6 +239,7 @@ class EnumConverter implements IConverter {
     try {
       return enumValue.value;
     } catch(e) {
+      Log.debug("toEnumValue(): ignored toEnumValue error: $e");
       return rightPart(enumValue.toString(), ".");
     }
   }
@@ -243,6 +262,7 @@ class DefaultConverter implements IConverter {
       var ret = value.toJson();
       return ret;
     } catch (NoSuchMethodError) {
+      Log.debug("DefaultConverter: '$value' does not have toJson()");
       return value;
     }
   }
@@ -343,11 +363,11 @@ class MapConverter implements IConverter {
     var to = {};
     if (map != null) {
       map.forEach((key, val) {
-        var keyConverter = JsonConverters.resolve(getTypeName(key), context);
+        var keyConverter = JsonConverters.resolve(nameOf(key), context);
         var mapKey = keyConverter != null
           ? keyConverter.toJson(key, context)
           : key;
-        var valueConverter = val != null ? JsonConverters.resolve(getTypeName(val), context) : null;
+        var valueConverter = val != null ? JsonConverters.resolve(nameOf(val), context) : null;
         to[mapKey.toString()] = valueConverter != null
             ? valueConverter.toJson(val, context)
             : val;
@@ -364,7 +384,7 @@ class MapConverter implements IConverter {
       return value;
     }
 
-    var toArgTypes = getGenericArgs(getTypeName(o));
+    var toArgTypes = getGenericArgs(getTypeName(o, context));
 
     Map map = value;
     map.forEach((key, val) {
@@ -383,7 +403,7 @@ class ListConverter implements IConverter {
     var to = [];
     if (list != null) {
       for (var x in list) {
-        var converter = JsonConverters.resolve(getTypeName(x), context);
+        var converter = JsonConverters.resolve(getTypeName(x, context), context);
         if (converter != null) {
           var item = converter.toJson(x, context);
           to.add(item);
@@ -403,7 +423,7 @@ class ListConverter implements IConverter {
     if (value.runtimeType == o.runtimeType) {
       return value;
     }
-    return populate(o, getTypeName(o), value, context);
+    return populate(o, getTypeName(o, context), value, context);
   }
 
   static String getElementType(String listType) {
