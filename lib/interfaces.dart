@@ -84,7 +84,7 @@ class TypeContext {
     }
 
     this.hasInit = true;
-    this.types["__init"] = new TypeInfo(TypeOf.Interface);
+    this.types["__init"] = TypeInfo(TypeOf.Interface);
     return this;
   }
 
@@ -96,29 +96,29 @@ class TypeContext {
   TypeInfo get typeInfo {
     var ret = getTypeInfo(typeName);
     if (ret == null) {
-      throw new ArgumentError(
+      throw ArgumentError(
           "Unknown Type '${typeName}', see: ${docsDartUrl("#generating-unknown-types")}");
     }
     return ret;
   }
 
   TypeContext newContext(String typeName) =>
-      new TypeContext(typeName: typeName, types: types);
+      TypeContext(typeName: typeName, types: types);
 
   static TypeContext combine(String typeName, TypeContext parentContext,
           TypeContext childContext) =>
       parentContext != null
-          ? new TypeContext(
+          ? TypeContext(
               typeName: typeName,
               types: parentContext.types,
               childContext: childContext)
-          : new TypeContext(typeName: typeName, types: childContext.types);
+          : TypeContext(typeName: typeName, types: childContext.types);
 
   void addChildContext(TypeContext childContext) {
     if (this.childContext == null) {
       this.childContext = childContext;
     } else {
-      this.childContext = new TypeContext(
+      this.childContext = TypeContext(
           types: this.childContext.types, childContext: childContext);
     }
   }
@@ -190,7 +190,7 @@ abstract class IServiceClient {
 
 class TypeAs {
   static String string = "";
-  static Uint8List bytes = new Uint8List(0);
+  static Uint8List bytes = Uint8List(0);
 }
 
 typedef void UrlFilter(String url);

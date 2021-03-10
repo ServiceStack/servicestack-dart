@@ -9,11 +9,11 @@ import '../dtos/test.dtos.dart';
 void main() async {
   //var host = "test.servicestack.net";
   var host = "localhost:5000";
-  var client = new JsonServiceClient("http://${host}");
-  var httpClient = new HttpClient();
+  var client = JsonServiceClient("http://${host}");
+  var httpClient = HttpClient();
 
   _runServiceClient(int i) async {
-    var response = await client.get(new Hello(name: "World"));
+    var response = await client.get(Hello(name: "World"));
     print("request ${i}: ${response.result}");
   }
 

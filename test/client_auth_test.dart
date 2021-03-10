@@ -6,7 +6,7 @@ import 'utils.dart';
 import 'dtos/test.dtos.dart';
 
 CreateJwt createJwt([Map options]) {
-  var to = new CreateJwt.fromJson(options ?? new Map<String, dynamic>());
+  var to = CreateJwt.fromJson(options ?? Map<String, dynamic>());
   if (to.userAuthId == null) to.userAuthId = "1";
   if (to.displayName == null) to.displayName = "test jwt";
   if (to.email == null) to.email = "test@auth.com";
@@ -14,7 +14,7 @@ CreateJwt createJwt([Map options]) {
 }
 
 void clearSession(JsonServiceClient client) async =>
-    await client.post(new Authenticate(provider: "logout"));
+    await client.post(Authenticate(provider: "logout"));
 
 void main() {
 
@@ -23,7 +23,7 @@ void main() {
     var response = await client.post(createJwt());
     client.bearerToken = response.token;
 
-    var testAuth = await client.get(new TestAuth());
+    var testAuth = await client.get(TestAuth());
     expect(testAuth.userId, equals("1"));
     expect(testAuth.displayName, equals("test jwt"));
     expect(testAuth.sessionId, isNotNull);
@@ -37,7 +37,7 @@ void main() {
     };
 
     try {
-      await client.get(new TestAuth());
+      await client.get(TestAuth());
       fail("should throw");
     } on WebServiceException catch (e) {
       var status = e.responseStatus;
@@ -57,11 +57,11 @@ void main() {
       client.password = "test";
     };
 
-    await client.get(new TestAuth());
+    await client.get(TestAuth());
     expect(count, equals(1));
   });
 
-  test('Can use onAuthenticationRequired to fetch new token', () async {
+  test('Can use onAuthenticationRequired to fetch token', () async {
     var client = createTestClient();
     var count = 0;
 
@@ -70,16 +70,16 @@ void main() {
       var authClient = createTestClient();
       authClient.userName = "test";
       authClient.password = "test";
-      var response = await authClient.get(new Authenticate());
+      var response = await authClient.get(Authenticate());
       client.bearerToken = response.bearerToken;
     };
 
-    await client.get(new TestAuth());
+    await client.get(TestAuth());
     expect(count, equals(1));
   });
 
   test(
-      'Can use onAuthenticationRequired to fetch new token after expired token',
+      'Can use onAuthenticationRequired to fetch token after expired token',
       () async {
     var client = createTestClient();
     var count = 0;
@@ -92,46 +92,46 @@ void main() {
     };
 
     var createExpiredJwt = createJwt();
-    createExpiredJwt.jwtExpiry = new DateTime(2000, 1, 1);
+    createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
 
     client.bearerToken = expiredJwt.token;
-    await client.get(new TestAuth());
+    await client.get(TestAuth());
     expect(count, equals(1));
   });
 
-  test('Can use refreshToken to fetch new token after expired token', () async {
+  test('Can use refreshToken to fetch token after expired token', () async {
     var client = createTestClient();
 
     var count = 0;
     var authClient = createTestClient();
     client.userName = "test";
     client.password = "test";
-    var authResponse = await client.post(new Authenticate());
+    var authResponse = await client.post(Authenticate());
 
     client.refreshToken = authResponse.refreshToken;
     client.setCredentials(null, null);
 
     var createExpiredJwt = createJwt();
-    createExpiredJwt.jwtExpiry = new DateTime(2000, 1, 1);
+    createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
 
     client.bearerToken = expiredJwt.token;
-    await client.get(new TestAuth());
+    await client.get(TestAuth());
 
     expect(client.bearerToken, isNot(equals(expiredJwt.token)));
   });
 
   test('Can reauthenticate after an auto refresh access token', () async {
     var client = createTestClient();
-    var auth = new Authenticate(
+    var auth = Authenticate(
         provider: "credentials", userName: "test", password: "test");
     var authResponse = await client.post(auth);
 
     var refreshToken = authResponse.refreshToken;
 
     var createExpiredJwt = createJwt();
-    createExpiredJwt.jwtExpiry = new DateTime(2000, 1, 1);
+    createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
     var bearerToken = expiredJwt.token;
 
@@ -154,7 +154,7 @@ void main() {
 
   test('Does fetch AccessToken using RefreshTokenCookies', () async {
     var client = createTestClient();
-    var authResponse = await client.post(new Authenticate(
+    var authResponse = await client.post(Authenticate(
         provider: "credentials", userName: "test", password: "test"));
 
     var initialAccessToken = client.cookies.firstWhere((x) => x.name == 'ss-tok');
@@ -166,7 +166,7 @@ void main() {
     var response = await client.send(request);
     expect(response.result, equals(request.name));
 
-    await client.post(new InvalidateLastAccessToken());
+    await client.post(InvalidateLastAccessToken());
 
     response = await client.send(request);
     expect(response.result, equals(request.name));
@@ -181,7 +181,7 @@ void main() {
     client.refreshToken = "Invalid.Refresh.Token";
 
     try {
-      await client.get(new TestAuth());
+      await client.get(TestAuth());
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.type, equals(WebServiceExceptionType.RefreshTokenException));
@@ -193,13 +193,13 @@ void main() {
   test('Expires RefreshToken throws RefreshTokenException', () async {
     var client = createTestClient();
 
-    var createExpiredJwt = new CreateRefreshJwt();
-    createExpiredJwt.jwtExpiry = new DateTime(2000, 1, 1);
+    var createExpiredJwt = CreateRefreshJwt();
+    createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
     client.refreshToken = expiredJwt.token;
 
     try {
-      await client.get(new TestAuth());
+      await client.get(TestAuth());
       fail("should throw");
     } catch (e) {
       expect(e.type, equals(WebServiceExceptionType.RefreshTokenException));

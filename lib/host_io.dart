@@ -3,7 +3,7 @@ import 'dart:io';
 
 import './host_base.dart';
 
-HostBase createHost() => new IOHost();
+HostBase createHost() => IOHost();
 
 class IOHost extends HostBase {
 

@@ -13,7 +13,7 @@ typedef void WebResponseExceptionFilter(Response res, Exception e);
 
 class ClientFactory {
   static IServiceClient create([String baseUrl = "/"]) {
-    var client = new JsonWebClient(baseUrl);
+    var client = JsonWebClient(baseUrl);
     if (ClientConfig.initClient != null) {
       ClientConfig.initClient(client);
     }
@@ -53,7 +53,7 @@ class WebResponseException implements Exception {
   WebResponseException(this.response);
 
   ResponseStatus getResponseStatus() {
-    return new ResponseStatus();
+    return ResponseStatus();
   }
 }
 
@@ -88,7 +88,7 @@ class JsonWebClient implements IServiceClient {
     headers = {
       "Accept": "application/json",
     };
-    client = new BrowserClient()..withCredentials = true;
+    client = BrowserClient()..withCredentials = true;
     maxRetries = 5;
     useTokenCookie = false;
   }
@@ -109,7 +109,7 @@ class JsonWebClient implements IServiceClient {
 
   Future<Map<String, dynamic>> getUrl(String path,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendWebContext(
+    return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "GET", url: toAbsoluteUrl(path), args: args));
   }
 
@@ -118,7 +118,7 @@ class JsonWebClient implements IServiceClient {
       T responseAs,
       WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendWebContext(
+    return sendRequest<T>(SendWebContext(
         method: "GET",
         url: toAbsoluteUrl(path),
         args: args,
@@ -134,7 +134,7 @@ class JsonWebClient implements IServiceClient {
 
   Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendWebContext(
+    return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "POST", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
@@ -143,7 +143,7 @@ class JsonWebClient implements IServiceClient {
       T responseAs,
       WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendWebContext(
+    return sendRequest<T>(SendWebContext(
         method: "POST",
         body: body,
         url: toAbsoluteUrl(path),
@@ -159,7 +159,7 @@ class JsonWebClient implements IServiceClient {
 
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendWebContext(
+    return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "DELETE", url: toAbsoluteUrl(path), args: args));
   }
 
@@ -168,7 +168,7 @@ class JsonWebClient implements IServiceClient {
       T responseAs,
       WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendWebContext(
+    return sendRequest<T>(SendWebContext(
         method: "DELETE",
         url: toAbsoluteUrl(path),
         args: args,
@@ -184,7 +184,7 @@ class JsonWebClient implements IServiceClient {
 
   Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendWebContext(
+    return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "PUT", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
@@ -193,7 +193,7 @@ class JsonWebClient implements IServiceClient {
       T responseAs,
       WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendWebContext(
+    return sendRequest<T>(SendWebContext(
         method: "PUT",
         body: body,
         url: toAbsoluteUrl(path),
@@ -210,7 +210,7 @@ class JsonWebClient implements IServiceClient {
 
   Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendWebContext(
+    return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "PATCH", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
@@ -219,7 +219,7 @@ class JsonWebClient implements IServiceClient {
       T responseAs,
       WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendWebContext(
+    return sendRequest<T>(SendWebContext(
         method: "PATCH",
         body: body,
         url: toAbsoluteUrl(path),
@@ -232,14 +232,14 @@ class JsonWebClient implements IServiceClient {
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return new List<T>();
+    if (requests == null || requests.length == 0) return List<T>();
     var url = combinePaths([replyBaseUrl, nameOf(requests.first) + "[]"]);
 
-    return this.sendRequest<List<T>>(new SendWebContext(
+    return this.sendRequest<List<T>>(SendWebContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: new List<T>(),
+        responseAs: List<T>(),
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
@@ -247,14 +247,14 @@ class JsonWebClient implements IServiceClient {
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return new List<T>();
+    if (requests == null || requests.length == 0) return List<T>();
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first) + "[]"]);
 
-    await this.sendRequest<List<T>>(new SendWebContext(
+    await this.sendRequest<List<T>>(SendWebContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: new List<T>(),
+        responseAs: List<T>(),
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
@@ -266,7 +266,7 @@ class JsonWebClient implements IServiceClient {
       T responseAs,
       WebRequestFilter requestFilter,
       WebResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendWebContext(
+    return sendRequest<T>(SendWebContext(
         request: request,
         body: body,
         method: method ?? resolveHttpMethod(request),
@@ -319,10 +319,10 @@ class JsonWebClient implements IServiceClient {
     } on Exception catch (e) {
       if (res.statusCode == 401) {
         if (refreshToken != null || useTokenCookie) {
-          var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
+          var jwtRequest = GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
 
-          var jwtInfo = new SendWebContext(
+          var jwtInfo = SendWebContext(
               method: "POST", request: jwtRequest, args: null, url: url);
           try {
             var jwtReq = await createRequest(jwtInfo);
@@ -391,7 +391,7 @@ class JsonWebClient implements IServiceClient {
 
     for (var attempt = 0; attempt < maxRetries; attempt++) {
       try {
-        req = new Request(method, uri);
+        req = Request(method, uri);
         break;
       } on Exception catch (e) {
         if (firstEx == null) {
@@ -432,7 +432,7 @@ class JsonWebClient implements IServiceClient {
   }
 
   Future<T> createResponse<T>(Response res, SendWebContext info) async {
-    if (res.statusCode >= 300) throw new WebResponseException(res);
+    if (res.statusCode >= 300) throw WebResponseException(res);
 
     if (info.responseFilter != null) {
       info.responseFilter(res);
@@ -501,7 +501,7 @@ class JsonWebClient implements IServiceClient {
     // if (res.bodyUsed)
     //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
 
-    var webEx = new WebServiceException()
+    var webEx = WebServiceException()
       ..statusCode = res.statusCode
       ..statusDescription = res.reasonPhrase
       ..type = type;

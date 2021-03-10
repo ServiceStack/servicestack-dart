@@ -12,7 +12,7 @@ typedef void ResponseExceptionFilter(HttpClientResponse res, Exception e);
 class ClientFactory {
   static IServiceClient create(
       [String baseUrl = "/", ClientOptions options = null]) {
-    var client = new JsonServiceClient(baseUrl);
+    var client = JsonServiceClient(baseUrl);
     if (ClientConfig.initClient != null) {
       ClientConfig.initClient(client);
     }
@@ -65,7 +65,7 @@ class HttpResponseException implements Exception {
   HttpResponseException(this.response);
 
   ResponseStatus getResponseStatus() {
-    return new ResponseStatus();
+    return ResponseStatus();
   }
 }
 
@@ -93,7 +93,7 @@ class JsonServiceClient implements IServiceClient {
   int maxRetries;
 
   void set client(HttpClient client) => _client = client;
-  HttpClient get client => _client ??= new HttpClient();
+  HttpClient get client => _client ??= HttpClient();
 
   void set connectionTimeout(Duration duration) =>
       client.connectionTimeout = duration;
@@ -105,7 +105,7 @@ class JsonServiceClient implements IServiceClient {
     headers = {
       HttpHeaders.acceptHeader: "application/json",
     };
-    cookies = new List<Cookie>();
+    cookies = List<Cookie>();
     maxRetries = 5;
     useTokenCookie = false;
   }
@@ -121,7 +121,7 @@ class JsonServiceClient implements IServiceClient {
   Future<Map<String, dynamic>> getUrl(String path,
       {Map<String, dynamic> args}) {
     return sendRequest<Map<String, dynamic>>(
-        new SendContext(method: "GET", url: toAbsoluteUrl(path), args: args));
+        SendContext(method: "GET", url: toAbsoluteUrl(path), args: args));
   }
 
   Future<T> getAs<T>(String path,
@@ -129,7 +129,7 @@ class JsonServiceClient implements IServiceClient {
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendContext(
+    return sendRequest<T>(SendContext(
         method: "GET",
         url: toAbsoluteUrl(path),
         args: args,
@@ -145,7 +145,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendContext(
+    return sendRequest<Map<String, dynamic>>(SendContext(
         method: "POST", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
@@ -154,7 +154,7 @@ class JsonServiceClient implements IServiceClient {
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendContext(
+    return sendRequest<T>(SendContext(
         method: "POST",
         body: body,
         url: toAbsoluteUrl(path),
@@ -170,7 +170,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendContext(
+    return sendRequest<Map<String, dynamic>>(SendContext(
         method: "DELETE", url: toAbsoluteUrl(path), args: args));
   }
 
@@ -179,7 +179,7 @@ class JsonServiceClient implements IServiceClient {
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendContext(
+    return sendRequest<T>(SendContext(
         method: "DELETE",
         url: toAbsoluteUrl(path),
         args: args,
@@ -195,7 +195,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendContext(
+    return sendRequest<Map<String, dynamic>>(SendContext(
         method: "PUT", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
@@ -204,7 +204,7 @@ class JsonServiceClient implements IServiceClient {
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendContext(
+    return sendRequest<T>(SendContext(
         method: "PUT",
         body: body,
         url: toAbsoluteUrl(path),
@@ -221,7 +221,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
       {Map<String, dynamic> args}) {
-    return sendRequest<Map<String, dynamic>>(new SendContext(
+    return sendRequest<Map<String, dynamic>>(SendContext(
         method: "PATCH", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
@@ -230,7 +230,7 @@ class JsonServiceClient implements IServiceClient {
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendContext(
+    return sendRequest<T>(SendContext(
         method: "PATCH",
         body: body,
         url: toAbsoluteUrl(path),
@@ -242,28 +242,28 @@ class JsonServiceClient implements IServiceClient {
 
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
       {RequestFilter requestFilter, ResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return new List<T>();
+    if (requests == null || requests.length == 0) return List<T>();
     var url = combinePaths([replyBaseUrl, nameOf(requests.first) + "[]"]);
 
-    return this.sendRequest<List<T>>(new SendContext(
+    return this.sendRequest<List<T>>(SendContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: new List<T>(),
+        responseAs: List<T>(),
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
 
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {RequestFilter requestFilter, ResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return new List<T>();
+    if (requests == null || requests.length == 0) return List<T>();
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first) + "[]"]);
 
-    await this.sendRequest<List<T>>(new SendContext(
+    await this.sendRequest<List<T>>(SendContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: new List<T>(),
+        responseAs: List<T>(),
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
@@ -275,7 +275,7 @@ class JsonServiceClient implements IServiceClient {
       T responseAs,
       RequestFilter requestFilter,
       ResponseFilter responseFilter}) {
-    return sendRequest<T>(new SendContext(
+    return sendRequest<T>(SendContext(
         request: request,
         body: body,
         method: method ?? resolveHttpMethod(request),
@@ -329,10 +329,10 @@ class JsonServiceClient implements IServiceClient {
       if (statusCode == 401) {
         var hasRefreshTokenCookie = cookies.any((x) => x.name == "ss-reftok");
         if (refreshToken != null || useTokenCookie || hasRefreshTokenCookie) {
-          var jwtRequest = new GetAccessToken(refreshToken: this.refreshToken);
+          var jwtRequest = GetAccessToken(refreshToken: this.refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
 
-          var jwtInfo = new SendContext(
+          var jwtInfo = SendContext(
               method: "POST", request: jwtRequest, args: null, url: url);
           try {
             var jwtReq = await createRequest(jwtInfo);
@@ -421,7 +421,7 @@ class JsonServiceClient implements IServiceClient {
     headers.forEach((key, val) {
       if (key == HttpHeaders.contentTypeHeader) {
         var parts = val.split("/");
-        req.headers.contentType = new ContentType(parts[0], parts[1]);
+        req.headers.contentType = ContentType(parts[0], parts[1]);
       } else {
         req.headers.add(key, val);
       }
@@ -447,8 +447,8 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T> createResponse<T>(HttpClientResponse res, SendContext info) async {
-    if (res == null) throw new ArgumentError.notNull("res");
-    if (res.statusCode >= 300) throw new HttpResponseException(res);
+    if (res == null) throw ArgumentError.notNull("res");
+    if (res.statusCode >= 300) throw HttpResponseException(res);
 
     try {
       mergeCookies(res.cookies);
@@ -535,12 +535,12 @@ class JsonServiceClient implements IServiceClient {
     if (res == null)
       throw raiseError(
           null,
-          new WebServiceException()
+          WebServiceException()
             ..innerException = e
             ..statusCode = 500
             ..statusDescription = e.toString());
 
-    var webEx = new WebServiceException()
+    var webEx = WebServiceException()
       ..statusCode = res.statusCode
       ..statusDescription = res.reasonPhrase
       ..type = type;
@@ -586,7 +586,7 @@ Future<String> readFully(HttpClientResponse response) async {
 //https://docs.flutter.io/flutter/foundation/consolidateHttpClientResponseBytes.html
 Future<Uint8List> readFullyAsBytes(HttpClientResponse response) {
   assert(response.contentLength != null);
-  final Completer<Uint8List> completer = new Completer<Uint8List>.sync();
+  final Completer<Uint8List> completer = Completer<Uint8List>.sync();
   if (response.contentLength == -1) {
     final List<List<int>> chunks = <List<int>>[];
     int contentLength = 0;
@@ -594,7 +594,7 @@ Future<Uint8List> readFullyAsBytes(HttpClientResponse response) {
       chunks.add(chunk);
       contentLength += chunk.length;
     }, onDone: () {
-      final Uint8List bytes = new Uint8List(contentLength);
+      final Uint8List bytes = Uint8List(contentLength);
       int offset = 0;
       for (List<int> chunk in chunks) {
         bytes.setRange(offset, offset + chunk.length, chunk);
@@ -604,7 +604,7 @@ Future<Uint8List> readFullyAsBytes(HttpClientResponse response) {
     }, onError: completer.completeError, cancelOnError: true);
   } else {
     // If the response has a content length, then allocate a buffer of the correct size.
-    final Uint8List bytes = new Uint8List(response.contentLength);
+    final Uint8List bytes = Uint8List(response.contentLength);
     int offset = 0;
     response.listen(
         (List<int> chunk) {

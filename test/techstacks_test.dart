@@ -8,7 +8,7 @@ import 'dtos/techstacks.dtos.dart';
 void main() {
   test('Should get techs response', () async {
     var client = createTechStacksClient();
-    var response = await client.get(new GetAllTechnologies());
+    var response = await client.get(GetAllTechnologies());
 
     // print("JSON: " + json.encode(response));
 
@@ -17,7 +17,7 @@ void main() {
 
   test('Should get techstacks overview', () async {
     var client = createTechStacksClient();
-    var response = await client.get(new Overview());
+    var response = await client.get(Overview());
 
     // print("JSON: " + json.encode(response));
 
@@ -27,7 +27,7 @@ void main() {
   test('Should throw 405', () async {
     var client = createTestClient();
     try {
-      await client.get(new Overview());
+      await client.get(Overview());
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(405));
@@ -40,7 +40,7 @@ void main() {
   test('Should throw 401', () async {
     var client = createTechStacksClient();
     try {
-      await client.get(new CreateTechnology());
+      await client.get(CreateTechnology());
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(401));
@@ -51,7 +51,7 @@ void main() {
 
   test('Can query AutoQuery with runtime args', () async {
     var client = createTechStacksClient();
-    var request = new FindTechnologies()..take = 3;
+    var request = FindTechnologies()..take = 3;
 
     var response = await client.get(request, args: {"VendorName": "Amazon"});
 
@@ -63,11 +63,11 @@ void main() {
   test('Can query AutoQuery with anon object and runtime args', () async {
     var client = createTechStacksClient();
     var args = {"Take": 3, "VendorName": "Amazon"};
-    var techstacksContext = new FindTechnologies().context;
+    var techstacksContext = FindTechnologies().context;
 
     var response = await client.getAs("/technology/search",
         args: args,
-        responseAs: new QueryResponse<Technology>()
+        responseAs: QueryResponse<Technology>()
           ..context = techstacksContext);
 
     expect(response.results.length, equals(3));
@@ -78,8 +78,8 @@ void main() {
   test('Can query with args and base class property', () async {
     var client = createTechStacksClient();
     var techs =
-        await client.get(new FindTechnologies(), args: {"slug": "flutter"});
-    var posts = await client.get(new QueryPosts(
+        await client.get(FindTechnologies(), args: {"slug": "flutter"});
+    var posts = await client.get(QueryPosts(
         anyTechnologyIds: [techs.results[0].id],
         types: ['Announcement', 'Showcase'])
       ..take = 1);

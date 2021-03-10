@@ -1,6 +1,6 @@
 import './host_base.dart';
 
-HostBase createHost() => new WebHost();
+HostBase createHost() => WebHost();
 
 class WebHost extends HostBase {
 

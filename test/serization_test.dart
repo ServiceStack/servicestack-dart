@@ -15,13 +15,13 @@ void main() {
     var dto = createAllTypes();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = new AllTypes.fromJson(jsonObj);
+    var fromJson = AllTypes.fromJson(jsonObj);
     assertAllTypes(fromJson);
   });
 
   test('Does deserialize AllTypes', () {
     Map jsonObj = jsonDecode(jsonAllTypes);
-    var dto = new AllTypes.fromJson(jsonObj);
+    var dto = AllTypes.fromJson(jsonObj);
     assertAllTypes(dto);
   });
 
@@ -29,29 +29,29 @@ void main() {
     var dto = createAllCollectionTypes();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = new AllCollectionTypes.fromJson(jsonObj);
+    var fromJson = AllCollectionTypes.fromJson(jsonObj);
     assertAllCollectionTypes(fromJson);
   });
 
   test("Does serialize HelloAllTypes", (){
-    var dto = new HelloAllTypes(
+    var dto = HelloAllTypes(
       name: "HelloAllTypes", 
       allTypes: createAllTypes(),
       allCollectionTypes: createAllCollectionTypes());
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = new HelloAllTypes.fromJson(jsonObj);
+    var fromJson = HelloAllTypes.fromJson(jsonObj);
     expect(fromJson.name, equals("HelloAllTypes"));
     assertAllTypes(fromJson.allTypes);
     assertAllCollectionTypes(fromJson.allCollectionTypes);
   });
 
   test('Does serialize inheritance', () {
-    var dto = new HelloWithInheritance(name: 'foo')
+    var dto = HelloWithInheritance(name: 'foo')
       ..id = 1;
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = new HelloWithInheritance.fromJson(jsonObj);
+    var fromJson = HelloWithInheritance.fromJson(jsonObj);
     expect(fromJson.name, equals("foo"));
     expect(fromJson.id, equals(1));
   });

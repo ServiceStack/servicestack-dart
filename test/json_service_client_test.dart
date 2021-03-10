@@ -9,7 +9,7 @@ const TEST_URL = "http://test.servicestack.net";
 
 class NonExistingService implements IReturn<String> {
   NonExistingService();
-  NonExistingService fromMap(Map<String, dynamic> map) => new NonExistingService.fromJson(map);
+  NonExistingService fromMap(Map<String, dynamic> map) => NonExistingService.fromJson(map);
   NonExistingService.fromJson(Map<String, dynamic> json) {}
   Map<String, dynamic> toJson() => {};
   createResponse() { return ""; }
@@ -21,7 +21,7 @@ void main() {
   test('Does process missing service correctly', () async {
     var client = createTestClient();
     try {
-      await client.get(new NonExistingService());
+      await client.get(NonExistingService());
       fail("should throw");
     } on WebServiceException catch(e) {
       expect(e.statusCode, equals(405));
@@ -31,7 +31,7 @@ void main() {
   test('Can serialize dates correctly via get request', () async {
     var client = createTestClient();
 
-    var request = new EchoTypes(dateTime: DateTime.utc(2015,1,1));
+    var request = EchoTypes(dateTime: DateTime.utc(2015,1,1));
 
     var response = await client.get(request);
 

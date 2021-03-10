@@ -1,6 +1,6 @@
 /* Options:
-Date: 2018-08-09 03:02:31
-Version: 5.00
+Date: 2021-03-10 06:11:47
+Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
 
@@ -11,10 +11,10 @@ BaseUrl: http://test.servicestack.net
 //AddDescriptionAsComments: True
 IncludeTypes: Hello.*
 //ExcludeTypes: 
-//DefaultImports: package:servicestack/client.dart,dart:collection,dart:typed_data
+//DefaultImports: package:servicestack/servicestack.dart
 */
 
-import 'package:servicestack/client.dart';
+import 'package:servicestack/servicestack.dart';
 
 class HelloResponse implements IConvertible
 {
@@ -39,7 +39,7 @@ class HelloResponse implements IConvertible
 // @Route("/hello/{Name}")
 class Hello implements IReturn<HelloResponse>, IConvertible
 {
-    // @Required()
+    // @required()
     String name;
 
     String title;
@@ -58,12 +58,14 @@ class Hello implements IReturn<HelloResponse>, IConvertible
         'title': title
     };
 
-    createResponse() { return new HelloResponse(); }
-    String getTypeName() { return "Hello"; }
+    createResponse() => HelloResponse();
+    getResponseTypeName() => "HelloResponse";
+    getTypeName() => "Hello";
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
-    'HelloResponse': new TypeInfo(TypeOf.Class, create:() => new HelloResponse()),
-    'Hello': new TypeInfo(TypeOf.Class, create:() => new Hello()),
+TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
+    'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
+    'Hello': TypeInfo(TypeOf.Class, create:() => Hello()),
 });
+

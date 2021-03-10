@@ -41,98 +41,98 @@ abstract class IDeleteDb<Table> implements ICrud {}
 abstract class ISaveDb<Table> implements ICrud {}
 
 Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
-  'dynamic': new TypeInfo(TypeOf.Class, create: () => {}),
-  'String': new TypeInfo(TypeOf.Class, create: () => ""),
-  'int': new TypeInfo(TypeOf.Class, create: () => 0),
-  'double': new TypeInfo(TypeOf.Class, create: () => 0.toDouble()),
-  'bool': new TypeInfo(TypeOf.Class, create: () => true),
+  'dynamic': TypeInfo(TypeOf.Class, create: () => {}),
+  'String': TypeInfo(TypeOf.Class, create: () => ""),
+  'int': TypeInfo(TypeOf.Class, create: () => 0),
+  'double': TypeInfo(TypeOf.Class, create: () => 0.toDouble()),
+  'bool': TypeInfo(TypeOf.Class, create: () => true),
   'Map<String,dynamic>':
-      new TypeInfo(TypeOf.Class, create: () => new Map<String, dynamic>()),
+      TypeInfo(TypeOf.Class, create: () => Map<String, dynamic>()),
   'Map<String,String>':
-      new TypeInfo(TypeOf.Class, create: () => new Map<String, String>()),
-  'List<String>': new TypeInfo(TypeOf.Class, create: () => new List<String>()),
-  'List<int>': new TypeInfo(TypeOf.Class, create: () => new List<int>()),
-  'List<double>': new TypeInfo(TypeOf.Class, create: () => new List<double>()),
-  'DateTime': new TypeInfo(TypeOf.Class, create: () => new DateTime(0)),
-  'Duration': new TypeInfo(TypeOf.Class, create: () => new Duration()),
-  'Tuple<T1,T2>': new TypeInfo(TypeOf.GenericDef, create: () => new Tuple()),
-  'Tuple2<T1,T2>': new TypeInfo(TypeOf.GenericDef, create: () => new Tuple2()),
+      TypeInfo(TypeOf.Class, create: () => Map<String, String>()),
+  'List<String>': TypeInfo(TypeOf.Class, create: () => List<String>()),
+  'List<int>': TypeInfo(TypeOf.Class, create: () => List<int>()),
+  'List<double>': TypeInfo(TypeOf.Class, create: () => List<double>()),
+  'DateTime': TypeInfo(TypeOf.Class, create: () => DateTime(0)),
+  'Duration': TypeInfo(TypeOf.Class, create: () => Duration()),
+  'Tuple<T1,T2>': TypeInfo(TypeOf.GenericDef, create: () => Tuple()),
+  'Tuple2<T1,T2>': TypeInfo(TypeOf.GenericDef, create: () => Tuple2()),
   'Tuple3<T1,T2,T3>':
-      new TypeInfo(TypeOf.GenericDef, create: () => new Tuple3()),
+      TypeInfo(TypeOf.GenericDef, create: () => Tuple3()),
   'Tuple4<T1,T2,T3,T4>':
-      new TypeInfo(TypeOf.GenericDef, create: () => new Tuple4()),
+      TypeInfo(TypeOf.GenericDef, create: () => Tuple4()),
   'KeyValuePair<K,V>':
-      new TypeInfo(TypeOf.GenericDef, create: () => new KeyValuePair()),
-  'KeyValuePair<String,String>': new TypeInfo(TypeOf.Class,
-      create: () => new KeyValuePair<String, String>()),
+      TypeInfo(TypeOf.GenericDef, create: () => KeyValuePair()),
+  'KeyValuePair<String,String>': TypeInfo(TypeOf.Class,
+      create: () => KeyValuePair<String, String>()),
   'ResponseStatus':
-      new TypeInfo(TypeOf.Class, create: () => new ResponseStatus()),
+      TypeInfo(TypeOf.Class, create: () => ResponseStatus()),
   'ResponseError':
-      new TypeInfo(TypeOf.Class, create: () => new ResponseError()),
+      TypeInfo(TypeOf.Class, create: () => ResponseError()),
   'List<ResponseError>':
-      new TypeInfo(TypeOf.Class, create: () => new List<ResponseError>()),
-  'QueryBase': new TypeInfo(TypeOf.AbstractClass),
-  'QueryData<T>': new TypeInfo(TypeOf.AbstractClass),
-  'QueryDb<T>': new TypeInfo(TypeOf.AbstractClass),
-  'QueryDb1<T>': new TypeInfo(TypeOf.AbstractClass),
-  'QueryDb2<From,Into>': new TypeInfo(TypeOf.AbstractClass),
+      TypeInfo(TypeOf.Class, create: () => List<ResponseError>()),
+  'QueryBase': TypeInfo(TypeOf.AbstractClass),
+  'QueryData<T>': TypeInfo(TypeOf.AbstractClass),
+  'QueryDb<T>': TypeInfo(TypeOf.AbstractClass),
+  'QueryDb1<T>': TypeInfo(TypeOf.AbstractClass),
+  'QueryDb2<From,Into>': TypeInfo(TypeOf.AbstractClass),
   'QueryResponse<T>':
-      new TypeInfo(TypeOf.GenericDef, create: () => new QueryResponse()),
+      TypeInfo(TypeOf.GenericDef, create: () => QueryResponse()),
   'List<UserApiKey>':
-      new TypeInfo(TypeOf.Class, create: () => new List<UserApiKey>()),
-  'Authenticate': new TypeInfo(TypeOf.Class, create: () => new Authenticate()),
+      TypeInfo(TypeOf.Class, create: () => List<UserApiKey>()),
+  'Authenticate': TypeInfo(TypeOf.Class, create: () => Authenticate()),
   'AuthenticateResponse':
-      new TypeInfo(TypeOf.Class, create: () => new AuthenticateResponse()),
-  'Register': new TypeInfo(TypeOf.Class, create: () => new Register()),
+      TypeInfo(TypeOf.Class, create: () => AuthenticateResponse()),
+  'Register': TypeInfo(TypeOf.Class, create: () => Register()),
   'RegisterResponse':
-      new TypeInfo(TypeOf.Class, create: () => new RegisterResponse()),
-  'AssignRoles': new TypeInfo(TypeOf.Class, create: () => new AssignRoles()),
+      TypeInfo(TypeOf.Class, create: () => RegisterResponse()),
+  'AssignRoles': TypeInfo(TypeOf.Class, create: () => AssignRoles()),
   'AssignRolesResponse':
-      new TypeInfo(TypeOf.Class, create: () => new AssignRolesResponse()),
+      TypeInfo(TypeOf.Class, create: () => AssignRolesResponse()),
   'UnAssignRoles':
-      new TypeInfo(TypeOf.Class, create: () => new UnAssignRoles()),
+      TypeInfo(TypeOf.Class, create: () => UnAssignRoles()),
   'UnAssignRolesResponse':
-      new TypeInfo(TypeOf.Class, create: () => new UnAssignRolesResponse()),
+      TypeInfo(TypeOf.Class, create: () => UnAssignRolesResponse()),
   'CancelRequest':
-      new TypeInfo(TypeOf.Class, create: () => new CancelRequest()),
+      TypeInfo(TypeOf.Class, create: () => CancelRequest()),
   'CancelRequestResponse':
-      new TypeInfo(TypeOf.Class, create: () => new CancelRequestResponse()),
+      TypeInfo(TypeOf.Class, create: () => CancelRequestResponse()),
   'UpdateEventSubscriber':
-      new TypeInfo(TypeOf.Class, create: () => new UpdateEventSubscriber()),
-  'UpdateEventSubscriberResponse': new TypeInfo(TypeOf.Class,
-      create: () => new UpdateEventSubscriberResponse()),
+      TypeInfo(TypeOf.Class, create: () => UpdateEventSubscriber()),
+  'UpdateEventSubscriberResponse': TypeInfo(TypeOf.Class,
+      create: () => UpdateEventSubscriberResponse()),
   'GetEventSubscribers':
-      new TypeInfo(TypeOf.Class, create: () => new GetEventSubscribers()),
-  'GetApiKeys': new TypeInfo(TypeOf.Class, create: () => new GetApiKeys()),
+      TypeInfo(TypeOf.Class, create: () => GetEventSubscribers()),
+  'GetApiKeys': TypeInfo(TypeOf.Class, create: () => GetApiKeys()),
   'GetApiKeysResponse':
-      new TypeInfo(TypeOf.Class, create: () => new GetApiKeysResponse()),
+      TypeInfo(TypeOf.Class, create: () => GetApiKeysResponse()),
   'RegenerateApiKeys':
-      new TypeInfo(TypeOf.Class, create: () => new RegenerateApiKeys()),
+      TypeInfo(TypeOf.Class, create: () => RegenerateApiKeys()),
   'RegenerateApiKeysResponse':
-      new TypeInfo(TypeOf.Class, create: () => new RegenerateApiKeysResponse()),
-  'UserApiKey': new TypeInfo(TypeOf.Class, create: () => new UserApiKey()),
+      TypeInfo(TypeOf.Class, create: () => RegenerateApiKeysResponse()),
+  'UserApiKey': TypeInfo(TypeOf.Class, create: () => UserApiKey()),
   'ConvertSessionToToken':
-      new TypeInfo(TypeOf.Class, create: () => new ConvertSessionToToken()),
-  'ConvertSessionToTokenResponse': new TypeInfo(TypeOf.Class,
-      create: () => new ConvertSessionToTokenResponse()),
+      TypeInfo(TypeOf.Class, create: () => ConvertSessionToToken()),
+  'ConvertSessionToTokenResponse': TypeInfo(TypeOf.Class,
+      create: () => ConvertSessionToTokenResponse()),
   'GetAccessToken':
-      new TypeInfo(TypeOf.Class, create: () => new GetAccessToken()),
+      TypeInfo(TypeOf.Class, create: () => GetAccessToken()),
   'GetAccessTokenResponse':
-      new TypeInfo(TypeOf.Class, create: () => new GetAccessTokenResponse()),
-   'List<NavItem>': new TypeInfo(TypeOf.Class, create:() => new List<NavItem>()),
-   'Map<String,List<NavItem>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<NavItem>>()),
-   'NavItem': new TypeInfo(TypeOf.Class, create:() => new NavItem()),
-   'GetNavItems': new TypeInfo(TypeOf.Class, create:() => new GetNavItems()),
-   'GetNavItemsResponse': new TypeInfo(TypeOf.Class, create:() => new GetNavItemsResponse()),
-   'EmptyResponse': new TypeInfo(TypeOf.Class, create:() => new EmptyResponse()),
-   'IdResponse': new TypeInfo(TypeOf.Class, create:() => new IdResponse()),
-   'StringResponse': new TypeInfo(TypeOf.Class, create:() => new StringResponse()),
-   'StringsResponse': new TypeInfo(TypeOf.Class, create:() => new StringsResponse()),
+      TypeInfo(TypeOf.Class, create: () => GetAccessTokenResponse()),
+   'List<NavItem>': TypeInfo(TypeOf.Class, create:() => List<NavItem>()),
+   'Map<String,List<NavItem>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<NavItem>>()),
+   'NavItem': TypeInfo(TypeOf.Class, create:() => NavItem()),
+   'GetNavItems': TypeInfo(TypeOf.Class, create:() => GetNavItems()),
+   'GetNavItemsResponse': TypeInfo(TypeOf.Class, create:() => GetNavItemsResponse()),
+   'EmptyResponse': TypeInfo(TypeOf.Class, create:() => EmptyResponse()),
+   'IdResponse': TypeInfo(TypeOf.Class, create:() => IdResponse()),
+   'StringResponse': TypeInfo(TypeOf.Class, create:() => StringResponse()),
+   'StringsResponse': TypeInfo(TypeOf.Class, create:() => StringsResponse()),
    'AuditBase': TypeInfo(TypeOf.AbstractClass),
  };
 
 TypeContext _ctx =
-    new TypeContext(typeName: 'JsonConverters', types: TypeInfos);
+    TypeContext(typeName: 'JsonConverters', types: TypeInfos);
 
 
 
@@ -391,7 +391,7 @@ class Authenticate
       };
 
   createResponse() {
-    return new AuthenticateResponse();
+    return AuthenticateResponse();
   }
 
   String getTypeName() {
@@ -508,7 +508,7 @@ class Register implements IReturn<RegisterResponse>, IPost, IConvertible {
       };
 
   createResponse() {
-    return new RegisterResponse();
+    return RegisterResponse();
   }
 
   String getTypeName() {
@@ -592,7 +592,7 @@ class AssignRoles implements IReturn<AssignRolesResponse>, IPost, IConvertible {
       };
 
   createResponse() {
-    return new AssignRolesResponse();
+    return AssignRolesResponse();
   }
 
   String getTypeName() {
@@ -653,7 +653,7 @@ class UnAssignRoles
       };
 
   createResponse() {
-    return new UnAssignRolesResponse();
+    return UnAssignRolesResponse();
   }
 
   String getTypeName() {
@@ -817,7 +817,7 @@ class GetApiKeys implements IReturn<GetApiKeysResponse>, IGet, IConvertible {
 
   @override
   GetApiKeysResponse createResponse() {
-    return new GetApiKeysResponse();
+    return GetApiKeysResponse();
   }
 
   @override
@@ -867,7 +867,7 @@ class RegenerateApiKeys
   Map<String, dynamic> toJson() => {'environment': environment};
 
   createResponse() {
-    return new RegenerateApiKeysResponse();
+    return RegenerateApiKeysResponse();
   }
 
   String getTypeName() {
@@ -942,7 +942,7 @@ class ConvertSessionToToken
   Map<String, dynamic> toJson() => {'preserveSession': preserveSession};
 
   createResponse() {
-    return new ConvertSessionToTokenResponse();
+    return ConvertSessionToTokenResponse();
   }
 
   String getTypeName() {
@@ -997,7 +997,7 @@ class GetAccessToken
   Map<String, dynamic> toJson() => {'refreshToken': refreshToken};
 
   createResponse() {
-    return new GetAccessTokenResponse();
+    return GetAccessTokenResponse();
   }
 
   String getTypeName() {
@@ -1085,7 +1085,7 @@ class GetNavItems implements IReturn<GetNavItemsResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetNavItemsResponse(); }
+    createResponse() { return GetNavItemsResponse(); }
     String getTypeName() { return "GetNavItems"; }
     TypeContext context = _ctx;
 }

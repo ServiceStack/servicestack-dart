@@ -8,8 +8,8 @@ import 'dartrefsandbox.dtos.dart';
 void main() {
   //https://github.com/tobiaszuercher/dart-ref-repo
 //  test('Can GetFoos', () async {
-//    var client = new JsonServiceClient("http://localhost:5000");
-//    var response = await client.get(new GetFoos());
+//    var client = JsonServiceClient("http://localhost:5000");
+//    var response = await client.get(GetFoos());
 //    expect(response.results.length, equals(1));
 //  });
 

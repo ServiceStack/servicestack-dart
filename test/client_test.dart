@@ -10,7 +10,7 @@ import 'dtos/test.dtos.dart';
 void main() {
   test('Can GET Hello', () async {
     var client = createTestClient();
-    var request = new Hello(name: "World");
+    var request = Hello(name: "World");
     HelloResponse response = await client.get(request);
 
     expect(response.result, equals("Hello, World!"));
@@ -18,7 +18,7 @@ void main() {
 
   test('Can POST Hello', () async {
     var client = createTestClient();
-    var request = new Hello(name: "World");
+    var request = Hello(name: "World");
     HelloResponse response = await client.post(request);
 
     expect(response.result, equals("Hello, World!"));
@@ -26,7 +26,7 @@ void main() {
 
   test('Can SEND umlauts', () async {
     var client = createTestClient();
-    var request = new Hello(name: "üöäß");
+    var request = Hello(name: "üöäß");
     HelloResponse response = await client.post(request);
 
     expect(response.result, equals("Hello, üöäß!"));
@@ -34,7 +34,7 @@ void main() {
 
   test('Does fire Request and Response Filters', () async {
     var client = createTestClient();
-    var events = new List<String>();
+    var events = List<String>();
 
     JsonServiceClient.globalRequestFilter =
         (req) => events.add("globalRequestFilter");
@@ -44,7 +44,7 @@ void main() {
     client.requestFilter = (req) => events.add("requestFilter");
     client.responseFilter = (req) => events.add("responseFilter");
 
-    var request = new Hello(name: "World");
+    var request = Hello(name: "World");
     HelloResponse response = await client.get(request);
 
     expect(response.result, equals("Hello, World!"));
@@ -66,7 +66,7 @@ void main() {
     var client = createTestClient();
 
     var jsonObj = await client.getUrl("/hello/World");
-    var response = new HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
   });
@@ -84,23 +84,23 @@ void main() {
     expect(jsonStr, equals('{"result":"Hello, World!"}'));
 
     HelloResponse dto = await client.getAs("/hello",
-        args: {"name": "World"}, responseAs: new HelloResponse());
+        args: {"name": "World"}, responseAs: HelloResponse());
     expect(dto.result, equals("Hello, World!"));
   });
 
   test('Can POST Hello with CustomPath', () async {
     var client = createTestClient();
-    var request = new Hello(name: "World");
+    var request = Hello(name: "World");
 
     var jsonObj = await client.postToUrl("/hello", request);
-    var response = new HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
   });
 
   test('Can POST Hello with CustomPath as raw types', () async {
     var client = createTestClient();
-    var request = new Hello(name: "World");
+    var request = Hello(name: "World");
 
     String jsonStr =
         await client.postAs("/hello", request, responseAs: TypeAs.string);
@@ -112,24 +112,24 @@ void main() {
     expect(jsonStr, equals('{"result":"Hello, World!"}'));
 
     HelloResponse dto =
-        await client.postAs("/hello", request, responseAs: new HelloResponse());
+        await client.postAs("/hello", request, responseAs: HelloResponse());
     expect(dto.result, equals("Hello, World!"));
   });
 
   test('Can POST Hello with CustomPath json object', () async {
     var client = createTestClient();
-    var request = new Hello(name: "World");
+    var request = Hello(name: "World");
 
     Map jsonObj = await client.postToUrl("/hello", json.encode(request));
-    var response = new HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
   });
 
   test('Does resolve IVerbs from request DTO interface marker', () {
-    expect(resolveHttpMethod(new SendGet()), equals("GET"));
-    expect(resolveHttpMethod(new SendPost()), equals("POST"));
-    expect(resolveHttpMethod(new SendPut()), equals("PUT"));
+    expect(resolveHttpMethod(SendGet()), equals("GET"));
+    expect(resolveHttpMethod(SendPost()), equals("POST"));
+    expect(resolveHttpMethod(SendPut()), equals("PUT"));
   });
 
   test('Can POST HelloAllTypes', () async {
@@ -148,7 +148,7 @@ void main() {
 
   test('Does handle 404 Error', () async {
     var client = createTestClient();
-    var request = new ThrowType(type: "NotFound", message: "not here");
+    var request = ThrowType(type: "NotFound", message: "not here");
     try {
       await client.put(request);
       fail("should throw");
@@ -162,7 +162,7 @@ void main() {
 
   test('Does handle ValidationException', () async {
     var client = createTestClient();
-    var request = new ThrowValidation(email: "invalidemail");
+    var request = ThrowValidation(email: "invalidemail");
     try {
       await client.post(request);
       fail("should throw");
@@ -192,7 +192,7 @@ void main() {
   test('Can POST valid ThrowValidation request', () async {
     var client = createTestClient();
     var request =
-        new ThrowValidation(age: 21, required: "foo", email: "my@gmail.com");
+        ThrowValidation(age: 21, required: "foo", email: "my@gmail.com");
     var response = await client.put(request);
     expect(response.age, equals(request.age));
     expect(response.required, equals(request.required));
@@ -201,7 +201,7 @@ void main() {
 
   test('Does handle auth failure', () async {
     var client = createTestClient();
-    var request = new RequiresAdmin();
+    var request = RequiresAdmin();
     try {
       await client.post(request);
       fail("should throw");
@@ -211,11 +211,11 @@ void main() {
   });
 
   test('Can send ReturnVoid', () async {
-    var sentMethods = new List<String>();
+    var sentMethods = List<String>();
     var client = createTestClient();
     client.requestFilter = (req) => sentMethods.add(req.method);
 
-    var request = new SendReturnVoid(id: 1);
+    var request = SendReturnVoid(id: 1);
 
     await client.send(request);
     expect(sentMethods.last, equals("POST"));
@@ -235,7 +235,7 @@ void main() {
 
   test('Can get response as Raw String', () async {
     var client = createTestClient();
-    var request = new HelloString(name: "World");
+    var request = HelloString(name: "World");
     var response = await client.get(request);
     expect(response, equals("World"));
   });
@@ -249,7 +249,7 @@ void main() {
 
   test('Should return raw text', () async {
     var client = createTestClient();
-    var request = new ReturnString(data: "0x10");
+    var request = ReturnString(data: "0x10");
     var str = await client.get(request);
     expect(str, equals("0x10"));
   });
@@ -262,7 +262,7 @@ void main() {
 
     var body = {"foo": "bar"};
 
-    var request = new SendJson(id: 1, name: "name");
+    var request = SendJson(id: 1, name: "name");
 
     var jsonObj =
         await client.postToUrl("/sendjson", body, args: toMap(request));
@@ -278,7 +278,7 @@ void main() {
 
     var body = {"foo": "bar"};
 
-    var request = new SendJson(id: 1, name: "name");
+    var request = SendJson(id: 1, name: "name");
 
     var jsonStr = await client.post(request, body: json.encode(body));
     var jsonObj = json.decode(jsonStr);
@@ -294,7 +294,7 @@ void main() {
 
     var body = "foo";
 
-    var request = new SendText(id: 1, name: "name", contentType: "text/plain");
+    var request = SendText(id: 1, name: "name", contentType: "text/plain");
 
     var str = await client.post(request, body: body);
 
@@ -307,7 +307,7 @@ void main() {
     client.responseFilter =
         (res) => expect(res.headers["X-AutoBatch-Completed"], equals(['3']));
 
-    var requests = ["foo", "bar", "baz"].map((name) => new Hello(name: name));
+    var requests = ["foo", "bar", "baz"].map((name) => Hello(name: name));
 
     var responses = await client.sendAll(requests);
 
@@ -320,7 +320,7 @@ void main() {
     client.urlFilter =
         (url) => expect(url, endsWith("/json/oneway/Hello%5B%5D"));
 
-    var requests = ["foo", "bar", "baz"].map((name) => new Hello(name: name));
+    var requests = ["foo", "bar", "baz"].map((name) => Hello(name: name));
 
     await client.sendAllOneWay(requests);
   });
@@ -330,7 +330,7 @@ void main() {
     client.urlFilter =
         (url) => expect(url, endsWith("/json/oneway/HelloReturnVoid%5B%5D"));
 
-    var requests = [1, 2, 3].map((id) => new HelloReturnVoid(id: id));
+    var requests = [1, 2, 3].map((id) => HelloReturnVoid(id: id));
 
     await client.sendAllOneWay(requests);
   });
@@ -338,7 +338,7 @@ void main() {
   test('Can POST to EchoTypes', () async {
     var client = createTestClient();
 
-    var request = new EchoTypes(Int: 1, string: "foo");
+    var request = EchoTypes(Int: 1, string: "foo");
 
     var response = await client.post(request);
 
@@ -349,7 +349,7 @@ void main() {
   test('Can GET IReturnVoid requests', () async {
     var client = createTestClient();
 
-    var request = new HelloReturnVoid(id: 1);
+    var request = HelloReturnVoid(id: 1);
 
     await client.get(request);
   });
@@ -357,7 +357,7 @@ void main() {
   test('Can POST IReturnVoid requests', () async {
     var client = createTestClient();
 
-    var request = new HelloReturnVoid(id: 1);
+    var request = HelloReturnVoid(id: 1);
 
     await client.post(request);
   });
@@ -369,7 +369,7 @@ void main() {
         url, endsWith("ThrowValidation?jsconfig=EmitCamelCaseNames%3Atrue"));
 
     try {
-      await client.post(new ThrowValidation(),
+      await client.post(ThrowValidation(),
           args: {"jsconfig": "EmitCamelCaseNames:true"});
     } on WebServiceException catch (e) {
       expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
@@ -389,7 +389,7 @@ void main() {
         url, endsWith("ThrowValidation?jsconfig=EmitCamelCaseNames%3Afalse"));
 
     try {
-      await client.post(new ThrowValidation(),
+      await client.post(ThrowValidation(),
           args: {"jsconfig": "EmitCamelCaseNames:false"});
     } on WebServiceException catch (e) {
       expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
@@ -406,7 +406,7 @@ void main() {
     var client = createTestClient();
 
     var jsonObj = await client.getUrl("/hello/World");
-    var response = new HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
   });
@@ -416,7 +416,7 @@ void main() {
 
     var jsonObj =
         await client.getUrl("http://test.servicestack.net/hello/World");
-    var response = new HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
   });
@@ -425,7 +425,7 @@ void main() {
     var client = createTestClient();
 
     var jsonObj = await client.getUrl("/hello", args: {"name": "World"});
-    var response = new HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
   });
@@ -433,10 +433,10 @@ void main() {
   test('Can GET EchoTypes using route', () async {
     var client = createTestClient();
 
-    var request = new EchoTypes(Int: 1, string: "foo");
+    var request = EchoTypes(Int: 1, string: "foo");
 
     var jsonObj = await client.getUrl("/echo/types", args: toMap(request));
-    var response = new EchoTypes.fromJson(jsonObj);
+    var response = EchoTypes.fromJson(jsonObj);
 
     expect(response.Int, equals(1));
     expect(response.string, equals("foo"));
@@ -464,7 +464,7 @@ void main() {
 
   test('Can handle connection error', () async {
     WebServiceException handledEx;
-    var client = new JsonServiceClient("http://unknown-zzz.net")
+    var client = JsonServiceClient("http://unknown-zzz.net")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
           handledEx = e;
@@ -473,7 +473,7 @@ void main() {
       ..connectionTimeout = Duration(seconds: 1);
 
     try {
-      var res = await client.get(new EchoTypes(Int: 1, string: "foo"));
+      var res = await client.get(EchoTypes(Int: 1, string: "foo"));
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(handledEx.statusCode, 500);

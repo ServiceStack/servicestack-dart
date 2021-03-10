@@ -6,8 +6,8 @@ import '../lib/client.dart';
 import 'dtos/test.dtos.dart';
 
 JsonServiceClient createTestClient() =>
-    //new JsonServiceClient("http://localhost:5000")
-    new JsonServiceClient("http://test.servicestack.net")
+    //JsonServiceClient("http://localhost:5000")
+    JsonServiceClient("http://test.servicestack.net")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
           // print("ERROR: " + json.encode(e.responseStatus));
@@ -15,19 +15,19 @@ JsonServiceClient createTestClient() =>
       };
 
 JsonServiceClient createTechStacksClient() =>
-    new JsonServiceClient("https://www.techstacks.io")
+    JsonServiceClient("https://www.techstacks.io")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
           print("ERROR: " + json.encode(e.responseStatus));
         }
       };
 
-HelloAllTypes createHelloAllTypes() => new HelloAllTypes(
+HelloAllTypes createHelloAllTypes() => HelloAllTypes(
     name: "name",
     allTypes: createAllTypes(),
     allCollectionTypes: createAllCollectionTypes());
 
-AllTypes createAllTypes() => new AllTypes(
+AllTypes createAllTypes() => AllTypes(
     id: 1,
     char: 'c',
     byte: 2,
@@ -41,9 +41,9 @@ AllTypes createAllTypes() => new AllTypes(
     Double: 2.2,
     decimal: 3.0,
     string: "string",
-    dateTime: new DateTime.utc(2001, 1, 1),
-    dateTimeOffset: new DateTime.utc(2001, 1, 1),
-    timeSpan: new Duration(hours: 1),
+    dateTime: DateTime.utc(2001, 1, 1),
+    dateTimeOffset: DateTime.utc(2001, 1, 1),
+    timeSpan: Duration(hours: 1),
     guid: "ea762009b66c410b9bf5ce21ad519249",
     stringList: ["A", "B", "C"],
     stringArray: ["D", "E", "F"],
@@ -53,7 +53,7 @@ AllTypes createAllTypes() => new AllTypes(
       "C": "F",
     },
     intStringMap: {1: "A", 2: "B", 3: "C"},
-    subType: new SubType(id: 1, name: "name"));
+    subType: SubType(id: 1, name: "name"));
 
 void assertHelloAllTypesResponse(HelloAllTypesResponse dto) {
   expect(dto.result, equals("name"));
@@ -73,9 +73,9 @@ void assertAllTypes(AllTypes dto) {
   expect(dto.Double, equals(2.2));
   expect(dto.decimal, equals(3.0));
   expect(dto.string, equals("string"));
-  expect(dto.dateTime, equals(new DateTime.utc(2001, 1, 1)));
-  expect(dto.dateTimeOffset, equals(new DateTime.utc(2001, 1, 1)));
-  expect(dto.timeSpan, equals(new Duration(hours: 1)));
+  expect(dto.dateTime, equals(DateTime.utc(2001, 1, 1)));
+  expect(dto.dateTimeOffset, equals(DateTime.utc(2001, 1, 1)));
+  expect(dto.timeSpan, equals(Duration(hours: 1)));
   expect(dto.guid, equals("ea762009b66c410b9bf5ce21ad519249"));
   expect(dto.stringList, equals(["A", "B", "C"]));
   expect(dto.stringArray, equals(["D", "E", "F"]));
@@ -92,7 +92,7 @@ void assertAllTypes(AllTypes dto) {
 }
 
 AllCollectionTypes createAllCollectionTypes() =>
-    new AllCollectionTypes(intArray: [
+    AllCollectionTypes(intArray: [
       1,
       2,
       3
@@ -108,7 +108,8 @@ AllCollectionTypes createAllCollectionTypes() =>
       "D",
       "E",
       "F"
-    ], pocoArray: [
+    ], byteArray: fromByteArray("QUJD"), //base64(ABC)
+        pocoArray: [
       createPoco("pocoArray")
     ], pocoList: [
       createPoco("pocoList")
@@ -125,6 +126,8 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
   expect(dto.intList, equals([4, 5, 6]));
   expect(dto.stringArray, equals(["A", "B", "C"]));
   expect(dto.stringList, equals(["D", "E", "F"]));
+  expect(dto.byteArray, equals([65,66,67])); //ABC
+
   expect(dto.pocoArray.length, equals(1));
   expect(dto.pocoArray[0].name, equals("pocoArray"));
   expect(dto.pocoList.length, equals(1));
@@ -145,14 +148,14 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
   expect(pocoLookupMapAList["D"].name, equals("E"));
 }
 
-Poco createPoco(String name) => new Poco(name: name);
+Poco createPoco(String name) => Poco(name: name);
 
 EchoComplexTypes createEchoComplexTypes() =>
-    new EchoComplexTypes(subType: new SubType(id: 1, name: "foo"), subTypes: [
-      new SubType(id: 2, name: "bar"),
-      new SubType(id: 3, name: "baz"),
+    EchoComplexTypes(subType: SubType(id: 1, name: "foo"), subTypes: [
+      SubType(id: 2, name: "bar"),
+      SubType(id: 3, name: "baz"),
     ], subTypeMap: {
-      "a": new SubType(id: 4, name: "qux")
+      "a": SubType(id: 4, name: "qux")
     }, stringMap: {
       "a": "b"
     }, intStringMap: {

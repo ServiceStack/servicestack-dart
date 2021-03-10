@@ -135,7 +135,7 @@ class GetFoos extends PagedAndOrderedRequest implements IReturn<PagedResult<FooL
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    createResponse() { return new PagedResult<FooListDto>(); }
+    createResponse() { return PagedResult<FooListDto>(); }
     String getTypeName() { return "GetFoos"; }
     TypeContext context = _ctx;
 }
@@ -168,7 +168,7 @@ class GetItemsRequest implements IReturn<List<Item>>, IConvertible {
 
     Map<String, dynamic> toJson() => {};
     createResponse() {
-        return new List<Item>();
+        return List<Item>();
     }
 
     String getTypeName() {
@@ -178,15 +178,15 @@ class GetItemsRequest implements IReturn<List<Item>>, IConvertible {
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(library: 'localhost', types: <String, TypeInfo> {
-    'FooListDto': new TypeInfo(TypeOf.Class, create:() => new FooListDto()),
-    'PagedRequest': new TypeInfo(TypeOf.AbstractClass),
-    'PagedAndOrderedRequest': new TypeInfo(TypeOf.AbstractClass),
-    'PagedResult<T>': new TypeInfo(TypeOf.GenericDef,create:() => new PagedResult()),
-    'UnknownTypes': new TypeInfo(TypeOf.Class, create:() => new UnknownTypes()),
-    'List<FooListDto>': new TypeInfo(TypeOf.Class, create:() => new List<FooListDto>()),
-    'GetFoos': new TypeInfo(TypeOf.Class, create:() => new GetFoos()),
-    'Item': new TypeInfo(TypeOf.Class, create: () => new Item()),
-    'List<Item>': new TypeInfo(TypeOf.Class, create: () => new List<Item>()),
+TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
+    'FooListDto': TypeInfo(TypeOf.Class, create:() => FooListDto()),
+    'PagedRequest': TypeInfo(TypeOf.AbstractClass),
+    'PagedAndOrderedRequest': TypeInfo(TypeOf.AbstractClass),
+    'PagedResult<T>': TypeInfo(TypeOf.GenericDef,create:() => PagedResult()),
+    'UnknownTypes': TypeInfo(TypeOf.Class, create:() => UnknownTypes()),
+    'List<FooListDto>': TypeInfo(TypeOf.Class, create:() => List<FooListDto>()),
+    'GetFoos': TypeInfo(TypeOf.Class, create:() => GetFoos()),
+    'Item': TypeInfo(TypeOf.Class, create: () => Item()),
+    'List<Item>': TypeInfo(TypeOf.Class, create: () => List<Item>()),
 });
 

@@ -10,7 +10,7 @@ void main(){
   test('AuthRequired returns 401', () async {
     var client = createTestClient();
     try {
-      await client.get(new TestAuth());
+      await client.get(TestAuth());
       fail("should throw");
     } on WebServiceException catch(e) {
       expect(e.statusCode, equals(401));
@@ -22,7 +22,7 @@ void main(){
     var client = createTestClient();
     client.setCredentials("test", "test");
 
-    var response = await client.get(new TestAuth());
+    var response = await client.get(TestAuth());
     
     expect(response.userId, equals('1'));
     expect(response.userName, equals("test"));
@@ -33,7 +33,7 @@ void main(){
   test('Can authenticate with CredentialsAuth', () async {
     var client = createTestClient();
     
-    var request = new Authenticate(provider: "credentials", userName: "test", password: "test");
+    var request = Authenticate(provider: "credentials", userName: "test", password: "test");
 
     var authResponse = await client.post(request);
 
@@ -41,7 +41,7 @@ void main(){
     expect(authResponse.userName, equals("test"));
     expect(authResponse.sessionId, isNotNull);
 
-    var response = await client.get(new TestAuth());
+    var response = await client.get(TestAuth());
    
     expect(response.userId, equals('1'));
     expect(response.userName, equals("test"));

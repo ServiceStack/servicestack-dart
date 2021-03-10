@@ -43,10 +43,10 @@ import 'package:servicestack/client.dart';
 
 import 'dtos.dart';
 
-var client = new JsonServiceClient("https://techstacks.io");
+var client = JsonServiceClient("https://techstacks.io");
 
 main() async {
-  var response = await client.get(new GetTechnology(slug: "flutter"));
+  var response = await client.get(GetTechnology(slug: "flutter"));
   print("${response.technology.name}: ${response.technology.vendorUrl}");
 }
 ```
@@ -67,7 +67,7 @@ import 'package:servicestack/web_client.dart' if (dart.library.io) 'package:serv
 
 main() async {
   var client = ClientFactory.create('https://techstacks.io');
-  var response = await client.get(new GetTechnology(slug: "flutter"));
+  var response = await client.get(GetTechnology(slug: "flutter"));
   print("${response.technology.name}: ${response.technology.vendorUrl}");
 }
 ```
@@ -130,7 +130,7 @@ For browser projects you can use the `JsonWebClient` from `web_client.dart` dire
 ```dart
 import 'package:servicestack/web_client.dart';
 
-var client = new JsonWebClient("https://techstacks.io");
+var client = JsonWebClient("https://techstacks.io");
 ```
 
 The `JsonWebClient` performs HTTP Requests using [dart:html BrowserClient](https://webdev.dartlang.org/angular/guide/server-communication) to use the browsers built-in `XMLHttpRequest` object. Despite their implementation differences `JsonWebClient` also supports the same feature-set as the Dart VM's `JsonServiceClient` above. 
@@ -141,10 +141,10 @@ In addition to implementing the `IServiceClient` above, each Service Client incl
 e.g. as the Request/Response filters have different Type signatures (dart:io's `HttpClientResponse` vs Browser's `Response`) they can't be declared in the shared `IServiceClient` interface, but thanks to Dart's type inference many of the extended concrete APIs are still source-compatible, e.g:
 
 ```dart
-var vmClient = new JsonServiceClient(baseUrl)
+var vmClient = JsonServiceClient(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 
-var webClient = new JsonWebClient(baseUrl)
+var webClient = JsonWebClient(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 ```
 
@@ -159,12 +159,12 @@ The generated DTOs follow Dart's [JsonCodec](https://api.dartlang.org/stable/1.2
 
 ```dart
 //Serialization
-var dto = new MyDto(name:"foo");
+var dto = MyDto(name:"foo");
 String jsonString = json.encode(dto);
 
 //Deserialization
 Map<String,dynamic> jsonObj = json.decode(jsonString);
-var fromJson = new MyDto.fromJson(jsonObj);
+var fromJson = MyDto.fromJson(jsonObj);
 ```
 
 #### Default Constructor
@@ -172,13 +172,13 @@ var fromJson = new MyDto.fromJson(jsonObj);
 All DTOs also include a default constructor containing all properties as optional arguments providing a wrist-friendly syntax for creating and populating DTOs in a single constructor expression, e.g:
 
 ```dart
-var request = new MyDto(name:"foo");
+var request = MyDto(name:"foo");
 ```
 
 Only the properties of each DTO are included in its default constructor so you'll need to use property accessors to initialize any fields in base classes, but thanks to Dart's support for method cascades you can still populate an entire DTO with a single expression, e.g:
 
 ```dart
-var request = new FindTechnologies(name:"Flutter")
+var request = FindTechnologies(name:"Flutter")
     ..fields = "id,slug,vendorName,productUrl"
     ..orderBy = "created,-viewCount"
     ..take = 1;
@@ -257,10 +257,10 @@ abstract class IServiceClient {
 In addition to implementing the `IServiceClient` above, each Service Client includes additional concrete specific functionality allowing for finer-grained access to their underlying HTTP Clients, e.g. as the Request/Response filters have different Type signatures (dart:io's `HttpClientResponse` vs Browser's `Response`) they can't be declared in the shared `IServiceClient` interface, but thanks to Dart's type inference many of the extended concrete APIs are still source-compatible, e.g:
 
 ```dart
-var vmClient = new JsonServiceClient(baseUrl)
+var vmClient = JsonServiceClient(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 
-var webClient = new JsonWebClient(baseUrl)
+var webClient = JsonWebClient(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 ```
 
@@ -318,8 +318,8 @@ import 'dtos.dart';
 const TestBaseUrl = "http://test.servicestack.net";
 const TechStacksBaseUrl = "https://techstacks.io";
 
-var testClient = new JsonServiceClient(TestBaseUrl);
-var techstacksClient = new JsonServiceClient(TechStacksBaseUrl);
+var testClient = JsonServiceClient(TestBaseUrl);
+var techstacksClient = JsonServiceClient(TechStacksBaseUrl);
 ```
 
 ### HelloFlutter UI
@@ -335,22 +335,22 @@ Ultimately this results in following the same dual class pattern below where the
 ```dart
 class HelloFlutter extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new HelloFlutterState();
+  State<StatefulWidget> createState() => HelloFlutterState();
 }
 
 class HelloFlutterState extends State<HelloFlutter> {
   //State for this widget
   String result = "";
-  Uint8List imageBytes = new Uint8List(0);
+  Uint8List imageBytes = Uint8List(0);
 
   @override
   Widget build(BuildContext context) {
 
       //...
-      new RaisedButton(
-        child: new Text("Async"),
+      RaisedButton(
+        child: Text("Async"),
         onPressed: () async {
-          var r = await testClient.get(new Hello(name: "Async"));
+          var r = await testClient.get(Hello(name: "Async"));
           setState(() {
             result = r.result;
           });
@@ -359,8 +359,8 @@ class HelloFlutterState extends State<HelloFlutter> {
 
       //...
       result != null && result != "" 
-          ? new Text(result) 
-          : new Image.memory(imageBytes, width:500.0, height:170.0),
+          ? Text(result) 
+          : Image.memory(imageBytes, width:500.0, height:170.0),
   }
 }
 ```
@@ -372,7 +372,7 @@ HelloFlutter's UI consists of 6 buttons across the top of the screen and an area
 The first **Async** example shows an example of the most popular API Request for calling ServiceStack Services, simply by sending a populated Request DTO that returns a populated Response DTO, in this case sending a `Hello` Request DTO that returns a `HelloResponse` DTO:
 
 ```dart
-var r = await testClient.get(new Hello(name: "Async"));
+var r = await testClient.get(Hello(name: "Async"));
 setState(() {
   result = r.result;
 });
@@ -390,16 +390,16 @@ This results in displaying the contents of the `result` String in a `Text` widge
 This example shows how to make Authenticated Requests where first the `JsonServiceClient` instance is authenticated by sending a `Authenticate` request with valid Username/Password credentials which is validated against the servers configured [CredentialsAuthProvider](https://docs.servicestack.net/authentication-and-authorization#auth-providers). If successful this will return [Session Cookies](https://docs.servicestack.net/sessions) containing a reference to the Authenticated UserSession stored on the server. The Cookies are automatically saved on the `JsonServiceClient` instance and re-sent on subsequent requests which is how it's able to make an Authenticated request to the [protected `HelloAuth` Service](https://github.com/ServiceStack/Test/blob/3cc559d8de79e1c70ff7f4327458040ca055dea3/src/Test/Test.ServiceInterface/TestAuthService.cs#L18-L19):
 
 ```dart
-new RaisedButton(
-  child: new Text("Auth"),
+RaisedButton(
+  child: Text("Auth"),
   onPressed: () async {
 
-    var auth = await testClient.post(new Authenticate(
+    var auth = await testClient.post(Authenticate(
         provider: "credentials",
         userName: "test",
         password: "test"));
 
-    var r = await testClient.get(new HelloAuth(name: "Auth"));
+    var r = await testClient.get(HelloAuth(name: "Auth"));
 
     setState(() {
       result = "${r.result} your JWT is: ${auth.bearerToken}";
@@ -419,18 +419,18 @@ JWT's encapsulate a signed, stateless Authenticated UserSession which is able to
 The JWT sample shows an example of authenticating via JWT, but instead of configuring the `JsonServiceClient` instance with the JWT BearerToken above (and what's needed to make JWT Authenticated Requests), it's only populating the [long-lived RefreshToken](https://docs.servicestack.net/jwt-authprovider#refresh-tokens) which the client automatically uses behind the scenes to fetch a new JWT Bearer Token from the remote ServiceStack endpoint, which if the User is still allowed to Sign In will populate the instance with a new JWT Bearer Token encapsulated with the latest UserSession.
 
 ```dart
-new RaisedButton(
-  child: new Text("JWT"),
+RaisedButton(
+  child: Text("JWT"),
   onPressed: () async {
-    var auth = await testClient.post(new Authenticate(
+    var auth = await testClient.post(Authenticate(
         provider: "credentials",
         userName: "test",
         password: "test"));
 
-    var newClient = new JsonServiceClient(TestBaseUrl)
+    var newClient = JsonServiceClient(TestBaseUrl)
       ..refreshToken = auth.refreshToken;
     
-    var r = await newClient.get(new HelloAuth(name: "JWT"));
+    var r = await newClient.get(HelloAuth(name: "JWT"));
 
     setState(() {
       result = "${r.result} your RefreshToken is: ${auth.refreshToken}";
@@ -465,13 +465,13 @@ We can include any additional arguments that are not explicitly defined on the R
 This examples calls 2 different AutoQuery Services, first to retrieve the **Flutter** `Technology` in https://techstacks.io to retrieve its `id` which it uses to query the latest `Announcement` or `Showcase` posted in the **Flutter** organization:
 
 ```dart
-new RaisedButton(
-  child: new Text("Query"),
+RaisedButton(
+  child: Text("Query"),
   onPressed: () async {
     
-    var techs = await techstacksClient.get(new FindTechnologies(), args: {"slug": "flutter"});
+    var techs = await techstacksClient.get(FindTechnologies(), args: {"slug": "flutter"});
     
-    var posts = await techstacksClient.get(new QueryPosts(
+    var posts = await techstacksClient.get(QueryPosts(
         anyTechnologyIds: [techs.results[0].id],
         types: ['Announcement', 'Showcase'])
       ..take = 1);
@@ -492,12 +492,12 @@ The 2nd Request calls the `QueryPosts` AutoQuery Service highlighting the Servic
 The `sendAll` and `sendAllOneWay` APIs lets you use ServiceStack's [Auto Batched Requests](https://docs.servicestack.net/auto-batched-requests) feature to batch multiple Requests DTOs of the same Type in a single Request that returns all Responses in a single Response, e.g:
 
 ```dart
-new RaisedButton(
-  child: new Text("Batch"),
+RaisedButton(
+  child: Text("Batch"),
   onPressed: () async {
     
     var requests = ['foo', 'bar', 'qux']
-        .map((name) => new Hello(name: name));
+        .map((name) => Hello(name: name));
     
     var responses = await testClient.sendAll(requests);
 
@@ -535,11 +535,11 @@ Most API Requests typically involve sending a populated Request DTO that returns
 This example calls the [`HelloImage` Service](https://github.com/ServiceStack/Test/blob/90678a1d57ac63daaafea7322e0a4f542a93488f/src/Test/Test.ServiceInterface/ImageService.cs#L137) which dynamically creates and returns an image based on the different properties on the incoming `HelloImage` Request DTO. As it implements `IReturn<byte[]>` the `JsonServiceClient` returns the binary contents of the HTTP Response in a `Uint8List` - the preferred type for bytes in Dart.
 
 ```dart
-new RaisedButton(
-  child: new Text("Image"),
+RaisedButton(
+  child: Text("Image"),
   onPressed: () async {
 
-    Uint8List bytes = await testClient.get(new HelloImage(
+    Uint8List bytes = await testClient.get(HelloImage(
         name: "Flutter",
         fontFamily: "Roboto",
         background: "#0091EA",
@@ -556,8 +556,8 @@ new RaisedButton(
 
 //...
 result != null && result != "" 
-    ? new Text(result) 
-    : new Image.memory(imageBytes, width:500.0, height:170.0),
+    ? Text(result) 
+    : Image.memory(imageBytes, width:500.0, height:170.0),
 ```
 
 To display the image we assign the response to the `imageBytes` field within the stateful widget's `setState()` which triggers a re-render of the UI containing the generated Image displayed using the [Image widget](https://docs.flutter.io/flutter/widgets/Image-class.html):
@@ -577,8 +577,8 @@ import 'package:servicestack/web_client.dart';
 and changing the clients to use the `JsonWebClient` instead, e.g:
 
 ```dart
-var testClient = new JsonWebClient(TestBaseUrl);
-var techstacksClient = new JsonWebClient(TechStacksBaseUrl);
+var testClient = JsonWebClient(TestBaseUrl);
+var techstacksClient = JsonWebClient(TechStacksBaseUrl);
 ```
 
 But otherwise the actual client source code for all of the Typed API requests remains exactly the same. 
@@ -607,35 +607,35 @@ class HelloWorldComponent {
   var imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="; // 1x1 pixel
   static const TestBaseUrl = "http://test.servicestack.net";
   static const TechStacksBaseUrl = "https://techstacks.io";
-  var testClient = new JsonWebClient(TestBaseUrl);
-  var techstacksClient = new JsonWebClient(TechStacksBaseUrl);
+  var testClient = JsonWebClient(TestBaseUrl);
+  var techstacksClient = JsonWebClient(TechStacksBaseUrl);
 
   doAsync() async {
-    var r = await testClient.get(new Hello(name: "Async"));
+    var r = await testClient.get(Hello(name: "Async"));
     result = r.result;
   }
 
   doAuth() async {
-    var auth = await testClient.post(new Authenticate(
+    var auth = await testClient.post(Authenticate(
         provider: "credentials", userName: "test", password: "test"));
-    var r = await testClient.get(new HelloAuth(name: "Auth"));
+    var r = await testClient.get(HelloAuth(name: "Auth"));
     result = "${r.result} your JWT is: ${auth.bearerToken}";
   }
 
   doJWT() async {
-    var auth = await testClient.post(new Authenticate(
+    var auth = await testClient.post(Authenticate(
         provider: "credentials", userName: "test", password: "test"));
 
-    var newClient = new JsonWebClient(TestBaseUrl)
+    var newClient = JsonWebClient(TestBaseUrl)
       ..refreshToken = auth.refreshToken;
-    var r = await newClient.get(new HelloAuth(name: "JWT"));
+    var r = await newClient.get(HelloAuth(name: "JWT"));
     result = "${r.result} your RefreshToken is: ${auth.refreshToken}";
   }
 
   doQuery() async {
     var techs = await techstacksClient
-        .get(new FindTechnologies(), args: {"slug": "flutter"});
-    var posts = await techstacksClient.get(new QueryPosts(
+        .get(FindTechnologies(), args: {"slug": "flutter"});
+    var posts = await techstacksClient.get(QueryPosts(
         anyTechnologyIds: [techs.results[0].id],
         types: ['Announcement', 'Showcase'])
       ..take = 1);
@@ -643,13 +643,13 @@ class HelloWorldComponent {
   }
 
   doBatch() async {
-    var requests = ['foo', 'bar', 'qux'].map((name) => new Hello(name: name));
+    var requests = ['foo', 'bar', 'qux'].map((name) => Hello(name: name));
     var responses = await testClient.sendAll(requests);
     result = "Batch Responses:\n${responses.map((r) => r.result).join('\n')}";
   }
 
   doImage() async {
-    Uint8List bytes = await testClient.get(new HelloImage(
+    Uint8List bytes = await testClient.get(HelloImage(
         name: "Flutter",
         fontFamily: "Roboto",
         background: "#0091EA",
