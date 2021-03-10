@@ -1,3 +1,8 @@
+## 1.0.29
+
+* Improve support for handling minified types in release builds
+* Add new `Log` provider abstraction and debug logging 
+
 ## 1.0.28
 
 * Improve naked List handling in minified builds
