@@ -147,7 +147,7 @@ Uri createUri(String url) {
   } catch (e) {
     //sometimes Uri refuses to parse urls with encodable chars so need to manually parse + reconstruct
     var parts = url.split("://");
-    if (parts.length != 2) throw new FormatException("Invalid URL: '${url}'");
+    if (parts.length != 2) throw FormatException("Invalid URL: '${url}'");
 
     var urlParts = splitOnFirst(parts[1], "/");
     var relativeUrl = urlParts.length == 1 ? "/" : "/" + urlParts[1];
@@ -158,7 +158,7 @@ Uri createUri(String url) {
     Map<String, String> query = null;
 
     if (relativeUrlParts.length == 2) {
-      query = new Map<String, String>();
+      query = Map<String, String>();
       var qs = relativeUrlParts[1];
       var qsParts = qs.split("&");
       for (var qsPart in qsParts) {
@@ -169,8 +169,8 @@ Uri createUri(String url) {
     }
 
     return parts[0] == "https"
-        ? new Uri.https(urlParts[0], path, query)
-        : new Uri.http(urlParts[0], path, query);
+        ? Uri.https(urlParts[0], path, query)
+        : Uri.http(urlParts[0], path, query);
   }
 }
 
@@ -188,9 +188,9 @@ String resolveHttpMethod(request) {
 
 WebServiceException createErrorResponse(String errorCode, String message,
     [WebServiceExceptionType type]) {
-  var error = new WebServiceException();
+  var error = WebServiceException();
   if (type != null) error.type = type;
-  error.responseStatus = new ResponseStatus()
+  error.responseStatus = ResponseStatus()
     ..errorCode = errorCode
     ..message = message;
   return error;
@@ -223,7 +223,7 @@ String qsValue(arg) {
     return Uri.encodeComponent(arg);
   }
   if (arg is List) {
-    var sb = new StringBuffer();
+    var sb = StringBuffer();
     for (var x in arg) {
       if (sb.length > 0) sb.write(",");
       sb.write(qsValue(x));
@@ -234,7 +234,7 @@ String qsValue(arg) {
     arg = (arg as IConvertible).toJson();
   }
   if (arg is Map) {
-    var sb = new StringBuffer();
+    var sb = StringBuffer();
     arg.forEach((key, val) {
       if (val == null) return;
       if (sb.length > 0) sb.write(",");
@@ -261,7 +261,7 @@ String sanitizeKey(String key) =>
 
 ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
   if (obj == null) return null;
-  var to = new ResponseStatus();
+  var to = ResponseStatus();
   var status = findValue(obj, "responseStatus") ?? obj;
 
   status.forEach((key, val) {
@@ -274,9 +274,9 @@ ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
       to.stackTrace = val;
     } else if (sanitizedKey == "errors") {
       List errors = val;
-      to.errors = new List<ResponseError>();
+      to.errors = [];
       for (Map error in errors) {
-        var fieldError = new ResponseError();
+        var fieldError = ResponseError();
         to.errors.add(fieldError);
         error.forEach((fieldKey, fieldVal) {
           var sanitizedFieldKey = sanitizeKey(fieldKey);
@@ -340,3 +340,6 @@ Map<String,int> toHostsMap(List<String> urls) {
   });
   return to;
 }
+
+String fromGuid(String guid) => guid;
+String toGuid(String guid) => guid;

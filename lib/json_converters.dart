@@ -14,17 +14,18 @@ class JsonConverters {
   }
 
   static Map<String, IConverter> Converters = {
-    'Duration': new DurationConverter(),
-    'DateTime': new DateTimeConverter(),
-    'List': new ListConverter(),
-    '_GrowableList': new ListConverter(),
-    'Map': new MapConverter(),
-    '_InternalLinkedHashMap': new MapConverter(),
-    'KeyValuePair': new KeyValuePairConverter(),
+    'Duration': DurationConverter(),
+    'DateTime': DateTimeConverter(),
+    'List': ListConverter(),
+    'Uint8List': ByteArrayConverter(),
+    '_GrowableList': ListConverter(),
+    'Map': MapConverter(),
+    '_InternalLinkedHashMap': MapConverter(),
+    'KeyValuePair': KeyValuePairConverter(),
   };
 
-  static IConverter enumConverter = new EnumConverter();
-  static IConverter defaultConverter = new DefaultConverter();
+  static IConverter enumConverter = EnumConverter();
+  static IConverter defaultConverter = DefaultConverter();
   static List<String> nativeTypes = [
     "int",
     "double",
@@ -53,14 +54,14 @@ class JsonConverters {
   }
 
   static dynamic fromJson(dynamic value, String typeName, TypeContext context) {
-    var newContext = new TypeContext(types: context.types, typeName: typeName,
+    var newContext = TypeContext(types: context.types, typeName: typeName,
         childContext: context.childContext)..addChildContext(_ctx);
     var converter = resolve(typeName, newContext);
     return converter.fromJson(value, newContext);
   }
 
   static dynamic toJson(dynamic value, String typeName, TypeContext context) {
-    var newContext = new TypeContext(types: context.types, typeName: typeName,
+    var newContext = TypeContext(types: context.types, typeName: typeName,
         childContext: context.childContext)..addChildContext(_ctx);
     var converter = resolve(typeName, newContext);
     return converter.toJson(value, newContext);
@@ -79,7 +80,7 @@ class JsonConverters {
 
   static Map<String, String> toStringMap(dynamic value) {
     if (value is Map<String, dynamic>) {
-      var to = new Map<String, String>();
+      var to = Map<String, String>();
       value.forEach((key, val) => to[key] = _toString(val));
       return to;
     }
@@ -181,7 +182,7 @@ dynamic convertTo(dynamic request, dynamic responseAs, dynamic jsonObj) {
       listType = responseAs.runtimeType.toString();
     }
     reqContext = createListContext(reqContext, listType, responseAs);
-    return new ListConverter().fromJson(jsonObj, reqContext);
+    return ListConverter().fromJson(jsonObj, reqContext);
   }
   if (reqContext != null && responseAs is IConvertible) {
     responseAs.context = reqContext;
@@ -193,12 +194,12 @@ dynamic convertTo(dynamic request, dynamic responseAs, dynamic jsonObj) {
 
 TypeContext createListContext(TypeContext reqContext, String listType, dynamic responseAs) {
   var existingInfo = reqContext.getTypeInfo(listType);
-  reqContext = new TypeContext(
+  reqContext = TypeContext(
       typeName: listType,
       types: {
         //List<T> in Dart 1.9 (non Strong mode) creates non generic List (dynamic)
         listType: existingInfo ??
-            new TypeInfo(TypeOf.Class, create: () => responseAs)
+            TypeInfo(TypeOf.Class, create: () => responseAs)
       },
       childContext: reqContext);
   return reqContext;
@@ -252,10 +253,34 @@ class DefaultConverter implements IConverter {
   }
 }
 
+class ByteArrayConverter implements IConverter {
+  fromJson(value, TypeContext context) {
+    String base64 = value is String ? value : null;
+    if (base64 != null)
+      return fromByteArray(value);
+    List<int> bytes = value is List<int> ? value : null;
+    if (value != null)
+      return Uint8List.fromList(bytes);
+    return null;
+  }
+
+  toJson(value, TypeContext context) {
+    if (value == null) return null;
+    Uint8List bytes = value is Uint8List ? value : null;
+    return bytes != null
+      ? toByteArray(bytes)
+      : null;
+  }
+}
+
+Uint8List fromByteArray(String base64String)  => base64.decode(base64String);
+String toByteArray(Uint8List bytes) => base64.encode(bytes);
+
 class DateTimeConverter implements IConverter {
   toJson(value, TypeContext context) {
     DateTime dateTime = value is DateTime ? value : null;
-    if (dateTime != null) return "\/Date(${dateTime.millisecondsSinceEpoch})\/";
+    if (dateTime != null)
+      return toDateTime(dateTime);
 
     return value;
   }
@@ -263,40 +288,47 @@ class DateTimeConverter implements IConverter {
   fromJson(value, TypeContext context) {
     DateTime date = value is DateTime ? value : null;
     if (date != null) return date;
-
     String strDate = value is String ? value : null;
     if (strDate != null) {
-      if (strDate.startsWith("\/Date(")) {
-        var epochAndZone = leftPart(rightPart(strDate, "("), ")");
-        var epochStr = epochAndZone.indexOf('-', 1) >= 0
-            ? lastLeftPart(epochAndZone, "-")
-            : epochAndZone;
-        var epoch = int.parse(epochStr);
-        return new DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
-      }
-      var hasSecFraction = strDate.indexOf(".") >= 0;
-      if (hasSecFraction) {
-        var secFraction = lastRightPart(strDate, ".");
-        bool isUtc = secFraction.endsWith('Z');
-        if (isUtc) {
-          secFraction = secFraction.substring(0, secFraction.length-1);
-        }
-        String tz = '';
-        if (secFraction.contains('+')) {
-          tz = '+' + rightPart(secFraction, '+');
-          secFraction = leftPart(secFraction, '+');
-        } else if (secFraction.contains('-')) {
-          tz = '-' + rightPart(secFraction, '-');
-          secFraction = leftPart(secFraction, '-');
-        }
-        if (secFraction.length > 6) {
-          strDate = lastLeftPart(strDate, '.') + '.' + secFraction.substring(0,6) + tz + (isUtc ? 'Z' : '');
-        }
-      }
-      return DateTime.parse(strDate);
+      return fromDateTime(strDate);
     }
     return value;
   }
+}
+
+String toDateTime(DateTime dateTime) {
+  return "\/Date(${dateTime.millisecondsSinceEpoch})\/";
+}
+
+DateTime fromDateTime(String strDate) {
+  if (strDate.startsWith("\/Date(")) {
+    var epochAndZone = leftPart(rightPart(strDate, "("), ")");
+    var epochStr = epochAndZone.indexOf('-', 1) >= 0
+        ? lastLeftPart(epochAndZone, "-")
+        : epochAndZone;
+    var epoch = int.parse(epochStr);
+    return DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
+  }
+  var hasSecFraction = strDate.indexOf(".") >= 0;
+  if (hasSecFraction) {
+    var secFraction = lastRightPart(strDate, ".");
+    bool isUtc = secFraction.endsWith('Z');
+    if (isUtc) {
+      secFraction = secFraction.substring(0, secFraction.length-1);
+    }
+    String tz = '';
+    if (secFraction.contains('+')) {
+      tz = '+' + rightPart(secFraction, '+');
+      secFraction = leftPart(secFraction, '+');
+    } else if (secFraction.contains('-')) {
+      tz = '-' + rightPart(secFraction, '-');
+      secFraction = leftPart(secFraction, '-');
+    }
+    if (secFraction.length > 6) {
+      strDate = lastLeftPart(strDate, '.') + '.' + secFraction.substring(0,6) + tz + (isUtc ? 'Z' : '');
+    }
+  }
+  return DateTime.parse(strDate);
 }
 
 class MapConverter implements IConverter {
@@ -402,4 +434,3 @@ class KeyValuePairConverter implements IConverter {
     return to;
   }
 }
-
