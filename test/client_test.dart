@@ -301,6 +301,17 @@ void main() {
     expect(str, equals("foo"));
   });
 
+  test('Can deserialize naked list', () async {
+    var client = createTestClient();
+    var response = await client.get(RawBazRequest());
+    expect(response.length, equals(2));
+
+    expect(response.runtimeType.toString(), equals(RawBazRequest().getResponseTypeName()));
+    expect(response.first.runtimeType.toString(), equals("Baz"));
+    var allNames = response.map((x) => x.name);
+    expect(allNames, equals(["item 1", "item 2"]));
+  });
+
   test('Can sendAll batch request', () async {
     var client = createTestClient();
 

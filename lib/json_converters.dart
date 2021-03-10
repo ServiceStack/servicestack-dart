@@ -93,8 +93,7 @@ class JsonConverters {
 String _toString(value) =>
     value == null ? null : value is String ? value : value.toString();
 
-String getTypeName(value) =>
-  value.runtimeType.toString();
+String getTypeName(value) => nameOf(value);
 
 bool _equals(left,right) {
   if (left == right)
@@ -164,6 +163,16 @@ dynamic populate(dynamic to, dynamic from, [TypeContext context = null]) {
   return null;
 }
 
+String getResponseType(dynamic request, dynamic responseAs) {
+  try {
+    Function getResponseTypeName = request.getResponseTypeName;
+    if (getResponseTypeName != null) {
+      return getResponseTypeName();
+    }
+  } catch (e) {}
+  return nameOf(responseAs);
+}
+
 dynamic convertTo(dynamic request, dynamic responseAs, dynamic jsonObj) {
   TypeContext reqContext;
   if (request is IConvertible) {
@@ -171,18 +180,14 @@ dynamic convertTo(dynamic request, dynamic responseAs, dynamic jsonObj) {
   } else if (request is List) {
     var firstRequest = request[0];
     var firstResponse = firstRequest.createResponse();
-    var elementType = firstResponse.runtimeType.toString();
-    reqContext = createListContext((firstRequest as IConvertible).context, "List<${elementType}>", responseAs);
+    var elementType = nameOf(firstResponse);
+    var listType = "List<${elementType}>";
+    reqContext = createListContext((firstRequest as IConvertible).context, listType, responseAs);
+    return ListConverter.populate(responseAs, listType, jsonObj, reqContext);
   }
   if (responseAs is List) {
-    String listType;
-    try {
-      listType = request.getResponseTypeName();
-    } on NoSuchMethodError {
-      listType = responseAs.runtimeType.toString();
-    }
-    reqContext = createListContext(reqContext, listType, responseAs);
-    return ListConverter().fromJson(jsonObj, reqContext);
+    var listType = getResponseType(request, responseAs);
+    return ListConverter.populate(responseAs, listType, jsonObj, reqContext);
   }
   if (reqContext != null && responseAs is IConvertible) {
     responseAs.context = reqContext;
@@ -398,14 +403,19 @@ class ListConverter implements IConverter {
     if (value.runtimeType == o.runtimeType) {
       return value;
     }
+    return populate(o, getTypeName(o), value, context);
+  }
 
-    var genericArgs = getGenericArgs(getTypeName(o));
-    var toArgType = genericArgs.length > 0 ? genericArgs[0] : 'dynamic';
+  static String getElementType(String listType) {
+    var genericArgs = getGenericArgs(listType);
+    return genericArgs.length > 0 ? genericArgs[0] : 'dynamic';
+  }
 
-    List list = value;
-    list.forEach((x) => o.add(convert(x, toArgType, context)));
-
-    return o;
+  static populate(List target, String listType, List from, TypeContext context) {
+    var elementType = getElementType(listType);
+    List list = from;
+    list.forEach((x) => target.add(convert(x, elementType, context)));
+    return target;
   }
 }
 

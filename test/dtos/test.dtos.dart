@@ -1,8 +1,8 @@
 /* Options:
-Date: 2021-03-10 14:28:33
+Date: 2021-03-10 10:31:57
 Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: http://localhost:5000
+BaseUrl: http://test.servicestack.net
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True
@@ -37,6 +37,7 @@ class CustomType implements IConvertible
         'name': name
     };
 
+    getTypeName() => "CustomType";
     TypeContext context = _ctx;
 }
 
@@ -59,6 +60,7 @@ class SetterType implements IConvertible
         'name': name
     };
 
+    getTypeName() => "SetterType";
     TypeContext context = _ctx;
 }
 
@@ -81,6 +83,7 @@ class Bar implements IConvertible
         'description': description
     };
 
+    getTypeName() => "Bar";
     TypeContext context = _ctx;
 }
 
@@ -103,6 +106,7 @@ class Baz implements IConvertible
         'description': description
     };
 
+    getTypeName() => "Baz";
     TypeContext context = _ctx;
 }
 
@@ -422,6 +426,7 @@ class AuthUserSession implements IConvertible
         'type': type
     };
 
+    getTypeName() => "AuthUserSession";
     TypeContext context = _ctx;
 }
 
@@ -441,6 +446,7 @@ class MetadataTestNestedChild implements IConvertible
         'name': name
     };
 
+    getTypeName() => "MetadataTestNestedChild";
     TypeContext context = _ctx;
 }
 
@@ -463,6 +469,7 @@ class MetadataTestChild implements IConvertible
         'results': JsonConverters.toJson(results,'List<MetadataTestNestedChild>',context)
     };
 
+    getTypeName() => "MetadataTestChild";
     TypeContext context = _ctx;
 }
 
@@ -484,6 +491,7 @@ class MenuItemExampleItem implements IConvertible
         'name1': name1
     };
 
+    getTypeName() => "MenuItemExampleItem";
     TypeContext context = _ctx;
 }
 
@@ -509,6 +517,7 @@ class MenuItemExample implements IConvertible
         'menuItemExampleItem': JsonConverters.toJson(menuItemExampleItem,'MenuItemExampleItem',context)
     };
 
+    getTypeName() => "MenuItemExample";
     TypeContext context = _ctx;
 }
 
@@ -531,6 +540,7 @@ class MenuExample implements IConvertible
         'menuItemExample1': JsonConverters.toJson(menuItemExample1,'MenuItemExample',context)
     };
 
+    getTypeName() => "MenuExample";
     TypeContext context = _ctx;
 }
 
@@ -550,6 +560,7 @@ class NestedClass implements IConvertible
         'value': value
     };
 
+    getTypeName() => "NestedClass";
     TypeContext context = _ctx;
 }
 
@@ -569,6 +580,7 @@ class ListResult implements IConvertible
         'result': result
     };
 
+    getTypeName() => "ListResult";
     TypeContext context = _ctx;
 }
 
@@ -588,6 +600,7 @@ class ArrayResult implements IConvertible
         'result': result
     };
 
+    getTypeName() => "ArrayResult";
     TypeContext context = _ctx;
 }
 
@@ -679,6 +692,7 @@ class SubType implements IConvertible
         'name': name
     };
 
+    getTypeName() => "SubType";
     TypeContext context = _ctx;
 }
 
@@ -773,6 +787,7 @@ abstract class AllTypesBase
         'subType': JsonConverters.toJson(subType,'SubType',context)
     };
 
+    getTypeName() => "AllTypesBase";
     TypeContext context = _ctx;
 }
 
@@ -792,6 +807,7 @@ class Poco implements IConvertible
         'name': name
     };
 
+    getTypeName() => "Poco";
     TypeContext context = _ctx;
 }
 
@@ -811,6 +827,7 @@ abstract class HelloBase
         'id': id
     };
 
+    getTypeName() => "HelloBase";
     TypeContext context = _ctx;
 }
 
@@ -830,6 +847,7 @@ abstract class HelloResponseBase
         'refId': refId
     };
 
+    getTypeName() => "HelloResponseBase";
     TypeContext context = _ctx;
 }
 
@@ -852,6 +870,7 @@ abstract class HelloBase1<T>
         'counts': JsonConverters.toJson(counts,'List<int>',context)
     };
 
+    getTypeName() => "HelloBase1<T>";
     TypeContext context = _ctx;
 }
 
@@ -871,6 +890,7 @@ class Item implements IConvertible
         'value': value
     };
 
+    getTypeName() => "Item";
     TypeContext context = _ctx;
 }
 
@@ -890,6 +910,7 @@ abstract class HelloWithReturnResponse
         'result': result
     };
 
+    getTypeName() => "HelloWithReturnResponse";
     TypeContext context = _ctx;
 }
 
@@ -909,6 +930,7 @@ class HelloType implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloType";
     TypeContext context = _ctx;
 }
 
@@ -930,6 +952,7 @@ class EmptyClass implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "EmptyClass";
     TypeContext context = _ctx;
 }
 
@@ -952,6 +975,7 @@ class InnerType implements IConvertible
         'name': name
     };
 
+    getTypeName() => "InnerType";
     TypeContext context = _ctx;
 }
 
@@ -989,6 +1013,7 @@ class PingService implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "PingService";
     TypeContext context = _ctx;
 }
 
@@ -1008,6 +1033,7 @@ class ReturnedDto implements IConvertible
         'id': id
     };
 
+    getTypeName() => "ReturnedDto";
     TypeContext context = _ctx;
 }
 
@@ -1034,6 +1060,7 @@ class CustomUserSession extends AuthUserSession implements IConvertible
         'customInfo': customInfo
     });
 
+    getTypeName() => "CustomUserSession";
     TypeContext context = _ctx;
 }
 
@@ -1053,6 +1080,7 @@ class UnAuthInfo implements IConvertible
         'customInfo': customInfo
     };
 
+    getTypeName() => "UnAuthInfo";
     TypeContext context = _ctx;
 }
 
@@ -1075,6 +1103,7 @@ class Channel implements IConvertible
         'value': value
     };
 
+    getTypeName() => "Channel";
     TypeContext context = _ctx;
 }
 
@@ -1103,6 +1132,7 @@ class Device implements IConvertible
         'channels': JsonConverters.toJson(channels,'List<Channel>',context)
     };
 
+    getTypeName() => "Device";
     TypeContext context = _ctx;
 }
 
@@ -1125,6 +1155,7 @@ class Logger implements IConvertible
         'devices': JsonConverters.toJson(devices,'List<Device>',context)
     };
 
+    getTypeName() => "Logger";
     TypeContext context = _ctx;
 }
 
@@ -1153,6 +1184,7 @@ class Rockstar implements IConvertible
         'age': age
     };
 
+    getTypeName() => "Rockstar";
     TypeContext context = _ctx;
 }
 
@@ -1166,6 +1198,7 @@ abstract class QueryDbTenant<From,Into> extends QueryDb2<From,Into>
     }
 
     Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "QueryDbTenant<From,Into>";
     TypeContext context = _ctx;
 }
 
@@ -1213,6 +1246,7 @@ class RockstarAuditTenant extends AuditBase implements IConvertible
         'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
     });
 
+    getTypeName() => "RockstarAuditTenant";
     TypeContext context = _ctx;
 }
 
@@ -1247,6 +1281,7 @@ abstract class RockstarBase
         'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
     };
 
+    getTypeName() => "RockstarBase";
     TypeContext context = _ctx;
 }
 
@@ -1267,6 +1302,7 @@ class RockstarAuto extends RockstarBase implements IConvertible
         'id': id
     });
 
+    getTypeName() => "RockstarAuto";
     TypeContext context = _ctx;
 }
 
@@ -1289,6 +1325,7 @@ class OnlyDefinedInGenericType implements IConvertible
         'name': name
     };
 
+    getTypeName() => "OnlyDefinedInGenericType";
     TypeContext context = _ctx;
 }
 
@@ -1311,6 +1348,7 @@ class OnlyDefinedInGenericTypeFrom implements IConvertible
         'name': name
     };
 
+    getTypeName() => "OnlyDefinedInGenericTypeFrom";
     TypeContext context = _ctx;
 }
 
@@ -1333,6 +1371,7 @@ class OnlyDefinedInGenericTypeInto implements IConvertible
         'name': name
     };
 
+    getTypeName() => "OnlyDefinedInGenericTypeInto";
     TypeContext context = _ctx;
 }
 
@@ -1371,6 +1410,7 @@ class RockstarAudit extends RockstarBase implements IConvertible
         'modifiedInfo': modifiedInfo
     });
 
+    getTypeName() => "RockstarAudit";
     TypeContext context = _ctx;
 }
 
@@ -1383,6 +1423,7 @@ abstract class CreateAuditBase<Table,TResponse> implements ICreateDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "CreateAuditBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1396,6 +1437,7 @@ abstract class CreateAuditTenantBase<Table,TResponse> extends CreateAuditBase<Ta
     }
 
     Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "CreateAuditTenantBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1408,6 +1450,7 @@ abstract class UpdateAuditBase<Table,TResponse> implements IUpdateDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "UpdateAuditBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1421,6 +1464,7 @@ abstract class UpdateAuditTenantBase<Table,TResponse> extends UpdateAuditBase<Ta
     }
 
     Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "UpdateAuditTenantBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1433,6 +1477,7 @@ abstract class PatchAuditBase<Table,TResponse> implements IPatchDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "PatchAuditBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1446,6 +1491,7 @@ abstract class PatchAuditTenantBase<Table,TResponse> extends PatchAuditBase<Tabl
     }
 
     Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "PatchAuditTenantBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1458,6 +1504,7 @@ abstract class SoftDeleteAuditBase<Table,TResponse> implements IUpdateDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "SoftDeleteAuditBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1471,6 +1518,7 @@ abstract class SoftDeleteAuditTenantBase<Table,TResponse> extends SoftDeleteAudi
     }
 
     Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "SoftDeleteAuditTenantBase<Table,TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1494,6 +1542,7 @@ class RockstarVersion extends RockstarBase implements IConvertible
         'rowVersion': rowVersion
     });
 
+    getTypeName() => "RockstarVersion";
     TypeContext context = _ctx;
 }
 
@@ -1506,6 +1555,7 @@ class TypesGroup implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "TypesGroup";
     TypeContext context = _ctx;
 }
 
@@ -1546,6 +1596,7 @@ class ChatMessage implements IConvertible
         'private': private
     };
 
+    getTypeName() => "ChatMessage";
     TypeContext context = _ctx;
 }
 
@@ -1568,6 +1619,7 @@ class GetChatHistoryResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "GetChatHistoryResponse";
     TypeContext context = _ctx;
 }
 
@@ -1656,6 +1708,7 @@ class GetUserDetailsResponse implements IConvertible
         'timeZone': timeZone
     };
 
+    getTypeName() => "GetUserDetailsResponse";
     TypeContext context = _ctx;
 }
 
@@ -1678,6 +1731,7 @@ class CustomHttpErrorResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "CustomHttpErrorResponse";
     TypeContext context = _ctx;
 }
 
@@ -1697,6 +1751,7 @@ class Foo implements IConvertible
         'bars': JsonConverters.toJson(bars,'List<Bar>',context)
     };
 
+    getTypeName() => "Foo";
     TypeContext context = _ctx;
 }
 
@@ -1716,6 +1771,7 @@ class ThrowTypeResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "ThrowTypeResponse";
     TypeContext context = _ctx;
 }
 
@@ -1744,6 +1800,7 @@ class ThrowValidationResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "ThrowValidationResponse";
     TypeContext context = _ctx;
 }
 
@@ -1763,6 +1820,7 @@ class ThrowBusinessErrorResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "ThrowBusinessErrorResponse";
     TypeContext context = _ctx;
 }
 
@@ -1782,6 +1840,7 @@ class Account implements IConvertible
         'name': name
     };
 
+    getTypeName() => "Account";
     TypeContext context = _ctx;
 }
 
@@ -1804,6 +1863,7 @@ class Project implements IConvertible
         'name': name
     };
 
+    getTypeName() => "Project";
     TypeContext context = _ctx;
 }
 
@@ -1826,6 +1886,7 @@ class SecuredResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "SecuredResponse";
     TypeContext context = _ctx;
 }
 
@@ -1848,6 +1909,7 @@ class CreateJwtResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "CreateJwtResponse";
     TypeContext context = _ctx;
 }
 
@@ -1870,6 +1932,7 @@ class CreateRefreshJwtResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "CreateRefreshJwtResponse";
     TypeContext context = _ctx;
 }
 
@@ -1892,6 +1955,7 @@ class MetadataTestResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<MetadataTestChild>',context)
     };
 
+    getTypeName() => "MetadataTestResponse";
     TypeContext context = _ctx;
 }
 
@@ -1919,6 +1983,7 @@ class GetExampleResponse implements IConvertible
         'menuExample1': JsonConverters.toJson(menuExample1,'MenuExample',context)
     };
 
+    getTypeName() => "GetExampleResponse";
     TypeContext context = _ctx;
 }
 
@@ -1938,6 +2003,7 @@ class GetRandomIdsResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<String>',context)
     };
 
+    getTypeName() => "GetRandomIdsResponse";
     TypeContext context = _ctx;
 }
 
@@ -1957,6 +2023,7 @@ class HelloResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloResponse";
     TypeContext context = _ctx;
 }
 
@@ -1981,6 +2048,7 @@ class HelloAnnotatedResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloAnnotatedResponse";
     TypeContext context = _ctx;
 }
 
@@ -2161,6 +2229,7 @@ class HelloAllTypesResponse implements IConvertible
         'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
     };
 
+    getTypeName() => "HelloAllTypesResponse";
     TypeContext context = _ctx;
 }
 
@@ -2181,6 +2250,7 @@ class SubAllTypes extends AllTypesBase implements IConvertible
         'hierarchy': hierarchy
     });
 
+    getTypeName() => "SubAllTypes";
     TypeContext context = _ctx;
 }
 
@@ -2224,6 +2294,7 @@ class HelloWithDataContractResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloWithDataContractResponse";
     TypeContext context = _ctx;
 }
 
@@ -2246,6 +2317,7 @@ class HelloWithDescriptionResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloWithDescriptionResponse";
     TypeContext context = _ctx;
 }
 
@@ -2266,6 +2338,7 @@ class HelloWithInheritanceResponse extends HelloResponseBase implements IConvert
         'result': result
     });
 
+    getTypeName() => "HelloWithInheritanceResponse";
     TypeContext context = _ctx;
 }
 
@@ -2286,6 +2359,7 @@ class HelloWithAlternateReturnResponse extends HelloWithReturnResponse implement
         'altResult': altResult
     });
 
+    getTypeName() => "HelloWithAlternateReturnResponse";
     TypeContext context = _ctx;
 }
 
@@ -2305,6 +2379,7 @@ class HelloWithRouteResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloWithRouteResponse";
     TypeContext context = _ctx;
 }
 
@@ -2324,6 +2399,7 @@ class HelloWithTypeResponse implements IConvertible
         'result': JsonConverters.toJson(result,'HelloType',context)
     };
 
+    getTypeName() => "HelloWithTypeResponse";
     TypeContext context = _ctx;
 }
 
@@ -2346,6 +2422,7 @@ class HelloInnerTypesResponse implements IConvertible
         'innerEnum': JsonConverters.toJson(innerEnum,'InnerEnum',context)
     };
 
+    getTypeName() => "HelloInnerTypesResponse";
     TypeContext context = _ctx;
 }
 
@@ -2365,6 +2442,7 @@ class HelloVerbResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloVerbResponse";
     TypeContext context = _ctx;
 }
 
@@ -2384,6 +2462,7 @@ class EnumResponse implements IConvertible
         'operator': JsonConverters.toJson(Operator,'ScopeType',context)
     };
 
+    getTypeName() => "EnumResponse";
     TypeContext context = _ctx;
 }
 
@@ -2434,6 +2513,7 @@ class HelloZipResponse implements IConvertible
         'result': result
     };
 
+    getTypeName() => "HelloZipResponse";
     TypeContext context = _ctx;
 }
 
@@ -2456,6 +2536,7 @@ class PingResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "PingResponse";
     TypeContext context = _ctx;
 }
 
@@ -2478,6 +2559,7 @@ class RequiresRoleResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "RequiresRoleResponse";
     TypeContext context = _ctx;
 }
 
@@ -2503,6 +2585,7 @@ class SendVerbResponse implements IConvertible
         'requestMethod': requestMethod
     };
 
+    getTypeName() => "SendVerbResponse";
     TypeContext context = _ctx;
 }
 
@@ -2528,6 +2611,7 @@ class GetSessionResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "GetSessionResponse";
     TypeContext context = _ctx;
 }
 
@@ -2569,6 +2653,7 @@ class GetStuffResponse implements IConvertible
         'isEnabled': isEnabled
     };
 
+    getTypeName() => "GetStuffResponse";
     TypeContext context = _ctx;
 }
 
@@ -2591,6 +2676,7 @@ class StoreLogsResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "StoreLogsResponse";
     TypeContext context = _ctx;
 }
 
@@ -2622,6 +2708,7 @@ class TestAuthResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "TestAuthResponse";
     TypeContext context = _ctx;
 }
 
@@ -2869,6 +2956,7 @@ class RockstarWithIdResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "RockstarWithIdResponse";
     TypeContext context = _ctx;
 }
 
@@ -2894,6 +2982,7 @@ class RockstarWithIdAndResultResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "RockstarWithIdAndResultResponse";
     TypeContext context = _ctx;
 }
 
@@ -2919,6 +3008,7 @@ class RockstarWithIdAndCountResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "RockstarWithIdAndCountResponse";
     TypeContext context = _ctx;
 }
 
@@ -2944,6 +3034,7 @@ class RockstarWithIdAndRowVersionResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
+    getTypeName() => "RockstarWithIdAndRowVersionResponse";
     TypeContext context = _ctx;
 }
 
@@ -3174,7 +3265,7 @@ class RawBazRequest implements IReturn<List<Baz>>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() => List<Baz>();
+    createResponse() => <Baz>[];
     getResponseTypeName() => "List<Baz>";
     getTypeName() => "RawBazRequest";
     TypeContext context = _ctx;
@@ -3202,6 +3293,7 @@ class DummyTypes implements IConvertible
         'arrayResult': JsonConverters.toJson(arrayResult,'List<ArrayResult>',context)
     };
 
+    getTypeName() => "DummyTypes";
     TypeContext context = _ctx;
 }
 
@@ -3225,6 +3317,7 @@ class ThrowHttpError implements IConvertible
         'message': message
     };
 
+    getTypeName() => "ThrowHttpError";
     TypeContext context = _ctx;
 }
 
@@ -3246,6 +3339,7 @@ class Throw404 implements IConvertible
         'message': message
     };
 
+    getTypeName() => "Throw404";
     TypeContext context = _ctx;
 }
 
@@ -3267,6 +3361,7 @@ class ThrowCustom400 implements IConvertible
         'message': message
     };
 
+    getTypeName() => "ThrowCustom400";
     TypeContext context = _ctx;
 }
 
@@ -3357,6 +3452,7 @@ class RootPathRoutes implements IConvertible
         'path': path
     };
 
+    getTypeName() => "RootPathRoutes";
     TypeContext context = _ctx;
 }
 
@@ -3539,6 +3635,7 @@ class ImageAsRedirect implements IConvertible
         'format': format
     };
 
+    getTypeName() => "ImageAsRedirect";
     TypeContext context = _ctx;
 }
 
@@ -3739,7 +3836,7 @@ class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertibl
         'id': id
     };
 
-    createResponse() => List<MetadataTestChild>();
+    createResponse() => <MetadataTestChild>[];
     getResponseTypeName() => "List<MetadataTestChild>";
     getTypeName() => "MetadataTestArray";
     TypeContext context = _ctx;
@@ -3802,6 +3899,7 @@ class TextFileTest implements IConvertible
         'asAttachment': asAttachment
     };
 
+    getTypeName() => "TextFileTest";
     TypeContext context = _ctx;
 }
 
@@ -3822,6 +3920,7 @@ class ReturnText implements IConvertible
         'text': text
     };
 
+    getTypeName() => "ReturnText";
     TypeContext context = _ctx;
 }
 
@@ -3842,6 +3941,7 @@ class ReturnHtml implements IConvertible
         'text': text
     };
 
+    getTypeName() => "ReturnHtml";
     TypeContext context = _ctx;
 }
 
@@ -3942,7 +4042,7 @@ class HelloList implements IReturn<List<ListResult>>, IConvertible
         'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
-    createResponse() => List<ListResult>();
+    createResponse() => <ListResult>[];
     getResponseTypeName() => "List<ListResult>";
     getTypeName() => "HelloList";
     TypeContext context = _ctx;
@@ -3964,7 +4064,7 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
         'names': JsonConverters.toJson(names,'List<String>',context)
     };
 
-    createResponse() => List<ArrayResult>();
+    createResponse() => <ArrayResult>[];
     getResponseTypeName() => "List<ArrayResult>";
     getTypeName() => "HelloArray";
     TypeContext context = _ctx;
@@ -4007,6 +4107,7 @@ class HelloWithEnum implements IConvertible
         'enumStyleMembers': JsonConverters.toJson(enumStyleMembers,'EnumStyleMembers',context)
     };
 
+    getTypeName() => "HelloWithEnum";
     TypeContext context = _ctx;
 }
 
@@ -4038,6 +4139,7 @@ class HelloWithEnumList implements IConvertible
         'enumStyle': JsonConverters.toJson(enumStyle,'List<EnumStyle>',context)
     };
 
+    getTypeName() => "HelloWithEnumList";
     TypeContext context = _ctx;
 }
 
@@ -4069,6 +4171,7 @@ class HelloWithEnumMap implements IConvertible
         'enumStyle': JsonConverters.toJson(enumStyle,'Map<EnumStyle,EnumStyle>',context)
     };
 
+    getTypeName() => "HelloWithEnumMap";
     TypeContext context = _ctx;
 }
 
@@ -4094,6 +4197,7 @@ class RestrictedAttributes implements IConvertible
         'hello': JsonConverters.toJson(hello,'Hello',context)
     };
 
+    getTypeName() => "RestrictedAttributes";
     TypeContext context = _ctx;
 }
 
@@ -4125,6 +4229,7 @@ class AllowedAttributes implements IConvertible
         'range': range
     };
 
+    getTypeName() => "AllowedAttributes";
     TypeContext context = _ctx;
 }
 
@@ -4218,6 +4323,7 @@ class HelloVoid implements IConvertible
         'name': name
     };
 
+    getTypeName() => "HelloVoid";
     TypeContext context = _ctx;
 }
 
@@ -4315,6 +4421,7 @@ class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertib
         'result': result
     });
 
+    getTypeName() => "HelloWithGenericInheritance";
     TypeContext context = _ctx;
 }
 
@@ -4335,6 +4442,7 @@ class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvert
         'result': result
     });
 
+    getTypeName() => "HelloWithGenericInheritance2";
     TypeContext context = _ctx;
 }
 
@@ -4348,6 +4456,7 @@ class HelloWithNestedInheritance extends HelloBase1<Item> implements IConvertibl
     }
 
     Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "HelloWithNestedInheritance";
     TypeContext context = _ctx;
 }
 
@@ -4440,6 +4549,7 @@ class HelloInterface implements IConvertible
         'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',context)
     };
 
+    getTypeName() => "HelloInterface";
     TypeContext context = _ctx;
 }
 
@@ -4474,6 +4584,7 @@ class HelloBuiltin implements IConvertible
         'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context)
     };
 
+    getTypeName() => "HelloBuiltin";
     TypeContext context = _ctx;
 }
 
@@ -4680,6 +4791,7 @@ class ResetConnections implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "ResetConnections";
     TypeContext context = _ctx;
 }
 
@@ -4778,7 +4890,7 @@ class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() => List<ReturnedDto>();
+    createResponse() => <ReturnedDto>[];
     getResponseTypeName() => "List<ReturnedDto>";
     getTypeName() => "GetRequest1";
     TypeContext context = _ctx;
@@ -4794,7 +4906,7 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() => List<ReturnedDto>();
+    createResponse() => <ReturnedDto>[];
     getResponseTypeName() => "List<ReturnedDto>";
     getTypeName() => "GetRequest2";
     TypeContext context = _ctx;
@@ -5207,6 +5319,7 @@ class TestVoidResponse implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "TestVoidResponse";
     TypeContext context = _ctx;
 }
 
@@ -5220,6 +5333,7 @@ class TestNullResponse implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "TestNullResponse";
     TypeContext context = _ctx;
 }
 
@@ -5546,7 +5660,7 @@ class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWith
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
+TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
     'CustomType': TypeInfo(TypeOf.Class, create:() => CustomType()),
     'SetterType': TypeInfo(TypeOf.Class, create:() => SetterType()),
     'Bar': TypeInfo(TypeOf.Class, create:() => Bar()),

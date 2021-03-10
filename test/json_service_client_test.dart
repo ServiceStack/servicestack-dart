@@ -46,10 +46,4 @@ void main() {
     expect(requestUrl, equals(TEST_URL + "?bool=false&int=0"));
   });
 
-  test('Can serialize raw list', () async {
-    var client = createTestClient();
-    var response = await client.get(RawBazRequest());
-    expect(response.length, equals(2));
-  });
-
 }
