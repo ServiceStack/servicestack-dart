@@ -1,5 +1,5 @@
 /* Options:
-Date: 2021-02-26 08:27:42
+Date: 2021-03-10 07:17:08
 Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://www.techstacks.io
@@ -3076,8 +3076,9 @@ class GetOrganization implements IReturn<GetOrganizationResponse>, IGet, IConver
         'id': id
     };
 
-    createResponse() { return new GetOrganizationResponse(); }
-    String getTypeName() { return "GetOrganization"; }
+    createResponse() => GetOrganizationResponse();
+    getResponseTypeName() => "GetOrganizationResponse";
+    getTypeName() => "GetOrganization";
     TypeContext context = _ctx;
 }
 
@@ -3098,8 +3099,9 @@ class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IGet, I
         'slug': slug
     };
 
-    createResponse() { return new GetOrganizationResponse(); }
-    String getTypeName() { return "GetOrganizationBySlug"; }
+    createResponse() => GetOrganizationResponse();
+    getResponseTypeName() => "GetOrganizationResponse";
+    getTypeName() => "GetOrganizationBySlug";
     TypeContext context = _ctx;
 }
 
@@ -3120,8 +3122,9 @@ class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>,
         'id': id
     };
 
-    createResponse() { return new GetOrganizationMembersResponse(); }
-    String getTypeName() { return "GetOrganizationMembers"; }
+    createResponse() => GetOrganizationMembersResponse();
+    getResponseTypeName() => "GetOrganizationMembersResponse";
+    getTypeName() => "GetOrganizationMembers";
     TypeContext context = _ctx;
 }
 
@@ -3142,8 +3145,9 @@ class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, IGe
         'id': id
     };
 
-    createResponse() { return new GetOrganizationAdminResponse(); }
-    String getTypeName() { return "GetOrganizationAdmin"; }
+    createResponse() => GetOrganizationAdminResponse();
+    getResponseTypeName() => "GetOrganizationAdminResponse";
+    getTypeName() => "GetOrganizationAdmin";
     TypeContext context = _ctx;
 }
 
@@ -3167,8 +3171,9 @@ class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTe
         'techStackId': techStackId
     };
 
-    createResponse() { return new CreateOrganizationForTechnologyResponse(); }
-    String getTypeName() { return "CreateOrganizationForTechnology"; }
+    createResponse() => CreateOrganizationForTechnologyResponse();
+    getResponseTypeName() => "CreateOrganizationForTechnologyResponse";
+    getTypeName() => "CreateOrganizationForTechnology";
     TypeContext context = _ctx;
 }
 
@@ -3204,8 +3209,9 @@ class CreateOrganization implements IReturn<CreateOrganizationResponse>, IPost, 
         'refUrn': refUrn
     };
 
-    createResponse() { return new CreateOrganizationResponse(); }
-    String getTypeName() { return "CreateOrganization"; }
+    createResponse() => CreateOrganizationResponse();
+    getResponseTypeName() => "CreateOrganizationResponse";
+    getTypeName() => "CreateOrganization";
     TypeContext context = _ctx;
 }
 
@@ -3280,8 +3286,9 @@ class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IPut, I
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new UpdateOrganizationResponse(); }
-    String getTypeName() { return "UpdateOrganization"; }
+    createResponse() => UpdateOrganizationResponse();
+    getResponseTypeName() => "UpdateOrganizationResponse";
+    getTypeName() => "UpdateOrganization";
     TypeContext context = _ctx;
 }
 
@@ -3303,7 +3310,7 @@ class DeleteOrganization implements IReturnVoid, IDelete, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "DeleteOrganization"; }
+    getTypeName() => "DeleteOrganization";
     TypeContext context = _ctx;
 }
 
@@ -3331,7 +3338,7 @@ class LockOrganization implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "LockOrganization"; }
+    getTypeName() => "LockOrganization";
     TypeContext context = _ctx;
 }
 
@@ -3361,8 +3368,9 @@ class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPost,
         'color': color
     };
 
-    createResponse() { return new OrganizationLabelResponse(); }
-    String getTypeName() { return "AddOrganizationLabel"; }
+    createResponse() => OrganizationLabelResponse();
+    getResponseTypeName() => "OrganizationLabelResponse";
+    getTypeName() => "AddOrganizationLabel";
     TypeContext context = _ctx;
 }
 
@@ -3392,8 +3400,9 @@ class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPu
         'color': color
     };
 
-    createResponse() { return new OrganizationLabelResponse(); }
-    String getTypeName() { return "UpdateOrganizationLabel"; }
+    createResponse() => OrganizationLabelResponse();
+    getResponseTypeName() => "OrganizationLabelResponse";
+    getTypeName() => "UpdateOrganizationLabel";
     TypeContext context = _ctx;
 }
 
@@ -3418,7 +3427,7 @@ class RemoveOrganizationLabel implements IReturnVoid, IDelete, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "RemoveOrganizationLabel"; }
+    getTypeName() => "RemoveOrganizationLabel";
     TypeContext context = _ctx;
 }
 
@@ -3451,8 +3460,9 @@ class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new AddOrganizationCategoryResponse(); }
-    String getTypeName() { return "AddOrganizationCategory"; }
+    createResponse() => AddOrganizationCategoryResponse();
+    getResponseTypeName() => "AddOrganizationCategoryResponse";
+    getTypeName() => "AddOrganizationCategory";
     TypeContext context = _ctx;
 }
 
@@ -3488,8 +3498,9 @@ class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryRe
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new UpdateOrganizationCategoryResponse(); }
-    String getTypeName() { return "UpdateOrganizationCategory"; }
+    createResponse() => UpdateOrganizationCategoryResponse();
+    getResponseTypeName() => "UpdateOrganizationCategoryResponse";
+    getTypeName() => "UpdateOrganizationCategory";
     TypeContext context = _ctx;
 }
 
@@ -3514,7 +3525,7 @@ class DeleteOrganizationCategory implements IReturnVoid, IDelete, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "DeleteOrganizationCategory"; }
+    getTypeName() => "DeleteOrganizationCategory";
     TypeContext context = _ctx;
 }
 
@@ -3556,8 +3567,9 @@ class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, I
         'notes': notes
     };
 
-    createResponse() { return new AddOrganizationMemberResponse(); }
-    String getTypeName() { return "AddOrganizationMember"; }
+    createResponse() => AddOrganizationMemberResponse();
+    getResponseTypeName() => "AddOrganizationMemberResponse";
+    getTypeName() => "AddOrganizationMember";
     TypeContext context = _ctx;
 }
 
@@ -3599,8 +3611,9 @@ class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberRespon
         'notes': notes
     };
 
-    createResponse() { return new UpdateOrganizationMemberResponse(); }
-    String getTypeName() { return "UpdateOrganizationMember"; }
+    createResponse() => UpdateOrganizationMemberResponse();
+    getResponseTypeName() => "UpdateOrganizationMemberResponse";
+    getTypeName() => "UpdateOrganizationMember";
     TypeContext context = _ctx;
 }
 
@@ -3625,7 +3638,7 @@ class RemoveOrganizationMember implements IReturnVoid, IDelete, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "RemoveOrganizationMember"; }
+    getTypeName() => "RemoveOrganizationMember";
     TypeContext context = _ctx;
 }
 
@@ -3673,8 +3686,9 @@ class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>,
         'denyAll': denyAll
     };
 
-    createResponse() { return new SetOrganizationMembersResponse(); }
-    String getTypeName() { return "SetOrganizationMembers"; }
+    createResponse() => SetOrganizationMembersResponse();
+    getResponseTypeName() => "SetOrganizationMembersResponse";
+    getTypeName() => "SetOrganizationMembers";
     TypeContext context = _ctx;
 }
 
@@ -3695,8 +3709,9 @@ class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvit
         'organizationId': organizationId
     };
 
-    createResponse() { return new GetOrganizationMemberInvitesResponse(); }
-    String getTypeName() { return "GetOrganizationMemberInvites"; }
+    createResponse() => GetOrganizationMemberInvitesResponse();
+    getResponseTypeName() => "GetOrganizationMemberInvitesResponse";
+    getTypeName() => "GetOrganizationMemberInvites";
     TypeContext context = _ctx;
 }
 
@@ -3717,8 +3732,9 @@ class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemb
         'organizationId': organizationId
     };
 
-    createResponse() { return new RequestOrganizationMemberInviteResponse(); }
-    String getTypeName() { return "RequestOrganizationMemberInvite"; }
+    createResponse() => RequestOrganizationMemberInviteResponse();
+    getResponseTypeName() => "RequestOrganizationMemberInviteResponse";
+    getTypeName() => "RequestOrganizationMemberInvite";
     TypeContext context = _ctx;
 }
 
@@ -3748,8 +3764,9 @@ class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMember
         'dismiss': dismiss
     };
 
-    createResponse() { return new UpdateOrganizationMemberInviteResponse(); }
-    String getTypeName() { return "UpdateOrganizationMemberInvite"; }
+    createResponse() => UpdateOrganizationMemberInviteResponse();
+    getResponseTypeName() => "UpdateOrganizationMemberInviteResponse";
+    getTypeName() => "UpdateOrganizationMemberInvite";
     TypeContext context = _ctx;
 }
 
@@ -3786,8 +3803,9 @@ class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>,
         'is': JsonConverters.toJson(Is,'List<String>',context)
     });
 
-    createResponse() { return new QueryResponse<Post>(); }
-    String getTypeName() { return "QueryPosts"; }
+    createResponse() => QueryResponse<Post>();
+    getResponseTypeName() => "QueryResponse<Post>";
+    getTypeName() => "QueryPosts";
     TypeContext context = _ctx;
 }
 
@@ -3811,8 +3829,9 @@ class GetPost implements IReturn<GetPostResponse>, IGet, IConvertible
         'include': include
     };
 
-    createResponse() { return new GetPostResponse(); }
-    String getTypeName() { return "GetPost"; }
+    createResponse() => GetPostResponse();
+    getResponseTypeName() => "GetPostResponse";
+    getTypeName() => "GetPost";
     TypeContext context = _ctx;
 }
 
@@ -3881,8 +3900,9 @@ class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
         'refUrn': refUrn
     };
 
-    createResponse() { return new CreatePostResponse(); }
-    String getTypeName() { return "CreatePost"; }
+    createResponse() => CreatePostResponse();
+    getResponseTypeName() => "CreatePostResponse";
+    getTypeName() => "CreatePost";
     TypeContext context = _ctx;
 }
 
@@ -3945,8 +3965,9 @@ class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
         'meta': meta
     };
 
-    createResponse() { return new UpdatePostResponse(); }
-    String getTypeName() { return "UpdatePost"; }
+    createResponse() => UpdatePostResponse();
+    getResponseTypeName() => "UpdatePostResponse";
+    getTypeName() => "UpdatePost";
     TypeContext context = _ctx;
 }
 
@@ -3967,8 +3988,9 @@ class DeletePost implements IReturn<DeletePostResponse>, IDelete, IConvertible
         'id': id
     };
 
-    createResponse() { return new DeletePostResponse(); }
-    String getTypeName() { return "DeletePost"; }
+    createResponse() => DeletePostResponse();
+    getResponseTypeName() => "DeletePostResponse";
+    getTypeName() => "DeletePost";
     TypeContext context = _ctx;
 }
 
@@ -3996,7 +4018,7 @@ class LockPost implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "LockPost"; }
+    getTypeName() => "LockPost";
     TypeContext context = _ctx;
 }
 
@@ -4024,7 +4046,7 @@ class HidePost implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "HidePost"; }
+    getTypeName() => "HidePost";
     TypeContext context = _ctx;
 }
 
@@ -4052,7 +4074,7 @@ class ChangeStatusPost implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "ChangeStatusPost"; }
+    getTypeName() => "ChangeStatusPost";
     TypeContext context = _ctx;
 }
 
@@ -4080,7 +4102,7 @@ class ActionPostReport implements IReturnVoid, IPost, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "ActionPostReport"; }
+    getTypeName() => "ActionPostReport";
     TypeContext context = _ctx;
 }
 
@@ -4107,8 +4129,9 @@ class CreatePostComment implements IReturn<CreatePostCommentResponse>, IPost, IC
         'content': content
     };
 
-    createResponse() { return new CreatePostCommentResponse(); }
-    String getTypeName() { return "CreatePostComment"; }
+    createResponse() => CreatePostCommentResponse();
+    getResponseTypeName() => "CreatePostCommentResponse";
+    getTypeName() => "CreatePostComment";
     TypeContext context = _ctx;
 }
 
@@ -4135,8 +4158,9 @@ class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IPut, ICo
         'content': content
     };
 
-    createResponse() { return new UpdatePostCommentResponse(); }
-    String getTypeName() { return "UpdatePostComment"; }
+    createResponse() => UpdatePostCommentResponse();
+    getResponseTypeName() => "UpdatePostCommentResponse";
+    getTypeName() => "UpdatePostComment";
     TypeContext context = _ctx;
 }
 
@@ -4160,8 +4184,9 @@ class DeletePostComment implements IReturn<DeletePostCommentResponse>, IDelete, 
         'postId': postId
     };
 
-    createResponse() { return new DeletePostCommentResponse(); }
-    String getTypeName() { return "DeletePostComment"; }
+    createResponse() => DeletePostCommentResponse();
+    getResponseTypeName() => "DeletePostCommentResponse";
+    getTypeName() => "DeletePostComment";
     TypeContext context = _ctx;
 }
 
@@ -4192,7 +4217,7 @@ class ActionPostCommentReport implements IReturnVoid, IPost, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "ActionPostCommentReport"; }
+    getTypeName() => "ActionPostCommentReport";
     TypeContext context = _ctx;
 }
 
@@ -4213,8 +4238,9 @@ class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse
         'postId': postId
     };
 
-    createResponse() { return new GetUserPostCommentVotesResponse(); }
-    String getTypeName() { return "GetUserPostCommentVotes"; }
+    createResponse() => GetUserPostCommentVotesResponse();
+    getResponseTypeName() => "GetUserPostCommentVotesResponse";
+    getTypeName() => "GetUserPostCommentVotes";
     TypeContext context = _ctx;
 }
 
@@ -4241,8 +4267,9 @@ class PinPostComment implements IReturn<PinPostCommentResponse>, IPut, IConverti
         'pin': pin
     };
 
-    createResponse() { return new PinPostCommentResponse(); }
-    String getTypeName() { return "PinPostComment"; }
+    createResponse() => PinPostCommentResponse();
+    getResponseTypeName() => "PinPostCommentResponse";
+    getTypeName() => "PinPostComment";
     TypeContext context = _ctx;
 }
 
@@ -4263,8 +4290,9 @@ class GetUsersByEmails implements IReturn<GetUsersByEmailsResponse>, IGet, IConv
         'emails': JsonConverters.toJson(emails,'List<String>',context)
     };
 
-    createResponse() { return new GetUsersByEmailsResponse(); }
-    String getTypeName() { return "GetUsersByEmails"; }
+    createResponse() => GetUsersByEmailsResponse();
+    getResponseTypeName() => "GetUsersByEmailsResponse";
+    getTypeName() => "GetUsersByEmails";
     TypeContext context = _ctx;
 }
 
@@ -4278,8 +4306,9 @@ class GetUserPostActivity implements IReturn<GetUserPostActivityResponse>, IGet,
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetUserPostActivityResponse(); }
-    String getTypeName() { return "GetUserPostActivity"; }
+    createResponse() => GetUserPostActivityResponse();
+    getResponseTypeName() => "GetUserPostActivityResponse";
+    getTypeName() => "GetUserPostActivity";
     TypeContext context = _ctx;
 }
 
@@ -4293,8 +4322,9 @@ class GetUserOrganizations implements IReturn<GetUserOrganizationsResponse>, IGe
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetUserOrganizationsResponse(); }
-    String getTypeName() { return "GetUserOrganizations"; }
+    createResponse() => GetUserOrganizationsResponse();
+    getResponseTypeName() => "GetUserOrganizationsResponse";
+    getTypeName() => "GetUserOrganizations";
     TypeContext context = _ctx;
 }
 
@@ -4318,8 +4348,9 @@ class UserPostVote implements IReturn<UserPostVoteResponse>, IPut, IConvertible
         'weight': weight
     };
 
-    createResponse() { return new UserPostVoteResponse(); }
-    String getTypeName() { return "UserPostVote"; }
+    createResponse() => UserPostVoteResponse();
+    getResponseTypeName() => "UserPostVoteResponse";
+    getTypeName() => "UserPostVote";
     TypeContext context = _ctx;
 }
 
@@ -4340,8 +4371,9 @@ class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IPut, IConv
         'id': id
     };
 
-    createResponse() { return new UserPostFavoriteResponse(); }
-    String getTypeName() { return "UserPostFavorite"; }
+    createResponse() => UserPostFavoriteResponse();
+    getResponseTypeName() => "UserPostFavoriteResponse";
+    getTypeName() => "UserPostFavorite";
     TypeContext context = _ctx;
 }
 
@@ -4368,8 +4400,9 @@ class UserPostReport implements IReturn<UserPostReportResponse>, IPut, IConverti
         'reportNotes': reportNotes
     };
 
-    createResponse() { return new UserPostReportResponse(); }
-    String getTypeName() { return "UserPostReport"; }
+    createResponse() => UserPostReportResponse();
+    getResponseTypeName() => "UserPostReportResponse";
+    getTypeName() => "UserPostReport";
     TypeContext context = _ctx;
 }
 
@@ -4396,8 +4429,9 @@ class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IGet,
         'weight': weight
     };
 
-    createResponse() { return new UserPostCommentVoteResponse(); }
-    String getTypeName() { return "UserPostCommentVote"; }
+    createResponse() => UserPostCommentVoteResponse();
+    getResponseTypeName() => "UserPostCommentVoteResponse";
+    getTypeName() => "UserPostCommentVote";
     TypeContext context = _ctx;
 }
 
@@ -4427,8 +4461,9 @@ class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, I
         'reportNotes': reportNotes
     };
 
-    createResponse() { return new UserPostCommentReportResponse(); }
-    String getTypeName() { return "UserPostCommentReport"; }
+    createResponse() => UserPostCommentReportResponse();
+    getResponseTypeName() => "UserPostCommentReportResponse";
+    getTypeName() => "UserPostCommentReport";
     TypeContext context = _ctx;
 }
 
@@ -4450,7 +4485,7 @@ class StorePreRender implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "StorePreRender"; }
+    getTypeName() => "StorePreRender";
     TypeContext context = _ctx;
 }
 
@@ -4471,8 +4506,9 @@ class GetPreRender implements IReturn<String>, IGet, IConvertible
         'path': path
     };
 
-    createResponse() { return ""; }
-    String getTypeName() { return "GetPreRender"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "GetPreRender";
     TypeContext context = _ctx;
 }
 
@@ -4486,8 +4522,9 @@ class SessionInfo implements IReturn<SessionInfoResponse>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new SessionInfoResponse(); }
-    String getTypeName() { return "SessionInfo"; }
+    createResponse() => SessionInfoResponse();
+    getResponseTypeName() => "SessionInfoResponse";
+    getTypeName() => "SessionInfo";
     TypeContext context = _ctx;
 }
 
@@ -4515,7 +4552,7 @@ class SubscribeToOrganization implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "SubscribeToOrganization"; }
+    getTypeName() => "SubscribeToOrganization";
     TypeContext context = _ctx;
 }
 
@@ -4537,7 +4574,7 @@ class SubscribeToPost implements IReturnVoid, IPut, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "SubscribeToPost"; }
+    getTypeName() => "SubscribeToPost";
     TypeContext context = _ctx;
 }
 
@@ -4559,7 +4596,7 @@ class DeleteOrganizationSubscription implements IReturnVoid, IDelete, IConvertib
     };
 
     createResponse() {}
-    String getTypeName() { return "DeleteOrganizationSubscription"; }
+    getTypeName() => "DeleteOrganizationSubscription";
     TypeContext context = _ctx;
 }
 
@@ -4581,7 +4618,7 @@ class DeletePostSubscription implements IReturnVoid, IDelete, IConvertible
     };
 
     createResponse() {}
-    String getTypeName() { return "DeletePostSubscription"; }
+    getTypeName() => "DeletePostSubscription";
     TypeContext context = _ctx;
 }
 
@@ -4602,8 +4639,9 @@ class GetTechnologyPreviousVersions implements IReturn<GetTechnologyPreviousVers
         'slug': slug
     };
 
-    createResponse() { return new GetTechnologyPreviousVersionsResponse(); }
-    String getTypeName() { return "GetTechnologyPreviousVersions"; }
+    createResponse() => GetTechnologyPreviousVersionsResponse();
+    getResponseTypeName() => "GetTechnologyPreviousVersionsResponse";
+    getTypeName() => "GetTechnologyPreviousVersions";
     TypeContext context = _ctx;
 }
 
@@ -4617,8 +4655,9 @@ class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IGet, I
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetAllTechnologiesResponse(); }
-    String getTypeName() { return "GetAllTechnologies"; }
+    createResponse() => GetAllTechnologiesResponse();
+    getResponseTypeName() => "GetAllTechnologiesResponse";
+    getTypeName() => "GetAllTechnologies";
     TypeContext context = _ctx;
 }
 
@@ -4626,42 +4665,78 @@ class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IGet, I
 // @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies")
 class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
 {
+    List<int> ids;
     String name;
+    String vendorName;
     String nameContains;
+    String vendorNameContains;
+    String descriptionContains;
 
-    FindTechnologies({this.name,this.nameContains});
+    FindTechnologies({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
     FindTechnologies.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
         name = json['name'];
+        vendorName = json['vendorName'];
         nameContains = json['nameContains'];
+        vendorNameContains = json['vendorNameContains'];
+        descriptionContains = json['descriptionContains'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
         'name': name,
-        'nameContains': nameContains
+        'vendorName': vendorName,
+        'nameContains': nameContains,
+        'vendorNameContains': vendorNameContains,
+        'descriptionContains': descriptionContains
     });
 
-    createResponse() { return new QueryResponse<Technology>(); }
-    String getTypeName() { return "FindTechnologies"; }
+    createResponse() => QueryResponse<Technology>();
+    getResponseTypeName() => "QueryResponse<Technology>";
+    getTypeName() => "FindTechnologies";
     TypeContext context = _ctx;
 }
 
 // @Route("/technology/query")
 class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
 {
-    QueryTechnology();
-    QueryTechnology.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    List<int> ids;
+    String name;
+    String vendorName;
+    String nameContains;
+    String vendorNameContains;
+    String descriptionContains;
+
+    QueryTechnology({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
+    QueryTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        name = json['name'];
+        vendorName = json['vendorName'];
+        nameContains = json['nameContains'];
+        vendorNameContains = json['vendorNameContains'];
+        descriptionContains = json['descriptionContains'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => super.toJson();
-    createResponse() { return new QueryResponse<Technology>(); }
-    String getTypeName() { return "QueryTechnology"; }
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'name': name,
+        'vendorName': vendorName,
+        'nameContains': nameContains,
+        'vendorNameContains': vendorNameContains,
+        'descriptionContains': descriptionContains
+    });
+
+    createResponse() => QueryResponse<Technology>();
+    getResponseTypeName() => "QueryResponse<Technology>";
+    getTypeName() => "QueryTechnology";
     TypeContext context = _ctx;
 }
 
@@ -4682,8 +4757,9 @@ class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, I
         'slug': slug
     };
 
-    createResponse() { return new GetTechnologyResponse(); }
-    String getTypeName() { return "GetTechnology"; }
+    createResponse() => GetTechnologyResponse();
+    getResponseTypeName() => "GetTechnologyResponse";
+    getTypeName() => "GetTechnology";
     TypeContext context = _ctx;
 }
 
@@ -4704,8 +4780,9 @@ class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetai
         'slug': slug
     };
 
-    createResponse() { return new GetTechnologyFavoriteDetailsResponse(); }
-    String getTypeName() { return "GetTechnologyFavoriteDetails"; }
+    createResponse() => GetTechnologyFavoriteDetailsResponse();
+    getResponseTypeName() => "GetTechnologyFavoriteDetailsResponse";
+    getTypeName() => "GetTechnologyFavoriteDetails";
     TypeContext context = _ctx;
 }
 
@@ -4750,8 +4827,9 @@ class CreateTechnology implements IReturn<CreateTechnologyResponse>, IPost, ICon
         'tier': JsonConverters.toJson(tier,'TechnologyTier',context)
     };
 
-    createResponse() { return new CreateTechnologyResponse(); }
-    String getTypeName() { return "CreateTechnology"; }
+    createResponse() => CreateTechnologyResponse();
+    getResponseTypeName() => "CreateTechnologyResponse";
+    getTypeName() => "CreateTechnology";
     TypeContext context = _ctx;
 }
 
@@ -4796,8 +4874,9 @@ class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IPut, IConv
         'tier': JsonConverters.toJson(tier,'TechnologyTier',context)
     };
 
-    createResponse() { return new UpdateTechnologyResponse(); }
-    String getTypeName() { return "UpdateTechnology"; }
+    createResponse() => UpdateTechnologyResponse();
+    getResponseTypeName() => "UpdateTechnologyResponse";
+    getTypeName() => "UpdateTechnology";
     TypeContext context = _ctx;
 }
 
@@ -4818,8 +4897,9 @@ class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IDelete, IC
         'id': id
     };
 
-    createResponse() { return new DeleteTechnologyResponse(); }
-    String getTypeName() { return "DeleteTechnology"; }
+    createResponse() => DeleteTechnologyResponse();
+    getResponseTypeName() => "DeleteTechnologyResponse";
+    getTypeName() => "DeleteTechnology";
     TypeContext context = _ctx;
 }
 
@@ -4840,8 +4920,9 @@ class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPr
         'slug': slug
     };
 
-    createResponse() { return new GetTechnologyStackPreviousVersionsResponse(); }
-    String getTypeName() { return "GetTechnologyStackPreviousVersions"; }
+    createResponse() => GetTechnologyStackPreviousVersionsResponse();
+    getResponseTypeName() => "GetTechnologyStackPreviousVersionsResponse";
+    getTypeName() => "GetTechnologyStackPreviousVersions";
     TypeContext context = _ctx;
 }
 
@@ -4868,8 +4949,9 @@ class GetPageStats implements IReturn<GetPageStatsResponse>, IGet, IConvertible
         'id': id
     };
 
-    createResponse() { return new GetPageStatsResponse(); }
-    String getTypeName() { return "GetPageStats"; }
+    createResponse() => GetPageStatsResponse();
+    getResponseTypeName() => "GetPageStatsResponse";
+    getTypeName() => "GetPageStats";
     TypeContext context = _ctx;
 }
 
@@ -4883,8 +4965,9 @@ class ClearCache implements IReturn<String>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return ""; }
-    String getTypeName() { return "ClearCache"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "ClearCache";
     TypeContext context = _ctx;
 }
 
@@ -4905,8 +4988,9 @@ class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
         'force': force
     };
 
-    createResponse() { return new HourlyTaskResponse(); }
-    String getTypeName() { return "HourlyTask"; }
+    createResponse() => HourlyTaskResponse();
+    getResponseTypeName() => "HourlyTaskResponse";
+    getTypeName() => "HourlyTask";
     TypeContext context = _ctx;
 }
 
@@ -4914,39 +4998,78 @@ class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
 // @AutoQueryViewer(DefaultSearchField="Description", DefaultSearchText="ServiceStack", DefaultSearchType="Contains", Description="Explore different Technology Stacks", IconUrl="material-icons:cloud", Title="Find Technology Stacks")
 class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
 {
+    List<int> ids;
+    String name;
+    String vendorName;
     String nameContains;
+    String vendorNameContains;
+    String descriptionContains;
 
-    FindTechStacks({this.nameContains});
+    FindTechStacks({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
     FindTechStacks.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        name = json['name'];
+        vendorName = json['vendorName'];
         nameContains = json['nameContains'];
+        vendorNameContains = json['vendorNameContains'];
+        descriptionContains = json['descriptionContains'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'nameContains': nameContains
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'name': name,
+        'vendorName': vendorName,
+        'nameContains': nameContains,
+        'vendorNameContains': vendorNameContains,
+        'descriptionContains': descriptionContains
     });
 
-    createResponse() { return new QueryResponse<TechnologyStack>(); }
-    String getTypeName() { return "FindTechStacks"; }
+    createResponse() => QueryResponse<TechnologyStack>();
+    getResponseTypeName() => "QueryResponse<TechnologyStack>";
+    getTypeName() => "FindTechStacks";
     TypeContext context = _ctx;
 }
 
 // @Route("/techstacks/query")
 class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
 {
-    QueryTechStacks();
-    QueryTechStacks.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    List<int> ids;
+    String name;
+    String vendorName;
+    String nameContains;
+    String vendorNameContains;
+    String descriptionContains;
+
+    QueryTechStacks({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
+    QueryTechStacks.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        name = json['name'];
+        vendorName = json['vendorName'];
+        nameContains = json['nameContains'];
+        vendorNameContains = json['vendorNameContains'];
+        descriptionContains = json['descriptionContains'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => super.toJson();
-    createResponse() { return new QueryResponse<TechnologyStack>(); }
-    String getTypeName() { return "QueryTechStacks"; }
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'name': name,
+        'vendorName': vendorName,
+        'nameContains': nameContains,
+        'vendorNameContains': vendorNameContains,
+        'descriptionContains': descriptionContains
+    });
+
+    createResponse() => QueryResponse<TechnologyStack>();
+    getResponseTypeName() => "QueryResponse<TechnologyStack>";
+    getTypeName() => "QueryTechStacks";
     TypeContext context = _ctx;
 }
 
@@ -4967,8 +5090,9 @@ class Overview implements IReturn<OverviewResponse>, IGet, IConvertible
         'reload': reload
     };
 
-    createResponse() { return new OverviewResponse(); }
-    String getTypeName() { return "Overview"; }
+    createResponse() => OverviewResponse();
+    getResponseTypeName() => "OverviewResponse";
+    getTypeName() => "Overview";
     TypeContext context = _ctx;
 }
 
@@ -4989,8 +5113,9 @@ class AppOverview implements IReturn<AppOverviewResponse>, IGet, IConvertible
         'reload': reload
     };
 
-    createResponse() { return new AppOverviewResponse(); }
-    String getTypeName() { return "AppOverview"; }
+    createResponse() => AppOverviewResponse();
+    getResponseTypeName() => "AppOverviewResponse";
+    getTypeName() => "AppOverview";
     TypeContext context = _ctx;
 }
 
@@ -5004,8 +5129,9 @@ class GetAllTechnologyStacks implements IReturn<GetAllTechnologyStacksResponse>,
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetAllTechnologyStacksResponse(); }
-    String getTypeName() { return "GetAllTechnologyStacks"; }
+    createResponse() => GetAllTechnologyStacksResponse();
+    getResponseTypeName() => "GetAllTechnologyStacksResponse";
+    getTypeName() => "GetAllTechnologyStacks";
     TypeContext context = _ctx;
 }
 
@@ -5026,8 +5152,9 @@ class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegist
         'slug': slug
     };
 
-    createResponse() { return new GetTechnologyStackResponse(); }
-    String getTypeName() { return "GetTechnologyStack"; }
+    createResponse() => GetTechnologyStackResponse();
+    getResponseTypeName() => "GetTechnologyStackResponse";
+    getTypeName() => "GetTechnologyStack";
     TypeContext context = _ctx;
 }
 
@@ -5048,8 +5175,9 @@ class GetTechnologyStackFavoriteDetails implements IReturn<GetTechnologyStackFav
         'slug': slug
     };
 
-    createResponse() { return new GetTechnologyStackFavoriteDetailsResponse(); }
-    String getTypeName() { return "GetTechnologyStackFavoriteDetails"; }
+    createResponse() => GetTechnologyStackFavoriteDetailsResponse();
+    getResponseTypeName() => "GetTechnologyStackFavoriteDetailsResponse";
+    getTypeName() => "GetTechnologyStackFavoriteDetails";
     TypeContext context = _ctx;
 }
 
@@ -5063,8 +5191,9 @@ class GetConfig implements IReturn<GetConfigResponse>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetConfigResponse(); }
-    String getTypeName() { return "GetConfig"; }
+    createResponse() => GetConfigResponse();
+    getResponseTypeName() => "GetConfigResponse";
+    getTypeName() => "GetConfig";
     TypeContext context = _ctx;
 }
 
@@ -5109,8 +5238,9 @@ class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, I
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new CreateTechnologyStackResponse(); }
-    String getTypeName() { return "CreateTechnologyStack"; }
+    createResponse() => CreateTechnologyStackResponse();
+    getResponseTypeName() => "CreateTechnologyStackResponse";
+    getTypeName() => "CreateTechnologyStack";
     TypeContext context = _ctx;
 }
 
@@ -5155,8 +5285,9 @@ class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, I
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
     };
 
-    createResponse() { return new UpdateTechnologyStackResponse(); }
-    String getTypeName() { return "UpdateTechnologyStack"; }
+    createResponse() => UpdateTechnologyStackResponse();
+    getResponseTypeName() => "UpdateTechnologyStackResponse";
+    getTypeName() => "UpdateTechnologyStack";
     TypeContext context = _ctx;
 }
 
@@ -5177,8 +5308,9 @@ class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, I
         'id': id
     };
 
-    createResponse() { return new DeleteTechnologyStackResponse(); }
-    String getTypeName() { return "DeleteTechnologyStack"; }
+    createResponse() => DeleteTechnologyStackResponse();
+    getResponseTypeName() => "DeleteTechnologyStackResponse";
+    getTypeName() => "DeleteTechnologyStack";
     TypeContext context = _ctx;
 }
 
@@ -5199,8 +5331,9 @@ class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, IGe
         'technologyStackId': technologyStackId
     };
 
-    createResponse() { return new GetFavoriteTechStackResponse(); }
-    String getTypeName() { return "GetFavoriteTechStack"; }
+    createResponse() => GetFavoriteTechStackResponse();
+    getResponseTypeName() => "GetFavoriteTechStackResponse";
+    getTypeName() => "GetFavoriteTechStack";
     TypeContext context = _ctx;
 }
 
@@ -5221,8 +5354,9 @@ class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IPut, 
         'technologyStackId': technologyStackId
     };
 
-    createResponse() { return new FavoriteTechStackResponse(); }
-    String getTypeName() { return "AddFavoriteTechStack"; }
+    createResponse() => FavoriteTechStackResponse();
+    getResponseTypeName() => "FavoriteTechStackResponse";
+    getTypeName() => "AddFavoriteTechStack";
     TypeContext context = _ctx;
 }
 
@@ -5243,8 +5377,9 @@ class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IDe
         'technologyStackId': technologyStackId
     };
 
-    createResponse() { return new FavoriteTechStackResponse(); }
-    String getTypeName() { return "RemoveFavoriteTechStack"; }
+    createResponse() => FavoriteTechStackResponse();
+    getResponseTypeName() => "FavoriteTechStackResponse";
+    getTypeName() => "RemoveFavoriteTechStack";
     TypeContext context = _ctx;
 }
 
@@ -5265,8 +5400,9 @@ class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse
         'technologyId': technologyId
     };
 
-    createResponse() { return new GetFavoriteTechnologiesResponse(); }
-    String getTypeName() { return "GetFavoriteTechnologies"; }
+    createResponse() => GetFavoriteTechnologiesResponse();
+    getResponseTypeName() => "GetFavoriteTechnologiesResponse";
+    getTypeName() => "GetFavoriteTechnologies";
     TypeContext context = _ctx;
 }
 
@@ -5287,8 +5423,9 @@ class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IPut
         'technologyId': technologyId
     };
 
-    createResponse() { return new FavoriteTechnologyResponse(); }
-    String getTypeName() { return "AddFavoriteTechnology"; }
+    createResponse() => FavoriteTechnologyResponse();
+    getResponseTypeName() => "FavoriteTechnologyResponse";
+    getTypeName() => "AddFavoriteTechnology";
     TypeContext context = _ctx;
 }
 
@@ -5309,8 +5446,9 @@ class RemoveFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, I
         'technologyId': technologyId
     };
 
-    createResponse() { return new FavoriteTechnologyResponse(); }
-    String getTypeName() { return "RemoveFavoriteTechnology"; }
+    createResponse() => FavoriteTechnologyResponse();
+    getResponseTypeName() => "FavoriteTechnologyResponse";
+    getTypeName() => "RemoveFavoriteTechnology";
     TypeContext context = _ctx;
 }
 
@@ -5324,8 +5462,9 @@ class GetUserFeed implements IReturn<GetUserFeedResponse>, IGet, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return new GetUserFeedResponse(); }
-    String getTypeName() { return "GetUserFeed"; }
+    createResponse() => GetUserFeedResponse();
+    getResponseTypeName() => "GetUserFeedResponse";
+    getTypeName() => "GetUserFeed";
     TypeContext context = _ctx;
 }
 
@@ -5346,8 +5485,9 @@ class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IGet, IConvertibl
         'userIds': JsonConverters.toJson(userIds,'List<int>',context)
     };
 
-    createResponse() { return new GetUsersKarmaResponse(); }
-    String getTypeName() { return "GetUsersKarma"; }
+    createResponse() => GetUsersKarmaResponse();
+    getResponseTypeName() => "GetUsersKarmaResponse";
+    getTypeName() => "GetUsersKarma";
     TypeContext context = _ctx;
 }
 
@@ -5368,8 +5508,9 @@ class GetUserInfo implements IReturn<GetUserInfoResponse>, IGet, IConvertible
         'userName': userName
     };
 
-    createResponse() { return new GetUserInfoResponse(); }
-    String getTypeName() { return "GetUserInfo"; }
+    createResponse() => GetUserInfoResponse();
+    getResponseTypeName() => "GetUserInfoResponse";
+    getTypeName() => "GetUserInfo";
     TypeContext context = _ctx;
 }
 
@@ -5403,8 +5544,9 @@ class MqStart implements IReturn<String>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return ""; }
-    String getTypeName() { return "MqStart"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "MqStart";
     TypeContext context = _ctx;
 }
 
@@ -5418,8 +5560,9 @@ class MqStop implements IReturn<String>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return ""; }
-    String getTypeName() { return "MqStop"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "MqStop";
     TypeContext context = _ctx;
 }
 
@@ -5433,8 +5576,9 @@ class MqStats implements IReturn<String>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return ""; }
-    String getTypeName() { return "MqStats"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "MqStats";
     TypeContext context = _ctx;
 }
 
@@ -5448,8 +5592,9 @@ class MqStatus implements IReturn<String>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() { return ""; }
-    String getTypeName() { return "MqStatus"; }
+    createResponse() => "";
+    getResponseTypeName() => "String";
+    getTypeName() => "MqStatus";
     TypeContext context = _ctx;
 }
 
@@ -5470,8 +5615,9 @@ class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IPost, IC
         'site': site
     };
 
-    createResponse() { return new SyncDiscourseSiteResponse(); }
-    String getTypeName() { return "SyncDiscourseSite"; }
+    createResponse() => SyncDiscourseSiteResponse();
+    getResponseTypeName() => "SyncDiscourseSiteResponse";
+    getTypeName() => "SyncDiscourseSite";
     TypeContext context = _ctx;
 }
 
@@ -5495,8 +5641,9 @@ class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IPut, IConver
         'approved': approved
     };
 
-    createResponse() { return new LogoUrlApprovalResponse(); }
-    String getTypeName() { return "LogoUrlApproval"; }
+    createResponse() => LogoUrlApprovalResponse();
+    getResponseTypeName() => "LogoUrlApprovalResponse";
+    getTypeName() => "LogoUrlApproval";
     TypeContext context = _ctx;
 }
 
@@ -5520,8 +5667,9 @@ class LockTechStack implements IReturn<LockStackResponse>, IPut, IConvertible
         'isLocked': isLocked
     };
 
-    createResponse() { return new LockStackResponse(); }
-    String getTypeName() { return "LockTechStack"; }
+    createResponse() => LockStackResponse();
+    getResponseTypeName() => "LockStackResponse";
+    getTypeName() => "LockTechStack";
     TypeContext context = _ctx;
 }
 
@@ -5545,8 +5693,9 @@ class LockTech implements IReturn<LockStackResponse>, IPut, IConvertible
         'isLocked': isLocked
     };
 
-    createResponse() { return new LockStackResponse(); }
-    String getTypeName() { return "LockTech"; }
+    createResponse() => LockStackResponse();
+    getResponseTypeName() => "LockStackResponse";
+    getTypeName() => "LockTech";
     TypeContext context = _ctx;
 }
 
@@ -5567,8 +5716,9 @@ class EmailTest implements IReturn<EmailTestRespoonse>, IConvertible
         'postId': postId
     };
 
-    createResponse() { return new EmailTestRespoonse(); }
-    String getTypeName() { return "EmailTest"; }
+    createResponse() => EmailTestRespoonse();
+    getResponseTypeName() => "EmailTestRespoonse";
+    getTypeName() => "EmailTest";
     TypeContext context = _ctx;
 }
 
@@ -5621,8 +5771,9 @@ class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
         'meta': meta
     };
 
-    createResponse() { return new ImportUserResponse(); }
-    String getTypeName() { return "ImportUser"; }
+    createResponse() => ImportUserResponse();
+    getResponseTypeName() => "ImportUserResponse";
+    getTypeName() => "ImportUser";
     TypeContext context = _ctx;
 }
 
@@ -5697,34 +5848,72 @@ class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResp
         'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context)
     };
 
-    createResponse() { return new ImportUserVoiceSuggestionResponse(); }
-    String getTypeName() { return "ImportUserVoiceSuggestion"; }
+    createResponse() => ImportUserVoiceSuggestionResponse();
+    getResponseTypeName() => "ImportUserVoiceSuggestionResponse";
+    getTypeName() => "ImportUserVoiceSuggestion";
     TypeContext context = _ctx;
 }
 
 // @Route("/posts/comment", "GET")
 class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryResponse<PostComment>>, IGet, IConvertible
 {
+    int id;
     int userId;
     int postId;
+    String contentContains;
+    int upVotesAbove;
+    int upVotesBelow;
+    int downVotesAbove;
+    int downVotes;
+    int favoritesAbove;
+    int favoritesBelow;
+    int wordCountAbove;
+    int wordCountBelow;
+    int reportCountAbove;
+    int reportCountBelow;
 
-    QueryPostComments({this.userId,this.postId});
+    QueryPostComments({this.id,this.userId,this.postId,this.contentContains,this.upVotesAbove,this.upVotesBelow,this.downVotesAbove,this.downVotes,this.favoritesAbove,this.favoritesBelow,this.wordCountAbove,this.wordCountBelow,this.reportCountAbove,this.reportCountBelow});
     QueryPostComments.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        id = json['id'];
         userId = json['userId'];
         postId = json['postId'];
+        contentContains = json['contentContains'];
+        upVotesAbove = json['upVotesAbove'];
+        upVotesBelow = json['upVotesBelow'];
+        downVotesAbove = json['downVotesAbove'];
+        downVotes = json['downVotes'];
+        favoritesAbove = json['favoritesAbove'];
+        favoritesBelow = json['favoritesBelow'];
+        wordCountAbove = json['wordCountAbove'];
+        wordCountBelow = json['wordCountBelow'];
+        reportCountAbove = json['reportCountAbove'];
+        reportCountBelow = json['reportCountBelow'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id,
         'userId': userId,
-        'postId': postId
+        'postId': postId,
+        'contentContains': contentContains,
+        'upVotesAbove': upVotesAbove,
+        'upVotesBelow': upVotesBelow,
+        'downVotesAbove': downVotesAbove,
+        'downVotes': downVotes,
+        'favoritesAbove': favoritesAbove,
+        'favoritesBelow': favoritesBelow,
+        'wordCountAbove': wordCountAbove,
+        'wordCountBelow': wordCountBelow,
+        'reportCountAbove': reportCountAbove,
+        'reportCountBelow': reportCountBelow
     });
 
-    createResponse() { return new QueryResponse<PostComment>(); }
-    String getTypeName() { return "QueryPostComments"; }
+    createResponse() => QueryResponse<PostComment>();
+    getResponseTypeName() => "QueryResponse<PostComment>";
+    getTypeName() => "QueryPostComments";
     TypeContext context = _ctx;
 }
 
@@ -5732,251 +5921,268 @@ class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryRe
 // @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies Admin")
 class FindTechnologiesAdmin extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IConvertible
 {
+    int id;
     String name;
+    String vendorName;
+    String nameContains;
+    String vendorNameContains;
 
-    FindTechnologiesAdmin({this.name});
+    FindTechnologiesAdmin({this.id,this.name,this.vendorName,this.nameContains,this.vendorNameContains});
     FindTechnologiesAdmin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
+        id = json['id'];
         name = json['name'];
+        vendorName = json['vendorName'];
+        nameContains = json['nameContains'];
+        vendorNameContains = json['vendorNameContains'];
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'name': name
+        'id': id,
+        'name': name,
+        'vendorName': vendorName,
+        'nameContains': nameContains,
+        'vendorNameContains': vendorNameContains
     });
 
-    createResponse() { return new QueryResponse<Technology>(); }
-    String getTypeName() { return "FindTechnologiesAdmin"; }
+    createResponse() => QueryResponse<Technology>();
+    getResponseTypeName() => "QueryResponse<Technology>";
+    getTypeName() => "FindTechnologiesAdmin";
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(library: 'www.techstacks.io', types: <String, TypeInfo> {
-    'PostType': new TypeInfo(TypeOf.Enum, enumValues:PostType.values),
-    'Post': new TypeInfo(TypeOf.Class, create:() => new Post()),
-    'Organization': new TypeInfo(TypeOf.Class, create:() => new Organization()),
-    'OrganizationLabel': new TypeInfo(TypeOf.Class, create:() => new OrganizationLabel()),
-    'Category': new TypeInfo(TypeOf.Class, create:() => new Category()),
-    'OrganizationMember': new TypeInfo(TypeOf.Class, create:() => new OrganizationMember()),
-    'OrganizationMemberInvite': new TypeInfo(TypeOf.Class, create:() => new OrganizationMemberInvite()),
-    'FlagType': new TypeInfo(TypeOf.Enum, enumValues:FlagType.values),
-    'PostReportInfo': new TypeInfo(TypeOf.Class, create:() => new PostReportInfo()),
-    'PostCommentReportInfo': new TypeInfo(TypeOf.Class, create:() => new PostCommentReportInfo()),
-    'PostComment': new TypeInfo(TypeOf.Class, create:() => new PostComment()),
-    'ReportAction': new TypeInfo(TypeOf.Enum, enumValues:ReportAction.values),
-    'UserRef': new TypeInfo(TypeOf.Class, create:() => new UserRef()),
-    'OrganizationSubscription': new TypeInfo(TypeOf.Class, create:() => new OrganizationSubscription()),
-    'TechnologyStackBase': new TypeInfo(TypeOf.AbstractClass),
-    'TechnologyStack': new TypeInfo(TypeOf.Class, create:() => new TechnologyStack()),
-    'TechnologyTier': new TypeInfo(TypeOf.Enum, enumValues:TechnologyTier.values),
-    'TechnologyBase': new TypeInfo(TypeOf.AbstractClass),
-    'Technology': new TypeInfo(TypeOf.Class, create:() => new Technology()),
-    'UserActivity': new TypeInfo(TypeOf.Class, create:() => new UserActivity()),
-    'Frequency': new TypeInfo(TypeOf.Enum, enumValues:Frequency.values),
-    'TechnologyHistory': new TypeInfo(TypeOf.Class, create:() => new TechnologyHistory()),
-    'IRegisterStats': new TypeInfo(TypeOf.Interface),
-    'TechnologyStackHistory': new TypeInfo(TypeOf.Class, create:() => new TechnologyStackHistory()),
-    'UserInfo': new TypeInfo(TypeOf.Class, create:() => new UserInfo()),
-    'TechnologyInfo': new TypeInfo(TypeOf.Class, create:() => new TechnologyInfo()),
-    'TechnologyInStack': new TypeInfo(TypeOf.Class, create:() => new TechnologyInStack()),
-    'TechStackDetails': new TypeInfo(TypeOf.Class, create:() => new TechStackDetails()),
-    'List<TechnologyInStack>': new TypeInfo(TypeOf.Class, create:() => new List<TechnologyInStack>()),
-    'LabelInfo': new TypeInfo(TypeOf.Class, create:() => new LabelInfo()),
-    'CategoryInfo': new TypeInfo(TypeOf.Class, create:() => new CategoryInfo()),
-    'OrganizationInfo': new TypeInfo(TypeOf.Class, create:() => new OrganizationInfo()),
-    'List<LabelInfo>': new TypeInfo(TypeOf.Class, create:() => new List<LabelInfo>()),
-    'List<CategoryInfo>': new TypeInfo(TypeOf.Class, create:() => new List<CategoryInfo>()),
-    'Option': new TypeInfo(TypeOf.Class, create:() => new Option()),
-    'UserVoiceUser': new TypeInfo(TypeOf.Class, create:() => new UserVoiceUser()),
-    'UserVoiceComment': new TypeInfo(TypeOf.Class, create:() => new UserVoiceComment()),
-    'GetOrganizationResponse': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationResponse()),
-    'List<OrganizationLabel>': new TypeInfo(TypeOf.Class, create:() => new List<OrganizationLabel>()),
-    'List<Category>': new TypeInfo(TypeOf.Class, create:() => new List<Category>()),
-    'List<OrganizationMember>': new TypeInfo(TypeOf.Class, create:() => new List<OrganizationMember>()),
-    'GetOrganizationMembersResponse': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationMembersResponse()),
-    'GetOrganizationAdminResponse': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationAdminResponse()),
-    'List<OrganizationMemberInvite>': new TypeInfo(TypeOf.Class, create:() => new List<OrganizationMemberInvite>()),
-    'List<PostReportInfo>': new TypeInfo(TypeOf.Class, create:() => new List<PostReportInfo>()),
-    'List<PostCommentReportInfo>': new TypeInfo(TypeOf.Class, create:() => new List<PostCommentReportInfo>()),
-    'CreateOrganizationForTechnologyResponse': new TypeInfo(TypeOf.Class, create:() => new CreateOrganizationForTechnologyResponse()),
-    'CreateOrganizationResponse': new TypeInfo(TypeOf.Class, create:() => new CreateOrganizationResponse()),
-    'UpdateOrganizationResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationResponse()),
-    'OrganizationLabelResponse': new TypeInfo(TypeOf.Class, create:() => new OrganizationLabelResponse()),
-    'AddOrganizationCategoryResponse': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationCategoryResponse()),
-    'UpdateOrganizationCategoryResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationCategoryResponse()),
-    'AddOrganizationMemberResponse': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationMemberResponse()),
-    'UpdateOrganizationMemberResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationMemberResponse()),
-    'SetOrganizationMembersResponse': new TypeInfo(TypeOf.Class, create:() => new SetOrganizationMembersResponse()),
-    'GetOrganizationMemberInvitesResponse': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationMemberInvitesResponse()),
-    'RequestOrganizationMemberInviteResponse': new TypeInfo(TypeOf.Class, create:() => new RequestOrganizationMemberInviteResponse()),
-    'UpdateOrganizationMemberInviteResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationMemberInviteResponse()),
-    'GetPostResponse': new TypeInfo(TypeOf.Class, create:() => new GetPostResponse()),
-    'List<PostComment>': new TypeInfo(TypeOf.Class, create:() => new List<PostComment>()),
-    'CreatePostResponse': new TypeInfo(TypeOf.Class, create:() => new CreatePostResponse()),
-    'UpdatePostResponse': new TypeInfo(TypeOf.Class, create:() => new UpdatePostResponse()),
-    'DeletePostResponse': new TypeInfo(TypeOf.Class, create:() => new DeletePostResponse()),
-    'CreatePostCommentResponse': new TypeInfo(TypeOf.Class, create:() => new CreatePostCommentResponse()),
-    'UpdatePostCommentResponse': new TypeInfo(TypeOf.Class, create:() => new UpdatePostCommentResponse()),
-    'DeletePostCommentResponse': new TypeInfo(TypeOf.Class, create:() => new DeletePostCommentResponse()),
-    'GetUserPostCommentVotesResponse': new TypeInfo(TypeOf.Class, create:() => new GetUserPostCommentVotesResponse()),
-    'PinPostCommentResponse': new TypeInfo(TypeOf.Class, create:() => new PinPostCommentResponse()),
-    'GetUsersByEmailsResponse': new TypeInfo(TypeOf.Class, create:() => new GetUsersByEmailsResponse()),
-    'List<UserRef>': new TypeInfo(TypeOf.Class, create:() => new List<UserRef>()),
-    'GetUserPostActivityResponse': new TypeInfo(TypeOf.Class, create:() => new GetUserPostActivityResponse()),
-    'GetUserOrganizationsResponse': new TypeInfo(TypeOf.Class, create:() => new GetUserOrganizationsResponse()),
-    'List<OrganizationSubscription>': new TypeInfo(TypeOf.Class, create:() => new List<OrganizationSubscription>()),
-    'UserPostVoteResponse': new TypeInfo(TypeOf.Class, create:() => new UserPostVoteResponse()),
-    'UserPostFavoriteResponse': new TypeInfo(TypeOf.Class, create:() => new UserPostFavoriteResponse()),
-    'UserPostReportResponse': new TypeInfo(TypeOf.Class, create:() => new UserPostReportResponse()),
-    'UserPostCommentVoteResponse': new TypeInfo(TypeOf.Class, create:() => new UserPostCommentVoteResponse()),
-    'UserPostCommentReportResponse': new TypeInfo(TypeOf.Class, create:() => new UserPostCommentReportResponse()),
-    'SessionInfoResponse': new TypeInfo(TypeOf.Class, create:() => new SessionInfoResponse()),
-    'List<TechnologyStack>': new TypeInfo(TypeOf.Class, create:() => new List<TechnologyStack>()),
-    'List<Technology>': new TypeInfo(TypeOf.Class, create:() => new List<Technology>()),
-    'GetTechnologyPreviousVersionsResponse': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyPreviousVersionsResponse()),
-    'List<TechnologyHistory>': new TypeInfo(TypeOf.Class, create:() => new List<TechnologyHistory>()),
-    'GetAllTechnologiesResponse': new TypeInfo(TypeOf.Class, create:() => new GetAllTechnologiesResponse()),
-    'GetTechnologyResponse': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyResponse()),
-    'GetTechnologyFavoriteDetailsResponse': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyFavoriteDetailsResponse()),
-    'CreateTechnologyResponse': new TypeInfo(TypeOf.Class, create:() => new CreateTechnologyResponse()),
-    'UpdateTechnologyResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateTechnologyResponse()),
-    'DeleteTechnologyResponse': new TypeInfo(TypeOf.Class, create:() => new DeleteTechnologyResponse()),
-    'GetTechnologyStackPreviousVersionsResponse': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyStackPreviousVersionsResponse()),
-    'List<TechnologyStackHistory>': new TypeInfo(TypeOf.Class, create:() => new List<TechnologyStackHistory>()),
-    'GetPageStatsResponse': new TypeInfo(TypeOf.Class, create:() => new GetPageStatsResponse()),
-    'HourlyTaskResponse': new TypeInfo(TypeOf.Class, create:() => new HourlyTaskResponse()),
-    'OverviewResponse': new TypeInfo(TypeOf.Class, create:() => new OverviewResponse()),
-    'List<UserInfo>': new TypeInfo(TypeOf.Class, create:() => new List<UserInfo>()),
-    'List<TechnologyInfo>': new TypeInfo(TypeOf.Class, create:() => new List<TechnologyInfo>()),
-    'List<TechStackDetails>': new TypeInfo(TypeOf.Class, create:() => new List<TechStackDetails>()),
-    'List<OrganizationInfo>': new TypeInfo(TypeOf.Class, create:() => new List<OrganizationInfo>()),
-    'Map<String,List<TechnologyInfo>>': new TypeInfo(TypeOf.Class, create:() => new Map<String,List<TechnologyInfo>>()),
-    'AppOverviewResponse': new TypeInfo(TypeOf.Class, create:() => new AppOverviewResponse()),
-    'List<Option>': new TypeInfo(TypeOf.Class, create:() => new List<Option>()),
-    'GetAllTechnologyStacksResponse': new TypeInfo(TypeOf.Class, create:() => new GetAllTechnologyStacksResponse()),
-    'GetTechnologyStackResponse': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyStackResponse()),
-    'GetTechnologyStackFavoriteDetailsResponse': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyStackFavoriteDetailsResponse()),
-    'GetConfigResponse': new TypeInfo(TypeOf.Class, create:() => new GetConfigResponse()),
-    'CreateTechnologyStackResponse': new TypeInfo(TypeOf.Class, create:() => new CreateTechnologyStackResponse()),
-    'UpdateTechnologyStackResponse': new TypeInfo(TypeOf.Class, create:() => new UpdateTechnologyStackResponse()),
-    'DeleteTechnologyStackResponse': new TypeInfo(TypeOf.Class, create:() => new DeleteTechnologyStackResponse()),
-    'GetFavoriteTechStackResponse': new TypeInfo(TypeOf.Class, create:() => new GetFavoriteTechStackResponse()),
-    'FavoriteTechStackResponse': new TypeInfo(TypeOf.Class, create:() => new FavoriteTechStackResponse()),
-    'GetFavoriteTechnologiesResponse': new TypeInfo(TypeOf.Class, create:() => new GetFavoriteTechnologiesResponse()),
-    'FavoriteTechnologyResponse': new TypeInfo(TypeOf.Class, create:() => new FavoriteTechnologyResponse()),
-    'GetUserFeedResponse': new TypeInfo(TypeOf.Class, create:() => new GetUserFeedResponse()),
-    'GetUsersKarmaResponse': new TypeInfo(TypeOf.Class, create:() => new GetUsersKarmaResponse()),
-    'Map<int,int>': new TypeInfo(TypeOf.Class, create:() => new Map<int,int>()),
-    'GetUserInfoResponse': new TypeInfo(TypeOf.Class, create:() => new GetUserInfoResponse()),
-    'SyncDiscourseSiteResponse': new TypeInfo(TypeOf.Class, create:() => new SyncDiscourseSiteResponse()),
-    'LogoUrlApprovalResponse': new TypeInfo(TypeOf.Class, create:() => new LogoUrlApprovalResponse()),
-    'LockStackResponse': new TypeInfo(TypeOf.Class, create:() => new LockStackResponse()),
-    'EmailTestRespoonse': new TypeInfo(TypeOf.Class, create:() => new EmailTestRespoonse()),
-    'ImportUserResponse': new TypeInfo(TypeOf.Class, create:() => new ImportUserResponse()),
-    'ImportUserVoiceSuggestionResponse': new TypeInfo(TypeOf.Class, create:() => new ImportUserVoiceSuggestionResponse()),
-    'Ping': new TypeInfo(TypeOf.Class, create:() => new Ping()),
-    'DummyTypes': new TypeInfo(TypeOf.Class, create:() => new DummyTypes()),
-    'List<Post>': new TypeInfo(TypeOf.Class, create:() => new List<Post>()),
-    'GetOrganization': new TypeInfo(TypeOf.Class, create:() => new GetOrganization()),
-    'GetOrganizationBySlug': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationBySlug()),
-    'GetOrganizationMembers': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationMembers()),
-    'GetOrganizationAdmin': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationAdmin()),
-    'CreateOrganizationForTechnology': new TypeInfo(TypeOf.Class, create:() => new CreateOrganizationForTechnology()),
-    'CreateOrganization': new TypeInfo(TypeOf.Class, create:() => new CreateOrganization()),
-    'UpdateOrganization': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganization()),
-    'DeleteOrganization': new TypeInfo(TypeOf.Class, create:() => new DeleteOrganization()),
-    'LockOrganization': new TypeInfo(TypeOf.Class, create:() => new LockOrganization()),
-    'AddOrganizationLabel': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationLabel()),
-    'UpdateOrganizationLabel': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationLabel()),
-    'RemoveOrganizationLabel': new TypeInfo(TypeOf.Class, create:() => new RemoveOrganizationLabel()),
-    'AddOrganizationCategory': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationCategory()),
-    'UpdateOrganizationCategory': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationCategory()),
-    'DeleteOrganizationCategory': new TypeInfo(TypeOf.Class, create:() => new DeleteOrganizationCategory()),
-    'AddOrganizationMember': new TypeInfo(TypeOf.Class, create:() => new AddOrganizationMember()),
-    'UpdateOrganizationMember': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationMember()),
-    'RemoveOrganizationMember': new TypeInfo(TypeOf.Class, create:() => new RemoveOrganizationMember()),
-    'SetOrganizationMembers': new TypeInfo(TypeOf.Class, create:() => new SetOrganizationMembers()),
-    'GetOrganizationMemberInvites': new TypeInfo(TypeOf.Class, create:() => new GetOrganizationMemberInvites()),
-    'RequestOrganizationMemberInvite': new TypeInfo(TypeOf.Class, create:() => new RequestOrganizationMemberInvite()),
-    'UpdateOrganizationMemberInvite': new TypeInfo(TypeOf.Class, create:() => new UpdateOrganizationMemberInvite()),
-    'QueryPosts': new TypeInfo(TypeOf.Class, create:() => new QueryPosts()),
-    'GetPost': new TypeInfo(TypeOf.Class, create:() => new GetPost()),
-    'CreatePost': new TypeInfo(TypeOf.Class, create:() => new CreatePost()),
-    'UpdatePost': new TypeInfo(TypeOf.Class, create:() => new UpdatePost()),
-    'DeletePost': new TypeInfo(TypeOf.Class, create:() => new DeletePost()),
-    'LockPost': new TypeInfo(TypeOf.Class, create:() => new LockPost()),
-    'HidePost': new TypeInfo(TypeOf.Class, create:() => new HidePost()),
-    'ChangeStatusPost': new TypeInfo(TypeOf.Class, create:() => new ChangeStatusPost()),
-    'ActionPostReport': new TypeInfo(TypeOf.Class, create:() => new ActionPostReport()),
-    'CreatePostComment': new TypeInfo(TypeOf.Class, create:() => new CreatePostComment()),
-    'UpdatePostComment': new TypeInfo(TypeOf.Class, create:() => new UpdatePostComment()),
-    'DeletePostComment': new TypeInfo(TypeOf.Class, create:() => new DeletePostComment()),
-    'ActionPostCommentReport': new TypeInfo(TypeOf.Class, create:() => new ActionPostCommentReport()),
-    'GetUserPostCommentVotes': new TypeInfo(TypeOf.Class, create:() => new GetUserPostCommentVotes()),
-    'PinPostComment': new TypeInfo(TypeOf.Class, create:() => new PinPostComment()),
-    'GetUsersByEmails': new TypeInfo(TypeOf.Class, create:() => new GetUsersByEmails()),
-    'GetUserPostActivity': new TypeInfo(TypeOf.Class, create:() => new GetUserPostActivity()),
-    'GetUserOrganizations': new TypeInfo(TypeOf.Class, create:() => new GetUserOrganizations()),
-    'UserPostVote': new TypeInfo(TypeOf.Class, create:() => new UserPostVote()),
-    'UserPostFavorite': new TypeInfo(TypeOf.Class, create:() => new UserPostFavorite()),
-    'UserPostReport': new TypeInfo(TypeOf.Class, create:() => new UserPostReport()),
-    'UserPostCommentVote': new TypeInfo(TypeOf.Class, create:() => new UserPostCommentVote()),
-    'UserPostCommentReport': new TypeInfo(TypeOf.Class, create:() => new UserPostCommentReport()),
-    'StorePreRender': new TypeInfo(TypeOf.Class, create:() => new StorePreRender()),
-    'GetPreRender': new TypeInfo(TypeOf.Class, create:() => new GetPreRender()),
-    'SessionInfo': new TypeInfo(TypeOf.Class, create:() => new SessionInfo()),
-    'SubscribeToOrganization': new TypeInfo(TypeOf.Class, create:() => new SubscribeToOrganization()),
-    'List<PostType>': new TypeInfo(TypeOf.Class, create:() => new List<PostType>()),
-    'SubscribeToPost': new TypeInfo(TypeOf.Class, create:() => new SubscribeToPost()),
-    'DeleteOrganizationSubscription': new TypeInfo(TypeOf.Class, create:() => new DeleteOrganizationSubscription()),
-    'DeletePostSubscription': new TypeInfo(TypeOf.Class, create:() => new DeletePostSubscription()),
-    'GetTechnologyPreviousVersions': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyPreviousVersions()),
-    'GetAllTechnologies': new TypeInfo(TypeOf.Class, create:() => new GetAllTechnologies()),
-    'FindTechnologies': new TypeInfo(TypeOf.Class, create:() => new FindTechnologies()),
-    'QueryTechnology': new TypeInfo(TypeOf.Class, create:() => new QueryTechnology()),
-    'GetTechnology': new TypeInfo(TypeOf.Class, create:() => new GetTechnology()),
-    'GetTechnologyFavoriteDetails': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyFavoriteDetails()),
-    'CreateTechnology': new TypeInfo(TypeOf.Class, create:() => new CreateTechnology()),
-    'UpdateTechnology': new TypeInfo(TypeOf.Class, create:() => new UpdateTechnology()),
-    'DeleteTechnology': new TypeInfo(TypeOf.Class, create:() => new DeleteTechnology()),
-    'GetTechnologyStackPreviousVersions': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyStackPreviousVersions()),
-    'GetPageStats': new TypeInfo(TypeOf.Class, create:() => new GetPageStats()),
-    'ClearCache': new TypeInfo(TypeOf.Class, create:() => new ClearCache()),
-    'HourlyTask': new TypeInfo(TypeOf.Class, create:() => new HourlyTask()),
-    'FindTechStacks': new TypeInfo(TypeOf.Class, create:() => new FindTechStacks()),
-    'QueryTechStacks': new TypeInfo(TypeOf.Class, create:() => new QueryTechStacks()),
-    'Overview': new TypeInfo(TypeOf.Class, create:() => new Overview()),
-    'AppOverview': new TypeInfo(TypeOf.Class, create:() => new AppOverview()),
-    'GetAllTechnologyStacks': new TypeInfo(TypeOf.Class, create:() => new GetAllTechnologyStacks()),
-    'GetTechnologyStack': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyStack()),
-    'GetTechnologyStackFavoriteDetails': new TypeInfo(TypeOf.Class, create:() => new GetTechnologyStackFavoriteDetails()),
-    'GetConfig': new TypeInfo(TypeOf.Class, create:() => new GetConfig()),
-    'CreateTechnologyStack': new TypeInfo(TypeOf.Class, create:() => new CreateTechnologyStack()),
-    'UpdateTechnologyStack': new TypeInfo(TypeOf.Class, create:() => new UpdateTechnologyStack()),
-    'DeleteTechnologyStack': new TypeInfo(TypeOf.Class, create:() => new DeleteTechnologyStack()),
-    'GetFavoriteTechStack': new TypeInfo(TypeOf.Class, create:() => new GetFavoriteTechStack()),
-    'AddFavoriteTechStack': new TypeInfo(TypeOf.Class, create:() => new AddFavoriteTechStack()),
-    'RemoveFavoriteTechStack': new TypeInfo(TypeOf.Class, create:() => new RemoveFavoriteTechStack()),
-    'GetFavoriteTechnologies': new TypeInfo(TypeOf.Class, create:() => new GetFavoriteTechnologies()),
-    'AddFavoriteTechnology': new TypeInfo(TypeOf.Class, create:() => new AddFavoriteTechnology()),
-    'RemoveFavoriteTechnology': new TypeInfo(TypeOf.Class, create:() => new RemoveFavoriteTechnology()),
-    'GetUserFeed': new TypeInfo(TypeOf.Class, create:() => new GetUserFeed()),
-    'GetUsersKarma': new TypeInfo(TypeOf.Class, create:() => new GetUsersKarma()),
-    'GetUserInfo': new TypeInfo(TypeOf.Class, create:() => new GetUserInfo()),
-    'UserAvatar': new TypeInfo(TypeOf.Class, create:() => new UserAvatar()),
-    'MqStart': new TypeInfo(TypeOf.Class, create:() => new MqStart()),
-    'MqStop': new TypeInfo(TypeOf.Class, create:() => new MqStop()),
-    'MqStats': new TypeInfo(TypeOf.Class, create:() => new MqStats()),
-    'MqStatus': new TypeInfo(TypeOf.Class, create:() => new MqStatus()),
-    'SyncDiscourseSite': new TypeInfo(TypeOf.Class, create:() => new SyncDiscourseSite()),
-    'LogoUrlApproval': new TypeInfo(TypeOf.Class, create:() => new LogoUrlApproval()),
-    'LockTechStack': new TypeInfo(TypeOf.Class, create:() => new LockTechStack()),
-    'LockTech': new TypeInfo(TypeOf.Class, create:() => new LockTech()),
-    'EmailTest': new TypeInfo(TypeOf.Class, create:() => new EmailTest()),
-    'ImportUser': new TypeInfo(TypeOf.Class, create:() => new ImportUser()),
-    'ImportUserVoiceSuggestion': new TypeInfo(TypeOf.Class, create:() => new ImportUserVoiceSuggestion()),
-    'QueryPostComments': new TypeInfo(TypeOf.Class, create:() => new QueryPostComments()),
-    'FindTechnologiesAdmin': new TypeInfo(TypeOf.Class, create:() => new FindTechnologiesAdmin()),
+TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, TypeInfo> {
+    'PostType': TypeInfo(TypeOf.Enum, enumValues:PostType.values),
+    'Post': TypeInfo(TypeOf.Class, create:() => Post()),
+    'Organization': TypeInfo(TypeOf.Class, create:() => Organization()),
+    'OrganizationLabel': TypeInfo(TypeOf.Class, create:() => OrganizationLabel()),
+    'Category': TypeInfo(TypeOf.Class, create:() => Category()),
+    'OrganizationMember': TypeInfo(TypeOf.Class, create:() => OrganizationMember()),
+    'OrganizationMemberInvite': TypeInfo(TypeOf.Class, create:() => OrganizationMemberInvite()),
+    'FlagType': TypeInfo(TypeOf.Enum, enumValues:FlagType.values),
+    'PostReportInfo': TypeInfo(TypeOf.Class, create:() => PostReportInfo()),
+    'PostCommentReportInfo': TypeInfo(TypeOf.Class, create:() => PostCommentReportInfo()),
+    'PostComment': TypeInfo(TypeOf.Class, create:() => PostComment()),
+    'ReportAction': TypeInfo(TypeOf.Enum, enumValues:ReportAction.values),
+    'UserRef': TypeInfo(TypeOf.Class, create:() => UserRef()),
+    'OrganizationSubscription': TypeInfo(TypeOf.Class, create:() => OrganizationSubscription()),
+    'TechnologyStackBase': TypeInfo(TypeOf.AbstractClass),
+    'TechnologyStack': TypeInfo(TypeOf.Class, create:() => TechnologyStack()),
+    'TechnologyTier': TypeInfo(TypeOf.Enum, enumValues:TechnologyTier.values),
+    'TechnologyBase': TypeInfo(TypeOf.AbstractClass),
+    'Technology': TypeInfo(TypeOf.Class, create:() => Technology()),
+    'UserActivity': TypeInfo(TypeOf.Class, create:() => UserActivity()),
+    'Frequency': TypeInfo(TypeOf.Enum, enumValues:Frequency.values),
+    'TechnologyHistory': TypeInfo(TypeOf.Class, create:() => TechnologyHistory()),
+    'IRegisterStats': TypeInfo(TypeOf.Interface),
+    'TechnologyStackHistory': TypeInfo(TypeOf.Class, create:() => TechnologyStackHistory()),
+    'UserInfo': TypeInfo(TypeOf.Class, create:() => UserInfo()),
+    'TechnologyInfo': TypeInfo(TypeOf.Class, create:() => TechnologyInfo()),
+    'TechnologyInStack': TypeInfo(TypeOf.Class, create:() => TechnologyInStack()),
+    'TechStackDetails': TypeInfo(TypeOf.Class, create:() => TechStackDetails()),
+    'List<TechnologyInStack>': TypeInfo(TypeOf.Class, create:() => <TechnologyInStack>[]),
+    'LabelInfo': TypeInfo(TypeOf.Class, create:() => LabelInfo()),
+    'CategoryInfo': TypeInfo(TypeOf.Class, create:() => CategoryInfo()),
+    'OrganizationInfo': TypeInfo(TypeOf.Class, create:() => OrganizationInfo()),
+    'List<LabelInfo>': TypeInfo(TypeOf.Class, create:() => <LabelInfo>[]),
+    'List<CategoryInfo>': TypeInfo(TypeOf.Class, create:() => <CategoryInfo>[]),
+    'Option': TypeInfo(TypeOf.Class, create:() => Option()),
+    'UserVoiceUser': TypeInfo(TypeOf.Class, create:() => UserVoiceUser()),
+    'UserVoiceComment': TypeInfo(TypeOf.Class, create:() => UserVoiceComment()),
+    'GetOrganizationResponse': TypeInfo(TypeOf.Class, create:() => GetOrganizationResponse()),
+    'List<OrganizationLabel>': TypeInfo(TypeOf.Class, create:() => <OrganizationLabel>[]),
+    'List<Category>': TypeInfo(TypeOf.Class, create:() => <Category>[]),
+    'List<OrganizationMember>': TypeInfo(TypeOf.Class, create:() => <OrganizationMember>[]),
+    'GetOrganizationMembersResponse': TypeInfo(TypeOf.Class, create:() => GetOrganizationMembersResponse()),
+    'GetOrganizationAdminResponse': TypeInfo(TypeOf.Class, create:() => GetOrganizationAdminResponse()),
+    'List<OrganizationMemberInvite>': TypeInfo(TypeOf.Class, create:() => <OrganizationMemberInvite>[]),
+    'List<PostReportInfo>': TypeInfo(TypeOf.Class, create:() => <PostReportInfo>[]),
+    'List<PostCommentReportInfo>': TypeInfo(TypeOf.Class, create:() => <PostCommentReportInfo>[]),
+    'CreateOrganizationForTechnologyResponse': TypeInfo(TypeOf.Class, create:() => CreateOrganizationForTechnologyResponse()),
+    'CreateOrganizationResponse': TypeInfo(TypeOf.Class, create:() => CreateOrganizationResponse()),
+    'UpdateOrganizationResponse': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationResponse()),
+    'OrganizationLabelResponse': TypeInfo(TypeOf.Class, create:() => OrganizationLabelResponse()),
+    'AddOrganizationCategoryResponse': TypeInfo(TypeOf.Class, create:() => AddOrganizationCategoryResponse()),
+    'UpdateOrganizationCategoryResponse': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationCategoryResponse()),
+    'AddOrganizationMemberResponse': TypeInfo(TypeOf.Class, create:() => AddOrganizationMemberResponse()),
+    'UpdateOrganizationMemberResponse': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationMemberResponse()),
+    'SetOrganizationMembersResponse': TypeInfo(TypeOf.Class, create:() => SetOrganizationMembersResponse()),
+    'GetOrganizationMemberInvitesResponse': TypeInfo(TypeOf.Class, create:() => GetOrganizationMemberInvitesResponse()),
+    'RequestOrganizationMemberInviteResponse': TypeInfo(TypeOf.Class, create:() => RequestOrganizationMemberInviteResponse()),
+    'UpdateOrganizationMemberInviteResponse': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationMemberInviteResponse()),
+    'GetPostResponse': TypeInfo(TypeOf.Class, create:() => GetPostResponse()),
+    'List<PostComment>': TypeInfo(TypeOf.Class, create:() => <PostComment>[]),
+    'CreatePostResponse': TypeInfo(TypeOf.Class, create:() => CreatePostResponse()),
+    'UpdatePostResponse': TypeInfo(TypeOf.Class, create:() => UpdatePostResponse()),
+    'DeletePostResponse': TypeInfo(TypeOf.Class, create:() => DeletePostResponse()),
+    'CreatePostCommentResponse': TypeInfo(TypeOf.Class, create:() => CreatePostCommentResponse()),
+    'UpdatePostCommentResponse': TypeInfo(TypeOf.Class, create:() => UpdatePostCommentResponse()),
+    'DeletePostCommentResponse': TypeInfo(TypeOf.Class, create:() => DeletePostCommentResponse()),
+    'GetUserPostCommentVotesResponse': TypeInfo(TypeOf.Class, create:() => GetUserPostCommentVotesResponse()),
+    'PinPostCommentResponse': TypeInfo(TypeOf.Class, create:() => PinPostCommentResponse()),
+    'GetUsersByEmailsResponse': TypeInfo(TypeOf.Class, create:() => GetUsersByEmailsResponse()),
+    'List<UserRef>': TypeInfo(TypeOf.Class, create:() => <UserRef>[]),
+    'GetUserPostActivityResponse': TypeInfo(TypeOf.Class, create:() => GetUserPostActivityResponse()),
+    'GetUserOrganizationsResponse': TypeInfo(TypeOf.Class, create:() => GetUserOrganizationsResponse()),
+    'List<OrganizationSubscription>': TypeInfo(TypeOf.Class, create:() => <OrganizationSubscription>[]),
+    'UserPostVoteResponse': TypeInfo(TypeOf.Class, create:() => UserPostVoteResponse()),
+    'UserPostFavoriteResponse': TypeInfo(TypeOf.Class, create:() => UserPostFavoriteResponse()),
+    'UserPostReportResponse': TypeInfo(TypeOf.Class, create:() => UserPostReportResponse()),
+    'UserPostCommentVoteResponse': TypeInfo(TypeOf.Class, create:() => UserPostCommentVoteResponse()),
+    'UserPostCommentReportResponse': TypeInfo(TypeOf.Class, create:() => UserPostCommentReportResponse()),
+    'SessionInfoResponse': TypeInfo(TypeOf.Class, create:() => SessionInfoResponse()),
+    'List<TechnologyStack>': TypeInfo(TypeOf.Class, create:() => <TechnologyStack>[]),
+    'List<Technology>': TypeInfo(TypeOf.Class, create:() => <Technology>[]),
+    'GetTechnologyPreviousVersionsResponse': TypeInfo(TypeOf.Class, create:() => GetTechnologyPreviousVersionsResponse()),
+    'List<TechnologyHistory>': TypeInfo(TypeOf.Class, create:() => <TechnologyHistory>[]),
+    'GetAllTechnologiesResponse': TypeInfo(TypeOf.Class, create:() => GetAllTechnologiesResponse()),
+    'GetTechnologyResponse': TypeInfo(TypeOf.Class, create:() => GetTechnologyResponse()),
+    'GetTechnologyFavoriteDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetTechnologyFavoriteDetailsResponse()),
+    'CreateTechnologyResponse': TypeInfo(TypeOf.Class, create:() => CreateTechnologyResponse()),
+    'UpdateTechnologyResponse': TypeInfo(TypeOf.Class, create:() => UpdateTechnologyResponse()),
+    'DeleteTechnologyResponse': TypeInfo(TypeOf.Class, create:() => DeleteTechnologyResponse()),
+    'GetTechnologyStackPreviousVersionsResponse': TypeInfo(TypeOf.Class, create:() => GetTechnologyStackPreviousVersionsResponse()),
+    'List<TechnologyStackHistory>': TypeInfo(TypeOf.Class, create:() => <TechnologyStackHistory>[]),
+    'GetPageStatsResponse': TypeInfo(TypeOf.Class, create:() => GetPageStatsResponse()),
+    'HourlyTaskResponse': TypeInfo(TypeOf.Class, create:() => HourlyTaskResponse()),
+    'OverviewResponse': TypeInfo(TypeOf.Class, create:() => OverviewResponse()),
+    'List<UserInfo>': TypeInfo(TypeOf.Class, create:() => <UserInfo>[]),
+    'List<TechnologyInfo>': TypeInfo(TypeOf.Class, create:() => <TechnologyInfo>[]),
+    'List<TechStackDetails>': TypeInfo(TypeOf.Class, create:() => <TechStackDetails>[]),
+    'List<OrganizationInfo>': TypeInfo(TypeOf.Class, create:() => <OrganizationInfo>[]),
+    'Map<String,List<TechnologyInfo>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<TechnologyInfo>>()),
+    'AppOverviewResponse': TypeInfo(TypeOf.Class, create:() => AppOverviewResponse()),
+    'List<Option>': TypeInfo(TypeOf.Class, create:() => <Option>[]),
+    'GetAllTechnologyStacksResponse': TypeInfo(TypeOf.Class, create:() => GetAllTechnologyStacksResponse()),
+    'GetTechnologyStackResponse': TypeInfo(TypeOf.Class, create:() => GetTechnologyStackResponse()),
+    'GetTechnologyStackFavoriteDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetTechnologyStackFavoriteDetailsResponse()),
+    'GetConfigResponse': TypeInfo(TypeOf.Class, create:() => GetConfigResponse()),
+    'CreateTechnologyStackResponse': TypeInfo(TypeOf.Class, create:() => CreateTechnologyStackResponse()),
+    'UpdateTechnologyStackResponse': TypeInfo(TypeOf.Class, create:() => UpdateTechnologyStackResponse()),
+    'DeleteTechnologyStackResponse': TypeInfo(TypeOf.Class, create:() => DeleteTechnologyStackResponse()),
+    'GetFavoriteTechStackResponse': TypeInfo(TypeOf.Class, create:() => GetFavoriteTechStackResponse()),
+    'FavoriteTechStackResponse': TypeInfo(TypeOf.Class, create:() => FavoriteTechStackResponse()),
+    'GetFavoriteTechnologiesResponse': TypeInfo(TypeOf.Class, create:() => GetFavoriteTechnologiesResponse()),
+    'FavoriteTechnologyResponse': TypeInfo(TypeOf.Class, create:() => FavoriteTechnologyResponse()),
+    'GetUserFeedResponse': TypeInfo(TypeOf.Class, create:() => GetUserFeedResponse()),
+    'GetUsersKarmaResponse': TypeInfo(TypeOf.Class, create:() => GetUsersKarmaResponse()),
+    'Map<int,int>': TypeInfo(TypeOf.Class, create:() => Map<int,int>()),
+    'GetUserInfoResponse': TypeInfo(TypeOf.Class, create:() => GetUserInfoResponse()),
+    'SyncDiscourseSiteResponse': TypeInfo(TypeOf.Class, create:() => SyncDiscourseSiteResponse()),
+    'LogoUrlApprovalResponse': TypeInfo(TypeOf.Class, create:() => LogoUrlApprovalResponse()),
+    'LockStackResponse': TypeInfo(TypeOf.Class, create:() => LockStackResponse()),
+    'EmailTestRespoonse': TypeInfo(TypeOf.Class, create:() => EmailTestRespoonse()),
+    'ImportUserResponse': TypeInfo(TypeOf.Class, create:() => ImportUserResponse()),
+    'ImportUserVoiceSuggestionResponse': TypeInfo(TypeOf.Class, create:() => ImportUserVoiceSuggestionResponse()),
+    'Ping': TypeInfo(TypeOf.Class, create:() => Ping()),
+    'DummyTypes': TypeInfo(TypeOf.Class, create:() => DummyTypes()),
+    'List<Post>': TypeInfo(TypeOf.Class, create:() => <Post>[]),
+    'GetOrganization': TypeInfo(TypeOf.Class, create:() => GetOrganization()),
+    'GetOrganizationBySlug': TypeInfo(TypeOf.Class, create:() => GetOrganizationBySlug()),
+    'GetOrganizationMembers': TypeInfo(TypeOf.Class, create:() => GetOrganizationMembers()),
+    'GetOrganizationAdmin': TypeInfo(TypeOf.Class, create:() => GetOrganizationAdmin()),
+    'CreateOrganizationForTechnology': TypeInfo(TypeOf.Class, create:() => CreateOrganizationForTechnology()),
+    'CreateOrganization': TypeInfo(TypeOf.Class, create:() => CreateOrganization()),
+    'UpdateOrganization': TypeInfo(TypeOf.Class, create:() => UpdateOrganization()),
+    'DeleteOrganization': TypeInfo(TypeOf.Class, create:() => DeleteOrganization()),
+    'LockOrganization': TypeInfo(TypeOf.Class, create:() => LockOrganization()),
+    'AddOrganizationLabel': TypeInfo(TypeOf.Class, create:() => AddOrganizationLabel()),
+    'UpdateOrganizationLabel': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationLabel()),
+    'RemoveOrganizationLabel': TypeInfo(TypeOf.Class, create:() => RemoveOrganizationLabel()),
+    'AddOrganizationCategory': TypeInfo(TypeOf.Class, create:() => AddOrganizationCategory()),
+    'UpdateOrganizationCategory': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationCategory()),
+    'DeleteOrganizationCategory': TypeInfo(TypeOf.Class, create:() => DeleteOrganizationCategory()),
+    'AddOrganizationMember': TypeInfo(TypeOf.Class, create:() => AddOrganizationMember()),
+    'UpdateOrganizationMember': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationMember()),
+    'RemoveOrganizationMember': TypeInfo(TypeOf.Class, create:() => RemoveOrganizationMember()),
+    'SetOrganizationMembers': TypeInfo(TypeOf.Class, create:() => SetOrganizationMembers()),
+    'GetOrganizationMemberInvites': TypeInfo(TypeOf.Class, create:() => GetOrganizationMemberInvites()),
+    'RequestOrganizationMemberInvite': TypeInfo(TypeOf.Class, create:() => RequestOrganizationMemberInvite()),
+    'UpdateOrganizationMemberInvite': TypeInfo(TypeOf.Class, create:() => UpdateOrganizationMemberInvite()),
+    'QueryResponse<Post>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Post>()),
+    'QueryPosts': TypeInfo(TypeOf.Class, create:() => QueryPosts()),
+    'GetPost': TypeInfo(TypeOf.Class, create:() => GetPost()),
+    'CreatePost': TypeInfo(TypeOf.Class, create:() => CreatePost()),
+    'UpdatePost': TypeInfo(TypeOf.Class, create:() => UpdatePost()),
+    'DeletePost': TypeInfo(TypeOf.Class, create:() => DeletePost()),
+    'LockPost': TypeInfo(TypeOf.Class, create:() => LockPost()),
+    'HidePost': TypeInfo(TypeOf.Class, create:() => HidePost()),
+    'ChangeStatusPost': TypeInfo(TypeOf.Class, create:() => ChangeStatusPost()),
+    'ActionPostReport': TypeInfo(TypeOf.Class, create:() => ActionPostReport()),
+    'CreatePostComment': TypeInfo(TypeOf.Class, create:() => CreatePostComment()),
+    'UpdatePostComment': TypeInfo(TypeOf.Class, create:() => UpdatePostComment()),
+    'DeletePostComment': TypeInfo(TypeOf.Class, create:() => DeletePostComment()),
+    'ActionPostCommentReport': TypeInfo(TypeOf.Class, create:() => ActionPostCommentReport()),
+    'GetUserPostCommentVotes': TypeInfo(TypeOf.Class, create:() => GetUserPostCommentVotes()),
+    'PinPostComment': TypeInfo(TypeOf.Class, create:() => PinPostComment()),
+    'GetUsersByEmails': TypeInfo(TypeOf.Class, create:() => GetUsersByEmails()),
+    'GetUserPostActivity': TypeInfo(TypeOf.Class, create:() => GetUserPostActivity()),
+    'GetUserOrganizations': TypeInfo(TypeOf.Class, create:() => GetUserOrganizations()),
+    'UserPostVote': TypeInfo(TypeOf.Class, create:() => UserPostVote()),
+    'UserPostFavorite': TypeInfo(TypeOf.Class, create:() => UserPostFavorite()),
+    'UserPostReport': TypeInfo(TypeOf.Class, create:() => UserPostReport()),
+    'UserPostCommentVote': TypeInfo(TypeOf.Class, create:() => UserPostCommentVote()),
+    'UserPostCommentReport': TypeInfo(TypeOf.Class, create:() => UserPostCommentReport()),
+    'StorePreRender': TypeInfo(TypeOf.Class, create:() => StorePreRender()),
+    'GetPreRender': TypeInfo(TypeOf.Class, create:() => GetPreRender()),
+    'SessionInfo': TypeInfo(TypeOf.Class, create:() => SessionInfo()),
+    'SubscribeToOrganization': TypeInfo(TypeOf.Class, create:() => SubscribeToOrganization()),
+    'List<PostType>': TypeInfo(TypeOf.Class, create:() => <PostType>[]),
+    'SubscribeToPost': TypeInfo(TypeOf.Class, create:() => SubscribeToPost()),
+    'DeleteOrganizationSubscription': TypeInfo(TypeOf.Class, create:() => DeleteOrganizationSubscription()),
+    'DeletePostSubscription': TypeInfo(TypeOf.Class, create:() => DeletePostSubscription()),
+    'GetTechnologyPreviousVersions': TypeInfo(TypeOf.Class, create:() => GetTechnologyPreviousVersions()),
+    'GetAllTechnologies': TypeInfo(TypeOf.Class, create:() => GetAllTechnologies()),
+    'QueryResponse<Technology>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Technology>()),
+    'FindTechnologies': TypeInfo(TypeOf.Class, create:() => FindTechnologies()),
+    'QueryTechnology': TypeInfo(TypeOf.Class, create:() => QueryTechnology()),
+    'GetTechnology': TypeInfo(TypeOf.Class, create:() => GetTechnology()),
+    'GetTechnologyFavoriteDetails': TypeInfo(TypeOf.Class, create:() => GetTechnologyFavoriteDetails()),
+    'CreateTechnology': TypeInfo(TypeOf.Class, create:() => CreateTechnology()),
+    'UpdateTechnology': TypeInfo(TypeOf.Class, create:() => UpdateTechnology()),
+    'DeleteTechnology': TypeInfo(TypeOf.Class, create:() => DeleteTechnology()),
+    'GetTechnologyStackPreviousVersions': TypeInfo(TypeOf.Class, create:() => GetTechnologyStackPreviousVersions()),
+    'GetPageStats': TypeInfo(TypeOf.Class, create:() => GetPageStats()),
+    'ClearCache': TypeInfo(TypeOf.Class, create:() => ClearCache()),
+    'HourlyTask': TypeInfo(TypeOf.Class, create:() => HourlyTask()),
+    'QueryResponse<TechnologyStack>': TypeInfo(TypeOf.Class, create:() => QueryResponse<TechnologyStack>()),
+    'FindTechStacks': TypeInfo(TypeOf.Class, create:() => FindTechStacks()),
+    'QueryTechStacks': TypeInfo(TypeOf.Class, create:() => QueryTechStacks()),
+    'Overview': TypeInfo(TypeOf.Class, create:() => Overview()),
+    'AppOverview': TypeInfo(TypeOf.Class, create:() => AppOverview()),
+    'GetAllTechnologyStacks': TypeInfo(TypeOf.Class, create:() => GetAllTechnologyStacks()),
+    'GetTechnologyStack': TypeInfo(TypeOf.Class, create:() => GetTechnologyStack()),
+    'GetTechnologyStackFavoriteDetails': TypeInfo(TypeOf.Class, create:() => GetTechnologyStackFavoriteDetails()),
+    'GetConfig': TypeInfo(TypeOf.Class, create:() => GetConfig()),
+    'CreateTechnologyStack': TypeInfo(TypeOf.Class, create:() => CreateTechnologyStack()),
+    'UpdateTechnologyStack': TypeInfo(TypeOf.Class, create:() => UpdateTechnologyStack()),
+    'DeleteTechnologyStack': TypeInfo(TypeOf.Class, create:() => DeleteTechnologyStack()),
+    'GetFavoriteTechStack': TypeInfo(TypeOf.Class, create:() => GetFavoriteTechStack()),
+    'AddFavoriteTechStack': TypeInfo(TypeOf.Class, create:() => AddFavoriteTechStack()),
+    'RemoveFavoriteTechStack': TypeInfo(TypeOf.Class, create:() => RemoveFavoriteTechStack()),
+    'GetFavoriteTechnologies': TypeInfo(TypeOf.Class, create:() => GetFavoriteTechnologies()),
+    'AddFavoriteTechnology': TypeInfo(TypeOf.Class, create:() => AddFavoriteTechnology()),
+    'RemoveFavoriteTechnology': TypeInfo(TypeOf.Class, create:() => RemoveFavoriteTechnology()),
+    'GetUserFeed': TypeInfo(TypeOf.Class, create:() => GetUserFeed()),
+    'GetUsersKarma': TypeInfo(TypeOf.Class, create:() => GetUsersKarma()),
+    'GetUserInfo': TypeInfo(TypeOf.Class, create:() => GetUserInfo()),
+    'UserAvatar': TypeInfo(TypeOf.Class, create:() => UserAvatar()),
+    'MqStart': TypeInfo(TypeOf.Class, create:() => MqStart()),
+    'MqStop': TypeInfo(TypeOf.Class, create:() => MqStop()),
+    'MqStats': TypeInfo(TypeOf.Class, create:() => MqStats()),
+    'MqStatus': TypeInfo(TypeOf.Class, create:() => MqStatus()),
+    'SyncDiscourseSite': TypeInfo(TypeOf.Class, create:() => SyncDiscourseSite()),
+    'LogoUrlApproval': TypeInfo(TypeOf.Class, create:() => LogoUrlApproval()),
+    'LockTechStack': TypeInfo(TypeOf.Class, create:() => LockTechStack()),
+    'LockTech': TypeInfo(TypeOf.Class, create:() => LockTech()),
+    'EmailTest': TypeInfo(TypeOf.Class, create:() => EmailTest()),
+    'ImportUser': TypeInfo(TypeOf.Class, create:() => ImportUser()),
+    'ImportUserVoiceSuggestion': TypeInfo(TypeOf.Class, create:() => ImportUserVoiceSuggestion()),
+    'QueryResponse<PostComment>': TypeInfo(TypeOf.Class, create:() => QueryResponse<PostComment>()),
+    'QueryPostComments': TypeInfo(TypeOf.Class, create:() => QueryPostComments()),
+    'FindTechnologiesAdmin': TypeInfo(TypeOf.Class, create:() => FindTechnologiesAdmin()),
 });
 
