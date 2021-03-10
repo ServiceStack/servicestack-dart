@@ -26,10 +26,19 @@ abstract class IMeta {
 abstract class IHasSessionId {
   String sessionId;
 }
-
+abstract class IHasBearerToken {
+  String bearerToken;
+}
 abstract class IHasVersion {
   int version;
 }
+
+abstract class ICrud {}
+abstract class ICreateDb<Table> implements ICrud {}
+abstract class IUpdateDb<Table> implements ICrud {}
+abstract class IPatchDb<Table> implements ICrud {}
+abstract class IDeleteDb<Table> implements ICrud {}
+abstract class ISaveDb<Table> implements ICrud {}
 
 Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
   'dynamic': new TypeInfo(TypeOf.Class, create: () => {}),
@@ -119,6 +128,7 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
    'IdResponse': new TypeInfo(TypeOf.Class, create:() => new IdResponse()),
    'StringResponse': new TypeInfo(TypeOf.Class, create:() => new StringResponse()),
    'StringsResponse': new TypeInfo(TypeOf.Class, create:() => new StringsResponse()),
+   'AuditBase': TypeInfo(TypeOf.AbstractClass),
  };
 
 TypeContext _ctx =
@@ -1302,6 +1312,53 @@ class StringsResponse implements IConvertible
     'results': JsonConverters.toJson(results,'List<String>',context),
     'meta': meta,
     'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+  };
+
+  TypeContext context = _ctx;
+}
+
+abstract class AuditBase
+{
+  // @DataMember(Order=1)
+  DateTime createdDate;
+
+  // @DataMember(Order=2)
+  // @required()
+  String createdBy;
+
+  // @DataMember(Order=3)
+  DateTime modifiedDate;
+
+  // @DataMember(Order=4)
+  // @required()
+  String modifiedBy;
+
+  // @DataMember(Order=5)
+  DateTime deletedDate;
+
+  // @DataMember(Order=6)
+  String deletedBy;
+
+  AuditBase({this.createdDate,this.createdBy,this.modifiedDate,this.modifiedBy,this.deletedDate,this.deletedBy});
+  AuditBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+  fromMap(Map<String, dynamic> json) {
+    createdDate = JsonConverters.fromJson(json['createdDate'],'DateTime',context);
+    createdBy = json['createdBy'];
+    modifiedDate = JsonConverters.fromJson(json['modifiedDate'],'DateTime',context);
+    modifiedBy = json['modifiedBy'];
+    deletedDate = JsonConverters.fromJson(json['deletedDate'],'DateTime',context);
+    deletedBy = json['deletedBy'];
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'createdDate': JsonConverters.toJson(createdDate,'DateTime',context),
+    'createdBy': createdBy,
+    'modifiedDate': JsonConverters.toJson(modifiedDate,'DateTime',context),
+    'modifiedBy': modifiedBy,
+    'deletedDate': JsonConverters.toJson(deletedDate,'DateTime',context),
+    'deletedBy': deletedBy
   };
 
   TypeContext context = _ctx;
