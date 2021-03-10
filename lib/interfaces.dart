@@ -52,12 +52,78 @@ class TypeContext {
   String typeName;
   TypeContext childContext;
 
+  static Map<String, TypeInfo> MinifiedTypes;
+  static Map<String, String> MinifiedTypeNames;
+  static bool EnableMinifiedTypes = true;
+
   TypeContext({this.library, this.types, this.typeName, this.childContext}) {}
 
   List<String> get genericArgs => getGenericArgs(typeName);
 
   TypeInfo getTypeInfo(String typeName) {
-    return types[typeName] ?? childContext?.getTypeInfo(typeName);
+    if (!isMinified(typeName)) {
+      var typeInfo = types[typeName] ?? childContext?.getTypeInfo(typeName);
+      Log.debug("getTypeInfo(): $typeName => $typeInfo");
+      return typeInfo;
+    } else {
+      if (isMinified(typeName)) {
+        if (EnableMinifiedTypes) {
+          initMinified();
+          var minifiedTypeInfo = MinifiedTypes[typeName];
+          if (minifiedTypeInfo != null) {
+            String originalType = "";
+            if (Log.isDebugEnabled()) {
+              for (var entry in types.entries) {
+                if (entry.value == minifiedTypeInfo) {
+                  originalType = ", original: '${entry.key}'";
+                }
+              }
+            }
+            Log.debug("Found TypeInfo for Minified Type: '${typeName}'${originalType}");
+            return minifiedTypeInfo;
+          }
+        }
+      }
+    }
+    Log.error("Could not find TypeInfo for Minified Type: ${typeName}");
+    return null;
+  }
+
+  initMinified() {
+    if (MinifiedTypes == null) {
+      var to = Map<String, TypeInfo>();
+      var toNames = Map<String, String>();
+      for (var entry in types.entries) {
+        var instance = entry.value.defaultInstance();
+        if (instance != null) {
+          var minifiedType = instance.runtimeType.toString();
+          to[minifiedType] = entry.value;
+          toNames[minifiedType] = entry.key;
+        }
+      }
+      MinifiedTypes = to;
+      MinifiedTypeNames = toNames;
+    }
+  }
+
+  TypeInfo resolveMinifiedType(String typeName) {
+    if (!isMinified(typeName))
+      throw ArgumentError("$typeName is not a minified type");
+
+    initMinified();
+    var originalType = MinifiedTypes[typeName];
+    // Log.debug("resolveMinifiedType($typeName) => $originalType");
+    return originalType;
+  }
+
+  String resolveMinifiedTypeName(String typeName) {
+    if (!isMinified(typeName))
+      throw ArgumentError("$typeName is not a minified type");
+
+    initMinified();
+    var originalType = MinifiedTypeNames[typeName];
+    // Log.debug("resolveMinifiedTypeName($typeName) => $originalType");
+    return originalType;
   }
 
   TypeInfo get typeInfo {
