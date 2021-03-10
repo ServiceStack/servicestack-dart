@@ -414,7 +414,6 @@ class JsonWebClient implements IServiceClient {
     if (bodyStr != null) {
       req.headers["Content-Type"] = "application/json";
     }
-
     if (info.requestFilter != null) {
       info.requestFilter(req);
     }
@@ -424,7 +423,6 @@ class JsonWebClient implements IServiceClient {
     if (globalRequestFilter != null) {
       globalRequestFilter(req);
     }
-
     if (bodyStr != null) {
       req.body = bodyStr;
     }

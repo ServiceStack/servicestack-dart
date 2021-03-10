@@ -431,7 +431,6 @@ class JsonServiceClient implements IServiceClient {
       req.headers.contentType = ContentType.json;
       // var bodyBytes = bodyStr != null ? utf8.encode(bodyStr) : null;
       req.contentLength = utf8.encode(bodyStr).length;
-      req.write(bodyStr);
     }
 
     if (info.requestFilter != null) {
@@ -442,6 +441,9 @@ class JsonServiceClient implements IServiceClient {
     }
     if (globalRequestFilter != null) {
       globalRequestFilter(req);
+    }
+    if (bodyStr != null) {
+      req.write(bodyStr);
     }
     return req;
   }
