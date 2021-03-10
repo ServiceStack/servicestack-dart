@@ -1,3 +1,7 @@
+## 1.0.28
+
+* Improve naked List handling in minified builds
+
 ## 1.0.26 
 
 * Add Inspect for quickly viewing API responses
