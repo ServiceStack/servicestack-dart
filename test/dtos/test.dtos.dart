@@ -1,8 +1,8 @@
 /* Options:
-Date: 2021-03-09 20:01:12
+Date: 2021-03-10 14:28:33
 Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: http://test.servicestack.net
+BaseUrl: http://localhost:5000
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True
@@ -595,19 +595,69 @@ enum EnumType
 {
     Value1,
     Value2,
+    Value3,
+}
+
+// @flags()
+class EnumTypeFlags
+{
+    static const EnumTypeFlags Value1 = const EnumTypeFlags._(0);
+    static const EnumTypeFlags Value2 = const EnumTypeFlags._(1);
+    static const EnumTypeFlags Value3 = const EnumTypeFlags._(2);
+
+    final int _value;
+    const EnumTypeFlags._(this._value);
+    int get value => _value;
+    static List<EnumTypeFlags> get values => const [Value1,Value2,Value3];
+}
+
+enum EnumWithValues
+{
+    None,
+    Value1,
+    Value2,
 }
 
 // @flags()
 class EnumFlags
 {
+    static const EnumFlags Value0 = const EnumFlags._(0);
     static const EnumFlags Value1 = const EnumFlags._(1);
     static const EnumFlags Value2 = const EnumFlags._(2);
     static const EnumFlags Value3 = const EnumFlags._(4);
+    static const EnumFlags Value123 = const EnumFlags._(7);
 
     final int _value;
     const EnumFlags._(this._value);
     int get value => _value;
-    static List<EnumFlags> get values => const [Value1,Value2,Value3];
+    static List<EnumFlags> get values => const [Value0,Value1,Value2,Value3,Value123];
+}
+
+enum EnumAsInt
+{
+    Value1,
+    Value2,
+    Value3,
+}
+
+enum EnumStyle
+{
+    lower,
+    UPPER,
+    PascalCase,
+    camelCase,
+    camelUPPER,
+    PascalUPPER,
+}
+
+enum EnumStyleMembers
+{
+    Lower,
+    Upper,
+    PascalCase,
+    CamelCase,
+    CamelUpper,
+    PascalUpper,
 }
 
 class SubType implements IConvertible
@@ -1106,6 +1156,120 @@ class Rockstar implements IConvertible
     TypeContext context = _ctx;
 }
 
+abstract class QueryDbTenant<From,Into> extends QueryDb2<From,Into>
+{
+    QueryDbTenant();
+    QueryDbTenant.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
+}
+
+enum LivingStatus
+{
+    Alive,
+    Dead,
+}
+
+class RockstarAuditTenant extends AuditBase implements IConvertible
+{
+    int tenantId;
+    int id;
+    String firstName;
+    String lastName;
+    int age;
+    DateTime dateOfBirth;
+    DateTime dateDied;
+    LivingStatus livingStatus;
+
+    RockstarAuditTenant({this.tenantId,this.id,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
+    RockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        tenantId = json['tenantId'];
+        id = json['id'];
+        firstName = json['firstName'];
+        lastName = json['lastName'];
+        age = json['age'];
+        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context);
+        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'tenantId': tenantId,
+        'id': id,
+        'firstName': firstName,
+        'lastName': lastName,
+        'age': age,
+        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context),
+        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context),
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+    });
+
+    TypeContext context = _ctx;
+}
+
+abstract class RockstarBase
+{
+    String firstName;
+    String lastName;
+    int age;
+    DateTime dateOfBirth;
+    DateTime dateDied;
+    LivingStatus livingStatus;
+
+    RockstarBase({this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
+    RockstarBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        firstName = json['firstName'];
+        lastName = json['lastName'];
+        age = json['age'];
+        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context);
+        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'firstName': firstName,
+        'lastName': lastName,
+        'age': age,
+        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context),
+        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context),
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class RockstarAuto extends RockstarBase implements IConvertible
+{
+    int id;
+
+    RockstarAuto({this.id});
+    RockstarAuto.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id
+    });
+
+    TypeContext context = _ctx;
+}
+
 class OnlyDefinedInGenericType implements IConvertible
 {
     int id;
@@ -1168,6 +1332,167 @@ class OnlyDefinedInGenericTypeInto implements IConvertible
         'id': id,
         'name': name
     };
+
+    TypeContext context = _ctx;
+}
+
+class RockstarAudit extends RockstarBase implements IConvertible
+{
+    int id;
+    DateTime createdDate;
+    String createdBy;
+    String createdInfo;
+    DateTime modifiedDate;
+    String modifiedBy;
+    String modifiedInfo;
+
+    RockstarAudit({this.id,this.createdDate,this.createdBy,this.createdInfo,this.modifiedDate,this.modifiedBy,this.modifiedInfo});
+    RockstarAudit.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        id = json['id'];
+        createdDate = JsonConverters.fromJson(json['createdDate'],'DateTime',context);
+        createdBy = json['createdBy'];
+        createdInfo = json['createdInfo'];
+        modifiedDate = JsonConverters.fromJson(json['modifiedDate'],'DateTime',context);
+        modifiedBy = json['modifiedBy'];
+        modifiedInfo = json['modifiedInfo'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id,
+        'createdDate': JsonConverters.toJson(createdDate,'DateTime',context),
+        'createdBy': createdBy,
+        'createdInfo': createdInfo,
+        'modifiedDate': JsonConverters.toJson(modifiedDate,'DateTime',context),
+        'modifiedBy': modifiedBy,
+        'modifiedInfo': modifiedInfo
+    });
+
+    TypeContext context = _ctx;
+}
+
+abstract class CreateAuditBase<Table,TResponse> implements ICreateDb<Table>
+{
+    CreateAuditBase();
+    CreateAuditBase.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+abstract class CreateAuditTenantBase<Table,TResponse> extends CreateAuditBase<Table,TResponse>
+{
+    CreateAuditTenantBase();
+    CreateAuditTenantBase.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
+}
+
+abstract class UpdateAuditBase<Table,TResponse> implements IUpdateDb<Table>
+{
+    UpdateAuditBase();
+    UpdateAuditBase.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+abstract class UpdateAuditTenantBase<Table,TResponse> extends UpdateAuditBase<Table,TResponse>
+{
+    UpdateAuditTenantBase();
+    UpdateAuditTenantBase.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
+}
+
+abstract class PatchAuditBase<Table,TResponse> implements IPatchDb<Table>
+{
+    PatchAuditBase();
+    PatchAuditBase.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+abstract class PatchAuditTenantBase<Table,TResponse> extends PatchAuditBase<Table,TResponse>
+{
+    PatchAuditTenantBase();
+    PatchAuditTenantBase.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
+}
+
+abstract class SoftDeleteAuditBase<Table,TResponse> implements IUpdateDb<Table>
+{
+    SoftDeleteAuditBase();
+    SoftDeleteAuditBase.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    TypeContext context = _ctx;
+}
+
+abstract class SoftDeleteAuditTenantBase<Table,TResponse> extends SoftDeleteAuditBase<Table,TResponse>
+{
+    SoftDeleteAuditTenantBase();
+    SoftDeleteAuditTenantBase.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    TypeContext context = _ctx;
+}
+
+class RockstarVersion extends RockstarBase implements IConvertible
+{
+    int id;
+    int rowVersion;
+
+    RockstarVersion({this.id,this.rowVersion});
+    RockstarVersion.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        id = json['id'];
+        rowVersion = json['rowVersion'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id,
+        'rowVersion': rowVersion
+    });
 
     TypeContext context = _ctx;
 }
@@ -2525,6 +2850,103 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     TypeContext context = _ctx;
 }
 
+class RockstarWithIdResponse implements IConvertible
+{
+    int id;
+    ResponseStatus responseStatus;
+
+    RockstarWithIdResponse({this.id,this.responseStatus});
+    RockstarWithIdResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class RockstarWithIdAndResultResponse implements IConvertible
+{
+    int id;
+    RockstarAuto result;
+    ResponseStatus responseStatus;
+
+    RockstarWithIdAndResultResponse({this.id,this.result,this.responseStatus});
+    RockstarWithIdAndResultResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        result = JsonConverters.fromJson(json['result'],'RockstarAuto',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'result': JsonConverters.toJson(result,'RockstarAuto',context),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class RockstarWithIdAndCountResponse implements IConvertible
+{
+    int id;
+    int count;
+    ResponseStatus responseStatus;
+
+    RockstarWithIdAndCountResponse({this.id,this.count,this.responseStatus});
+    RockstarWithIdAndCountResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        count = json['count'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'count': count,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class RockstarWithIdAndRowVersionResponse implements IConvertible
+{
+    int id;
+    int rowVersion;
+    ResponseStatus responseStatus;
+
+    RockstarWithIdAndRowVersionResponse({this.id,this.rowVersion,this.responseStatus});
+    RockstarWithIdAndRowVersionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        rowVersion = json['rowVersion'];
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'rowVersion': rowVersion,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
 // @Route("/channels/{Channel}/raw")
 class PostRawToChannel implements IReturnVoid, IConvertible
 {
@@ -3551,23 +3973,100 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
 class HelloWithEnum implements IConvertible
 {
     EnumType enumProp;
+    EnumTypeFlags enumTypeFlags;
+    EnumWithValues enumWithValues;
     EnumType nullableEnumProp;
     EnumFlags enumFlags;
+    EnumAsInt enumAsInt;
+    EnumStyle enumStyle;
+    EnumStyleMembers enumStyleMembers;
 
-    HelloWithEnum({this.enumProp,this.nullableEnumProp,this.enumFlags});
+    HelloWithEnum({this.enumProp,this.enumTypeFlags,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumAsInt,this.enumStyle,this.enumStyleMembers});
     HelloWithEnum.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',context);
+        enumTypeFlags = JsonConverters.fromJson(json['enumTypeFlags'],'EnumTypeFlags',context);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'EnumWithValues',context);
         nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',context);
         enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',context);
+        enumAsInt = JsonConverters.fromJson(json['enumAsInt'],'EnumAsInt',context);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'EnumStyle',context);
+        enumStyleMembers = JsonConverters.fromJson(json['enumStyleMembers'],'EnumStyleMembers',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'enumProp': JsonConverters.toJson(enumProp,'EnumType',context),
+        'enumTypeFlags': JsonConverters.toJson(enumTypeFlags,'EnumTypeFlags',context),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'EnumWithValues',context),
         'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',context),
-        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context)
+        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context),
+        'enumAsInt': JsonConverters.toJson(enumAsInt,'EnumAsInt',context),
+        'enumStyle': JsonConverters.toJson(enumStyle,'EnumStyle',context),
+        'enumStyleMembers': JsonConverters.toJson(enumStyleMembers,'EnumStyleMembers',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class HelloWithEnumList implements IConvertible
+{
+    List<EnumType> enumProp;
+    List<EnumWithValues> enumWithValues;
+    List<EnumType> nullableEnumProp;
+    List<EnumFlags> enumFlags;
+    List<EnumStyle> enumStyle;
+
+    HelloWithEnumList({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
+    HelloWithEnumList.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        enumProp = JsonConverters.fromJson(json['enumProp'],'List<EnumType>',context);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'List<EnumWithValues>',context);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'List<EnumType>',context);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'List<EnumFlags>',context);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'List<EnumStyle>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'enumProp': JsonConverters.toJson(enumProp,'List<EnumType>',context),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'List<EnumWithValues>',context),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'List<EnumType>',context),
+        'enumFlags': JsonConverters.toJson(enumFlags,'List<EnumFlags>',context),
+        'enumStyle': JsonConverters.toJson(enumStyle,'List<EnumStyle>',context)
+    };
+
+    TypeContext context = _ctx;
+}
+
+class HelloWithEnumMap implements IConvertible
+{
+    Map<EnumType,EnumType> enumProp;
+    Map<EnumWithValues,EnumWithValues> enumWithValues;
+    Map<EnumType,EnumType> nullableEnumProp;
+    Map<EnumFlags,EnumFlags> enumFlags;
+    Map<EnumStyle,EnumStyle> enumStyle;
+
+    HelloWithEnumMap({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
+    HelloWithEnumMap.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        enumProp = JsonConverters.fromJson(json['enumProp'],'Map<EnumType,EnumType>',context);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'Map<EnumWithValues,EnumWithValues>',context);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'Map<EnumType,EnumType>',context);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'Map<EnumFlags,EnumFlags>',context);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'Map<EnumStyle,EnumStyle>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'enumProp': JsonConverters.toJson(enumProp,'Map<EnumType,EnumType>',context),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'Map<EnumWithValues,EnumWithValues>',context),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'Map<EnumType,EnumType>',context),
+        'enumFlags': JsonConverters.toJson(enumFlags,'Map<EnumFlags,EnumFlags>',context),
+        'enumStyle': JsonConverters.toJson(enumStyle,'Map<EnumStyle,EnumStyle>',context)
     };
 
     TypeContext context = _ctx;
@@ -4724,6 +5223,55 @@ class TestNullResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
+class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
+{
+    int id;
+
+    QueryRockstarAudit({this.id});
+    QueryRockstarAudit.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id
+    });
+
+    createResponse() => QueryResponse<RockstarAuto>();
+    getResponseTypeName() => "QueryResponse<RockstarAuto>";
+    getTypeName() => "QueryRockstarAudit";
+    TypeContext context = _ctx;
+}
+
+class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
+{
+    String firstNameStartsWith;
+    int ageOlderThan;
+
+    QueryRockstarAuditSubOr({this.firstNameStartsWith,this.ageOlderThan});
+    QueryRockstarAuditSubOr.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        firstNameStartsWith = json['firstNameStartsWith'];
+        ageOlderThan = json['ageOlderThan'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'firstNameStartsWith': firstNameStartsWith,
+        'ageOlderThan': ageOlderThan
+    });
+
+    createResponse() => QueryResponse<RockstarAuto>();
+    getResponseTypeName() => "QueryResponse<RockstarAuto>";
+    getTypeName() => "QueryRockstarAuditSubOr";
+    TypeContext context = _ctx;
+}
+
 class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
 {
     int id;
@@ -4787,17 +5335,228 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
     TypeContext context = _ctx;
 }
 
-TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
+class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IConvertible
+{
+    CreateRockstarAudit();
+    CreateRockstarAudit.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    createResponse() => RockstarWithIdResponse();
+    getResponseTypeName() => "RockstarWithIdResponse";
+    getTypeName() => "CreateRockstarAudit";
+    TypeContext context = _ctx;
+}
+
+class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
+{
+    String sessionId;
+    String firstName;
+    String lastName;
+    int age;
+    DateTime dateOfBirth;
+    DateTime dateDied;
+    LivingStatus livingStatus;
+
+    CreateRockstarAuditTenant({this.sessionId,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
+    CreateRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        sessionId = json['sessionId'];
+        firstName = json['firstName'];
+        lastName = json['lastName'];
+        age = json['age'];
+        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context);
+        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'sessionId': sessionId,
+        'firstName': firstName,
+        'lastName': lastName,
+        'age': age,
+        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context),
+        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context),
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+    });
+
+    createResponse() => RockstarWithIdAndResultResponse();
+    getResponseTypeName() => "RockstarWithIdAndResultResponse";
+    getTypeName() => "CreateRockstarAuditTenant";
+    TypeContext context = _ctx;
+}
+
+class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
+{
+    String sessionId;
+    int id;
+    String firstName;
+    LivingStatus livingStatus;
+
+    UpdateRockstarAuditTenant({this.sessionId,this.id,this.firstName,this.livingStatus});
+    UpdateRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        sessionId = json['sessionId'];
+        id = json['id'];
+        firstName = json['firstName'];
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'sessionId': sessionId,
+        'id': id,
+        'firstName': firstName,
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+    });
+
+    createResponse() => RockstarWithIdAndResultResponse();
+    getResponseTypeName() => "RockstarWithIdAndResultResponse";
+    getTypeName() => "UpdateRockstarAuditTenant";
+    TypeContext context = _ctx;
+}
+
+class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
+{
+    String sessionId;
+    int id;
+    String firstName;
+    LivingStatus livingStatus;
+
+    PatchRockstarAuditTenant({this.sessionId,this.id,this.firstName,this.livingStatus});
+    PatchRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        sessionId = json['sessionId'];
+        id = json['id'];
+        firstName = json['firstName'];
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'sessionId': sessionId,
+        'id': id,
+        'firstName': firstName,
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+    });
+
+    createResponse() => RockstarWithIdAndResultResponse();
+    getResponseTypeName() => "RockstarWithIdAndResultResponse";
+    getTypeName() => "PatchRockstarAuditTenant";
+    TypeContext context = _ctx;
+}
+
+class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IConvertible
+{
+    int id;
+
+    SoftDeleteAuditTenant({this.id});
+    SoftDeleteAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id
+    });
+
+    createResponse() => RockstarWithIdAndResultResponse();
+    getResponseTypeName() => "RockstarWithIdAndResultResponse";
+    getTypeName() => "SoftDeleteAuditTenant";
+    TypeContext context = _ctx;
+}
+
+class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IHasBearerToken, IConvertible
+{
+    String bearerToken;
+
+    CreateRockstarAuditMqToken({this.bearerToken});
+    CreateRockstarAuditMqToken.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        bearerToken = json['bearerToken'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'bearerToken': bearerToken
+    });
+
+    createResponse() => RockstarWithIdResponse();
+    getResponseTypeName() => "RockstarWithIdResponse";
+    getTypeName() => "CreateRockstarAuditMqToken";
+    TypeContext context = _ctx;
+}
+
+class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, IDeleteDb<RockstarAuditTenant>, IHasSessionId, IConvertible
+{
+    String sessionId;
+    int id;
+    int age;
+
+    RealDeleteAuditTenant({this.sessionId,this.id,this.age});
+    RealDeleteAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        sessionId = json['sessionId'];
+        id = json['id'];
+        age = json['age'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'sessionId': sessionId,
+        'id': id,
+        'age': age
+    };
+
+    createResponse() => RockstarWithIdAndCountResponse();
+    getResponseTypeName() => "RockstarWithIdAndCountResponse";
+    getTypeName() => "RealDeleteAuditTenant";
+    TypeContext context = _ctx;
+}
+
+class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWithIdAndRowVersionResponse>, ICreateDb<RockstarVersion>, IConvertible
+{
+    CreateRockstarVersion();
+    CreateRockstarVersion.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    createResponse() => RockstarWithIdAndRowVersionResponse();
+    getResponseTypeName() => "RockstarWithIdAndRowVersionResponse";
+    getTypeName() => "CreateRockstarVersion";
+    TypeContext context = _ctx;
+}
+
+TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'CustomType': TypeInfo(TypeOf.Class, create:() => CustomType()),
     'SetterType': TypeInfo(TypeOf.Class, create:() => SetterType()),
     'Bar': TypeInfo(TypeOf.Class, create:() => Bar()),
     'Baz': TypeInfo(TypeOf.Class, create:() => Baz()),
     'IAuthTokens': TypeInfo(TypeOf.Interface),
     'AuthUserSession': TypeInfo(TypeOf.Class, create:() => AuthUserSession()),
-    'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => List<IAuthTokens>()),
+    'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => <IAuthTokens>[]),
     'MetadataTestNestedChild': TypeInfo(TypeOf.Class, create:() => MetadataTestNestedChild()),
     'MetadataTestChild': TypeInfo(TypeOf.Class, create:() => MetadataTestChild()),
-    'List<MetadataTestNestedChild>': TypeInfo(TypeOf.Class, create:() => List<MetadataTestNestedChild>()),
+    'List<MetadataTestNestedChild>': TypeInfo(TypeOf.Class, create:() => <MetadataTestNestedChild>[]),
     'MenuItemExampleItem': TypeInfo(TypeOf.Class, create:() => MenuItemExampleItem()),
     'MenuItemExample': TypeInfo(TypeOf.Class, create:() => MenuItemExample()),
     'MenuExample': TypeInfo(TypeOf.Class, create:() => MenuExample()),
@@ -4805,7 +5564,12 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'ListResult': TypeInfo(TypeOf.Class, create:() => ListResult()),
     'ArrayResult': TypeInfo(TypeOf.Class, create:() => ArrayResult()),
     'EnumType': TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
+    'EnumTypeFlags': TypeInfo(TypeOf.Enum, enumValues:EnumTypeFlags.values),
+    'EnumWithValues': TypeInfo(TypeOf.Enum, enumValues:EnumWithValues.values),
     'EnumFlags': TypeInfo(TypeOf.Enum, enumValues:EnumFlags.values),
+    'EnumAsInt': TypeInfo(TypeOf.Enum, enumValues:EnumAsInt.values),
+    'EnumStyle': TypeInfo(TypeOf.Enum, enumValues:EnumStyle.values),
+    'EnumStyleMembers': TypeInfo(TypeOf.Enum, enumValues:EnumStyleMembers.values),
     'SubType': TypeInfo(TypeOf.Class, create:() => SubType()),
     'AllTypesBase': TypeInfo(TypeOf.AbstractClass),
     'Map<int,String>': TypeInfo(TypeOf.Class, create:() => Map<int,String>()),
@@ -4829,21 +5593,36 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'UnAuthInfo': TypeInfo(TypeOf.Class, create:() => UnAuthInfo()),
     'Channel': TypeInfo(TypeOf.Class, create:() => Channel()),
     'Device': TypeInfo(TypeOf.Class, create:() => Device()),
-    'List<Channel>': TypeInfo(TypeOf.Class, create:() => List<Channel>()),
+    'List<Channel>': TypeInfo(TypeOf.Class, create:() => <Channel>[]),
     'Logger': TypeInfo(TypeOf.Class, create:() => Logger()),
-    'List<Device>': TypeInfo(TypeOf.Class, create:() => List<Device>()),
+    'List<Device>': TypeInfo(TypeOf.Class, create:() => <Device>[]),
     'Rockstar': TypeInfo(TypeOf.Class, create:() => Rockstar()),
+    'QueryDbTenant<From,Into>': TypeInfo(TypeOf.AbstractClass),
+    'LivingStatus': TypeInfo(TypeOf.Enum, enumValues:LivingStatus.values),
+    'RockstarAuditTenant': TypeInfo(TypeOf.Class, create:() => RockstarAuditTenant()),
+    'RockstarBase': TypeInfo(TypeOf.AbstractClass),
+    'RockstarAuto': TypeInfo(TypeOf.Class, create:() => RockstarAuto()),
     'OnlyDefinedInGenericType': TypeInfo(TypeOf.Class, create:() => OnlyDefinedInGenericType()),
     'OnlyDefinedInGenericTypeFrom': TypeInfo(TypeOf.Class, create:() => OnlyDefinedInGenericTypeFrom()),
     'OnlyDefinedInGenericTypeInto': TypeInfo(TypeOf.Class, create:() => OnlyDefinedInGenericTypeInto()),
+    'RockstarAudit': TypeInfo(TypeOf.Class, create:() => RockstarAudit()),
+    'CreateAuditBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'CreateAuditTenantBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'UpdateAuditBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'UpdateAuditTenantBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'PatchAuditBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'PatchAuditTenantBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'SoftDeleteAuditBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'SoftDeleteAuditTenantBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
+    'RockstarVersion': TypeInfo(TypeOf.Class, create:() => RockstarVersion()),
     'TypesGroup': TypeInfo(TypeOf.Class, create:() => TypesGroup()),
     'ChatMessage': TypeInfo(TypeOf.Class, create:() => ChatMessage()),
     'GetChatHistoryResponse': TypeInfo(TypeOf.Class, create:() => GetChatHistoryResponse()),
-    'List<ChatMessage>': TypeInfo(TypeOf.Class, create:() => List<ChatMessage>()),
+    'List<ChatMessage>': TypeInfo(TypeOf.Class, create:() => <ChatMessage>[]),
     'GetUserDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetUserDetailsResponse()),
     'CustomHttpErrorResponse': TypeInfo(TypeOf.Class, create:() => CustomHttpErrorResponse()),
     'Foo': TypeInfo(TypeOf.Class, create:() => Foo()),
-    'List<Bar>': TypeInfo(TypeOf.Class, create:() => List<Bar>()),
+    'List<Bar>': TypeInfo(TypeOf.Class, create:() => <Bar>[]),
     'ThrowTypeResponse': TypeInfo(TypeOf.Class, create:() => ThrowTypeResponse()),
     'ThrowValidationResponse': TypeInfo(TypeOf.Class, create:() => ThrowValidationResponse()),
     'ThrowBusinessErrorResponse': TypeInfo(TypeOf.Class, create:() => ThrowBusinessErrorResponse()),
@@ -4853,7 +5632,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'CreateJwtResponse': TypeInfo(TypeOf.Class, create:() => CreateJwtResponse()),
     'CreateRefreshJwtResponse': TypeInfo(TypeOf.Class, create:() => CreateRefreshJwtResponse()),
     'MetadataTestResponse': TypeInfo(TypeOf.Class, create:() => MetadataTestResponse()),
-    'List<MetadataTestChild>': TypeInfo(TypeOf.Class, create:() => List<MetadataTestChild>()),
+    'List<MetadataTestChild>': TypeInfo(TypeOf.Class, create:() => <MetadataTestChild>[]),
     'GetExampleResponse': TypeInfo(TypeOf.Class, create:() => GetExampleResponse()),
     'GetRandomIdsResponse': TypeInfo(TypeOf.Class, create:() => GetRandomIdsResponse()),
     'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
@@ -4861,10 +5640,10 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'AllTypes': TypeInfo(TypeOf.Class, create:() => AllTypes()),
     'AllCollectionTypes': TypeInfo(TypeOf.Class, create:() => AllCollectionTypes()),
     'Uint8List': TypeInfo(TypeOf.Class, create:() => Uint8List(0)),
-    'List<Poco>': TypeInfo(TypeOf.Class, create:() => List<Poco>()),
+    'List<Poco>': TypeInfo(TypeOf.Class, create:() => <Poco>[]),
     'Map<String,List<Poco>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Poco>>()),
     'Map<String,List<Map<String,Poco>>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Map<String,Poco>>>()),
-    'List<Map<String,Poco>>': TypeInfo(TypeOf.Class, create:() => List<Map<String,Poco>>()),
+    'List<Map<String,Poco>>': TypeInfo(TypeOf.Class, create:() => <Map<String,Poco>>[]),
     'Map<String,Poco>': TypeInfo(TypeOf.Class, create:() => Map<String,Poco>()),
     'HelloAllTypesResponse': TypeInfo(TypeOf.Class, create:() => HelloAllTypesResponse()),
     'SubAllTypes': TypeInfo(TypeOf.Class, create:() => SubAllTypes()),
@@ -4887,7 +5666,7 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'GetSessionResponse': TypeInfo(TypeOf.Class, create:() => GetSessionResponse()),
     'GetStuffResponse': TypeInfo(TypeOf.Class, create:() => GetStuffResponse()),
     'StoreLogsResponse': TypeInfo(TypeOf.Class, create:() => StoreLogsResponse()),
-    'List<Logger>': TypeInfo(TypeOf.Class, create:() => List<Logger>()),
+    'List<Logger>': TypeInfo(TypeOf.Class, create:() => <Logger>[]),
     'TestAuthResponse': TypeInfo(TypeOf.Class, create:() => TestAuthResponse()),
     'RequiresAdmin': TypeInfo(TypeOf.Class, create:() => RequiresAdmin()),
     'CustomRoute': TypeInfo(TypeOf.Class, create:() => CustomRoute()),
@@ -4895,9 +5674,13 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'EchoTypes': TypeInfo(TypeOf.Class, create:() => EchoTypes()),
     'EchoCollections': TypeInfo(TypeOf.Class, create:() => EchoCollections()),
     'EchoComplexTypes': TypeInfo(TypeOf.Class, create:() => EchoComplexTypes()),
-    'List<SubType>': TypeInfo(TypeOf.Class, create:() => List<SubType>()),
+    'List<SubType>': TypeInfo(TypeOf.Class, create:() => <SubType>[]),
     'Map<String,SubType>': TypeInfo(TypeOf.Class, create:() => Map<String,SubType>()),
     'StoreRockstars': TypeInfo(TypeOf.Class, create:() => StoreRockstars()),
+    'RockstarWithIdResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdResponse()),
+    'RockstarWithIdAndResultResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdAndResultResponse()),
+    'RockstarWithIdAndCountResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdAndCountResponse()),
+    'RockstarWithIdAndRowVersionResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdAndRowVersionResponse()),
     'PostRawToChannel': TypeInfo(TypeOf.Class, create:() => PostRawToChannel()),
     'PostChatToChannel': TypeInfo(TypeOf.Class, create:() => PostChatToChannel()),
     'GetChatHistory': TypeInfo(TypeOf.Class, create:() => GetChatHistory()),
@@ -4907,12 +5690,11 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'GetUserDetails': TypeInfo(TypeOf.Class, create:() => GetUserDetails()),
     'CustomHttpError': TypeInfo(TypeOf.Class, create:() => CustomHttpError()),
     'FooRequest': TypeInfo(TypeOf.Class, create:() => FooRequest()),
-    'List<Baz>': TypeInfo(TypeOf.Class, create:() => List<Baz>()),
     'RawBazRequest': TypeInfo(TypeOf.Class, create:() => RawBazRequest()),
     'DummyTypes': TypeInfo(TypeOf.Class, create:() => DummyTypes()),
-    'List<HelloResponse>': TypeInfo(TypeOf.Class, create:() => List<HelloResponse>()),
-    'List<ListResult>': TypeInfo(TypeOf.Class, create:() => List<ListResult>()),
-    'List<ArrayResult>': TypeInfo(TypeOf.Class, create:() => List<ArrayResult>()),
+    'List<HelloResponse>': TypeInfo(TypeOf.Class, create:() => <HelloResponse>[]),
+    'List<ListResult>': TypeInfo(TypeOf.Class, create:() => <ListResult>[]),
+    'List<ArrayResult>': TypeInfo(TypeOf.Class, create:() => <ArrayResult>[]),
     'ThrowHttpError': TypeInfo(TypeOf.Class, create:() => ThrowHttpError()),
     'Throw404': TypeInfo(TypeOf.Class, create:() => Throw404()),
     'ThrowCustom400': TypeInfo(TypeOf.Class, create:() => ThrowCustom400()),
@@ -4947,6 +5729,16 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'HelloList': TypeInfo(TypeOf.Class, create:() => HelloList()),
     'HelloArray': TypeInfo(TypeOf.Class, create:() => HelloArray()),
     'HelloWithEnum': TypeInfo(TypeOf.Class, create:() => HelloWithEnum()),
+    'HelloWithEnumList': TypeInfo(TypeOf.Class, create:() => HelloWithEnumList()),
+    'List<EnumType>': TypeInfo(TypeOf.Class, create:() => <EnumType>[]),
+    'List<EnumWithValues>': TypeInfo(TypeOf.Class, create:() => <EnumWithValues>[]),
+    'List<EnumFlags>': TypeInfo(TypeOf.Class, create:() => <EnumFlags>[]),
+    'List<EnumStyle>': TypeInfo(TypeOf.Class, create:() => <EnumStyle>[]),
+    'HelloWithEnumMap': TypeInfo(TypeOf.Class, create:() => HelloWithEnumMap()),
+    'Map<EnumType,EnumType>': TypeInfo(TypeOf.Class, create:() => Map<EnumType,EnumType>()),
+    'Map<EnumWithValues,EnumWithValues>': TypeInfo(TypeOf.Class, create:() => Map<EnumWithValues,EnumWithValues>()),
+    'Map<EnumFlags,EnumFlags>': TypeInfo(TypeOf.Class, create:() => Map<EnumFlags,EnumFlags>()),
+    'Map<EnumStyle,EnumStyle>': TypeInfo(TypeOf.Class, create:() => Map<EnumStyle,EnumStyle>()),
     'RestrictedAttributes': TypeInfo(TypeOf.Class, create:() => RestrictedAttributes()),
     'AllowedAttributes': TypeInfo(TypeOf.Class, create:() => AllowedAttributes()),
     'HelloAllTypes': TypeInfo(TypeOf.Class, create:() => HelloAllTypes()),
@@ -4979,7 +5771,6 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'ReturnString': TypeInfo(TypeOf.Class, create:() => ReturnString()),
     'ReturnBytes': TypeInfo(TypeOf.Class, create:() => ReturnBytes()),
     'ReturnStream': TypeInfo(TypeOf.Class, create:() => ReturnStream()),
-    'List<ReturnedDto>': TypeInfo(TypeOf.Class, create:() => List<ReturnedDto>()),
     'GetRequest1': TypeInfo(TypeOf.Class, create:() => GetRequest1()),
     'GetRequest2': TypeInfo(TypeOf.Class, create:() => GetRequest2()),
     'SendJson': TypeInfo(TypeOf.Class, create:() => SendJson()),
@@ -5001,14 +5792,26 @@ TypeContext _ctx = new TypeContext(library: 'test.servicestack.net', types: <Str
     'TestDataAllCollectionTypes': TypeInfo(TypeOf.Class, create:() => TestDataAllCollectionTypes()),
     'TestVoidResponse': TypeInfo(TypeOf.Class, create:() => TestVoidResponse()),
     'TestNullResponse': TypeInfo(TypeOf.Class, create:() => TestNullResponse()),
+    'QueryResponse<RockstarAuto>': TypeInfo(TypeOf.Class, create:() => QueryResponse<RockstarAuto>()),
+    'QueryRockstarAudit': TypeInfo(TypeOf.Class, create:() => QueryRockstarAudit()),
+    'QueryRockstarAuditSubOr': TypeInfo(TypeOf.Class, create:() => QueryRockstarAuditSubOr()),
+    'List<RockstarAuto>': TypeInfo(TypeOf.Class, create:() => <RockstarAuto>[]),
     'QueryResponse<OnlyDefinedInGenericType>': TypeInfo(TypeOf.Class, create:() => QueryResponse<OnlyDefinedInGenericType>()),
     'QueryPocoBase': TypeInfo(TypeOf.Class, create:() => QueryPocoBase()),
-    'List<OnlyDefinedInGenericType>': TypeInfo(TypeOf.Class, create:() => List<OnlyDefinedInGenericType>()),
+    'List<OnlyDefinedInGenericType>': TypeInfo(TypeOf.Class, create:() => <OnlyDefinedInGenericType>[]),
     'QueryResponse<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => QueryResponse<OnlyDefinedInGenericTypeInto>()),
     'QueryPocoIntoBase': TypeInfo(TypeOf.Class, create:() => QueryPocoIntoBase()),
-    'List<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => List<OnlyDefinedInGenericTypeInto>()),
+    'List<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => <OnlyDefinedInGenericTypeInto>[]),
     'QueryResponse<Rockstar>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Rockstar>()),
     'QueryRockstars': TypeInfo(TypeOf.Class, create:() => QueryRockstars()),
-    'List<Rockstar>': TypeInfo(TypeOf.Class, create:() => List<Rockstar>()),
+    'List<Rockstar>': TypeInfo(TypeOf.Class, create:() => <Rockstar>[]),
+    'CreateRockstarAudit': TypeInfo(TypeOf.Class, create:() => CreateRockstarAudit()),
+    'CreateRockstarAuditTenant': TypeInfo(TypeOf.Class, create:() => CreateRockstarAuditTenant()),
+    'UpdateRockstarAuditTenant': TypeInfo(TypeOf.Class, create:() => UpdateRockstarAuditTenant()),
+    'PatchRockstarAuditTenant': TypeInfo(TypeOf.Class, create:() => PatchRockstarAuditTenant()),
+    'SoftDeleteAuditTenant': TypeInfo(TypeOf.Class, create:() => SoftDeleteAuditTenant()),
+    'CreateRockstarAuditMqToken': TypeInfo(TypeOf.Class, create:() => CreateRockstarAuditMqToken()),
+    'RealDeleteAuditTenant': TypeInfo(TypeOf.Class, create:() => RealDeleteAuditTenant()),
+    'CreateRockstarVersion': TypeInfo(TypeOf.Class, create:() => CreateRockstarVersion()),
 });
 
