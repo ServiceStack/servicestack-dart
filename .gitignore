@@ -1,6 +1,7 @@
 # Custom
 *.log
 .gistrun/
+sync.cmd
 
 # See https://www.dartlang.org/guides/libraries/private-files
 
