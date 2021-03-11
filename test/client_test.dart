@@ -303,23 +303,34 @@ void main() {
 
   test('Can deserialize nested list', () async {
     var client = createTestClient();
-    var response = await client.get(FooRequest());
-    expect(response.bars.length, equals(2));
+    var response = await client.get(GetItems());
+    expect(response.results.length, equals(2));
 
-    expect(response.runtimeType.toString(), equals(FooRequest().getResponseTypeName()));
-    expect(response.bars.first.runtimeType.toString(), equals("Bar"));
-    var allNames = response.bars.map((x) => x.name);
+    expect(response.runtimeType.toString(), equals(GetItems().getResponseTypeName()));
+    expect(response.results.first.runtimeType.toString(), equals("Item"));
+    var allNames = response.results.map((x) => x.name);
     expect(allNames, equals(["bar item 1", "bar item 2"]));
   });
 
   test('Can deserialize naked list', () async {
     var client = createTestClient();
-    var response = await client.get(RawBazRequest());
+    var response = await client.get(GetNakedItems());
     expect(response.length, equals(2));
 
-    expect(response.runtimeType.toString(), equals(RawBazRequest().getResponseTypeName()));
-    expect(response.first.runtimeType.toString(), equals("Baz"));
+    expect(response.runtimeType.toString(), equals(GetNakedItems().getResponseTypeName()));
+    expect(response.first.runtimeType.toString(), equals("Item"));
     var allNames = response.map((x) => x.name);
+    expect(allNames, equals(["item 1", "item 2"]));
+  });
+
+  test('Can deserialize custom generic response type', () async {
+    var client = createTestClient();
+    var response = await client.get(AltQueryItems());
+    expect(response.results.length, equals(2));
+
+    expect(response.runtimeType.toString(), equals(AltQueryItems().getResponseTypeName()));
+    expect(response.results.first.runtimeType.toString(), equals("Item"));
+    var allNames = response.results.map((x) => x.name);
     expect(allNames, equals(["item 1", "item 2"]));
   });
 

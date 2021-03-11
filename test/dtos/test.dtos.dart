@@ -1,5 +1,5 @@
 /* Options:
-Date: 2021-03-10 10:31:57
+Date: 2021-03-11 04:26:35
 Version: 5.105
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://test.servicestack.net
@@ -64,13 +64,13 @@ class SetterType implements IConvertible
     TypeContext context = _ctx;
 }
 
-class Bar implements IConvertible
+class Item implements IConvertible
 {
     String name;
     String description;
 
-    Bar({this.name,this.description});
-    Bar.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    Item({this.name,this.description});
+    Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         name = json['name'];
@@ -83,30 +83,7 @@ class Bar implements IConvertible
         'description': description
     };
 
-    getTypeName() => "Bar";
-    TypeContext context = _ctx;
-}
-
-class Baz implements IConvertible
-{
-    String name;
-    String description;
-
-    Baz({this.name,this.description});
-    Baz.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        description = json['description'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name': name,
-        'description': description
-    };
-
-    getTypeName() => "Baz";
+    getTypeName() => "Item";
     TypeContext context = _ctx;
 }
 
@@ -870,27 +847,7 @@ abstract class HelloBase1<T>
         'counts': JsonConverters.toJson(counts,'List<int>',context)
     };
 
-    getTypeName() => "HelloBase1<T>";
-    TypeContext context = _ctx;
-}
-
-class Item implements IConvertible
-{
-    String value;
-
-    Item({this.value});
-    Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        value = json['value'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'value': value
-    };
-
-    getTypeName() => "Item";
+    getTypeName() => "HelloBase<$T>";
     TypeContext context = _ctx;
 }
 
@@ -1198,7 +1155,7 @@ abstract class QueryDbTenant<From,Into> extends QueryDb2<From,Into>
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    getTypeName() => "QueryDbTenant<From,Into>";
+    getTypeName() => "QueryDbTenant<$From,$Into>";
     TypeContext context = _ctx;
 }
 
@@ -1423,7 +1380,7 @@ abstract class CreateAuditBase<Table,TResponse> implements ICreateDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
-    getTypeName() => "CreateAuditBase<Table,TResponse>";
+    getTypeName() => "CreateAuditBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1437,7 +1394,7 @@ abstract class CreateAuditTenantBase<Table,TResponse> extends CreateAuditBase<Ta
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    getTypeName() => "CreateAuditTenantBase<Table,TResponse>";
+    getTypeName() => "CreateAuditTenantBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1450,7 +1407,7 @@ abstract class UpdateAuditBase<Table,TResponse> implements IUpdateDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
-    getTypeName() => "UpdateAuditBase<Table,TResponse>";
+    getTypeName() => "UpdateAuditBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1464,7 +1421,7 @@ abstract class UpdateAuditTenantBase<Table,TResponse> extends UpdateAuditBase<Ta
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    getTypeName() => "UpdateAuditTenantBase<Table,TResponse>";
+    getTypeName() => "UpdateAuditTenantBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1477,7 +1434,7 @@ abstract class PatchAuditBase<Table,TResponse> implements IPatchDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
-    getTypeName() => "PatchAuditBase<Table,TResponse>";
+    getTypeName() => "PatchAuditBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1491,7 +1448,7 @@ abstract class PatchAuditTenantBase<Table,TResponse> extends PatchAuditBase<Tabl
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    getTypeName() => "PatchAuditTenantBase<Table,TResponse>";
+    getTypeName() => "PatchAuditTenantBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1504,7 +1461,7 @@ abstract class SoftDeleteAuditBase<Table,TResponse> implements IUpdateDb<Table>
     }
 
     Map<String, dynamic> toJson() => {};
-    getTypeName() => "SoftDeleteAuditBase<Table,TResponse>";
+    getTypeName() => "SoftDeleteAuditBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1518,7 +1475,7 @@ abstract class SoftDeleteAuditTenantBase<Table,TResponse> extends SoftDeleteAudi
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    getTypeName() => "SoftDeleteAuditTenantBase<Table,TResponse>";
+    getTypeName() => "SoftDeleteAuditTenantBase<$Table,$TResponse>";
     TypeContext context = _ctx;
 }
 
@@ -1735,23 +1692,55 @@ class CustomHttpErrorResponse implements IConvertible
     TypeContext context = _ctx;
 }
 
-class Foo implements IConvertible
+class QueryResponseAlt<T> implements IConvertible
 {
-    List<Bar> bars;
+    int offset;
+    int total;
+    List<T> results;
+    Map<String,String> meta;
+    ResponseStatus responseStatus;
 
-    Foo({this.bars});
-    Foo.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    QueryResponseAlt({this.offset,this.total,this.results,this.meta,this.responseStatus});
+    QueryResponseAlt.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        bars = JsonConverters.fromJson(json['bars'],'List<Bar>',context);
+        offset = json['offset'];
+        total = json['total'];
+        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context);
+        meta = JsonConverters.toStringMap(json['meta']);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'bars': JsonConverters.toJson(bars,'List<Bar>',context)
+        'offset': offset,
+        'total': total,
+        'results': JsonConverters.toJson(results,'List<T>',context),
+        'meta': meta,
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
     };
 
-    getTypeName() => "Foo";
+    getTypeName() => "QueryResponseAlt<$T>";
+    TypeContext context = _ctx;
+}
+
+class Items implements IConvertible
+{
+    List<Item> results;
+
+    Items({this.results});
+    Items.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        results = JsonConverters.fromJson(json['results'],'List<Item>',context);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'results': JsonConverters.toJson(results,'List<Item>',context)
+    };
+
+    getTypeName() => "Items";
     TypeContext context = _ctx;
 }
 
@@ -3241,33 +3230,55 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
     TypeContext context = _ctx;
 }
 
-class FooRequest implements IReturn<Foo>, IConvertible
+class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible
 {
-    FooRequest();
-    FooRequest.fromJson(Map<String, dynamic> json) : super();
+    String name;
+
+    AltQueryItems({this.name});
+    AltQueryItems.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
     fromMap(Map<String, dynamic> json) {
+        name = json['name'];
         return this;
     }
 
-    Map<String, dynamic> toJson() => {};
-    createResponse() => Foo();
-    getResponseTypeName() => "Foo";
-    getTypeName() => "FooRequest";
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    createResponse() => QueryResponseAlt<Item>();
+    getResponseTypeName() => "QueryResponseAlt<Item>";
+    getTypeName() => "AltQueryItems";
     TypeContext context = _ctx;
 }
 
-class RawBazRequest implements IReturn<List<Baz>>, IConvertible
+class GetItems implements IReturn<Items>, IConvertible
 {
-    RawBazRequest();
-    RawBazRequest.fromJson(Map<String, dynamic> json) : super();
+    GetItems();
+    GetItems.fromJson(Map<String, dynamic> json) : super();
     fromMap(Map<String, dynamic> json) {
         return this;
     }
 
     Map<String, dynamic> toJson() => {};
-    createResponse() => <Baz>[];
-    getResponseTypeName() => "List<Baz>";
-    getTypeName() => "RawBazRequest";
+    createResponse() => Items();
+    getResponseTypeName() => "Items";
+    getTypeName() => "GetItems";
+    TypeContext context = _ctx;
+}
+
+class GetNakedItems implements IReturn<List<Item>>, IConvertible
+{
+    GetNakedItems();
+    GetNakedItems.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    createResponse() => <Item>[];
+    getResponseTypeName() => "List<Item>";
+    getTypeName() => "GetNakedItems";
     TypeContext context = _ctx;
 }
 
@@ -5663,8 +5674,7 @@ class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWith
 TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
     'CustomType': TypeInfo(TypeOf.Class, create:() => CustomType()),
     'SetterType': TypeInfo(TypeOf.Class, create:() => SetterType()),
-    'Bar': TypeInfo(TypeOf.Class, create:() => Bar()),
-    'Baz': TypeInfo(TypeOf.Class, create:() => Baz()),
+    'Item': TypeInfo(TypeOf.Class, create:() => Item()),
     'IAuthTokens': TypeInfo(TypeOf.Interface),
     'AuthUserSession': TypeInfo(TypeOf.Class, create:() => AuthUserSession()),
     'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => <IAuthTokens>[]),
@@ -5691,7 +5701,6 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'HelloBase': TypeInfo(TypeOf.AbstractClass),
     'HelloResponseBase': TypeInfo(TypeOf.AbstractClass),
     'HelloBase1<T>': TypeInfo(TypeOf.AbstractClass),
-    'Item': TypeInfo(TypeOf.Class, create:() => Item()),
     'HelloWithReturnResponse': TypeInfo(TypeOf.AbstractClass),
     'HelloType': TypeInfo(TypeOf.Class, create:() => HelloType()),
     'IPoco': TypeInfo(TypeOf.Interface),
@@ -5735,8 +5744,9 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'List<ChatMessage>': TypeInfo(TypeOf.Class, create:() => <ChatMessage>[]),
     'GetUserDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetUserDetailsResponse()),
     'CustomHttpErrorResponse': TypeInfo(TypeOf.Class, create:() => CustomHttpErrorResponse()),
-    'Foo': TypeInfo(TypeOf.Class, create:() => Foo()),
-    'List<Bar>': TypeInfo(TypeOf.Class, create:() => <Bar>[]),
+    'QueryResponseAlt<T>': TypeInfo(TypeOf.GenericDef,create:() => QueryResponseAlt()),
+    'Items': TypeInfo(TypeOf.Class, create:() => Items()),
+    'List<Item>': TypeInfo(TypeOf.Class, create:() => <Item>[]),
     'ThrowTypeResponse': TypeInfo(TypeOf.Class, create:() => ThrowTypeResponse()),
     'ThrowValidationResponse': TypeInfo(TypeOf.Class, create:() => ThrowValidationResponse()),
     'ThrowBusinessErrorResponse': TypeInfo(TypeOf.Class, create:() => ThrowBusinessErrorResponse()),
@@ -5803,8 +5813,9 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'PostObjectToChannel': TypeInfo(TypeOf.Class, create:() => PostObjectToChannel()),
     'GetUserDetails': TypeInfo(TypeOf.Class, create:() => GetUserDetails()),
     'CustomHttpError': TypeInfo(TypeOf.Class, create:() => CustomHttpError()),
-    'FooRequest': TypeInfo(TypeOf.Class, create:() => FooRequest()),
-    'RawBazRequest': TypeInfo(TypeOf.Class, create:() => RawBazRequest()),
+    'AltQueryItems': TypeInfo(TypeOf.Class, create:() => AltQueryItems()),
+    'GetItems': TypeInfo(TypeOf.Class, create:() => GetItems()),
+    'GetNakedItems': TypeInfo(TypeOf.Class, create:() => GetNakedItems()),
     'DummyTypes': TypeInfo(TypeOf.Class, create:() => DummyTypes()),
     'List<HelloResponse>': TypeInfo(TypeOf.Class, create:() => <HelloResponse>[]),
     'List<ListResult>': TypeInfo(TypeOf.Class, create:() => <ListResult>[]),
