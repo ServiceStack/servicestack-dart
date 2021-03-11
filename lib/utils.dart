@@ -358,5 +358,8 @@ Map<String,int> toHostsMap(List<String> urls) {
   return to;
 }
 
+// From .NET Guid to Guid string
 String fromGuid(String guid) => guid;
+
+// From Guid string to .NET Guid
 String toGuid(String guid) => guid;

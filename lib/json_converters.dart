@@ -298,7 +298,10 @@ class ByteArrayConverter implements IConverter {
   }
 }
 
+// From .NET byte[] (Base64 String) to Dart Uint8List
 Uint8List fromByteArray(String base64String)  => base64.decode(base64String);
+
+// From Dart Uint8List to .NET byte[] (Base64 String)
 String toByteArray(Uint8List bytes) => base64.encode(bytes);
 
 class DateTimeConverter implements IConverter {
@@ -321,22 +324,19 @@ class DateTimeConverter implements IConverter {
   }
 }
 
-String toDateTime(DateTime dateTime) {
-  return "\/Date(${dateTime.millisecondsSinceEpoch})\/";
-}
-
-DateTime fromDateTime(String strDate) {
-  if (strDate.startsWith("\/Date(")) {
-    var epochAndZone = leftPart(rightPart(strDate, "("), ")");
+// From .NET DateTime (WCF JSON or ISO Date) to Dart DateTime
+DateTime fromDateTime(String jsonDate) {
+  if (jsonDate.startsWith("\/Date(")) {
+    var epochAndZone = leftPart(rightPart(jsonDate, "("), ")");
     var epochStr = epochAndZone.indexOf('-', 1) >= 0
         ? lastLeftPart(epochAndZone, "-")
         : epochAndZone;
     var epoch = int.parse(epochStr);
     return DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
   }
-  var hasSecFraction = strDate.indexOf(".") >= 0;
+  var hasSecFraction = jsonDate.indexOf(".") >= 0;
   if (hasSecFraction) {
-    var secFraction = lastRightPart(strDate, ".");
+    var secFraction = lastRightPart(jsonDate, ".");
     bool isUtc = secFraction.endsWith('Z');
     if (isUtc) {
       secFraction = secFraction.substring(0, secFraction.length-1);
@@ -350,10 +350,15 @@ DateTime fromDateTime(String strDate) {
       secFraction = leftPart(secFraction, '-');
     }
     if (secFraction.length > 6) {
-      strDate = lastLeftPart(strDate, '.') + '.' + secFraction.substring(0,6) + tz + (isUtc ? 'Z' : '');
+      jsonDate = lastLeftPart(jsonDate, '.') + '.' + secFraction.substring(0,6) + tz + (isUtc ? 'Z' : '');
     }
   }
-  return DateTime.parse(strDate);
+  return DateTime.parse(jsonDate);
+}
+
+// From Dart DateTime to .NET DateTime (WCF JSON Date)
+String toDateTime(DateTime dateTime) {
+  return "\/Date(${dateTime.millisecondsSinceEpoch})\/";
 }
 
 class MapConverter implements IConverter {

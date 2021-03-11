@@ -14,6 +14,7 @@ class DurationConverter implements IConverter {
   }
 }
 
+// From .NET TimeSpan (XSD Duration) to Dart Duration
 Duration fromTimeSpan(String str) {
   if (str == null)
     return null;
@@ -71,6 +72,7 @@ Duration fromTimeSpan(String str) {
       milliseconds: (ms * 1000).toInt());
 }
 
+// From Dart Duration to .NET TimeSpan (XSD Duration)
 String toTimeSpan(Duration duration) {
   StringBuffer sb = StringBuffer("P");
 
