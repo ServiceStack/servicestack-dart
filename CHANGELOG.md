@@ -1,3 +1,7 @@
+## 1.0.30
+
+* Remove null values from Inspect.dump() output
+
 ## 1.0.29
 
 * Improve support for handling minified types in release builds
