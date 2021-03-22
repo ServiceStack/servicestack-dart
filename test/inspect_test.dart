@@ -3,6 +3,8 @@ import 'package:test/test.dart';
 import '../lib/inspect.dart';
 import 'dart:convert';
 import 'dart:io';
+import '../lib/client.dart';
+import 'dtos/techstacks.dtos.dart';
 
 class GithubRepo {
   final String name;
@@ -55,6 +57,30 @@ void main() {
 
       Inspect.vars({'orgRepos': orgRepos});
     });
+
+
+    test('Does not emit nulls on Typed DTOs', () async {
+      var client = JsonServiceClient("https://techstacks.io");
+      var response = await client.get((FindTechnologies()
+        ..vendorName = "Google"
+        ..take = 3
+        ..orderByDesc = "ViewCount"
+        ..fields = "Id,Name,ProductUrl,Tier,VendorName"));
+
+      var dump = Inspect.dump(response);
+      expect(dump, isNot(contains("null")));
+      print(dump);
+
+      expect(response.total, equals(15));
+      expect(response.results.length, equals(3));
+      var names = response.results.map((x) => x.name).join(",");
+      expect(names, equals("AngularJS,Go,Protocol Buffers"));
+      var ids = response.results.map((x) => x.id.toString()).join(",");
+      expect(ids, equals("7,18,77"));
+      var tiers = response.results.map((x) => rightPart(x.tier.toString(), ".")).join(",");
+      expect(tiers, equals("Client,ProgrammingLanguage,Server"));
+    });
+
   });
 
 }

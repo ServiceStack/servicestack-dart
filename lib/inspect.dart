@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:servicestack/client.dart';
+
 import './host.dart';
 
 class Inspect {
@@ -12,9 +14,36 @@ class Inspect {
     if (cast<Iterable>(obj) != null) {
       obj = _asList(obj);
     }
-    var encoder = JsonEncoder.withIndent('    ');
+    var encoder = JsonEncoder.withIndent('    ', (o) => _toEncodable(o));
     var json = encoder.convert(obj);
     return json.replaceAll('"', '');
+  }
+
+  static dynamic _toEncodable(o) {
+    if (o == null || o is num || identical(o, true) || identical(o, false) || o is String) {
+      return o;
+    } else if (o is List) {
+      var list = o;
+      for (var i=0; i<list.length; i++) {
+        list[i] = _toEncodable(list[i]);
+      }
+      return list;
+    } else if (o is Map) {
+      var keys = o.keys.toList(growable:false);
+      var keysToRemove = [];
+      keys.forEach((k) {
+        var value = _toEncodable(o[k]);
+        if (value != null) {
+          o[k] = value;
+        } else {
+          keysToRemove.add(k);
+        }
+      });
+      if (keysToRemove.length > 0)
+        o.removeWhere((key, value) => keysToRemove.contains(key));
+      return o;
+    }
+    return _toEncodable(o.toJson());
   }
 
   static void printDump(dynamic obj) => print(dump(obj));
@@ -131,4 +160,5 @@ class Inspect {
     }
     return str;
   }
+
 }
