@@ -8,7 +8,7 @@ class Inspect {
     Host.instance.vars(obj);
   }
 
-  static T cast<T>(x) => x is T ? x : null;
+  static T? cast<T>(x) => x is T ? x : null;
 
   static String dump(dynamic obj) {
     if (cast<Iterable>(obj) != null) {
@@ -50,14 +50,14 @@ class Inspect {
 
   static String dumpTable(Iterable rows) {
     rows = _asList(rows);
-    var mapRows = _asListMap(rows);
+    var mapRows = _asListMap(rows as List<dynamic>);
     var keys = _allKeys(mapRows);
     var colSizes = Map<String, int>();
 
     keys.forEach((k) {
       var max = k.length;
       mapRows.forEach((row) {
-        var col = row[k];
+        var col = row![k];
         if (col != null) {
           var valSize = "${col}".length;
           if (valSize > max) {
@@ -69,14 +69,14 @@ class Inspect {
     });
 
     // sum + ' padding ' + |
-    int rowWidth = colSizes.values.fold(0, (p, c) => p + c) +
+    int rowWidth = colSizes.values.fold(0, (dynamic p, c) => p + c) +
         (colSizes.length * 2) +
         (colSizes.length + 1);
     var sb = <String>[];
     sb.add("+${'-' * (rowWidth - 2)}+");
     var head = '|';
     keys.forEach((k) {
-      head += _alignCenter(k, colSizes[k]) + '|';
+      head += _alignCenter(k, colSizes[k]!) + '|';
     });
     sb.add(head);
     sb.add("|${'-' * (rowWidth - 2)}|");
@@ -84,7 +84,7 @@ class Inspect {
     mapRows.forEach((row) {
       var to = '|';
       keys.forEach((k) {
-        to += '' + _alignAuto(row[k], colSizes[k]) + '|';
+        to += '' + _alignAuto(row![k], colSizes[k]!) + '|';
       });
       sb.add(to);
     });
@@ -103,20 +103,20 @@ class Inspect {
     return obj;
   }
 
-  static List<Map<String, dynamic>> _asListMap(List rows) {
+  static List<Map<String, dynamic>?> _asListMap(List rows) {
     return rows.map((e) => _asMap(e)).toList();
   }
 
-  static Map<String, dynamic> _asMap(dynamic obj) {
+  static Map<String, dynamic>? _asMap(dynamic obj) {
     if (obj is Map<String, dynamic>) {
       return obj;
     }
     return obj.toJson();
   }
 
-  static List<String> _allKeys(List<Map<String, dynamic>> rows) {
+  static List<String> _allKeys(List<Map<String, dynamic>?> rows) {
     var to = <String>[];
-    rows.forEach((o) => o.keys.forEach((k) {
+    rows.forEach((o) => o!.keys.forEach((k) {
       if (!to.contains(k)) {
         to.add(k);
       }

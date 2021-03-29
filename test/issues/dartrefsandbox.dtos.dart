@@ -18,7 +18,7 @@ import '../../lib/servicestack.dart';
 
 class FooListDto implements IConvertible
 {
-    String id;
+    String? id;
 
     FooListDto({this.id});
     FooListDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -37,8 +37,8 @@ class FooListDto implements IConvertible
 
 abstract class PagedRequest
 {
-    int page;
-    int pageSize;
+    int? page;
+    int? pageSize;
 
     PagedRequest({this.page,this.pageSize});
     PagedRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -59,7 +59,7 @@ abstract class PagedRequest
 
 abstract class PagedAndOrderedRequest extends PagedRequest
 {
-    String orderBy;
+    String? orderBy;
 
     PagedAndOrderedRequest({this.orderBy});
     PagedAndOrderedRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -79,10 +79,10 @@ abstract class PagedAndOrderedRequest extends PagedRequest
 
 class PagedResult<T> implements IConvertible
 {
-    int page;
-    int pageSize;
-    int totalResults;
-    List<T> results;
+    int? page;
+    int? pageSize;
+    int? totalResults;
+    List<T>? results;
 
     PagedResult({this.page,this.pageSize,this.totalResults,this.results});
     PagedResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -107,7 +107,7 @@ class PagedResult<T> implements IConvertible
 
 class UnknownTypes implements IConvertible
 {
-    List<FooListDto> fooListDtos;
+    List<FooListDto>? fooListDtos;
 
     UnknownTypes({this.fooListDtos});
     UnknownTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -142,7 +142,7 @@ class GetFoos extends PagedAndOrderedRequest implements IReturn<PagedResult<FooL
 
 class Item implements IConvertible
 {
-    String id;
+    String? id;
 
     Item({this.id});
     Item.fromJson(Map<String, dynamic> json) { fromMap(json); }

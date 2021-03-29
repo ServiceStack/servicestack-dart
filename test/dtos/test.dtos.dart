@@ -20,8 +20,8 @@ import 'dart:typed_data';
 
 class CustomType implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     CustomType({this.id,this.name});
     CustomType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -43,8 +43,8 @@ class CustomType implements IConvertible
 
 class SetterType implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     SetterType({this.id,this.name});
     SetterType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -66,8 +66,8 @@ class SetterType implements IConvertible
 
 class Item implements IConvertible
 {
-    String name;
-    String description;
+    String? name;
+    String? description;
 
     Item({this.name,this.description});
     Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -89,193 +89,193 @@ class Item implements IConvertible
 
 abstract class IAuthTokens
 {
-    String provider;
-    String userId;
-    String accessToken;
-    String accessTokenSecret;
-    String refreshToken;
-    DateTime refreshTokenExpiry;
-    String requestToken;
-    String requestTokenSecret;
-    Map<String,String> items;
+    String? provider;
+    String? userId;
+    String? accessToken;
+    String? accessTokenSecret;
+    String? refreshToken;
+    DateTime? refreshTokenExpiry;
+    String? requestToken;
+    String? requestTokenSecret;
+    Map<String,String>? items;
 }
 
 // @DataContract
 class AuthUserSession implements IConvertible
 {
     // @DataMember(Order=1)
-    String referrerUrl;
+    String? referrerUrl;
 
     // @DataMember(Order=2)
-    String id;
+    String? id;
 
     // @DataMember(Order=3)
-    String userAuthId;
+    String? userAuthId;
 
     // @DataMember(Order=4)
-    String userAuthName;
+    String? userAuthName;
 
     // @DataMember(Order=5)
-    String userName;
+    String? userName;
 
     // @DataMember(Order=6)
-    String twitterUserId;
+    String? twitterUserId;
 
     // @DataMember(Order=7)
-    String twitterScreenName;
+    String? twitterScreenName;
 
     // @DataMember(Order=8)
-    String facebookUserId;
+    String? facebookUserId;
 
     // @DataMember(Order=9)
-    String facebookUserName;
+    String? facebookUserName;
 
     // @DataMember(Order=10)
-    String firstName;
+    String? firstName;
 
     // @DataMember(Order=11)
-    String lastName;
+    String? lastName;
 
     // @DataMember(Order=12)
-    String displayName;
+    String? displayName;
 
     // @DataMember(Order=13)
-    String company;
+    String? company;
 
     // @DataMember(Order=14)
-    String email;
+    String? email;
 
     // @DataMember(Order=15)
-    String primaryEmail;
+    String? primaryEmail;
 
     // @DataMember(Order=16)
-    String phoneNumber;
+    String? phoneNumber;
 
     // @DataMember(Order=17)
-    DateTime birthDate;
+    DateTime? birthDate;
 
     // @DataMember(Order=18)
-    String birthDateRaw;
+    String? birthDateRaw;
 
     // @DataMember(Order=19)
-    String address;
+    String? address;
 
     // @DataMember(Order=20)
-    String address2;
+    String? address2;
 
     // @DataMember(Order=21)
-    String city;
+    String? city;
 
     // @DataMember(Order=22)
-    String state;
+    String? state;
 
     // @DataMember(Order=23)
-    String country;
+    String? country;
 
     // @DataMember(Order=24)
-    String culture;
+    String? culture;
 
     // @DataMember(Order=25)
-    String fullName;
+    String? fullName;
 
     // @DataMember(Order=26)
-    String gender;
+    String? gender;
 
     // @DataMember(Order=27)
-    String language;
+    String? language;
 
     // @DataMember(Order=28)
-    String mailAddress;
+    String? mailAddress;
 
     // @DataMember(Order=29)
-    String nickname;
+    String? nickname;
 
     // @DataMember(Order=30)
-    String postalCode;
+    String? postalCode;
 
     // @DataMember(Order=31)
-    String timeZone;
+    String? timeZone;
 
     // @DataMember(Order=32)
-    String requestTokenSecret;
+    String? requestTokenSecret;
 
     // @DataMember(Order=33)
-    DateTime createdAt;
+    DateTime? createdAt;
 
     // @DataMember(Order=34)
-    DateTime lastModified;
+    DateTime? lastModified;
 
     // @DataMember(Order=35)
-    List<String> roles;
+    List<String>? roles;
 
     // @DataMember(Order=36)
-    List<String> permissions;
+    List<String>? permissions;
 
     // @DataMember(Order=37)
-    bool isAuthenticated;
+    bool? isAuthenticated;
 
     // @DataMember(Order=38)
-    bool fromToken;
+    bool? fromToken;
 
     // @DataMember(Order=39)
-    String profileUrl;
+    String? profileUrl;
 
     // @DataMember(Order=40)
-    String sequence;
+    String? sequence;
 
     // @DataMember(Order=41)
-    int tag;
+    int? tag;
 
     // @DataMember(Order=42)
-    String authProvider;
+    String? authProvider;
 
     // @DataMember(Order=43)
-    List<IAuthTokens> providerOAuthAccess;
+    List<IAuthTokens>? providerOAuthAccess;
 
     // @DataMember(Order=44)
-    Map<String,String> meta;
+    Map<String,String>? meta;
 
     // @DataMember(Order=45)
-    List<String> audiences;
+    List<String>? audiences;
 
     // @DataMember(Order=46)
-    List<String> scopes;
+    List<String>? scopes;
 
     // @DataMember(Order=47)
-    String dns;
+    String? dns;
 
     // @DataMember(Order=48)
-    String rsa;
+    String? rsa;
 
     // @DataMember(Order=49)
-    String sid;
+    String? sid;
 
     // @DataMember(Order=50)
-    String hash;
+    String? hash;
 
     // @DataMember(Order=51)
-    String homePhone;
+    String? homePhone;
 
     // @DataMember(Order=52)
-    String mobilePhone;
+    String? mobilePhone;
 
     // @DataMember(Order=53)
-    String webpage;
+    String? webpage;
 
     // @DataMember(Order=54)
-    bool emailConfirmed;
+    bool? emailConfirmed;
 
     // @DataMember(Order=55)
-    bool phoneNumberConfirmed;
+    bool? phoneNumberConfirmed;
 
     // @DataMember(Order=56)
-    bool twoFactorEnabled;
+    bool? twoFactorEnabled;
 
     // @DataMember(Order=57)
-    String securityStamp;
+    String? securityStamp;
 
     // @DataMember(Order=58)
-    String type;
+    String? type;
 
     AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta,this.audiences,this.scopes,this.dns,this.rsa,this.sid,this.hash,this.homePhone,this.mobilePhone,this.webpage,this.emailConfirmed,this.phoneNumberConfirmed,this.twoFactorEnabled,this.securityStamp,this.type});
     AuthUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -409,7 +409,7 @@ class AuthUserSession implements IConvertible
 
 class MetadataTestNestedChild implements IConvertible
 {
-    String name;
+    String? name;
 
     MetadataTestNestedChild({this.name});
     MetadataTestNestedChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -429,8 +429,8 @@ class MetadataTestNestedChild implements IConvertible
 
 class MetadataTestChild implements IConvertible
 {
-    String name;
-    List<MetadataTestNestedChild> results;
+    String? name;
+    List<MetadataTestNestedChild>? results;
 
     MetadataTestChild({this.name,this.results});
     MetadataTestChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -454,7 +454,7 @@ class MenuItemExampleItem implements IConvertible
 {
     // @DataMember(Order=1)
     // @apiMember()
-    String name1;
+    String? name1;
 
     MenuItemExampleItem({this.name1});
     MenuItemExampleItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -476,9 +476,9 @@ class MenuItemExample implements IConvertible
 {
     // @DataMember(Order=1)
     // @apiMember()
-    String name1;
+    String? name1;
 
-    MenuItemExampleItem menuItemExampleItem;
+    MenuItemExampleItem? menuItemExampleItem;
 
     MenuItemExample({this.name1,this.menuItemExampleItem});
     MenuItemExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -503,7 +503,7 @@ class MenuExample implements IConvertible
 {
     // @DataMember(Order=1)
     // @apiMember()
-    MenuItemExample menuItemExample1;
+    MenuItemExample? menuItemExample1;
 
     MenuExample({this.menuItemExample1});
     MenuExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -523,7 +523,7 @@ class MenuExample implements IConvertible
 
 class NestedClass implements IConvertible
 {
-    String value;
+    String? value;
 
     NestedClass({this.value});
     NestedClass.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -543,7 +543,7 @@ class NestedClass implements IConvertible
 
 class ListResult implements IConvertible
 {
-    String result;
+    String? result;
 
     ListResult({this.result});
     ListResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -563,7 +563,7 @@ class ListResult implements IConvertible
 
 class ArrayResult implements IConvertible
 {
-    String result;
+    String? result;
 
     ArrayResult({this.result});
     ArrayResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -652,8 +652,8 @@ enum EnumStyleMembers
 
 class SubType implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     SubType({this.id,this.name});
     SubType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -675,32 +675,32 @@ class SubType implements IConvertible
 
 abstract class AllTypesBase
 {
-    int id;
-    int nullableId;
-    int byte;
-    int short;
-    int Int;
-    int long;
-    int uShort;
-    int uInt;
-    int uLong;
-    double float;
-    double Double;
-    double decimal;
-    String string;
-    DateTime dateTime;
-    Duration timeSpan;
-    DateTime dateTimeOffset;
-    String guid;
-    String char;
-    KeyValuePair<String,String> keyValuePair;
-    DateTime nullableDateTime;
-    Duration nullableTimeSpan;
-    List<String> stringList;
-    List<String> stringArray;
-    Map<String,String> stringMap;
-    Map<int,String> intStringMap;
-    SubType subType;
+    int? id;
+    int? nullableId;
+    int? byte;
+    int? short;
+    int? Int;
+    int? long;
+    int? uShort;
+    int? uInt;
+    int? uLong;
+    double? float;
+    double? Double;
+    double? decimal;
+    String? string;
+    DateTime? dateTime;
+    Duration? timeSpan;
+    DateTime? dateTimeOffset;
+    String? guid;
+    String? char;
+    KeyValuePair<String,String>? keyValuePair;
+    DateTime? nullableDateTime;
+    Duration? nullableTimeSpan;
+    List<String>? stringList;
+    List<String>? stringArray;
+    Map<String,String>? stringMap;
+    Map<int,String>? intStringMap;
+    SubType? subType;
 
     AllTypesBase({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
     AllTypesBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -770,7 +770,7 @@ abstract class AllTypesBase
 
 class Poco implements IConvertible
 {
-    String name;
+    String? name;
 
     Poco({this.name});
     Poco.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -790,7 +790,7 @@ class Poco implements IConvertible
 
 abstract class HelloBase
 {
-    int id;
+    int? id;
 
     HelloBase({this.id});
     HelloBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -810,7 +810,7 @@ abstract class HelloBase
 
 abstract class HelloResponseBase
 {
-    int refId;
+    int? refId;
 
     HelloResponseBase({this.refId});
     HelloResponseBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -830,8 +830,8 @@ abstract class HelloResponseBase
 
 abstract class HelloBase1<T>
 {
-    List<T> items;
-    List<int> counts;
+    List<T>? items;
+    List<int>? counts;
 
     HelloBase1({this.items,this.counts});
     HelloBase1.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -853,7 +853,7 @@ abstract class HelloBase1<T>
 
 abstract class HelloWithReturnResponse
 {
-    String result;
+    String? result;
 
     HelloWithReturnResponse({this.result});
     HelloWithReturnResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -873,7 +873,7 @@ abstract class HelloWithReturnResponse
 
 class HelloType implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloType({this.result});
     HelloType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -893,7 +893,7 @@ class HelloType implements IConvertible
 
 abstract class IPoco
 {
-    String name;
+    String? name;
 }
 
 abstract class IEmptyInterface
@@ -915,8 +915,8 @@ class EmptyClass implements IConvertible
 
 class InnerType implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     InnerType({this.id,this.name});
     InnerType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -976,7 +976,7 @@ class PingService implements IConvertible
 
 class ReturnedDto implements IConvertible
 {
-    int id;
+    int? id;
 
     ReturnedDto({this.id});
     ReturnedDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -997,10 +997,10 @@ class ReturnedDto implements IConvertible
 class CustomUserSession extends AuthUserSession implements IConvertible
 {
     // @DataMember
-    String customName;
+    String? customName;
 
     // @DataMember
-    String customInfo;
+    String? customInfo;
 
     CustomUserSession({this.customName,this.customInfo});
     CustomUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1023,7 +1023,7 @@ class CustomUserSession extends AuthUserSession implements IConvertible
 
 class UnAuthInfo implements IConvertible
 {
-    String customInfo;
+    String? customInfo;
 
     UnAuthInfo({this.customInfo});
     UnAuthInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1043,8 +1043,8 @@ class UnAuthInfo implements IConvertible
 
 class Channel implements IConvertible
 {
-    String name;
-    String value;
+    String? name;
+    String? value;
 
     Channel({this.name,this.value});
     Channel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1066,10 +1066,10 @@ class Channel implements IConvertible
 
 class Device implements IConvertible
 {
-    int id;
-    String type;
-    int timeStamp;
-    List<Channel> channels;
+    int? id;
+    String? type;
+    int? timeStamp;
+    List<Channel>? channels;
 
     Device({this.id,this.type,this.timeStamp,this.channels});
     Device.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1095,8 +1095,8 @@ class Device implements IConvertible
 
 class Logger implements IConvertible
 {
-    int id;
-    List<Device> devices;
+    int? id;
+    List<Device>? devices;
 
     Logger({this.id,this.devices});
     Logger.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1118,10 +1118,10 @@ class Logger implements IConvertible
 
 class Rockstar implements IConvertible
 {
-    int id;
-    String firstName;
-    String lastName;
-    int age;
+    int? id;
+    String? firstName;
+    String? lastName;
+    int? age;
 
     Rockstar({this.id,this.firstName,this.lastName,this.age});
     Rockstar.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1167,14 +1167,14 @@ enum LivingStatus
 
 class RockstarAuditTenant extends AuditBase implements IConvertible
 {
-    int tenantId;
-    int id;
-    String firstName;
-    String lastName;
-    int age;
-    DateTime dateOfBirth;
-    DateTime dateDied;
-    LivingStatus livingStatus;
+    int? tenantId;
+    int? id;
+    String? firstName;
+    String? lastName;
+    int? age;
+    DateTime? dateOfBirth;
+    DateTime? dateDied;
+    LivingStatus? livingStatus;
 
     RockstarAuditTenant({this.tenantId,this.id,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
     RockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1209,12 +1209,12 @@ class RockstarAuditTenant extends AuditBase implements IConvertible
 
 abstract class RockstarBase
 {
-    String firstName;
-    String lastName;
-    int age;
-    DateTime dateOfBirth;
-    DateTime dateDied;
-    LivingStatus livingStatus;
+    String? firstName;
+    String? lastName;
+    int? age;
+    DateTime? dateOfBirth;
+    DateTime? dateDied;
+    LivingStatus? livingStatus;
 
     RockstarBase({this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
     RockstarBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1244,7 +1244,7 @@ abstract class RockstarBase
 
 class RockstarAuto extends RockstarBase implements IConvertible
 {
-    int id;
+    int? id;
 
     RockstarAuto({this.id});
     RockstarAuto.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1265,8 +1265,8 @@ class RockstarAuto extends RockstarBase implements IConvertible
 
 class OnlyDefinedInGenericType implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     OnlyDefinedInGenericType({this.id,this.name});
     OnlyDefinedInGenericType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1288,8 +1288,8 @@ class OnlyDefinedInGenericType implements IConvertible
 
 class OnlyDefinedInGenericTypeFrom implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     OnlyDefinedInGenericTypeFrom({this.id,this.name});
     OnlyDefinedInGenericTypeFrom.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1311,8 +1311,8 @@ class OnlyDefinedInGenericTypeFrom implements IConvertible
 
 class OnlyDefinedInGenericTypeInto implements IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     OnlyDefinedInGenericTypeInto({this.id,this.name});
     OnlyDefinedInGenericTypeInto.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1334,13 +1334,13 @@ class OnlyDefinedInGenericTypeInto implements IConvertible
 
 class RockstarAudit extends RockstarBase implements IConvertible
 {
-    int id;
-    DateTime createdDate;
-    String createdBy;
-    String createdInfo;
-    DateTime modifiedDate;
-    String modifiedBy;
-    String modifiedInfo;
+    int? id;
+    DateTime? createdDate;
+    String? createdBy;
+    String? createdInfo;
+    DateTime? modifiedDate;
+    String? modifiedBy;
+    String? modifiedInfo;
 
     RockstarAudit({this.id,this.createdDate,this.createdBy,this.createdInfo,this.modifiedDate,this.modifiedBy,this.modifiedInfo});
     RockstarAudit.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1481,8 +1481,8 @@ abstract class SoftDeleteAuditTenantBase<Table,TResponse> extends SoftDeleteAudi
 
 class RockstarVersion extends RockstarBase implements IConvertible
 {
-    int id;
-    int rowVersion;
+    int? id;
+    int? rowVersion;
 
     RockstarVersion({this.id,this.rowVersion});
     RockstarVersion.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1518,14 +1518,14 @@ class TypesGroup implements IConvertible
 
 class ChatMessage implements IConvertible
 {
-    int id;
-    String channel;
-    String fromUserId;
-    String fromName;
-    String displayName;
-    String message;
-    String userAuthId;
-    bool private;
+    int? id;
+    String? channel;
+    String? fromUserId;
+    String? fromName;
+    String? displayName;
+    String? message;
+    String? userAuthId;
+    bool? private;
 
     ChatMessage({this.id,this.channel,this.fromUserId,this.fromName,this.displayName,this.message,this.userAuthId,this.private});
     ChatMessage.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1559,8 +1559,8 @@ class ChatMessage implements IConvertible
 
 class GetChatHistoryResponse implements IConvertible
 {
-    List<ChatMessage> results;
-    ResponseStatus responseStatus;
+    List<ChatMessage>? results;
+    ResponseStatus? responseStatus;
 
     GetChatHistoryResponse({this.results,this.responseStatus});
     GetChatHistoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1582,30 +1582,30 @@ class GetChatHistoryResponse implements IConvertible
 
 class GetUserDetailsResponse implements IConvertible
 {
-    String provider;
-    String userId;
-    String userName;
-    String fullName;
-    String displayName;
-    String firstName;
-    String lastName;
-    String company;
-    String email;
-    String phoneNumber;
-    DateTime birthDate;
-    String birthDateRaw;
-    String address;
-    String address2;
-    String city;
-    String state;
-    String country;
-    String culture;
-    String gender;
-    String language;
-    String mailAddress;
-    String nickname;
-    String postalCode;
-    String timeZone;
+    String? provider;
+    String? userId;
+    String? userName;
+    String? fullName;
+    String? displayName;
+    String? firstName;
+    String? lastName;
+    String? company;
+    String? email;
+    String? phoneNumber;
+    DateTime? birthDate;
+    String? birthDateRaw;
+    String? address;
+    String? address2;
+    String? city;
+    String? state;
+    String? country;
+    String? culture;
+    String? gender;
+    String? language;
+    String? mailAddress;
+    String? nickname;
+    String? postalCode;
+    String? timeZone;
 
     GetUserDetailsResponse({this.provider,this.userId,this.userName,this.fullName,this.displayName,this.firstName,this.lastName,this.company,this.email,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone});
     GetUserDetailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1671,8 +1671,8 @@ class GetUserDetailsResponse implements IConvertible
 
 class CustomHttpErrorResponse implements IConvertible
 {
-    String custom;
-    ResponseStatus responseStatus;
+    String? custom;
+    ResponseStatus? responseStatus;
 
     CustomHttpErrorResponse({this.custom,this.responseStatus});
     CustomHttpErrorResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1694,11 +1694,11 @@ class CustomHttpErrorResponse implements IConvertible
 
 class QueryResponseAlt<T> implements IConvertible
 {
-    int offset;
-    int total;
-    List<T> results;
-    Map<String,String> meta;
-    ResponseStatus responseStatus;
+    int? offset;
+    int? total;
+    List<T>? results;
+    Map<String,String>? meta;
+    ResponseStatus? responseStatus;
 
     QueryResponseAlt({this.offset,this.total,this.results,this.meta,this.responseStatus});
     QueryResponseAlt.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1726,7 +1726,7 @@ class QueryResponseAlt<T> implements IConvertible
 
 class Items implements IConvertible
 {
-    List<Item> results;
+    List<Item>? results;
 
     Items({this.results});
     Items.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1746,7 +1746,7 @@ class Items implements IConvertible
 
 class ThrowTypeResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     ThrowTypeResponse({this.responseStatus});
     ThrowTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1766,10 +1766,10 @@ class ThrowTypeResponse implements IConvertible
 
 class ThrowValidationResponse implements IConvertible
 {
-    int age;
-    String required;
-    String email;
-    ResponseStatus responseStatus;
+    int? age;
+    String? required;
+    String? email;
+    ResponseStatus? responseStatus;
 
     ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
     ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1795,7 +1795,7 @@ class ThrowValidationResponse implements IConvertible
 
 class ThrowBusinessErrorResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     ThrowBusinessErrorResponse({this.responseStatus});
     ThrowBusinessErrorResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1815,7 +1815,7 @@ class ThrowBusinessErrorResponse implements IConvertible
 
 class Account implements IConvertible
 {
-    String name;
+    String? name;
 
     Account({this.name});
     Account.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1835,8 +1835,8 @@ class Account implements IConvertible
 
 class Project implements IConvertible
 {
-    String account;
-    String name;
+    String? account;
+    String? name;
 
     Project({this.account,this.name});
     Project.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1858,8 +1858,8 @@ class Project implements IConvertible
 
 class SecuredResponse implements IConvertible
 {
-    String result;
-    ResponseStatus responseStatus;
+    String? result;
+    ResponseStatus? responseStatus;
 
     SecuredResponse({this.result,this.responseStatus});
     SecuredResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1881,8 +1881,8 @@ class SecuredResponse implements IConvertible
 
 class CreateJwtResponse implements IConvertible
 {
-    String token;
-    ResponseStatus responseStatus;
+    String? token;
+    ResponseStatus? responseStatus;
 
     CreateJwtResponse({this.token,this.responseStatus});
     CreateJwtResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1904,8 +1904,8 @@ class CreateJwtResponse implements IConvertible
 
 class CreateRefreshJwtResponse implements IConvertible
 {
-    String token;
-    ResponseStatus responseStatus;
+    String? token;
+    ResponseStatus? responseStatus;
 
     CreateRefreshJwtResponse({this.token,this.responseStatus});
     CreateRefreshJwtResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1927,8 +1927,8 @@ class CreateRefreshJwtResponse implements IConvertible
 
 class MetadataTestResponse implements IConvertible
 {
-    int id;
-    List<MetadataTestChild> results;
+    int? id;
+    List<MetadataTestChild>? results;
 
     MetadataTestResponse({this.id,this.results});
     MetadataTestResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1952,11 +1952,11 @@ class MetadataTestResponse implements IConvertible
 class GetExampleResponse implements IConvertible
 {
     // @DataMember(Order=1)
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     // @DataMember(Order=2)
     // @apiMember()
-    MenuExample menuExample1;
+    MenuExample? menuExample1;
 
     GetExampleResponse({this.responseStatus,this.menuExample1});
     GetExampleResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1978,7 +1978,7 @@ class GetExampleResponse implements IConvertible
 
 class GetRandomIdsResponse implements IConvertible
 {
-    List<String> results;
+    List<String>? results;
 
     GetRandomIdsResponse({this.results});
     GetRandomIdsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1998,7 +1998,7 @@ class GetRandomIdsResponse implements IConvertible
 
 class HelloResponse implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloResponse({this.result});
     HelloResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2023,7 +2023,7 @@ class HelloResponse implements IConvertible
 class HelloAnnotatedResponse implements IConvertible
 {
     // @DataMember
-    String result;
+    String? result;
 
     HelloAnnotatedResponse({this.result});
     HelloAnnotatedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2043,32 +2043,32 @@ class HelloAnnotatedResponse implements IConvertible
 
 class AllTypes implements IReturn<AllTypes>, IConvertible
 {
-    int id;
-    int nullableId;
-    int byte;
-    int short;
-    int Int;
-    int long;
-    int uShort;
-    int uInt;
-    int uLong;
-    double float;
-    double Double;
-    double decimal;
-    String string;
-    DateTime dateTime;
-    Duration timeSpan;
-    DateTime dateTimeOffset;
-    String guid;
-    String char;
-    KeyValuePair<String,String> keyValuePair;
-    DateTime nullableDateTime;
-    Duration nullableTimeSpan;
-    List<String> stringList;
-    List<String> stringArray;
-    Map<String,String> stringMap;
-    Map<int,String> intStringMap;
-    SubType subType;
+    int? id;
+    int? nullableId;
+    int? byte;
+    int? short;
+    int? Int;
+    int? long;
+    int? uShort;
+    int? uInt;
+    int? uLong;
+    double? float;
+    double? Double;
+    double? decimal;
+    String? string;
+    DateTime? dateTime;
+    Duration? timeSpan;
+    DateTime? dateTimeOffset;
+    String? guid;
+    String? char;
+    KeyValuePair<String,String>? keyValuePair;
+    DateTime? nullableDateTime;
+    Duration? nullableTimeSpan;
+    List<String>? stringList;
+    List<String>? stringArray;
+    Map<String,String>? stringMap;
+    Map<int,String>? intStringMap;
+    SubType? subType;
 
     AllTypes({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
     AllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2140,19 +2140,19 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
 
 class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
 {
-    List<int> intArray;
-    List<int> intList;
-    List<String> stringArray;
-    List<String> stringList;
-    List<double> floatArray;
-    List<double> doubleList;
-    Uint8List byteArray;
-    List<String> charArray;
-    List<double> decimalList;
-    List<Poco> pocoArray;
-    List<Poco> pocoList;
-    Map<String,List<Poco>> pocoLookup;
-    Map<String,List<Map<String,Poco>>> pocoLookupMap;
+    List<int>? intArray;
+    List<int>? intList;
+    List<String>? stringArray;
+    List<String>? stringList;
+    List<double>? floatArray;
+    List<double>? doubleList;
+    Uint8List? byteArray;
+    List<String>? charArray;
+    List<double>? decimalList;
+    List<Poco>? pocoArray;
+    List<Poco>? pocoList;
+    Map<String,List<Poco>>? pocoLookup;
+    Map<String,List<Map<String,Poco>>>? pocoLookupMap;
 
     AllCollectionTypes({this.intArray,this.intList,this.stringArray,this.stringList,this.floatArray,this.doubleList,this.byteArray,this.charArray,this.decimalList,this.pocoArray,this.pocoList,this.pocoLookup,this.pocoLookupMap});
     AllCollectionTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2198,9 +2198,9 @@ class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
 
 class HelloAllTypesResponse implements IConvertible
 {
-    String result;
-    AllTypes allTypes;
-    AllCollectionTypes allCollectionTypes;
+    String? result;
+    AllTypes? allTypes;
+    AllCollectionTypes? allCollectionTypes;
 
     HelloAllTypesResponse({this.result,this.allTypes,this.allCollectionTypes});
     HelloAllTypesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2224,7 +2224,7 @@ class HelloAllTypesResponse implements IConvertible
 
 class SubAllTypes extends AllTypesBase implements IConvertible
 {
-    int hierarchy;
+    int? hierarchy;
 
     SubAllTypes({this.hierarchy});
     SubAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2245,7 +2245,7 @@ class SubAllTypes extends AllTypesBase implements IConvertible
 
 class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
 {
-    DateTime dateTime;
+    DateTime? dateTime;
 
     HelloDateTime({this.dateTime});
     HelloDateTime.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2269,7 +2269,7 @@ class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
 class HelloWithDataContractResponse implements IConvertible
 {
     // @DataMember(Name="result", Order=1, IsRequired=true, EmitDefaultValue=false)
-    String result;
+    String? result;
 
     HelloWithDataContractResponse({this.result});
     HelloWithDataContractResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2292,7 +2292,7 @@ class HelloWithDataContractResponse implements IConvertible
 */
 class HelloWithDescriptionResponse implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloWithDescriptionResponse({this.result});
     HelloWithDescriptionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2312,7 +2312,7 @@ class HelloWithDescriptionResponse implements IConvertible
 
 class HelloWithInheritanceResponse extends HelloResponseBase implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloWithInheritanceResponse({this.result});
     HelloWithInheritanceResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2333,7 +2333,7 @@ class HelloWithInheritanceResponse extends HelloResponseBase implements IConvert
 
 class HelloWithAlternateReturnResponse extends HelloWithReturnResponse implements IConvertible
 {
-    String altResult;
+    String? altResult;
 
     HelloWithAlternateReturnResponse({this.altResult});
     HelloWithAlternateReturnResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2354,7 +2354,7 @@ class HelloWithAlternateReturnResponse extends HelloWithReturnResponse implement
 
 class HelloWithRouteResponse implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloWithRouteResponse({this.result});
     HelloWithRouteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2374,7 +2374,7 @@ class HelloWithRouteResponse implements IConvertible
 
 class HelloWithTypeResponse implements IConvertible
 {
-    HelloType result;
+    HelloType? result;
 
     HelloWithTypeResponse({this.result});
     HelloWithTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2394,8 +2394,8 @@ class HelloWithTypeResponse implements IConvertible
 
 class HelloInnerTypesResponse implements IConvertible
 {
-    InnerType innerType;
-    InnerEnum innerEnum;
+    InnerType? innerType;
+    InnerEnum? innerEnum;
 
     HelloInnerTypesResponse({this.innerType,this.innerEnum});
     HelloInnerTypesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2417,7 +2417,7 @@ class HelloInnerTypesResponse implements IConvertible
 
 class HelloVerbResponse implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloVerbResponse({this.result});
     HelloVerbResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2437,7 +2437,7 @@ class HelloVerbResponse implements IConvertible
 
 class EnumResponse implements IConvertible
 {
-    ScopeType Operator;
+    ScopeType? Operator;
 
     EnumResponse({this.Operator});
     EnumResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2458,9 +2458,9 @@ class EnumResponse implements IConvertible
 // @Route("/hellotypes/{Name}")
 class HelloTypes implements IReturn<HelloTypes>, IConvertible
 {
-    String string;
-    bool Bool;
-    int Int;
+    String? string;
+    bool? Bool;
+    int? Int;
 
     HelloTypes({this.string,this.Bool,this.Int});
     HelloTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2488,7 +2488,7 @@ class HelloTypes implements IReturn<HelloTypes>, IConvertible
 class HelloZipResponse implements IConvertible
 {
     // @DataMember
-    String result;
+    String? result;
 
     HelloZipResponse({this.result});
     HelloZipResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2508,8 +2508,8 @@ class HelloZipResponse implements IConvertible
 
 class PingResponse implements IConvertible
 {
-    Map<String,ResponseStatus> responses;
-    ResponseStatus responseStatus;
+    Map<String,ResponseStatus>? responses;
+    ResponseStatus? responseStatus;
 
     PingResponse({this.responses,this.responseStatus});
     PingResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2531,8 +2531,8 @@ class PingResponse implements IConvertible
 
 class RequiresRoleResponse implements IConvertible
 {
-    String result;
-    ResponseStatus responseStatus;
+    String? result;
+    ResponseStatus? responseStatus;
 
     RequiresRoleResponse({this.result,this.responseStatus});
     RequiresRoleResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2554,9 +2554,9 @@ class RequiresRoleResponse implements IConvertible
 
 class SendVerbResponse implements IConvertible
 {
-    int id;
-    String pathInfo;
-    String requestMethod;
+    int? id;
+    String? pathInfo;
+    String? requestMethod;
 
     SendVerbResponse({this.id,this.pathInfo,this.requestMethod});
     SendVerbResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2580,9 +2580,9 @@ class SendVerbResponse implements IConvertible
 
 class GetSessionResponse implements IConvertible
 {
-    CustomUserSession result;
-    UnAuthInfo unAuthInfo;
-    ResponseStatus responseStatus;
+    CustomUserSession? result;
+    UnAuthInfo? unAuthInfo;
+    ResponseStatus? responseStatus;
 
     GetSessionResponse({this.result,this.unAuthInfo,this.responseStatus});
     GetSessionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2608,19 +2608,19 @@ class GetSessionResponse implements IConvertible
 class GetStuffResponse implements IConvertible
 {
     // @DataMember
-    DateTime summaryDate;
+    DateTime? summaryDate;
 
     // @DataMember
-    DateTime summaryEndDate;
+    DateTime? summaryEndDate;
 
     // @DataMember
-    String symbol;
+    String? symbol;
 
     // @DataMember
-    String email;
+    String? email;
 
     // @DataMember
-    bool isEnabled;
+    bool? isEnabled;
 
     GetStuffResponse({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
     GetStuffResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2648,8 +2648,8 @@ class GetStuffResponse implements IConvertible
 
 class StoreLogsResponse implements IConvertible
 {
-    List<Logger> existingLogs;
-    ResponseStatus responseStatus;
+    List<Logger>? existingLogs;
+    ResponseStatus? responseStatus;
 
     StoreLogsResponse({this.existingLogs,this.responseStatus});
     StoreLogsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2671,11 +2671,11 @@ class StoreLogsResponse implements IConvertible
 
 class TestAuthResponse implements IConvertible
 {
-    String userId;
-    String sessionId;
-    String userName;
-    String displayName;
-    ResponseStatus responseStatus;
+    String? userId;
+    String? sessionId;
+    String? userName;
+    String? displayName;
+    ResponseStatus? responseStatus;
 
     TestAuthResponse({this.userId,this.sessionId,this.userName,this.displayName,this.responseStatus});
     TestAuthResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2703,7 +2703,7 @@ class TestAuthResponse implements IConvertible
 
 class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
 {
-    int id;
+    int? id;
 
     RequiresAdmin({this.id});
     RequiresAdmin.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2727,7 +2727,7 @@ class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
 // @Route("/custom/{Data}")
 class CustomRoute implements IReturn<CustomRoute>, IConvertible
 {
-    String data;
+    String? data;
 
     CustomRoute({this.data});
     CustomRoute.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2750,7 +2750,7 @@ class CustomRoute implements IReturn<CustomRoute>, IConvertible
 // @Route("/wait/{ForMs}")
 class Wait implements IReturn<Wait>, IConvertible
 {
-    int forMs;
+    int? forMs;
 
     Wait({this.forMs});
     Wait.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2773,22 +2773,22 @@ class Wait implements IReturn<Wait>, IConvertible
 // @Route("/echo/types")
 class EchoTypes implements IReturn<EchoTypes>, IConvertible
 {
-    int byte;
-    int short;
-    int Int;
-    int long;
-    int uShort;
-    int uInt;
-    int uLong;
-    double float;
-    double Double;
-    double decimal;
-    String string;
-    DateTime dateTime;
-    Duration timeSpan;
-    DateTime dateTimeOffset;
-    String guid;
-    String char;
+    int? byte;
+    int? short;
+    int? Int;
+    int? long;
+    int? uShort;
+    int? uInt;
+    int? uLong;
+    double? float;
+    double? Double;
+    double? decimal;
+    String? string;
+    DateTime? dateTime;
+    Duration? timeSpan;
+    DateTime? dateTimeOffset;
+    String? guid;
+    String? char;
 
     EchoTypes({this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char});
     EchoTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2841,10 +2841,10 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
 // @Route("/echo/collections")
 class EchoCollections implements IReturn<EchoCollections>, IConvertible
 {
-    List<String> stringList;
-    List<String> stringArray;
-    Map<String,String> stringMap;
-    Map<int,String> intStringMap;
+    List<String>? stringList;
+    List<String>? stringArray;
+    Map<String,String>? stringMap;
+    Map<int,String>? intStringMap;
 
     EchoCollections({this.stringList,this.stringArray,this.stringMap,this.intStringMap});
     EchoCollections.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2873,11 +2873,11 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
 // @Route("/echo/complex")
 class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
 {
-    SubType subType;
-    List<SubType> subTypes;
-    Map<String,SubType> subTypeMap;
-    Map<String,String> stringMap;
-    Map<int,String> intStringMap;
+    SubType? subType;
+    List<SubType>? subTypes;
+    Map<String,SubType>? subTypeMap;
+    Map<String,String>? stringMap;
+    Map<int,String>? intStringMap;
 
     EchoComplexTypes({this.subType,this.subTypes,this.subTypeMap,this.stringMap,this.intStringMap});
     EchoComplexTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2928,8 +2928,8 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
 
 class RockstarWithIdResponse implements IConvertible
 {
-    int id;
-    ResponseStatus responseStatus;
+    int? id;
+    ResponseStatus? responseStatus;
 
     RockstarWithIdResponse({this.id,this.responseStatus});
     RockstarWithIdResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2951,9 +2951,9 @@ class RockstarWithIdResponse implements IConvertible
 
 class RockstarWithIdAndResultResponse implements IConvertible
 {
-    int id;
-    RockstarAuto result;
-    ResponseStatus responseStatus;
+    int? id;
+    RockstarAuto? result;
+    ResponseStatus? responseStatus;
 
     RockstarWithIdAndResultResponse({this.id,this.result,this.responseStatus});
     RockstarWithIdAndResultResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2977,9 +2977,9 @@ class RockstarWithIdAndResultResponse implements IConvertible
 
 class RockstarWithIdAndCountResponse implements IConvertible
 {
-    int id;
-    int count;
-    ResponseStatus responseStatus;
+    int? id;
+    int? count;
+    ResponseStatus? responseStatus;
 
     RockstarWithIdAndCountResponse({this.id,this.count,this.responseStatus});
     RockstarWithIdAndCountResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3003,9 +3003,9 @@ class RockstarWithIdAndCountResponse implements IConvertible
 
 class RockstarWithIdAndRowVersionResponse implements IConvertible
 {
-    int id;
-    int rowVersion;
-    ResponseStatus responseStatus;
+    int? id;
+    int? rowVersion;
+    ResponseStatus? responseStatus;
 
     RockstarWithIdAndRowVersionResponse({this.id,this.rowVersion,this.responseStatus});
     RockstarWithIdAndRowVersionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3030,11 +3030,11 @@ class RockstarWithIdAndRowVersionResponse implements IConvertible
 // @Route("/channels/{Channel}/raw")
 class PostRawToChannel implements IReturnVoid, IConvertible
 {
-    String from;
-    String toUserId;
-    String channel;
-    String message;
-    String selector;
+    String? from;
+    String? toUserId;
+    String? channel;
+    String? message;
+    String? selector;
 
     PostRawToChannel({this.from,this.toUserId,this.channel,this.message,this.selector});
     PostRawToChannel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3064,11 +3064,11 @@ class PostRawToChannel implements IReturnVoid, IConvertible
 // @Route("/channels/{Channel}/chat")
 class PostChatToChannel implements IReturn<ChatMessage>, IConvertible
 {
-    String from;
-    String toUserId;
-    String channel;
-    String message;
-    String selector;
+    String? from;
+    String? toUserId;
+    String? channel;
+    String? message;
+    String? selector;
 
     PostChatToChannel({this.from,this.toUserId,this.channel,this.message,this.selector});
     PostChatToChannel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3099,9 +3099,9 @@ class PostChatToChannel implements IReturn<ChatMessage>, IConvertible
 // @Route("/chathistory")
 class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible
 {
-    List<String> channels;
-    int afterId;
-    int take;
+    List<String>? channels;
+    int? afterId;
+    int? take;
 
     GetChatHistory({this.channels,this.afterId,this.take});
     GetChatHistory.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3158,11 +3158,11 @@ class ResetServerEvents implements IReturnVoid, IConvertible
 // @Route("/channels/{Channel}/object")
 class PostObjectToChannel implements IReturnVoid, IConvertible
 {
-    String toUserId;
-    String channel;
-    String selector;
-    CustomType customType;
-    SetterType setterType;
+    String? toUserId;
+    String? channel;
+    String? selector;
+    CustomType? customType;
+    SetterType? setterType;
 
     PostObjectToChannel({this.toUserId,this.channel,this.selector,this.customType,this.setterType});
     PostObjectToChannel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3207,8 +3207,8 @@ class GetUserDetails implements IReturn<GetUserDetailsResponse>, IConvertible
 
 class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 {
-    int statusCode;
-    String statusDescription;
+    int? statusCode;
+    String? statusDescription;
 
     CustomHttpError({this.statusCode,this.statusDescription});
     CustomHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3232,7 +3232,7 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
 
 class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible
 {
-    String name;
+    String? name;
 
     AltQueryItems({this.name});
     AltQueryItems.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3284,9 +3284,9 @@ class GetNakedItems implements IReturn<List<Item>>, IConvertible
 
 class DummyTypes implements IConvertible
 {
-    List<HelloResponse> helloResponses;
-    List<ListResult> listResult;
-    List<ArrayResult> arrayResult;
+    List<HelloResponse>? helloResponses;
+    List<ListResult>? listResult;
+    List<ArrayResult>? arrayResult;
 
     DummyTypes({this.helloResponses,this.listResult,this.arrayResult});
     DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3311,8 +3311,8 @@ class DummyTypes implements IConvertible
 // @Route("/throwhttperror/{Status}")
 class ThrowHttpError implements IConvertible
 {
-    int status;
-    String message;
+    int? status;
+    String? message;
 
     ThrowHttpError({this.status,this.message});
     ThrowHttpError.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3336,7 +3336,7 @@ class ThrowHttpError implements IConvertible
 // @Route("/throw404/{Message}")
 class Throw404 implements IConvertible
 {
-    String message;
+    String? message;
 
     Throw404({this.message});
     Throw404.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3358,7 +3358,7 @@ class Throw404 implements IConvertible
 // @Route("/throwcustom400/{Message}")
 class ThrowCustom400 implements IConvertible
 {
-    String message;
+    String? message;
 
     ThrowCustom400({this.message});
     ThrowCustom400.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3379,8 +3379,8 @@ class ThrowCustom400 implements IConvertible
 // @Route("/throw/{Type}")
 class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
 {
-    String type;
-    String message;
+    String? type;
+    String? message;
 
     ThrowType({this.type,this.message});
     ThrowType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3405,9 +3405,9 @@ class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
 // @Route("/throwvalidation")
 class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
 {
-    int age;
-    String required;
-    String email;
+    int? age;
+    String? required;
+    String? email;
 
     ThrowValidation({this.age,this.required,this.email});
     ThrowValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3449,7 +3449,7 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
 
 class RootPathRoutes implements IConvertible
 {
-    String path;
+    String? path;
 
     RootPathRoutes({this.path});
     RootPathRoutes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3469,7 +3469,7 @@ class RootPathRoutes implements IConvertible
 
 class GetAccount implements IReturn<Account>, IConvertible
 {
-    String account;
+    String? account;
 
     GetAccount({this.account});
     GetAccount.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3491,8 +3491,8 @@ class GetAccount implements IReturn<Account>, IConvertible
 
 class GetProject implements IReturn<Project>, IConvertible
 {
-    String account;
-    String project;
+    String? account;
+    String? project;
 
     GetProject({this.account,this.project});
     GetProject.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3517,7 +3517,7 @@ class GetProject implements IReturn<Project>, IConvertible
 // @Route("/image-stream")
 class ImageAsStream implements IReturn<Uint8List>, IConvertible
 {
-    String format;
+    String? format;
 
     ImageAsStream({this.format});
     ImageAsStream.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3540,7 +3540,7 @@ class ImageAsStream implements IReturn<Uint8List>, IConvertible
 // @Route("/image-bytes")
 class ImageAsBytes implements IReturn<Uint8List>, IConvertible
 {
-    String format;
+    String? format;
 
     ImageAsBytes({this.format});
     ImageAsBytes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3563,7 +3563,7 @@ class ImageAsBytes implements IReturn<Uint8List>, IConvertible
 // @Route("/image-custom")
 class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
 {
-    String format;
+    String? format;
 
     ImageAsCustomResult({this.format});
     ImageAsCustomResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3586,7 +3586,7 @@ class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
 // @Route("/image-response")
 class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
 {
-    String format;
+    String? format;
 
     ImageWriteToResponse({this.format});
     ImageWriteToResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3609,7 +3609,7 @@ class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
 // @Route("/image-file")
 class ImageAsFile implements IReturn<Uint8List>, IConvertible
 {
-    String format;
+    String? format;
 
     ImageAsFile({this.format});
     ImageAsFile.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3632,7 +3632,7 @@ class ImageAsFile implements IReturn<Uint8List>, IConvertible
 // @Route("/image-redirect")
 class ImageAsRedirect implements IConvertible
 {
-    String format;
+    String? format;
 
     ImageAsRedirect({this.format});
     ImageAsRedirect.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3653,14 +3653,14 @@ class ImageAsRedirect implements IConvertible
 // @Route("/hello-image/{Name}")
 class HelloImage implements IReturn<Uint8List>, IConvertible
 {
-    String name;
-    String format;
-    int width;
-    int height;
-    int fontSize;
-    String fontFamily;
-    String foreground;
-    String background;
+    String? name;
+    String? format;
+    int? width;
+    int? height;
+    int? fontSize;
+    String? fontFamily;
+    String? foreground;
+    String? background;
 
     HelloImage({this.name,this.format,this.width,this.height,this.fontSize,this.fontFamily,this.foreground,this.background});
     HelloImage.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3698,7 +3698,7 @@ class HelloImage implements IReturn<Uint8List>, IConvertible
 // @ValidateRequest(Validator="IsAuthenticated")
 class Secured implements IReturn<SecuredResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     Secured({this.name});
     Secured.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3721,7 +3721,7 @@ class Secured implements IReturn<SecuredResponse>, IConvertible
 // @Route("/jwt")
 class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IConvertible
 {
-    DateTime jwtExpiry;
+    DateTime? jwtExpiry;
 
     CreateJwt({this.jwtExpiry});
     CreateJwt.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3745,8 +3745,8 @@ class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, I
 // @Route("/jwt-refresh")
 class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertible
 {
-    String userAuthId;
-    DateTime jwtExpiry;
+    String? userAuthId;
+    DateTime? jwtExpiry;
 
     CreateRefreshJwt({this.userAuthId,this.jwtExpiry});
     CreateRefreshJwt.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3787,7 +3787,7 @@ class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible
 // @Route("/logs")
 class ViewLogs implements IReturn<String>, IConvertible
 {
-    bool clear;
+    bool? clear;
 
     ViewLogs({this.clear});
     ViewLogs.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3810,7 +3810,7 @@ class ViewLogs implements IReturn<String>, IConvertible
 // @Route("/metadatatest")
 class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
 {
-    int id;
+    int? id;
 
     MetadataTest({this.id});
     MetadataTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3833,7 +3833,7 @@ class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
 // @Route("/metadatatest-array")
 class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertible
 {
-    int id;
+    int? id;
 
     MetadataTestArray({this.id});
     MetadataTestArray.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3873,7 +3873,7 @@ class GetExample implements IReturn<GetExampleResponse>, IConvertible
 // @Route("/randomids")
 class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
 {
-    int take;
+    int? take;
 
     GetRandomIds({this.take});
     GetRandomIds.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3896,7 +3896,7 @@ class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
 // @Route("/textfile-test")
 class TextFileTest implements IConvertible
 {
-    bool asAttachment;
+    bool? asAttachment;
 
     TextFileTest({this.asAttachment});
     TextFileTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3917,7 +3917,7 @@ class TextFileTest implements IConvertible
 // @Route("/return/text")
 class ReturnText implements IConvertible
 {
-    String text;
+    String? text;
 
     ReturnText({this.text});
     ReturnText.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3938,7 +3938,7 @@ class ReturnText implements IConvertible
 // @Route("/return/html")
 class ReturnHtml implements IConvertible
 {
-    String text;
+    String? text;
 
     ReturnHtml({this.text});
     ReturnHtml.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3961,9 +3961,9 @@ class ReturnHtml implements IConvertible
 class Hello implements IReturn<HelloResponse>, IConvertible
 {
     // @required()
-    String name;
+    String? name;
 
-    String title;
+    String? title;
 
     Hello({this.name,this.title});
     Hello.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3992,7 +3992,7 @@ class Hello implements IReturn<HelloResponse>, IConvertible
 class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
 {
     // @DataMember
-    String name;
+    String? name;
 
     HelloAnnotated({this.name});
     HelloAnnotated.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4014,8 +4014,8 @@ class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
 
 class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
 {
-    String name;
-    NestedClass nestedClassProp;
+    String? name;
+    NestedClass? nestedClassProp;
 
     HelloWithNestedClass({this.name,this.nestedClassProp});
     HelloWithNestedClass.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4039,7 +4039,7 @@ class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
 
 class HelloList implements IReturn<List<ListResult>>, IConvertible
 {
-    List<String> names;
+    List<String>? names;
 
     HelloList({this.names});
     HelloList.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4061,7 +4061,7 @@ class HelloList implements IReturn<List<ListResult>>, IConvertible
 
 class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
 {
-    List<String> names;
+    List<String>? names;
 
     HelloArray({this.names});
     HelloArray.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4083,14 +4083,14 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
 
 class HelloWithEnum implements IConvertible
 {
-    EnumType enumProp;
-    EnumTypeFlags enumTypeFlags;
-    EnumWithValues enumWithValues;
-    EnumType nullableEnumProp;
-    EnumFlags enumFlags;
-    EnumAsInt enumAsInt;
-    EnumStyle enumStyle;
-    EnumStyleMembers enumStyleMembers;
+    EnumType? enumProp;
+    EnumTypeFlags? enumTypeFlags;
+    EnumWithValues? enumWithValues;
+    EnumType? nullableEnumProp;
+    EnumFlags? enumFlags;
+    EnumAsInt? enumAsInt;
+    EnumStyle? enumStyle;
+    EnumStyleMembers? enumStyleMembers;
 
     HelloWithEnum({this.enumProp,this.enumTypeFlags,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumAsInt,this.enumStyle,this.enumStyleMembers});
     HelloWithEnum.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4124,11 +4124,11 @@ class HelloWithEnum implements IConvertible
 
 class HelloWithEnumList implements IConvertible
 {
-    List<EnumType> enumProp;
-    List<EnumWithValues> enumWithValues;
-    List<EnumType> nullableEnumProp;
-    List<EnumFlags> enumFlags;
-    List<EnumStyle> enumStyle;
+    List<EnumType>? enumProp;
+    List<EnumWithValues>? enumWithValues;
+    List<EnumType>? nullableEnumProp;
+    List<EnumFlags>? enumFlags;
+    List<EnumStyle>? enumStyle;
 
     HelloWithEnumList({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
     HelloWithEnumList.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4156,11 +4156,11 @@ class HelloWithEnumList implements IConvertible
 
 class HelloWithEnumMap implements IConvertible
 {
-    Map<EnumType,EnumType> enumProp;
-    Map<EnumWithValues,EnumWithValues> enumWithValues;
-    Map<EnumType,EnumType> nullableEnumProp;
-    Map<EnumFlags,EnumFlags> enumFlags;
-    Map<EnumStyle,EnumStyle> enumStyle;
+    Map<EnumType,EnumType>? enumProp;
+    Map<EnumWithValues,EnumWithValues>? enumWithValues;
+    Map<EnumType,EnumType>? nullableEnumProp;
+    Map<EnumFlags,EnumFlags>? enumFlags;
+    Map<EnumStyle,EnumStyle>? enumStyle;
 
     HelloWithEnumMap({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
     HelloWithEnumMap.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4188,9 +4188,9 @@ class HelloWithEnumMap implements IConvertible
 
 class RestrictedAttributes implements IConvertible
 {
-    int id;
-    String name;
-    Hello hello;
+    int? id;
+    String? name;
+    Hello? hello;
 
     RestrictedAttributes({this.id,this.name,this.hello});
     RestrictedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4226,7 +4226,7 @@ class AllowedAttributes implements IConvertible
     */
     // @DataMember(Name="Aliased")
     // @ApiMember(DataType="double", Description="Range Description", IsRequired=true, ParameterType="path")
-    double range;
+    double? range;
 
     AllowedAttributes({this.range});
     AllowedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4247,9 +4247,9 @@ class AllowedAttributes implements IConvertible
 // @Route("/all-types")
 class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 {
-    String name;
-    AllTypes allTypes;
-    AllCollectionTypes allCollectionTypes;
+    String? name;
+    AllTypes? allTypes;
+    AllCollectionTypes? allCollectionTypes;
 
     HelloAllTypes({this.name,this.allTypes,this.allCollectionTypes});
     HelloAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4275,7 +4275,7 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 
 class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, IConvertible
 {
-    int hierarchy;
+    int? hierarchy;
 
     HelloSubAllTypes({this.hierarchy});
     HelloSubAllTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4298,7 +4298,7 @@ class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, ICo
 
 class HelloString implements IReturn<String>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloString({this.name});
     HelloString.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4320,7 +4320,7 @@ class HelloString implements IReturn<String>, IConvertible
 
 class HelloVoid implements IConvertible
 {
-    String name;
+    String? name;
 
     HelloVoid({this.name});
     HelloVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4342,10 +4342,10 @@ class HelloVoid implements IConvertible
 class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, IConvertible
 {
     // @DataMember(Name="name", Order=1, IsRequired=true, EmitDefaultValue=false)
-    String name;
+    String? name;
 
     // @DataMember(Name="id", Order=2, EmitDefaultValue=false)
-    int id;
+    int? id;
 
     HelloWithDataContract({this.name,this.id});
     HelloWithDataContract.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4372,7 +4372,7 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, I
 */
 class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloWithDescription({this.name});
     HelloWithDescription.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4394,7 +4394,7 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, ICo
 
 class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloWithInheritance({this.name});
     HelloWithInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4417,7 +4417,7 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
 
 class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloWithGenericInheritance({this.result});
     HelloWithGenericInheritance.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4438,7 +4438,7 @@ class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertib
 
 class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvertible
 {
-    String result;
+    String? result;
 
     HelloWithGenericInheritance2({this.result});
     HelloWithGenericInheritance2.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4473,7 +4473,7 @@ class HelloWithNestedInheritance extends HelloBase1<Item> implements IConvertibl
 
 class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloWithReturn({this.name});
     HelloWithReturn.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4496,7 +4496,7 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, ICon
 // @Route("/helloroute")
 class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloWithRoute({this.name});
     HelloWithRoute.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4518,7 +4518,7 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
 
 class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloWithType({this.name});
     HelloWithType.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4540,9 +4540,9 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
 
 class HelloInterface implements IConvertible
 {
-    IPoco poco;
-    IEmptyInterface emptyInterface;
-    EmptyClass emptyClass;
+    IPoco? poco;
+    IEmptyInterface? emptyInterface;
+    EmptyClass? emptyClass;
 
     HelloInterface({this.poco,this.emptyInterface,this.emptyClass});
     HelloInterface.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4581,7 +4581,7 @@ class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
 
 class HelloBuiltin implements IConvertible
 {
-    DayOfWeek dayOfWeek;
+    DayOfWeek? dayOfWeek;
 
     HelloBuiltin({this.dayOfWeek});
     HelloBuiltin.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4601,7 +4601,7 @@ class HelloBuiltin implements IConvertible
 
 class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
 {
-    int id;
+    int? id;
 
     HelloGet({this.id});
     HelloGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4639,7 +4639,7 @@ class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, 
 
 class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
 {
-    int id;
+    int? id;
 
     HelloPut({this.id});
     HelloPut.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4661,7 +4661,7 @@ class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
 
 class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
 {
-    int id;
+    int? id;
 
     HelloDelete({this.id});
     HelloDelete.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4683,7 +4683,7 @@ class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
 
 class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
 {
-    int id;
+    int? id;
 
     HelloPatch({this.id});
     HelloPatch.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4705,7 +4705,7 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
 
 class HelloReturnVoid implements IReturnVoid, IConvertible
 {
-    int id;
+    int? id;
 
     HelloReturnVoid({this.id});
     HelloReturnVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4726,7 +4726,7 @@ class HelloReturnVoid implements IReturnVoid, IConvertible
 
 class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
 {
-    ScopeType Operator;
+    ScopeType? Operator;
 
     EnumRequest({this.Operator});
     EnumRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4751,10 +4751,10 @@ class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
 class HelloZip implements IReturn<HelloZipResponse>, IConvertible
 {
     // @DataMember
-    String name;
+    String? name;
 
     // @DataMember
-    List<String> test;
+    List<String>? test;
 
     HelloZip({this.name,this.test});
     HelloZip.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4825,7 +4825,7 @@ class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
 // @Route("/return/string")
 class ReturnString implements IReturn<String>, IConvertible
 {
-    String data;
+    String? data;
 
     ReturnString({this.data});
     ReturnString.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4848,7 +4848,7 @@ class ReturnString implements IReturn<String>, IConvertible
 // @Route("/return/bytes")
 class ReturnBytes implements IReturn<Uint8List>, IConvertible
 {
-    Uint8List data;
+    Uint8List? data;
 
     ReturnBytes({this.data});
     ReturnBytes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4871,7 +4871,7 @@ class ReturnBytes implements IReturn<Uint8List>, IConvertible
 // @Route("/return/stream")
 class ReturnStream implements IReturn<Uint8List>, IConvertible
 {
-    Uint8List data;
+    Uint8List? data;
 
     ReturnStream({this.data});
     ReturnStream.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4926,8 +4926,8 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 // @Route("/sendjson")
 class SendJson implements IReturn<String>, IConvertible
 {
-    int id;
-    String name;
+    int? id;
+    String? name;
 
     SendJson({this.id,this.name});
     SendJson.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4952,9 +4952,9 @@ class SendJson implements IReturn<String>, IConvertible
 // @Route("/sendtext")
 class SendText implements IReturn<String>, IConvertible
 {
-    int id;
-    String name;
-    String contentType;
+    int? id;
+    String? name;
+    String? contentType;
 
     SendText({this.id,this.name,this.contentType});
     SendText.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4981,9 +4981,9 @@ class SendText implements IReturn<String>, IConvertible
 // @Route("/sendraw")
 class SendRaw implements IReturn<Uint8List>, IConvertible
 {
-    int id;
-    String name;
-    String contentType;
+    int? id;
+    String? name;
+    String? contentType;
 
     SendRaw({this.id,this.name,this.contentType});
     SendRaw.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5009,7 +5009,7 @@ class SendRaw implements IReturn<Uint8List>, IConvertible
 
 class SendDefault implements IReturn<SendVerbResponse>, IConvertible
 {
-    int id;
+    int? id;
 
     SendDefault({this.id});
     SendDefault.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5032,7 +5032,7 @@ class SendDefault implements IReturn<SendVerbResponse>, IConvertible
 // @Route("/sendrestget/{Id}", "GET")
 class SendRestGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 {
-    int id;
+    int? id;
 
     SendRestGet({this.id});
     SendRestGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5054,7 +5054,7 @@ class SendRestGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 
 class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 {
-    int id;
+    int? id;
 
     SendGet({this.id});
     SendGet.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5076,7 +5076,7 @@ class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
 
 class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
 {
-    int id;
+    int? id;
 
     SendPost({this.id});
     SendPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5098,7 +5098,7 @@ class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
 
 class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
 {
-    int id;
+    int? id;
 
     SendPut({this.id});
     SendPut.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5120,7 +5120,7 @@ class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
 
 class SendReturnVoid implements IReturnVoid, IConvertible
 {
-    int id;
+    int? id;
 
     SendReturnVoid({this.id});
     SendReturnVoid.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5158,7 +5158,7 @@ class GetSession implements IReturn<GetSessionResponse>, IConvertible
 // @Route("/session/edit/{CustomName}")
 class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
 {
-    String customName;
+    String? customName;
 
     UpdateSession({this.customName});
     UpdateSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5184,23 +5184,23 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
 {
     // @DataMember
     // @ApiMember(DataType="DateTime", Name="Summary Date")
-    DateTime summaryDate;
+    DateTime? summaryDate;
 
     // @DataMember
     // @ApiMember(DataType="DateTime", Name="Summary End Date")
-    DateTime summaryEndDate;
+    DateTime? summaryEndDate;
 
     // @DataMember
     // @ApiMember(DataType="string", Name="Symbol")
-    String symbol;
+    String? symbol;
 
     // @DataMember
     // @ApiMember(DataType="string", Name="Email")
-    String email;
+    String? email;
 
     // @DataMember
     // @ApiMember(DataType="bool", Name="Is Enabled")
-    bool isEnabled;
+    bool? isEnabled;
 
     GetStuff({this.summaryDate,this.summaryEndDate,this.symbol,this.email,this.isEnabled});
     GetStuff.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5230,7 +5230,7 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
 
 class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
 {
-    List<Logger> loggers;
+    List<Logger>? loggers;
 
     StoreLogs({this.loggers});
     StoreLogs.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5252,7 +5252,7 @@ class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
 
 class HelloAuth implements IReturn<HelloResponse>, IConvertible
 {
-    String name;
+    String? name;
 
     HelloAuth({this.name});
     HelloAuth.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5350,7 +5350,7 @@ class TestNullResponse implements IConvertible
 
 class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
 {
-    int id;
+    int? id;
 
     QueryRockstarAudit({this.id});
     QueryRockstarAudit.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5373,8 +5373,8 @@ class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto>
 
 class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
 {
-    String firstNameStartsWith;
-    int ageOlderThan;
+    String? firstNameStartsWith;
+    int? ageOlderThan;
 
     QueryRockstarAuditSubOr({this.firstNameStartsWith,this.ageOlderThan});
     QueryRockstarAuditSubOr.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5399,7 +5399,7 @@ class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto>
 
 class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
 {
-    int id;
+    int? id;
 
     QueryPocoBase({this.id});
     QueryPocoBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5422,7 +5422,7 @@ class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IRetur
 
 class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IConvertible
 {
-    int id;
+    int? id;
 
     QueryPocoIntoBase({this.id});
     QueryPocoIntoBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5479,14 +5479,14 @@ class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithId
 class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
 {
     String sessionId;
-    String firstName;
-    String lastName;
-    int age;
-    DateTime dateOfBirth;
-    DateTime dateDied;
-    LivingStatus livingStatus;
+    String? firstName;
+    String? lastName;
+    int? age;
+    DateTime? dateOfBirth;
+    DateTime? dateDied;
+    LivingStatus? livingStatus;
 
-    CreateRockstarAuditTenant({this.sessionId,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
+    CreateRockstarAuditTenant({required this.sessionId,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
     CreateRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5520,11 +5520,11 @@ class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenan
 class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
 {
     String sessionId;
-    int id;
-    String firstName;
-    LivingStatus livingStatus;
+    int? id;
+    String? firstName;
+    LivingStatus? livingStatus;
 
-    UpdateRockstarAuditTenant({this.sessionId,this.id,this.firstName,this.livingStatus});
+    UpdateRockstarAuditTenant({required this.sessionId,this.id,this.firstName,this.livingStatus});
     UpdateRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5552,11 +5552,11 @@ class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenan
 class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
 {
     String sessionId;
-    int id;
-    String firstName;
-    LivingStatus livingStatus;
+    int? id;
+    String? firstName;
+    LivingStatus? livingStatus;
 
-    PatchRockstarAuditTenant({this.sessionId,this.id,this.firstName,this.livingStatus});
+    PatchRockstarAuditTenant({required this.sessionId,this.id,this.firstName,this.livingStatus});
     PatchRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5583,7 +5583,7 @@ class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,
 
 class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IConvertible
 {
-    int id;
+    int? id;
 
     SoftDeleteAuditTenant({this.id});
     SoftDeleteAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5608,7 +5608,7 @@ class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<Rocksta
 {
     String bearerToken;
 
-    CreateRockstarAuditMqToken({this.bearerToken});
+    CreateRockstarAuditMqToken({required this.bearerToken});
     CreateRockstarAuditMqToken.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5630,10 +5630,10 @@ class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<Rocksta
 class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, IDeleteDb<RockstarAuditTenant>, IHasSessionId, IConvertible
 {
     String sessionId;
-    int id;
-    int age;
+    int? id;
+    int? age;
 
-    RealDeleteAuditTenant({this.sessionId,this.id,this.age});
+    RealDeleteAuditTenant({required this.sessionId,this.id,this.age});
     RealDeleteAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {

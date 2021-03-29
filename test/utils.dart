@@ -57,8 +57,8 @@ AllTypes createAllTypes() => AllTypes(
 
 void assertHelloAllTypesResponse(HelloAllTypesResponse dto) {
   expect(dto.result, equals("name"));
-  assertAllTypes(dto.allTypes);
-  assertAllCollectionTypes(dto.allCollectionTypes);
+  assertAllTypes(dto.allTypes!);
+  assertAllCollectionTypes(dto.allCollectionTypes!);
 }
 
 void assertAllTypes(AllTypes dto) {
@@ -87,8 +87,8 @@ void assertAllTypes(AllTypes dto) {
         "C": "F",
       }));
   expect(dto.intStringMap, equals({1: "A", 2: "B", 3: "C"}));
-  expect(dto.subType.id, equals(1));
-  expect(dto.subType.name, equals("name"));
+  expect(dto.subType!.id, equals(1));
+  expect(dto.subType!.name, equals("name"));
 }
 
 AllCollectionTypes createAllCollectionTypes() =>
@@ -128,24 +128,24 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
   expect(dto.stringList, equals(["D", "E", "F"]));
   expect(dto.byteArray, equals([65,66,67])); //ABC
 
-  expect(dto.pocoArray.length, equals(1));
-  expect(dto.pocoArray[0].name, equals("pocoArray"));
-  expect(dto.pocoList.length, equals(1));
-  expect(dto.pocoList[0].name, equals("pocoList"));
+  expect(dto.pocoArray!.length, equals(1));
+  expect(dto.pocoArray![0].name, equals("pocoArray"));
+  expect(dto.pocoList!.length, equals(1));
+  expect(dto.pocoList![0].name, equals("pocoList"));
 
-  expect(dto.pocoLookup.length, equals(1));
-  var pocoLookupValues = dto.pocoLookup["A"];
+  expect(dto.pocoLookup!.length, equals(1));
+  var pocoLookupValues = dto.pocoLookup!["A"]!;
   expect(pocoLookupValues.length, equals(2));
   expect(pocoLookupValues[0].name, equals("B"));
   expect(pocoLookupValues[1].name, equals("C"));
 
-  expect(dto.pocoLookupMap.length, equals(1));
-  var pocoLookupMapValues = dto.pocoLookupMap["A"];
+  expect(dto.pocoLookupMap!.length, equals(1));
+  var pocoLookupMapValues = dto.pocoLookupMap!["A"]!;
   expect(pocoLookupMapValues.length, equals(1));
   var pocoLookupMapAList = pocoLookupMapValues[0];
   expect(pocoLookupMapAList.length, equals(2));
-  expect(pocoLookupMapAList["B"].name, equals("C"));
-  expect(pocoLookupMapAList["D"].name, equals("E"));
+  expect(pocoLookupMapAList["B"]!.name, equals("C"));
+  expect(pocoLookupMapAList["D"]!.name, equals("E"));
 }
 
 Poco createPoco(String name) => Poco(name: name);
@@ -163,14 +163,14 @@ EchoComplexTypes createEchoComplexTypes() =>
     });
 
 void assertEchoComplexTypes(EchoComplexTypes dto) {
-  expect(dto.subType.id, equals(1));
-  expect(dto.subType.name, equals("foo"));
-  expect(dto.subTypes[0].id, equals(2));
-  expect(dto.subTypes[0].name, equals("bar"));
-  expect(dto.subTypes[1].id, equals(3));
-  expect(dto.subTypes[1].name, equals("baz"));
-  expect(dto.subTypeMap['a'].id, equals(4));
-  expect(dto.subTypeMap['a'].name, equals('qux'));
-  expect(dto.stringMap['a'], equals('b'));
-  expect(dto.intStringMap[1], equals('A'));
+  expect(dto.subType!.id, equals(1));
+  expect(dto.subType!.name, equals("foo"));
+  expect(dto.subTypes![0].id, equals(2));
+  expect(dto.subTypes![0].name, equals("bar"));
+  expect(dto.subTypes![1].id, equals(3));
+  expect(dto.subTypes![1].name, equals("baz"));
+  expect(dto.subTypeMap!['a']!.id, equals(4));
+  expect(dto.subTypeMap!['a']!.name, equals('qux'));
+  expect(dto.stringMap!['a'], equals('b'));
+  expect(dto.intStringMap![1], equals('A'));
 }

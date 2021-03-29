@@ -21,7 +21,7 @@ void main() {
     var dto = HelloWithEnum();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnum.fromJson(jsonObj);
+    var fromJson = HelloWithEnum.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnum(fromJson, dto);
   });
 
@@ -31,7 +31,7 @@ void main() {
 
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnum.fromJson(jsonObj);
+    var fromJson = HelloWithEnum.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnum(fromJson, dto);
   });
 
@@ -44,7 +44,7 @@ void main() {
 
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnum.fromJson(jsonObj);
+    var fromJson = HelloWithEnum.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnum(fromJson, dto);
   });
 
@@ -60,7 +60,7 @@ void main() {
     var dto = HelloWithEnumList();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnumList.fromJson(jsonObj);
+    var fromJson = HelloWithEnumList.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumList(fromJson, dto);
   });
 
@@ -74,7 +74,7 @@ void main() {
     var json = jsonEncode(dto);
     print("JSON: ${json}");
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnumList.fromJson(jsonObj);
+    var fromJson = HelloWithEnumList.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumList(fromJson, dto);
   });
 
@@ -90,7 +90,7 @@ void main() {
     var dto = HelloWithEnumMap();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnumMap.fromJson(jsonObj);
+    var fromJson = HelloWithEnumMap.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumMap(fromJson, dto);
   });
 
@@ -104,7 +104,7 @@ void main() {
     var json = jsonEncode(dto);
     print("JSON: ${json}");
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithEnumMap.fromJson(jsonObj);
+    var fromJson = HelloWithEnumMap.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumMap(fromJson, dto);
   });
 

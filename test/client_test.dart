@@ -58,8 +58,8 @@ void main() {
           "globalResponseFilter"
         ]));
 
-    JsonServiceClient.globalRequestFilter = null;
-    JsonServiceClient.globalResponseFilter = null;
+    JsonServiceClient.globalRequestFilter = null!;
+    JsonServiceClient.globalResponseFilter = null!;
   });
 
   test('Can GET Hello with CustomPath', () async {
@@ -121,7 +121,7 @@ void main() {
     var request = Hello(name: "World");
 
     Map jsonObj = await client.postToUrl("/hello", json.encode(request));
-    var response = HelloResponse.fromJson(jsonObj);
+    var response = HelloResponse.fromJson(jsonObj as Map<String, dynamic>);
 
     expect(response.result, equals("Hello, World!"));
   });
@@ -304,11 +304,11 @@ void main() {
   test('Can deserialize nested list', () async {
     var client = createTestClient();
     var response = await client.get(GetItems());
-    expect(response.results.length, equals(2));
+    expect(response.results!.length, equals(2));
 
     expect(response.runtimeType.toString(), equals(GetItems().getResponseTypeName()));
-    expect(response.results.first.runtimeType.toString(), equals("Item"));
-    var allNames = response.results.map((x) => x.name);
+    expect(response.results!.first.runtimeType.toString(), equals("Item"));
+    var allNames = response.results!.map((x) => x.name);
     expect(allNames, equals(["bar item 1", "bar item 2"]));
   });
 
@@ -326,11 +326,11 @@ void main() {
   test('Can deserialize custom generic response type', () async {
     var client = createTestClient();
     var response = await client.get(AltQueryItems());
-    expect(response.results.length, equals(2));
+    expect(response.results!.length, equals(2));
 
     expect(response.runtimeType.toString(), equals(AltQueryItems().getResponseTypeName()));
-    expect(response.results.first.runtimeType.toString(), equals("Item"));
-    var allNames = response.results.map((x) => x.name);
+    expect(response.results!.first.runtimeType.toString(), equals("Item"));
+    var allNames = response.results!.map((x) => x.name);
     expect(allNames, equals(["item 1", "item 2"]));
   });
 
@@ -496,7 +496,7 @@ void main() {
   });
 
   test('Can handle connection error', () async {
-    WebServiceException handledEx;
+    late WebServiceException handledEx;
     var client = JsonServiceClient("http://unknown-zzz.net")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
