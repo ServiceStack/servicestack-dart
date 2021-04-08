@@ -1,3 +1,7 @@
+## 1.0.31
+
+* Added `getTokenCookie()` & `getRefreshTokenCookie()` APIs to `IServiceClient`
+
 ## 1.0.30
 
 * Remove null values from Inspect.dump() output
