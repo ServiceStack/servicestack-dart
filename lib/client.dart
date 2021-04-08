@@ -95,6 +95,13 @@ class JsonServiceClient implements IServiceClient {
   void set client(HttpClient client) => _client = client;
   HttpClient get client => _client ??= HttpClient();
 
+  String getTokenCookie() {
+    return cookies.firstWhere((x) => x.name == 'ss-tok')?.value;
+  }
+  String getRefreshTokenCookie() {
+    return cookies.firstWhere((x) => x.name == 'ss-reftok')?.value;
+  }
+
   void set connectionTimeout(Duration duration) =>
       client.connectionTimeout = duration;
   Duration get connectionTimeout => client.connectionTimeout;
@@ -105,7 +112,7 @@ class JsonServiceClient implements IServiceClient {
     headers = {
       HttpHeaders.acceptHeader: "application/json",
     };
-    cookies = List<Cookie>();
+    cookies = <Cookie>[];
     maxRetries = 5;
     useTokenCookie = false;
   }
@@ -242,28 +249,28 @@ class JsonServiceClient implements IServiceClient {
 
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
       {RequestFilter requestFilter, ResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return List<T>();
+    if (requests == null || requests.length == 0) return <T>[];
     var url = combinePaths([replyBaseUrl, nameOf(requests.first) + "[]"]);
 
     return this.sendRequest<List<T>>(SendContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: List<T>(),
+        responseAs: <T>[],
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
 
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {RequestFilter requestFilter, ResponseFilter responseFilter}) async {
-    if (requests == null || requests.length == 0) return List<T>();
+    if (requests == null || requests.length == 0) return <T>[];
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first) + "[]"]);
 
     await this.sendRequest<List<T>>(SendContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: List<T>(),
+        responseAs: <T>[],
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }

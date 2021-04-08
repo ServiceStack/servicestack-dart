@@ -190,6 +190,9 @@ abstract class IServiceClient {
   String userName;
   String password;
 
+  String getTokenCookie();
+  String getRefreshTokenCookie();
+
   AsyncCallbackFunction onAuthenticationRequired;
 
   void clearCookies();

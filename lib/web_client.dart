@@ -93,6 +93,18 @@ class JsonWebClient implements IServiceClient {
     useTokenCookie = false;
   }
 
+  String getTokenCookie() => cookies['ss-tok'];
+  String getRefreshTokenCookie() => cookies['ss-reftok'];
+
+  get cookies {
+    var map = Map<String,String>();
+    (document.cookie?.split(';') ?? []).forEach((x) {
+      var parts = x.split('=');
+      map[parts[0].trim()] = Uri.decodeComponent(parts[1].trim());
+    });
+    return map;
+  }
+
   void clearCookies() {
     var cookies = document.cookie.split(";");
     for (var i = 0; i < cookies.length; i++) {
@@ -239,7 +251,7 @@ class JsonWebClient implements IServiceClient {
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: List<T>(),
+        responseAs: <T>[],
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
