@@ -95,6 +95,13 @@ class JsonServiceClient implements IServiceClient {
   void set client(HttpClient client) => _client = client;
   HttpClient get client => _client ??= HttpClient();
 
+  String getTokenCookie() {
+    return cookies.firstWhere((x) => x.name == 'ss-tok')?.value;
+  }
+  String getRefreshTokenCookie() {
+    return cookies.firstWhere((x) => x.name == 'ss-reftok')?.value;
+  }
+
   void set connectionTimeout(Duration? duration) =>
       client.connectionTimeout = duration;
   Duration? get connectionTimeout => client.connectionTimeout;
@@ -105,7 +112,7 @@ class JsonServiceClient implements IServiceClient {
     headers = {
       HttpHeaders.acceptHeader: "application/json",
     };
-    cookies = List<Cookie>();
+    cookies = <Cookie>[];
     maxRetries = 5;
     useTokenCookie = false;
   }
@@ -249,7 +256,7 @@ class JsonServiceClient implements IServiceClient {
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: List<T>(),
+        responseAs: <T>[],
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }
@@ -263,7 +270,7 @@ class JsonServiceClient implements IServiceClient {
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
-        responseAs: List<T>(),
+        responseAs: <T>[],
         requestFilter: requestFilter,
         responseFilter: responseFilter));
   }

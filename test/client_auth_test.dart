@@ -103,8 +103,6 @@ void main() {
   test('Can use refreshToken to fetch token after expired token', () async {
     var client = createTestClient();
 
-    var count = 0;
-    var authClient = createTestClient();
     client.userName = "test";
     client.password = "test";
     var authResponse = await client.post(Authenticate());
@@ -154,11 +152,11 @@ void main() {
 
   test('Does fetch AccessToken using RefreshTokenCookies', () async {
     var client = createTestClient();
-    var authResponse = await client.post(Authenticate(
+    await client.post(Authenticate(
         provider: "credentials", userName: "test", password: "test"));
 
-    var initialAccessToken = client.cookies.firstWhere((x) => x.name == 'ss-tok');
-    var initialRefreshToken = client.cookies.firstWhere((x) => x.name == 'ss-reftok');
+    var initialAccessToken = client.getTokenCookie();
+    var initialRefreshToken = client.getRefreshTokenCookie();
     expect(initialAccessToken, isNotNull);
     expect(initialRefreshToken, isNotNull);
 
@@ -171,7 +169,7 @@ void main() {
     response = await client.send(request);
     expect(response.result, equals(request.name));
 
-    var latestAccessToken = client.cookies.firstWhere((x) => x.name == 'ss-tok');
+    var latestAccessToken = client.getTokenCookie();
     expect(latestAccessToken, isNot(equals(initialAccessToken)));
   });
 

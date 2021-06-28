@@ -191,6 +191,8 @@ abstract class IServiceClient {
   String? password;
 
   AsyncCallbackFunction? onAuthenticationRequired;
+  String getTokenCookie();
+  String getRefreshTokenCookie();
 
   void clearCookies();
 

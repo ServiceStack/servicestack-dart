@@ -1,6 +1,14 @@
+## 1.0.32
+
+* Upgraded **http** dependency to ^0.13.3
+
+## 1.0.31
+
+* Added `getTokenCookie()` & `getRefreshTokenCookie()` APIs to `IServiceClient`
+
 ## 1.0.30
 
-* Remove null values from Inspect.dump() output
+* Remove `null` values from `Inspect.dump()` output
 
 ## 1.0.29
 
