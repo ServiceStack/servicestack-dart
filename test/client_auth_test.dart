@@ -5,8 +5,8 @@ import 'utils.dart';
 
 import 'dtos/test.dtos.dart';
 
-CreateJwt createJwt([Map options]) {
-  var to = CreateJwt.fromJson(options ?? Map<String, dynamic>());
+CreateJwt createJwt([Map? options]) {
+  var to = CreateJwt.fromJson(options as Map<String, dynamic>? ?? Map<String, dynamic>());
   if (to.userAuthId == null) to.userAuthId = "1";
   if (to.displayName == null) to.displayName = "test jwt";
   if (to.email == null) to.email = "test@auth.com";
@@ -21,7 +21,7 @@ void main() {
   test('Can auth with JWT', () async {
     var client = createTestClient();
     var response = await client.post(createJwt());
-    client.bearerToken = response.token;
+    client.bearerToken = response.token!;
 
     var testAuth = await client.get(TestAuth());
     expect(testAuth.userId, equals("1"));
@@ -88,14 +88,14 @@ void main() {
       count++;
       var createFreshJwt = createJwt();
       var freshJwt = await client.post(createFreshJwt);
-      client.bearerToken = freshJwt.token;
+      client.bearerToken = freshJwt.token!;
     };
 
     var createExpiredJwt = createJwt();
     createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
 
-    client.bearerToken = expiredJwt.token;
+    client.bearerToken = expiredJwt.token!;
     await client.get(TestAuth());
     expect(count, equals(1));
   });
@@ -108,13 +108,13 @@ void main() {
     var authResponse = await client.post(Authenticate());
 
     client.refreshToken = authResponse.refreshToken;
-    client.setCredentials(null, null);
+    client.setCredentials(null!, null!);
 
     var createExpiredJwt = createJwt();
     createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
 
-    client.bearerToken = expiredJwt.token;
+    client.bearerToken = expiredJwt.token!;
     await client.get(TestAuth());
 
     expect(client.bearerToken, isNot(equals(expiredJwt.token)));
@@ -131,7 +131,7 @@ void main() {
     var createExpiredJwt = createJwt();
     createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
-    var bearerToken = expiredJwt.token;
+    var bearerToken = expiredJwt.token!;
 
     await clearSession(client);
 
@@ -194,7 +194,7 @@ void main() {
     var createExpiredJwt = CreateRefreshJwt();
     createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
     var expiredJwt = await client.post(createExpiredJwt);
-    client.refreshToken = expiredJwt.token;
+    client.refreshToken = expiredJwt.token!;
 
     try {
       await client.get(TestAuth());

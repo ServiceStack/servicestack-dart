@@ -15,13 +15,13 @@ void main() {
     var dto = createAllTypes();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = AllTypes.fromJson(jsonObj);
+    var fromJson = AllTypes.fromJson(jsonObj as Map<String, dynamic>);
     assertAllTypes(fromJson);
   });
 
   test('Does deserialize AllTypes', () {
     Map jsonObj = jsonDecode(jsonAllTypes);
-    var dto = AllTypes.fromJson(jsonObj);
+    var dto = AllTypes.fromJson(jsonObj as Map<String, dynamic>);
     assertAllTypes(dto);
   });
 
@@ -29,7 +29,7 @@ void main() {
     var dto = createAllCollectionTypes();
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = AllCollectionTypes.fromJson(jsonObj);
+    var fromJson = AllCollectionTypes.fromJson(jsonObj as Map<String, dynamic>);
     assertAllCollectionTypes(fromJson);
   });
 
@@ -40,10 +40,10 @@ void main() {
       allCollectionTypes: createAllCollectionTypes());
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloAllTypes.fromJson(jsonObj);
+    var fromJson = HelloAllTypes.fromJson(jsonObj as Map<String, dynamic>);
     expect(fromJson.name, equals("HelloAllTypes"));
-    assertAllTypes(fromJson.allTypes);
-    assertAllCollectionTypes(fromJson.allCollectionTypes);
+    assertAllTypes(fromJson.allTypes!);
+    assertAllCollectionTypes(fromJson.allCollectionTypes!);
   });
 
   test('Does serialize inheritance', () {
@@ -51,7 +51,7 @@ void main() {
       ..id = 1;
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
-    var fromJson = HelloWithInheritance.fromJson(jsonObj);
+    var fromJson = HelloWithInheritance.fromJson(jsonObj as Map<String, dynamic>);
     expect(fromJson.name, equals("foo"));
     expect(fromJson.id, equals(1));
   });

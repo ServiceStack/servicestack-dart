@@ -6,7 +6,7 @@ abstract class IConverter {
 }
 
 abstract class IConvertible {
-  TypeContext context;
+  TypeContext? context;
   fromMap(Map<String, dynamic> map);
   Map<String, dynamic> toJson();
 }
@@ -20,7 +20,7 @@ enum TypeOf {
 }
 
 class ClientConfig {
-  static ClientFilter initClient;
+  static ClientFilter? initClient;
 }
 
 class ClientOptions {
@@ -34,11 +34,11 @@ class ClientOptions {
 }
 
 class TypeInfo {
-  Function create;
+  Function? create;
   TypeOf type;
-  List enumValues;
+  List? enumValues;
   TypeInfo(this.type, {this.create, this.enumValues});
-  createInstance() => this.create();
+  createInstance() => this.create!();
   bool get canCreate => create != null;
   dynamic _instance;
   defaultInstance() {
@@ -47,22 +47,22 @@ class TypeInfo {
 }
 
 class TypeContext {
-  String library;
-  Map<String, TypeInfo> types;
-  String typeName;
-  TypeContext childContext;
+  String? library;
+  Map<String, TypeInfo>? types;
+  String? typeName;
+  TypeContext? childContext;
 
-  static Map<String, TypeInfo> MinifiedTypes;
-  static Map<String, String> MinifiedTypeNames;
+  static Map<String?, TypeInfo>? MinifiedTypes;
+  static late Map<String?, String> MinifiedTypeNames;
   static bool EnableMinifiedTypes = true;
 
   TypeContext({this.library, this.types, this.typeName, this.childContext}) {}
 
   List<String> get genericArgs => getGenericArgs(typeName);
 
-  TypeInfo getTypeInfo(String typeName) {
+  TypeInfo? getTypeInfo(String typeName) {
     if (!containsMinified(typeName)) {
-      var typeInfo = types[typeName] ?? childContext?.getTypeInfo(typeName);
+      var typeInfo = types![typeName] ?? childContext?.getTypeInfo(typeName);
       Log.debug("getTypeInfo(): $typeName => $typeInfo");
       return typeInfo;
     } else {
@@ -75,11 +75,11 @@ class TypeContext {
             return getTypeInfo(useTypeName);
           }
         }
-        var minifiedTypeInfo = MinifiedTypes[useTypeName];
+        var minifiedTypeInfo = MinifiedTypes![useTypeName];
         if (minifiedTypeInfo != null) {
           String originalType = "";
           if (Log.isDebugEnabled()) {
-            for (var entry in types.entries) {
+            for (var entry in types!.entries) {
               if (entry.value == minifiedTypeInfo) {
                 originalType = ", original: '${entry.key}'";
               }
@@ -114,12 +114,12 @@ class TypeContext {
 
   initMinified() {
     if (MinifiedTypes == null) {
-      var to = Map<String, TypeInfo>();
-      var toNames = Map<String, String>();
-      for (var entry in types.entries) {
+      var to = Map<String?, TypeInfo>();
+      var toNames = Map<String?, String>();
+      for (var entry in types!.entries) {
         var instance = entry.value.defaultInstance();
         if (instance != null) {
-          var minifiedType = instance.runtimeType.toString();
+          String? minifiedType = instance.runtimeType.toString();
           to[minifiedType] = entry.value;
           toNames[minifiedType] = entry.key;
         }
@@ -129,17 +129,17 @@ class TypeContext {
     }
   }
 
-  TypeInfo resolveMinifiedType(String typeName) {
+  TypeInfo? resolveMinifiedType(String typeName) {
     if (!isMinified(typeName))
       throw ArgumentError("$typeName is not a minified type");
 
     initMinified();
-    var originalType = MinifiedTypes[typeName];
+    var originalType = MinifiedTypes![typeName];
     // Log.debug("resolveMinifiedType($typeName) => $originalType");
     return originalType;
   }
 
-  String resolveMinifiedTypeName(String typeName) {
+  String? resolveMinifiedTypeName(String typeName) {
     if (!isMinified(typeName))
       throw ArgumentError("$typeName is not a minified type");
 
@@ -150,7 +150,7 @@ class TypeContext {
   }
 
   TypeInfo get typeInfo {
-    var ret = getTypeInfo(typeName);
+    var ret = getTypeInfo(typeName!);
     if (ret == null) {
       throw ArgumentError(
           "Unknown Type '${typeName}', see: ${docsDartUrl("#generating-unknown-types")}");
@@ -175,74 +175,73 @@ class TypeContext {
       this.childContext = childContext;
     } else {
       this.childContext = TypeContext(
-          types: this.childContext.types, childContext: childContext);
+          types: this.childContext!.types, childContext: childContext);
     }
   }
 }
 
 abstract class IServiceClient {
-  String baseUrl;
-  String replyBaseUrl;
-  String oneWayBaseUrl;
+  String? baseUrl;
+  String? replyBaseUrl;
+  String? oneWayBaseUrl;
 
-  String bearerToken;
-  String refreshToken;
-  String userName;
-  String password;
+  String? bearerToken;
+  String? refreshToken;
+  String? userName;
+  String? password;
 
+  AsyncCallbackFunction? onAuthenticationRequired;
   String getTokenCookie();
   String getRefreshTokenCookie();
 
-  AsyncCallbackFunction onAuthenticationRequired;
-
   void clearCookies();
 
-  Future<T> get<T>(IReturn<T> request, {Map<String, dynamic> args});
+  Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>> getUrl(String path, {Map<String, dynamic> args});
+  Future<Map<String, dynamic>?> getUrl(String path, {Map<String, dynamic>? args});
 
-  Future<T> getAs<T>(String path, {Map<String, dynamic> args, T responseAs});
+  Future<T> getAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
 
   Future<T> post<T>(IReturn<T> request,
-      {dynamic body, Map<String, dynamic> args});
+      {dynamic body, Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
-      {Map<String, dynamic> args});
+  Future<Map<String, dynamic>?> postToUrl(String path, dynamic body,
+      {Map<String, dynamic>? args});
 
   Future<T> postAs<T>(String path, dynamic body,
-      {Map<String, dynamic> args, T responseAs});
+      {Map<String, dynamic>? args, T? responseAs});
 
-  Future<T> delete<T>(IReturn<T> request, {Map<String, dynamic> args});
+  Future<T> delete<T>(IReturn<T> request, {Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>> deleteUrl(String path,
-      {Map<String, dynamic> args});
+  Future<Map<String, dynamic>?> deleteUrl(String path,
+      {Map<String, dynamic>? args});
 
-  Future<T> deleteAs<T>(String path, {Map<String, dynamic> args, T responseAs});
+  Future<T> deleteAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
 
   Future<T> put<T>(IReturn<T> request,
-      {dynamic body, Map<String, dynamic> args});
+      {dynamic body, Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
-      {Map<String, dynamic> args});
+  Future<Map<String, dynamic>?> putToUrl(String path, dynamic body,
+      {Map<String, dynamic>? args});
 
   Future<T> putAs<T>(String path, dynamic body,
-      {Map<String, dynamic> args, T responseAs});
+      {Map<String, dynamic>? args, T? responseAs});
 
   Future<T> patch<T>(IReturn<T> request,
-      {dynamic body, Map<String, dynamic> args});
+      {dynamic body, Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
-      {Map<String, dynamic> args});
+  Future<Map<String, dynamic>?> patchToUrl(String path, dynamic body,
+      {Map<String, dynamic>? args});
 
   Future<T> patchAs<T>(String path, dynamic body,
-      {Map<String, dynamic> args, T responseAs});
+      {Map<String, dynamic>? args, T? responseAs});
 
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests);
 
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests);
 
   Future<T> send<T>(IReturn<T> request,
-      {String method, Map<String, dynamic> args, T responseAs});
+      {String? method, Map<String, dynamic>? args, T? responseAs});
 
   void close({bool force = false});
 }
@@ -262,14 +261,14 @@ enum WebServiceExceptionType {
 }
 
 class WebServiceException implements Exception {
-  int statusCode;
-  String statusDescription;
-  WebServiceExceptionType type;
-  String get message => responseStatus != null
-      ? responseStatus.message ?? responseStatus.errorCode
+  int? statusCode;
+  String? statusDescription;
+  WebServiceExceptionType? type;
+  String? get message => responseStatus != null
+      ? responseStatus!.message ?? responseStatus!.errorCode
       : statusDescription;
   dynamic innerException;
-  ResponseStatus responseStatus;
+  ResponseStatus? responseStatus;
 }
 
 extension ServiceClientExtensions on IServiceClient {
@@ -278,8 +277,8 @@ extension ServiceClientExtensions on IServiceClient {
     this.password = password;
   }
 
-  String createUrlFromDto<T>(String method, dynamic request) {
-    var url = combinePaths([this.replyBaseUrl, nameOf(request)]);
+  String? createUrlFromDto<T>(String? method, dynamic request) {
+    String? url = combinePaths([this.replyBaseUrl, nameOf(request)]);
 
     if (!hasRequestBody(method)) {
       url = appendQueryString(url, toMap(request));

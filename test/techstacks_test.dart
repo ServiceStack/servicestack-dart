@@ -12,7 +12,7 @@ void main() {
 
     // print("JSON: " + json.encode(response));
 
-    expect(response.results.length, greaterThan(0));
+    expect(response.results!.length, greaterThan(0));
   });
 
   test('Should get techstacks overview', () async {
@@ -21,7 +21,7 @@ void main() {
 
     // print("JSON: " + json.encode(response));
 
-    expect(response.topTechnologies.length, greaterThan(0));
+    expect(response.topTechnologies!.length, greaterThan(0));
   });
 
   test('Should throw 405', () async {

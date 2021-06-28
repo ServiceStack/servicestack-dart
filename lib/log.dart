@@ -18,16 +18,16 @@ abstract class Logger {
     }
     throw AssertionError("LogLevel");
   }
-  log(LogLevel level, String msg, [Exception error=null]);
+  log(LogLevel level, String msg, [Exception? error=null]);
 }
 
 class ConsoleLogger extends Logger {
-  log(LogLevel level, String msg, [Exception error=null]) {
+  log(LogLevel level, String msg, [Exception? error=null]) {
     print("${label(level)}: $msg");
   }
 }
 class NullLogger extends Logger {
-  log(LogLevel level, String msg, [Exception error=null]) {}
+  log(LogLevel level, String msg, [Exception? error=null]) {}
 }
 
 class Log {
@@ -51,13 +51,13 @@ class Log {
     }
   }
 
-  static warn(String msg, [Exception error=null]) {
+  static warn(String msg, [Exception? error=null]) {
     if (isWarnEnabled()) {
       logger.log(LogLevel.Warn, msg);
     }
   }
 
-  static error(String msg, [Exception error=null]) {
+  static error(String msg, [Exception? error=null]) {
     if (isErrorEnabled()) {
       logger.log(LogLevel.Error, msg, error);
     }

@@ -1,6 +1,6 @@
 part of servicestack;
 
-List<String> splitOnFirst(String s, String c) {
+List<String?> splitOnFirst(String? s, String c) {
   if (s == null || s == "") return [s];
   var pos = s.indexOf(c);
   return pos >= 0 ? [s.substring(0, pos), s.substring(pos + 1)] : [s];
@@ -12,26 +12,26 @@ List<String> splitOnLast(String s, String c) {
   return pos >= 0 ? [s.substring(0, pos), s.substring(pos + 1)] : [s];
 }
 
-String leftPart(String strVal, String needle) {
+String? leftPart(String? strVal, String needle) {
   if (strVal == null) return null;
   var pos = strVal.indexOf(needle);
   return pos == -1 ? strVal : strVal.substring(0, pos);
 }
 
-String lastLeftPart(String strVal, String needle) {
+String? lastLeftPart(String? strVal, String needle) {
   if (strVal == null) return null;
   var pos = strVal.lastIndexOf(needle);
   return pos == -1 ? strVal : strVal.substring(0, pos);
 }
 
-String rightPart(String strVal, String needle) {
+String? rightPart(String? strVal, String needle) {
   if (strVal == null) return null;
   var pos = strVal.indexOf(needle);
   return pos == -1 ? strVal : strVal.substring(pos + needle.length);
 }
 
 String lastRightPart(String strVal, String needle) {
-  if (strVal == null) return null;
+  if (strVal == null) return null!;
   var pos = strVal.lastIndexOf(needle);
   return pos == -1 ? strVal : strVal.substring(pos + needle.length);
 }
@@ -58,11 +58,11 @@ String trimEnd(String text, String character) {
   return text.substring(0, i + 1).trim();
 }
 
-List<String> getGenericArgs(String type) {
+List<String> getGenericArgs(String? type) {
   var parts = splitOnFirst(type, "<");
   if (parts.length == 1) return [];
 
-  var argsString = lastLeftPart(parts[1], ">");
+  var argsString = lastLeftPart(parts[1], ">")!;
   return splitGenericArgs(argsString);
 }
 
@@ -104,10 +104,10 @@ List<String> runtimeGenericTypeDefs(instance, List<int> indexes) {
   return argTypes;
 }
 
-String combinePaths(List<String> paths) {
+String combinePaths(List<String?> paths) {
   List<String> parts = [];
   for (int i = 0; i < paths.length; i++) {
-    var arg = paths[i];
+    var arg = paths[i]!;
     if (arg.indexOf("://") == -1)
       parts.addAll(arg.split("/"));
     else
@@ -132,20 +132,20 @@ String combinePaths(List<String> paths) {
 bool isMinified(String type) => type.startsWith("minified:");
 bool containsMinified(String type) => type.indexOf("minified:") >= 0; //e.g. List<minified:...>
 
-String nameOf(dynamic o) {
+String? nameOf(dynamic o) {
   if (o == null) return "null";
 
   try {
     if (o is List) {
       var first = o.length > 0 ? o[0] : null;
       if (first != null) {
-        var elementType = nameOf(first);
+        var elementType = nameOf(first)!;
         Log.debug("nameOf: List<$elementType>");
         if (!isMinified(elementType))
           return "List<$elementType>";
       }
     } else {
-      Function getTypeName = o.getTypeName;
+      Function? getTypeName = o.getTypeName;
       if (getTypeName != null) return getTypeName();
     }
   } catch (e) {
@@ -155,7 +155,7 @@ String nameOf(dynamic o) {
   return o.runtimeType.toString();
 }
 
-Uri createUri(String url) {
+Uri? createUri(String? url) {
   if (url == null || url.length == 0) return null;
 
   try {
@@ -167,16 +167,16 @@ Uri createUri(String url) {
     if (parts.length != 2) throw FormatException("Invalid URL: '${url}'");
 
     var urlParts = splitOnFirst(parts[1], "/");
-    var relativeUrl = urlParts.length == 1 ? "/" : "/" + urlParts[1];
+    var relativeUrl = urlParts.length == 1 ? "/" : "/" + urlParts[1]!;
 
     var relativeUrlParts = splitOnFirst(relativeUrl, "?");
     var path = relativeUrlParts[0];
 
-    Map<String, String> query = null;
+    Map<String?, String?>? query = null;
 
     if (relativeUrlParts.length == 2) {
-      query = Map<String, String>();
-      var qs = relativeUrlParts[1];
+      query = Map<String?, String?>();
+      var qs = relativeUrlParts[1]!;
       var qsParts = qs.split("&");
       for (var qsPart in qsParts) {
         var kvp = splitOnFirst(qsPart, "=");
@@ -186,8 +186,8 @@ Uri createUri(String url) {
     }
 
     return parts[0] == "https"
-        ? Uri.https(urlParts[0], path, query)
-        : Uri.http(urlParts[0], path, query);
+        ? Uri.https(urlParts[0]!, path!, query as Map<String, String>?)
+        : Uri.http(urlParts[0]!, path!, query as Map<String, String>?);
   }
 }
 
@@ -204,7 +204,7 @@ String resolveHttpMethod(request) {
 }
 
 WebServiceException createErrorResponse(String errorCode, String message,
-    [WebServiceExceptionType type]) {
+    [WebServiceExceptionType? type]) {
   var error = WebServiceException();
   if (type != null) error.type = type;
   error.responseStatus = ResponseStatus()
@@ -213,25 +213,25 @@ WebServiceException createErrorResponse(String errorCode, String message,
   return error;
 }
 
-bool hasRequestBody(String method) => !(method == "GET" ||
+bool hasRequestBody(String? method) => !(method == "GET" ||
     method == "DELETE" ||
     method == "HEAD" ||
     method == "OPTIONS");
 
 bool isJsonObject(String str) => str != null && str.trim().startsWith("{");
 
-String appendQueryString(String url, Map<String, dynamic> args) {
+String? appendQueryString(String? url, Map<String, dynamic>? args) {
   if (args != null) {
     args.forEach((key, val) {
       if (val == null) return;
-      url += url.indexOf("?") >= 0 ? "&" : "?";
-      url += key + "=" + qsValue(val);
+      url += url!.indexOf("?") >= 0 ? "&" : "?";
+      url += key + "=" + qsValue(val)!;
     });
   }
   return url;
 }
 
-String qsValue(arg) {
+String? qsValue(arg) {
   if (arg == null) return "";
   if (arg is Uint8List) {
     return base64.encode(arg);
@@ -248,7 +248,7 @@ String qsValue(arg) {
     return sb.toString();
   }
   if (arg is IConvertible) {
-    arg = (arg as IConvertible).toJson();
+    arg = arg.toJson();
   }
   if (arg is Map) {
     var sb = StringBuffer();
@@ -264,7 +264,7 @@ String qsValue(arg) {
   return arg.toString();
 }
 
-Map<String, dynamic> toMap(request) {
+Map<String, dynamic>? toMap(request) {
   try {
     var ret = request.toJson();
     return ret;
@@ -274,9 +274,9 @@ Map<String, dynamic> toMap(request) {
 }
 
 String sanitizeKey(String key) =>
-    key != null ? key.toLowerCase().replaceAll("_", "") : null;
+    key != null ? key.toLowerCase().replaceAll("_", "") : null!;
 
-ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
+ResponseStatus? createResponseStatus(Map<String, dynamic>? obj) {
   if (obj == null) return null;
   var to = ResponseStatus();
   var status = findValue(obj, "responseStatus") ?? obj;
@@ -292,9 +292,9 @@ ResponseStatus createResponseStatus(Map<String, dynamic> obj) {
     } else if (sanitizedKey == "errors") {
       List errors = val;
       to.errors = [];
-      for (Map error in errors) {
+      for (Map error in errors as Iterable<Map<dynamic, dynamic>>) {
         var fieldError = ResponseError();
-        to.errors.add(fieldError);
+        to.errors!.add(fieldError);
         error.forEach((fieldKey, fieldVal) {
           var sanitizedFieldKey = sanitizeKey(fieldKey);
           if (sanitizedFieldKey == "errorcode") {
@@ -335,23 +335,23 @@ String docsUrl(String suffix) {
   return "https://docs.servicestack.net/${suffix}";
 }
 
-Map<String,int> toHostsMap(List<String> urls) {
-  var to = Map<String,int>();
+Map<String,int?> toHostsMap(List<String> urls) {
+  var to = Map<String,int?>();
   urls.forEach((hostname) {
     var host = hostname;
-    int port = null;
+    int? port = null;
     if (host.indexOf('://') >= 0) {
-      host = rightPart(host, '://');
+      host = rightPart(host, '://')!;
     }
     if (host.indexOf('/') >= 0) {
-      host = leftPart(host, '/');
+      host = leftPart(host, '/')!;
     }
     if (host.indexOf('?') >= 0) {
-      host = leftPart(host, '?');
+      host = leftPart(host, '?')!;
     }
     if (host.indexOf(':') >= 0) {
-      port = int.parse(rightPart(host, ':'));
-      host = leftPart(host, ':');
+      port = int.parse(rightPart(host, ':')!);
+      host = leftPart(host, ':')!;
     }
     to[host] = port;
   });

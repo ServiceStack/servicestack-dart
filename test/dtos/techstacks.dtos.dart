@@ -27,68 +27,68 @@ enum PostType
 
 class Post implements IConvertible
 {
-    int id;
-    int organizationId;
-    int userId;
-    PostType type;
-    int categoryId;
-    String title;
-    String slug;
-    String url;
-    String imageUrl;
+    int? id;
+    int? organizationId;
+    int? userId;
+    PostType? type;
+    int? categoryId;
+    String? title;
+    String? slug;
+    String? url;
+    String? imageUrl;
     // @StringLength(2147483647)
-    String content;
+    String? content;
 
     // @StringLength(2147483647)
-    String contentHtml;
+    String? contentHtml;
 
-    int pinCommentId;
-    List<int> technologyIds;
-    DateTime fromDate;
-    DateTime toDate;
-    String location;
-    String metaType;
-    String meta;
-    bool approved;
-    int upVotes;
-    int downVotes;
-    int points;
-    int views;
-    int favorites;
-    int subscribers;
-    int replyCount;
-    int commentsCount;
-    int wordCount;
-    int reportCount;
-    int linksCount;
-    int linkedToCount;
-    int score;
-    int rank;
-    List<String> labels;
-    List<int> refUserIds;
-    List<String> refLinks;
-    List<int> muteUserIds;
-    DateTime lastCommentDate;
-    int lastCommentId;
-    int lastCommentUserId;
-    DateTime deleted;
-    String deletedBy;
-    DateTime locked;
-    String lockedBy;
-    DateTime hidden;
-    String hiddenBy;
-    String status;
-    DateTime statusDate;
-    String statusBy;
-    bool archived;
-    DateTime bumped;
-    DateTime created;
-    String createdBy;
-    DateTime modified;
-    String modifiedBy;
-    int refId;
-    String refSource;
-    String refUrn;
+    int? pinCommentId;
+    List<int>? technologyIds;
+    DateTime? fromDate;
+    DateTime? toDate;
+    String? location;
+    String? metaType;
+    String? meta;
+    bool? approved;
+    int? upVotes;
+    int? downVotes;
+    int? points;
+    int? views;
+    int? favorites;
+    int? subscribers;
+    int? replyCount;
+    int? commentsCount;
+    int? wordCount;
+    int? reportCount;
+    int? linksCount;
+    int? linkedToCount;
+    int? score;
+    int? rank;
+    List<String>? labels;
+    List<int>? refUserIds;
+    List<String>? refLinks;
+    List<int>? muteUserIds;
+    DateTime? lastCommentDate;
+    int? lastCommentId;
+    int? lastCommentUserId;
+    DateTime? deleted;
+    String? deletedBy;
+    DateTime? locked;
+    String? lockedBy;
+    DateTime? hidden;
+    String? hiddenBy;
+    String? status;
+    DateTime? statusDate;
+    String? statusBy;
+    bool? archived;
+    DateTime? bumped;
+    DateTime? created;
+    String? createdBy;
+    DateTime? modified;
+    String? modifiedBy;
+    int? refId;
+    String? refSource;
+    String? refUrn;
 
     Post({this.id,this.organizationId,this.userId,this.type,this.categoryId,this.title,this.slug,this.url,this.imageUrl,this.content,this.contentHtml,this.pinCommentId,this.technologyIds,this.fromDate,this.toDate,this.location,this.metaType,this.meta,this.approved,this.upVotes,this.downVotes,this.points,this.views,this.favorites,this.subscribers,this.replyCount,this.commentsCount,this.wordCount,this.reportCount,this.linksCount,this.linkedToCount,this.score,this.rank,this.labels,this.refUserIds,this.refLinks,this.muteUserIds,this.lastCommentDate,this.lastCommentId,this.lastCommentUserId,this.deleted,this.deletedBy,this.locked,this.lockedBy,this.hidden,this.hiddenBy,this.status,this.statusDate,this.statusBy,this.archived,this.bumped,this.created,this.createdBy,this.modified,this.modifiedBy,this.refId,this.refSource,this.refUrn});
     Post.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -221,46 +221,46 @@ class Post implements IConvertible
 
 class Organization implements IConvertible
 {
-    int id;
-    String name;
-    String slug;
-    String description;
-    String descriptionHtml;
-    String color;
-    String textColor;
-    String linkColor;
-    String backgroundColor;
-    String backgroundUrl;
-    String logoUrl;
-    String heroUrl;
-    String lang;
-    String defaultPostType;
-    List<String> defaultSubscriptionPostTypes;
-    List<String> postTypes;
-    List<String> moderatorPostTypes;
-    int deletePostsWithReportCount;
-    bool disableInvites;
-    int upVotes;
-    int downVotes;
-    int views;
-    int favorites;
-    int subscribers;
-    int commentsCount;
-    int postsCount;
-    int score;
-    int rank;
-    int refId;
-    String refSource;
-    DateTime hidden;
-    String hiddenBy;
-    DateTime locked;
-    String lockedBy;
-    DateTime deleted;
-    String deletedBy;
-    DateTime created;
-    String createdBy;
-    DateTime modified;
-    String modifiedBy;
+    int? id;
+    String? name;
+    String? slug;
+    String? description;
+    String? descriptionHtml;
+    String? color;
+    String? textColor;
+    String? linkColor;
+    String? backgroundColor;
+    String? backgroundUrl;
+    String? logoUrl;
+    String? heroUrl;
+    String? lang;
+    String? defaultPostType;
+    List<String>? defaultSubscriptionPostTypes;
+    List<String>? postTypes;
+    List<String>? moderatorPostTypes;
+    int? deletePostsWithReportCount;
+    bool? disableInvites;
+    int? upVotes;
+    int? downVotes;
+    int? views;
+    int? favorites;
+    int? subscribers;
+    int? commentsCount;
+    int? postsCount;
+    int? score;
+    int? rank;
+    int? refId;
+    String? refSource;
+    DateTime? hidden;
+    String? hiddenBy;
+    DateTime? locked;
+    String? lockedBy;
+    DateTime? deleted;
+    String? deletedBy;
+    DateTime? created;
+    String? createdBy;
+    DateTime? modified;
+    String? modifiedBy;
 
     Organization({this.id,this.name,this.slug,this.description,this.descriptionHtml,this.color,this.textColor,this.linkColor,this.backgroundColor,this.backgroundUrl,this.logoUrl,this.heroUrl,this.lang,this.defaultPostType,this.defaultSubscriptionPostTypes,this.postTypes,this.moderatorPostTypes,this.deletePostsWithReportCount,this.disableInvites,this.upVotes,this.downVotes,this.views,this.favorites,this.subscribers,this.commentsCount,this.postsCount,this.score,this.rank,this.refId,this.refSource,this.hidden,this.hiddenBy,this.locked,this.lockedBy,this.deleted,this.deletedBy,this.created,this.createdBy,this.modified,this.modifiedBy});
     Organization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -357,10 +357,10 @@ class Organization implements IConvertible
 
 class OrganizationLabel implements IConvertible
 {
-    String slug;
-    int organizationId;
-    String description;
-    String color;
+    String? slug;
+    int? organizationId;
+    String? description;
+    String? color;
 
     OrganizationLabel({this.slug,this.organizationId,this.description,this.color});
     OrganizationLabel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -385,17 +385,17 @@ class OrganizationLabel implements IConvertible
 
 class Category implements IConvertible
 {
-    int id;
-    int organizationId;
-    String name;
-    String slug;
-    String description;
-    String color;
-    List<int> technologyIds;
-    int commentsCount;
-    int postsCount;
-    int score;
-    int rank;
+    int? id;
+    int? organizationId;
+    String? name;
+    String? slug;
+    String? description;
+    String? color;
+    List<int>? technologyIds;
+    int? commentsCount;
+    int? postsCount;
+    int? score;
+    int? rank;
 
     Category({this.id,this.organizationId,this.name,this.slug,this.description,this.color,this.technologyIds,this.commentsCount,this.postsCount,this.score,this.rank});
     Category.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -434,16 +434,16 @@ class Category implements IConvertible
 
 class OrganizationMember implements IConvertible
 {
-    int id;
-    int organizationId;
-    int userId;
-    String userName;
-    bool isOwner;
-    bool isModerator;
-    bool denyAll;
-    bool denyPosts;
-    bool denyComments;
-    String notes;
+    int? id;
+    int? organizationId;
+    int? userId;
+    String? userName;
+    bool? isOwner;
+    bool? isModerator;
+    bool? denyAll;
+    bool? denyPosts;
+    bool? denyComments;
+    String? notes;
 
     OrganizationMember({this.id,this.organizationId,this.userId,this.userName,this.isOwner,this.isModerator,this.denyAll,this.denyPosts,this.denyComments,this.notes});
     OrganizationMember.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -480,11 +480,11 @@ class OrganizationMember implements IConvertible
 
 class OrganizationMemberInvite implements IConvertible
 {
-    int id;
-    int organizationId;
-    int userId;
-    String userName;
-    DateTime dismissed;
+    int? id;
+    int? organizationId;
+    int? userId;
+    String? userName;
+    DateTime? dismissed;
 
     OrganizationMemberInvite({this.id,this.organizationId,this.userId,this.userName,this.dismissed});
     OrganizationMemberInvite.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -521,21 +521,21 @@ enum FlagType
 
 class PostReportInfo implements IConvertible
 {
-    int id;
-    int organizationId;
-    int postId;
-    int userId;
-    String userName;
-    FlagType flagType;
-    String reportNotes;
-    DateTime created;
-    DateTime acknowledged;
-    String acknowledgedBy;
-    DateTime dismissed;
-    String dismissedBy;
-    String title;
-    int reportCount;
-    String createdBy;
+    int? id;
+    int? organizationId;
+    int? postId;
+    int? userId;
+    String? userName;
+    FlagType? flagType;
+    String? reportNotes;
+    DateTime? created;
+    DateTime? acknowledged;
+    String? acknowledgedBy;
+    DateTime? dismissed;
+    String? dismissedBy;
+    String? title;
+    int? reportCount;
+    String? createdBy;
 
     PostReportInfo({this.id,this.organizationId,this.postId,this.userId,this.userName,this.flagType,this.reportNotes,this.created,this.acknowledged,this.acknowledgedBy,this.dismissed,this.dismissedBy,this.title,this.reportCount,this.createdBy});
     PostReportInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -582,22 +582,22 @@ class PostReportInfo implements IConvertible
 
 class PostCommentReportInfo implements IConvertible
 {
-    int id;
-    int organizationId;
-    int postId;
-    int postCommentId;
-    int userId;
-    String userName;
-    FlagType flagType;
-    String reportNotes;
-    DateTime created;
-    DateTime acknowledged;
-    String acknowledgedBy;
-    DateTime dismissed;
-    String dismissedBy;
-    String contentHtml;
-    int reportCount;
-    String createdBy;
+    int? id;
+    int? organizationId;
+    int? postId;
+    int? postCommentId;
+    int? userId;
+    String? userName;
+    FlagType? flagType;
+    String? reportNotes;
+    DateTime? created;
+    DateTime? acknowledged;
+    String? acknowledgedBy;
+    DateTime? dismissed;
+    String? dismissedBy;
+    String? contentHtml;
+    int? reportCount;
+    String? createdBy;
 
     PostCommentReportInfo({this.id,this.organizationId,this.postId,this.postCommentId,this.userId,this.userName,this.flagType,this.reportNotes,this.created,this.acknowledged,this.acknowledgedBy,this.dismissed,this.dismissedBy,this.contentHtml,this.reportCount,this.createdBy});
     PostCommentReportInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -646,31 +646,31 @@ class PostCommentReportInfo implements IConvertible
 
 class PostComment implements IConvertible
 {
-    int id;
-    int postId;
-    int userId;
-    int replyId;
+    int? id;
+    int? postId;
+    int? userId;
+    int? replyId;
     // @StringLength(2147483647)
-    String content;
+    String? content;
 
     // @StringLength(2147483647)
-    String contentHtml;
+    String? contentHtml;
 
-    int score;
-    int rank;
-    int upVotes;
-    int downVotes;
-    int favorites;
-    int wordCount;
-    int reportCount;
-    DateTime deleted;
-    DateTime hidden;
-    DateTime modified;
-    DateTime created;
-    String createdBy;
-    int refId;
-    String refSource;
-    String refUrn;
+    int? score;
+    int? rank;
+    int? upVotes;
+    int? downVotes;
+    int? favorites;
+    int? wordCount;
+    int? reportCount;
+    DateTime? deleted;
+    DateTime? hidden;
+    DateTime? modified;
+    DateTime? created;
+    String? createdBy;
+    int? refId;
+    String? refSource;
+    String? refUrn;
 
     PostComment({this.id,this.postId,this.userId,this.replyId,this.content,this.contentHtml,this.score,this.rank,this.upVotes,this.downVotes,this.favorites,this.wordCount,this.reportCount,this.deleted,this.hidden,this.modified,this.created,this.createdBy,this.refId,this.refSource,this.refUrn});
     PostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -735,12 +735,12 @@ enum ReportAction
 
 class UserRef implements IConvertible
 {
-    int id;
-    String userName;
-    String email;
-    int refId;
-    String refSource;
-    String refUrn;
+    int? id;
+    String? userName;
+    String? email;
+    int? refId;
+    String? refSource;
+    String? refUrn;
 
     UserRef({this.id,this.userName,this.email,this.refId,this.refSource,this.refUrn});
     UserRef.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -769,15 +769,15 @@ class UserRef implements IConvertible
 
 class OrganizationSubscription implements IConvertible
 {
-    int id;
-    int organizationId;
-    int userId;
-    String userName;
-    List<String> postTypes;
-    int frequencyDays;
-    int lastSyncedId;
-    DateTime lastSynced;
-    DateTime created;
+    int? id;
+    int? organizationId;
+    int? userId;
+    String? userName;
+    List<String>? postTypes;
+    int? frequencyDays;
+    int? lastSyncedId;
+    DateTime? lastSynced;
+    DateTime? created;
 
     OrganizationSubscription({this.id,this.organizationId,this.userId,this.userName,this.postTypes,this.frequencyDays,this.lastSyncedId,this.lastSynced,this.created});
     OrganizationSubscription.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -812,30 +812,30 @@ class OrganizationSubscription implements IConvertible
 
 abstract class TechnologyStackBase
 {
-    int id;
-    String name;
-    String vendorName;
-    String description;
-    String appUrl;
-    String screenshotUrl;
-    DateTime created;
-    String createdBy;
-    DateTime lastModified;
-    String lastModifiedBy;
-    bool isLocked;
-    String ownerId;
-    String slug;
+    int? id;
+    String? name;
+    String? vendorName;
+    String? description;
+    String? appUrl;
+    String? screenshotUrl;
+    DateTime? created;
+    String? createdBy;
+    DateTime? lastModified;
+    String? lastModifiedBy;
+    bool? isLocked;
+    String? ownerId;
+    String? slug;
     // @StringLength(2147483647)
-    String details;
+    String? details;
 
     // @StringLength(2147483647)
-    String detailsHtml;
+    String? detailsHtml;
 
-    DateTime lastStatusUpdate;
-    int organizationId;
-    int commentsPostId;
-    int viewCount;
-    int favCount;
+    DateTime? lastStatusUpdate;
+    int? organizationId;
+    int? commentsPostId;
+    int? viewCount;
+    int? favCount;
 
     TechnologyStackBase({this.id,this.name,this.vendorName,this.description,this.appUrl,this.screenshotUrl,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.isLocked,this.ownerId,this.slug,this.details,this.detailsHtml,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
     TechnologyStackBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -918,27 +918,27 @@ enum TechnologyTier
 
 abstract class TechnologyBase
 {
-    int id;
-    String name;
-    String vendorName;
-    String vendorUrl;
-    String productUrl;
-    String logoUrl;
-    String description;
-    DateTime created;
-    String createdBy;
-    DateTime lastModified;
-    String lastModifiedBy;
-    String ownerId;
-    String slug;
-    bool logoApproved;
-    bool isLocked;
-    TechnologyTier tier;
-    DateTime lastStatusUpdate;
-    int organizationId;
-    int commentsPostId;
-    int viewCount;
-    int favCount;
+    int? id;
+    String? name;
+    String? vendorName;
+    String? vendorUrl;
+    String? productUrl;
+    String? logoUrl;
+    String? description;
+    DateTime? created;
+    String? createdBy;
+    DateTime? lastModified;
+    String? lastModifiedBy;
+    String? ownerId;
+    String? slug;
+    bool? logoApproved;
+    bool? isLocked;
+    TechnologyTier? tier;
+    DateTime? lastStatusUpdate;
+    int? organizationId;
+    int? commentsPostId;
+    int? viewCount;
+    int? favCount;
 
     TechnologyBase({this.id,this.name,this.vendorName,this.vendorUrl,this.productUrl,this.logoUrl,this.description,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.ownerId,this.slug,this.logoApproved,this.isLocked,this.tier,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
     TechnologyBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1010,22 +1010,22 @@ class Technology extends TechnologyBase implements IConvertible
 
 class UserActivity implements IConvertible
 {
-    int id;
-    String userName;
-    int karma;
-    int technologyCount;
-    int techStacksCount;
-    int postsCount;
-    int postUpVotes;
-    int postDownVotes;
-    int commentUpVotes;
-    int commentDownVotes;
-    int postCommentsCount;
-    int pinnedCommentCount;
-    int postReportCount;
-    int postCommentReportCount;
-    DateTime created;
-    DateTime modified;
+    int? id;
+    String? userName;
+    int? karma;
+    int? technologyCount;
+    int? techStacksCount;
+    int? postsCount;
+    int? postUpVotes;
+    int? postDownVotes;
+    int? commentUpVotes;
+    int? commentDownVotes;
+    int? postCommentsCount;
+    int? pinnedCommentCount;
+    int? postReportCount;
+    int? postCommentReportCount;
+    DateTime? created;
+    DateTime? modified;
 
     UserActivity({this.id,this.userName,this.karma,this.technologyCount,this.techStacksCount,this.postsCount,this.postUpVotes,this.postDownVotes,this.commentUpVotes,this.commentDownVotes,this.postCommentsCount,this.pinnedCommentCount,this.postReportCount,this.postCommentReportCount,this.created,this.modified});
     UserActivity.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1082,8 +1082,8 @@ enum Frequency
 
 class TechnologyHistory extends TechnologyBase implements IConvertible
 {
-    int technologyId;
-    String operation;
+    int? technologyId;
+    String? operation;
 
     TechnologyHistory({this.technologyId,this.operation});
     TechnologyHistory.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1109,9 +1109,9 @@ abstract class IRegisterStats
 
 class TechnologyStackHistory extends TechnologyStackBase implements IConvertible
 {
-    int technologyStackId;
-    String operation;
-    List<int> technologyIds;
+    int? technologyStackId;
+    String? operation;
+    List<int>? technologyIds;
 
     TechnologyStackHistory({this.technologyStackId,this.operation,this.technologyIds});
     TechnologyStackHistory.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1135,9 +1135,9 @@ class TechnologyStackHistory extends TechnologyStackBase implements IConvertible
 
 class UserInfo implements IConvertible
 {
-    String userName;
-    String avatarUrl;
-    int stacksCount;
+    String? userName;
+    String? avatarUrl;
+    int? stacksCount;
 
     UserInfo({this.userName,this.avatarUrl,this.stacksCount});
     UserInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1160,11 +1160,11 @@ class UserInfo implements IConvertible
 
 class TechnologyInfo implements IConvertible
 {
-    TechnologyTier tier;
-    String slug;
-    String name;
-    String logoUrl;
-    int stacksCount;
+    TechnologyTier? tier;
+    String? slug;
+    String? name;
+    String? logoUrl;
+    int? stacksCount;
 
     TechnologyInfo({this.tier,this.slug,this.name,this.logoUrl,this.stacksCount});
     TechnologyInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1191,9 +1191,9 @@ class TechnologyInfo implements IConvertible
 
 class TechnologyInStack extends TechnologyBase implements IConvertible
 {
-    int technologyId;
-    int technologyStackId;
-    String justification;
+    int? technologyId;
+    int? technologyStackId;
+    String? justification;
 
     TechnologyInStack({this.technologyId,this.technologyStackId,this.justification});
     TechnologyInStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1217,7 +1217,7 @@ class TechnologyInStack extends TechnologyBase implements IConvertible
 
 class TechStackDetails extends TechnologyStackBase implements IConvertible
 {
-    List<TechnologyInStack> technologyChoices;
+    List<TechnologyInStack>? technologyChoices;
 
     TechStackDetails({this.technologyChoices});
     TechStackDetails.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1237,8 +1237,8 @@ class TechStackDetails extends TechnologyStackBase implements IConvertible
 
 class LabelInfo implements IConvertible
 {
-    String slug;
-    String color;
+    String? slug;
+    String? color;
 
     LabelInfo({this.slug,this.color});
     LabelInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1259,9 +1259,9 @@ class LabelInfo implements IConvertible
 
 class CategoryInfo implements IConvertible
 {
-    int id;
-    String name;
-    String slug;
+    int? id;
+    String? name;
+    String? slug;
 
     CategoryInfo({this.id,this.name,this.slug});
     CategoryInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1284,22 +1284,22 @@ class CategoryInfo implements IConvertible
 
 class OrganizationInfo implements IConvertible
 {
-    int id;
-    String name;
-    String slug;
-    int refId;
-    String refSource;
-    int upVotes;
-    int downVotes;
-    int membersCount;
-    int rank;
-    bool disableInvites;
-    String lang;
-    List<String> postTypes;
-    List<String> moderatorPostTypes;
-    DateTime locked;
-    List<LabelInfo> labels;
-    List<CategoryInfo> categories;
+    int? id;
+    String? name;
+    String? slug;
+    int? refId;
+    String? refSource;
+    int? upVotes;
+    int? downVotes;
+    int? membersCount;
+    int? rank;
+    bool? disableInvites;
+    String? lang;
+    List<String>? postTypes;
+    List<String>? moderatorPostTypes;
+    DateTime? locked;
+    List<LabelInfo>? labels;
+    List<CategoryInfo>? categories;
 
     OrganizationInfo({this.id,this.name,this.slug,this.refId,this.refSource,this.upVotes,this.downVotes,this.membersCount,this.rank,this.disableInvites,this.lang,this.postTypes,this.moderatorPostTypes,this.locked,this.labels,this.categories});
     OrganizationInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1350,13 +1350,13 @@ class OrganizationInfo implements IConvertible
 class Option implements IConvertible
 {
     // @DataMember(Name="name")
-    String name;
+    String? name;
 
     // @DataMember(Name="title")
-    String title;
+    String? title;
 
     // @DataMember(Name="value")
-    TechnologyTier value;
+    TechnologyTier? value;
 
     Option({this.name,this.title,this.value});
     Option.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1379,12 +1379,12 @@ class Option implements IConvertible
 
 class UserVoiceUser implements IConvertible
 {
-    int id;
-    String name;
-    String email;
-    String avatarUrl;
-    DateTime createdAt;
-    DateTime updatedAt;
+    int? id;
+    String? name;
+    String? email;
+    String? avatarUrl;
+    DateTime? createdAt;
+    DateTime? updatedAt;
 
     UserVoiceUser({this.id,this.name,this.email,this.avatarUrl,this.createdAt,this.updatedAt});
     UserVoiceUser.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1413,10 +1413,10 @@ class UserVoiceUser implements IConvertible
 
 class UserVoiceComment implements IConvertible
 {
-    String text;
-    String formattedText;
-    DateTime createdAt;
-    UserVoiceUser creator;
+    String? text;
+    String? formattedText;
+    DateTime? createdAt;
+    UserVoiceUser? creator;
 
     UserVoiceComment({this.text,this.formattedText,this.createdAt,this.creator});
     UserVoiceComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1441,16 +1441,16 @@ class UserVoiceComment implements IConvertible
 
 class GetOrganizationResponse implements IConvertible
 {
-    int cache;
-    int id;
-    String slug;
-    Organization organization;
-    List<OrganizationLabel> labels;
-    List<Category> categories;
-    List<OrganizationMember> owners;
-    List<OrganizationMember> moderators;
-    int membersCount;
-    ResponseStatus responseStatus;
+    int? cache;
+    int? id;
+    String? slug;
+    Organization? organization;
+    List<OrganizationLabel>? labels;
+    List<Category>? categories;
+    List<OrganizationMember>? owners;
+    List<OrganizationMember>? moderators;
+    int? membersCount;
+    ResponseStatus? responseStatus;
 
     GetOrganizationResponse({this.cache,this.id,this.slug,this.organization,this.labels,this.categories,this.owners,this.moderators,this.membersCount,this.responseStatus});
     GetOrganizationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1487,9 +1487,9 @@ class GetOrganizationResponse implements IConvertible
 
 class GetOrganizationMembersResponse implements IConvertible
 {
-    int organizationId;
-    List<OrganizationMember> results;
-    ResponseStatus responseStatus;
+    int? organizationId;
+    List<OrganizationMember>? results;
+    ResponseStatus? responseStatus;
 
     GetOrganizationMembersResponse({this.organizationId,this.results,this.responseStatus});
     GetOrganizationMembersResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1512,12 +1512,12 @@ class GetOrganizationMembersResponse implements IConvertible
 
 class GetOrganizationAdminResponse implements IConvertible
 {
-    List<OrganizationLabel> labels;
-    List<OrganizationMember> members;
-    List<OrganizationMemberInvite> memberInvites;
-    List<PostReportInfo> reportedPosts;
-    List<PostCommentReportInfo> reportedPostComments;
-    ResponseStatus responseStatus;
+    List<OrganizationLabel>? labels;
+    List<OrganizationMember>? members;
+    List<OrganizationMemberInvite>? memberInvites;
+    List<PostReportInfo>? reportedPosts;
+    List<PostCommentReportInfo>? reportedPostComments;
+    ResponseStatus? responseStatus;
 
     GetOrganizationAdminResponse({this.labels,this.members,this.memberInvites,this.reportedPosts,this.reportedPostComments,this.responseStatus});
     GetOrganizationAdminResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1546,11 +1546,11 @@ class GetOrganizationAdminResponse implements IConvertible
 
 class CreateOrganizationForTechnologyResponse implements IConvertible
 {
-    int organizationId;
-    String organizationSlug;
-    int commentsPostId;
-    String commentsPostSlug;
-    ResponseStatus responseStatus;
+    int? organizationId;
+    String? organizationSlug;
+    int? commentsPostId;
+    String? commentsPostSlug;
+    ResponseStatus? responseStatus;
 
     CreateOrganizationForTechnologyResponse({this.organizationId,this.organizationSlug,this.commentsPostId,this.commentsPostSlug,this.responseStatus});
     CreateOrganizationForTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1577,9 +1577,9 @@ class CreateOrganizationForTechnologyResponse implements IConvertible
 
 class CreateOrganizationResponse implements IConvertible
 {
-    int id;
-    String slug;
-    ResponseStatus responseStatus;
+    int? id;
+    String? slug;
+    ResponseStatus? responseStatus;
 
     CreateOrganizationResponse({this.id,this.slug,this.responseStatus});
     CreateOrganizationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1602,7 +1602,7 @@ class CreateOrganizationResponse implements IConvertible
 
 class UpdateOrganizationResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UpdateOrganizationResponse({this.responseStatus});
     UpdateOrganizationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1621,7 +1621,7 @@ class UpdateOrganizationResponse implements IConvertible
 
 class OrganizationLabelResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     OrganizationLabelResponse({this.responseStatus});
     OrganizationLabelResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1640,9 +1640,9 @@ class OrganizationLabelResponse implements IConvertible
 
 class AddOrganizationCategoryResponse implements IConvertible
 {
-    int id;
-    String slug;
-    ResponseStatus responseStatus;
+    int? id;
+    String? slug;
+    ResponseStatus? responseStatus;
 
     AddOrganizationCategoryResponse({this.id,this.slug,this.responseStatus});
     AddOrganizationCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1665,7 +1665,7 @@ class AddOrganizationCategoryResponse implements IConvertible
 
 class UpdateOrganizationCategoryResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UpdateOrganizationCategoryResponse({this.responseStatus});
     UpdateOrganizationCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1684,7 +1684,7 @@ class UpdateOrganizationCategoryResponse implements IConvertible
 
 class AddOrganizationMemberResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     AddOrganizationMemberResponse({this.responseStatus});
     AddOrganizationMemberResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1703,7 +1703,7 @@ class AddOrganizationMemberResponse implements IConvertible
 
 class UpdateOrganizationMemberResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UpdateOrganizationMemberResponse({this.responseStatus});
     UpdateOrganizationMemberResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1722,9 +1722,9 @@ class UpdateOrganizationMemberResponse implements IConvertible
 
 class SetOrganizationMembersResponse implements IConvertible
 {
-    List<int> userIdsAdded;
-    List<int> userIdsRemoved;
-    ResponseStatus responseStatus;
+    List<int>? userIdsAdded;
+    List<int>? userIdsRemoved;
+    ResponseStatus? responseStatus;
 
     SetOrganizationMembersResponse({this.userIdsAdded,this.userIdsRemoved,this.responseStatus});
     SetOrganizationMembersResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1747,8 +1747,8 @@ class SetOrganizationMembersResponse implements IConvertible
 
 class GetOrganizationMemberInvitesResponse implements IConvertible
 {
-    List<OrganizationMemberInvite> results;
-    ResponseStatus responseStatus;
+    List<OrganizationMemberInvite>? results;
+    ResponseStatus? responseStatus;
 
     GetOrganizationMemberInvitesResponse({this.results,this.responseStatus});
     GetOrganizationMemberInvitesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1769,8 +1769,8 @@ class GetOrganizationMemberInvitesResponse implements IConvertible
 
 class RequestOrganizationMemberInviteResponse implements IConvertible
 {
-    int organizationId;
-    ResponseStatus responseStatus;
+    int? organizationId;
+    ResponseStatus? responseStatus;
 
     RequestOrganizationMemberInviteResponse({this.organizationId,this.responseStatus});
     RequestOrganizationMemberInviteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1791,7 +1791,7 @@ class RequestOrganizationMemberInviteResponse implements IConvertible
 
 class UpdateOrganizationMemberInviteResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UpdateOrganizationMemberInviteResponse({this.responseStatus});
     UpdateOrganizationMemberInviteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1810,10 +1810,10 @@ class UpdateOrganizationMemberInviteResponse implements IConvertible
 
 class GetPostResponse implements IConvertible
 {
-    int cache;
-    Post post;
-    List<PostComment> comments;
-    ResponseStatus responseStatus;
+    int? cache;
+    Post? post;
+    List<PostComment>? comments;
+    ResponseStatus? responseStatus;
 
     GetPostResponse({this.cache,this.post,this.comments,this.responseStatus});
     GetPostResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1838,9 +1838,9 @@ class GetPostResponse implements IConvertible
 
 class CreatePostResponse implements IConvertible
 {
-    int id;
-    String slug;
-    ResponseStatus responseStatus;
+    int? id;
+    String? slug;
+    ResponseStatus? responseStatus;
 
     CreatePostResponse({this.id,this.slug,this.responseStatus});
     CreatePostResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1863,7 +1863,7 @@ class CreatePostResponse implements IConvertible
 
 class UpdatePostResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UpdatePostResponse({this.responseStatus});
     UpdatePostResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1882,8 +1882,8 @@ class UpdatePostResponse implements IConvertible
 
 class DeletePostResponse implements IConvertible
 {
-    int id;
-    ResponseStatus responseStatus;
+    int? id;
+    ResponseStatus? responseStatus;
 
     DeletePostResponse({this.id,this.responseStatus});
     DeletePostResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1904,9 +1904,9 @@ class DeletePostResponse implements IConvertible
 
 class CreatePostCommentResponse implements IConvertible
 {
-    int id;
-    int postId;
-    ResponseStatus responseStatus;
+    int? id;
+    int? postId;
+    ResponseStatus? responseStatus;
 
     CreatePostCommentResponse({this.id,this.postId,this.responseStatus});
     CreatePostCommentResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1929,7 +1929,7 @@ class CreatePostCommentResponse implements IConvertible
 
 class UpdatePostCommentResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UpdatePostCommentResponse({this.responseStatus});
     UpdatePostCommentResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1948,9 +1948,9 @@ class UpdatePostCommentResponse implements IConvertible
 
 class DeletePostCommentResponse implements IConvertible
 {
-    int id;
-    int postId;
-    ResponseStatus responseStatus;
+    int? id;
+    int? postId;
+    ResponseStatus? responseStatus;
 
     DeletePostCommentResponse({this.id,this.postId,this.responseStatus});
     DeletePostCommentResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1973,9 +1973,9 @@ class DeletePostCommentResponse implements IConvertible
 
 class GetUserPostCommentVotesResponse implements IConvertible
 {
-    int postId;
-    List<int> upVotedCommentIds;
-    List<int> downVotedCommentIds;
+    int? postId;
+    List<int>? upVotedCommentIds;
+    List<int>? downVotedCommentIds;
 
     GetUserPostCommentVotesResponse({this.postId,this.upVotedCommentIds,this.downVotedCommentIds});
     GetUserPostCommentVotesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -1998,7 +1998,7 @@ class GetUserPostCommentVotesResponse implements IConvertible
 
 class PinPostCommentResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     PinPostCommentResponse({this.responseStatus});
     PinPostCommentResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2017,8 +2017,8 @@ class PinPostCommentResponse implements IConvertible
 
 class GetUsersByEmailsResponse implements IConvertible
 {
-    List<UserRef> results;
-    ResponseStatus responseStatus;
+    List<UserRef>? results;
+    ResponseStatus? responseStatus;
 
     GetUsersByEmailsResponse({this.results,this.responseStatus});
     GetUsersByEmailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2039,10 +2039,10 @@ class GetUsersByEmailsResponse implements IConvertible
 
 class GetUserPostActivityResponse implements IConvertible
 {
-    List<int> upVotedPostIds;
-    List<int> downVotedPostIds;
-    List<int> favoritePostIds;
-    ResponseStatus responseStatus;
+    List<int>? upVotedPostIds;
+    List<int>? downVotedPostIds;
+    List<int>? favoritePostIds;
+    ResponseStatus? responseStatus;
 
     GetUserPostActivityResponse({this.upVotedPostIds,this.downVotedPostIds,this.favoritePostIds,this.responseStatus});
     GetUserPostActivityResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2067,9 +2067,9 @@ class GetUserPostActivityResponse implements IConvertible
 
 class GetUserOrganizationsResponse implements IConvertible
 {
-    List<OrganizationMember> members;
-    List<OrganizationMemberInvite> memberInvites;
-    List<OrganizationSubscription> subscriptions;
+    List<OrganizationMember>? members;
+    List<OrganizationMemberInvite>? memberInvites;
+    List<OrganizationSubscription>? subscriptions;
 
     GetUserOrganizationsResponse({this.members,this.memberInvites,this.subscriptions});
     GetUserOrganizationsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2092,7 +2092,7 @@ class GetUserOrganizationsResponse implements IConvertible
 
 class UserPostVoteResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UserPostVoteResponse({this.responseStatus});
     UserPostVoteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2111,7 +2111,7 @@ class UserPostVoteResponse implements IConvertible
 
 class UserPostFavoriteResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UserPostFavoriteResponse({this.responseStatus});
     UserPostFavoriteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2130,7 +2130,7 @@ class UserPostFavoriteResponse implements IConvertible
 
 class UserPostReportResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UserPostReportResponse({this.responseStatus});
     UserPostReportResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2149,7 +2149,7 @@ class UserPostReportResponse implements IConvertible
 
 class UserPostCommentVoteResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UserPostCommentVoteResponse({this.responseStatus});
     UserPostCommentVoteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2168,7 +2168,7 @@ class UserPostCommentVoteResponse implements IConvertible
 
 class UserPostCommentReportResponse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     UserPostCommentReportResponse({this.responseStatus});
     UserPostCommentReportResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2187,35 +2187,35 @@ class UserPostCommentReportResponse implements IConvertible
 
 class SessionInfoResponse implements IConvertible
 {
-    DateTime created;
-    String id;
-    String referrerUrl;
-    String userAuthId;
-    String userAuthName;
-    String userName;
-    String displayName;
-    String firstName;
-    String lastName;
-    String email;
-    DateTime createdAt;
-    DateTime lastModified;
-    List<String> roles;
-    List<String> permissions;
-    bool isAuthenticated;
-    String authProvider;
-    String profileUrl;
-    String githubProfileUrl;
-    String twitterProfileUrl;
-    String accessToken;
-    String avatarUrl;
-    List<TechnologyStack> techStacks;
-    List<TechnologyStack> favoriteTechStacks;
-    List<Technology> favoriteTechnologies;
-    UserActivity userActivity;
-    List<OrganizationMember> members;
-    List<OrganizationMemberInvite> memberInvites;
-    List<OrganizationSubscription> subscriptions;
-    ResponseStatus responseStatus;
+    DateTime? created;
+    String? id;
+    String? referrerUrl;
+    String? userAuthId;
+    String? userAuthName;
+    String? userName;
+    String? displayName;
+    String? firstName;
+    String? lastName;
+    String? email;
+    DateTime? createdAt;
+    DateTime? lastModified;
+    List<String>? roles;
+    List<String>? permissions;
+    bool? isAuthenticated;
+    String? authProvider;
+    String? profileUrl;
+    String? githubProfileUrl;
+    String? twitterProfileUrl;
+    String? accessToken;
+    String? avatarUrl;
+    List<TechnologyStack>? techStacks;
+    List<TechnologyStack>? favoriteTechStacks;
+    List<Technology>? favoriteTechnologies;
+    UserActivity? userActivity;
+    List<OrganizationMember>? members;
+    List<OrganizationMemberInvite>? memberInvites;
+    List<OrganizationSubscription>? subscriptions;
+    ResponseStatus? responseStatus;
 
     SessionInfoResponse({this.created,this.id,this.referrerUrl,this.userAuthId,this.userAuthName,this.userName,this.displayName,this.firstName,this.lastName,this.email,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.authProvider,this.profileUrl,this.githubProfileUrl,this.twitterProfileUrl,this.accessToken,this.avatarUrl,this.techStacks,this.favoriteTechStacks,this.favoriteTechnologies,this.userActivity,this.members,this.memberInvites,this.subscriptions,this.responseStatus});
     SessionInfoResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2290,7 +2290,7 @@ class SessionInfoResponse implements IConvertible
 
 class GetTechnologyPreviousVersionsResponse implements IConvertible
 {
-    List<TechnologyHistory> results;
+    List<TechnologyHistory>? results;
 
     GetTechnologyPreviousVersionsResponse({this.results});
     GetTechnologyPreviousVersionsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2309,8 +2309,8 @@ class GetTechnologyPreviousVersionsResponse implements IConvertible
 
 class GetAllTechnologiesResponse implements IConvertible
 {
-    List<Technology> results;
-    int total;
+    List<Technology>? results;
+    int? total;
 
     GetAllTechnologiesResponse({this.results,this.total});
     GetAllTechnologiesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2331,10 +2331,10 @@ class GetAllTechnologiesResponse implements IConvertible
 
 class GetTechnologyResponse implements IConvertible
 {
-    DateTime created;
-    Technology technology;
-    List<TechnologyStack> technologyStacks;
-    ResponseStatus responseStatus;
+    DateTime? created;
+    Technology? technology;
+    List<TechnologyStack>? technologyStacks;
+    ResponseStatus? responseStatus;
 
     GetTechnologyResponse({this.created,this.technology,this.technologyStacks,this.responseStatus});
     GetTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2359,8 +2359,8 @@ class GetTechnologyResponse implements IConvertible
 
 class GetTechnologyFavoriteDetailsResponse implements IConvertible
 {
-    List<String> users;
-    int favoriteCount;
+    List<String>? users;
+    int? favoriteCount;
 
     GetTechnologyFavoriteDetailsResponse({this.users,this.favoriteCount});
     GetTechnologyFavoriteDetailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2381,8 +2381,8 @@ class GetTechnologyFavoriteDetailsResponse implements IConvertible
 
 class CreateTechnologyResponse implements IConvertible
 {
-    Technology result;
-    ResponseStatus responseStatus;
+    Technology? result;
+    ResponseStatus? responseStatus;
 
     CreateTechnologyResponse({this.result,this.responseStatus});
     CreateTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2403,8 +2403,8 @@ class CreateTechnologyResponse implements IConvertible
 
 class UpdateTechnologyResponse implements IConvertible
 {
-    Technology result;
-    ResponseStatus responseStatus;
+    Technology? result;
+    ResponseStatus? responseStatus;
 
     UpdateTechnologyResponse({this.result,this.responseStatus});
     UpdateTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2425,8 +2425,8 @@ class UpdateTechnologyResponse implements IConvertible
 
 class DeleteTechnologyResponse implements IConvertible
 {
-    Technology result;
-    ResponseStatus responseStatus;
+    Technology? result;
+    ResponseStatus? responseStatus;
 
     DeleteTechnologyResponse({this.result,this.responseStatus});
     DeleteTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2447,7 +2447,7 @@ class DeleteTechnologyResponse implements IConvertible
 
 class GetTechnologyStackPreviousVersionsResponse implements IConvertible
 {
-    List<TechnologyStackHistory> results;
+    List<TechnologyStackHistory>? results;
 
     GetTechnologyStackPreviousVersionsResponse({this.results});
     GetTechnologyStackPreviousVersionsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2466,10 +2466,10 @@ class GetTechnologyStackPreviousVersionsResponse implements IConvertible
 
 class GetPageStatsResponse implements IConvertible
 {
-    String type;
-    String slug;
-    int viewCount;
-    int favCount;
+    String? type;
+    String? slug;
+    int? viewCount;
+    int? favCount;
 
     GetPageStatsResponse({this.type,this.slug,this.viewCount,this.favCount});
     GetPageStatsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2494,8 +2494,8 @@ class GetPageStatsResponse implements IConvertible
 
 class HourlyTaskResponse implements IConvertible
 {
-    Map<String,String> meta;
-    ResponseStatus responseStatus;
+    Map<String,String>? meta;
+    ResponseStatus? responseStatus;
 
     HourlyTaskResponse({this.meta,this.responseStatus});
     HourlyTaskResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2516,14 +2516,14 @@ class HourlyTaskResponse implements IConvertible
 
 class OverviewResponse implements IConvertible
 {
-    DateTime created;
-    List<UserInfo> topUsers;
-    List<TechnologyInfo> topTechnologies;
-    List<TechStackDetails> latestTechStacks;
-    List<TechnologyStack> popularTechStacks;
-    List<OrganizationInfo> allOrganizations;
-    Map<String,List<TechnologyInfo>> topTechnologiesByTier;
-    ResponseStatus responseStatus;
+    DateTime? created;
+    List<UserInfo>? topUsers;
+    List<TechnologyInfo>? topTechnologies;
+    List<TechStackDetails>? latestTechStacks;
+    List<TechnologyStack>? popularTechStacks;
+    List<OrganizationInfo>? allOrganizations;
+    Map<String,List<TechnologyInfo>>? topTechnologiesByTier;
+    ResponseStatus? responseStatus;
 
     OverviewResponse({this.created,this.topUsers,this.topTechnologies,this.latestTechStacks,this.popularTechStacks,this.allOrganizations,this.topTechnologiesByTier,this.responseStatus});
     OverviewResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2556,10 +2556,10 @@ class OverviewResponse implements IConvertible
 
 class AppOverviewResponse implements IConvertible
 {
-    DateTime created;
-    List<Option> allTiers;
-    List<TechnologyInfo> topTechnologies;
-    ResponseStatus responseStatus;
+    DateTime? created;
+    List<Option>? allTiers;
+    List<TechnologyInfo>? topTechnologies;
+    ResponseStatus? responseStatus;
 
     AppOverviewResponse({this.created,this.allTiers,this.topTechnologies,this.responseStatus});
     AppOverviewResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2584,8 +2584,8 @@ class AppOverviewResponse implements IConvertible
 
 class GetAllTechnologyStacksResponse implements IConvertible
 {
-    List<TechnologyStack> results;
-    int total;
+    List<TechnologyStack>? results;
+    int? total;
 
     GetAllTechnologyStacksResponse({this.results,this.total});
     GetAllTechnologyStacksResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2606,9 +2606,9 @@ class GetAllTechnologyStacksResponse implements IConvertible
 
 class GetTechnologyStackResponse implements IConvertible
 {
-    DateTime created;
-    TechStackDetails result;
-    ResponseStatus responseStatus;
+    DateTime? created;
+    TechStackDetails? result;
+    ResponseStatus? responseStatus;
 
     GetTechnologyStackResponse({this.created,this.result,this.responseStatus});
     GetTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2631,8 +2631,8 @@ class GetTechnologyStackResponse implements IConvertible
 
 class GetTechnologyStackFavoriteDetailsResponse implements IConvertible
 {
-    List<String> users;
-    int favoriteCount;
+    List<String>? users;
+    int? favoriteCount;
 
     GetTechnologyStackFavoriteDetailsResponse({this.users,this.favoriteCount});
     GetTechnologyStackFavoriteDetailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2653,9 +2653,9 @@ class GetTechnologyStackFavoriteDetailsResponse implements IConvertible
 
 class GetConfigResponse implements IConvertible
 {
-    List<Option> allTiers;
-    List<Option> allPostTypes;
-    List<Option> allFlagTypes;
+    List<Option>? allTiers;
+    List<Option>? allPostTypes;
+    List<Option>? allFlagTypes;
 
     GetConfigResponse({this.allTiers,this.allPostTypes,this.allFlagTypes});
     GetConfigResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2678,8 +2678,8 @@ class GetConfigResponse implements IConvertible
 
 class CreateTechnologyStackResponse implements IConvertible
 {
-    TechStackDetails result;
-    ResponseStatus responseStatus;
+    TechStackDetails? result;
+    ResponseStatus? responseStatus;
 
     CreateTechnologyStackResponse({this.result,this.responseStatus});
     CreateTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2700,8 +2700,8 @@ class CreateTechnologyStackResponse implements IConvertible
 
 class UpdateTechnologyStackResponse implements IConvertible
 {
-    TechStackDetails result;
-    ResponseStatus responseStatus;
+    TechStackDetails? result;
+    ResponseStatus? responseStatus;
 
     UpdateTechnologyStackResponse({this.result,this.responseStatus});
     UpdateTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2722,8 +2722,8 @@ class UpdateTechnologyStackResponse implements IConvertible
 
 class DeleteTechnologyStackResponse implements IConvertible
 {
-    TechStackDetails result;
-    ResponseStatus responseStatus;
+    TechStackDetails? result;
+    ResponseStatus? responseStatus;
 
     DeleteTechnologyStackResponse({this.result,this.responseStatus});
     DeleteTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2744,7 +2744,7 @@ class DeleteTechnologyStackResponse implements IConvertible
 
 class GetFavoriteTechStackResponse implements IConvertible
 {
-    List<TechnologyStack> results;
+    List<TechnologyStack>? results;
 
     GetFavoriteTechStackResponse({this.results});
     GetFavoriteTechStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2763,7 +2763,7 @@ class GetFavoriteTechStackResponse implements IConvertible
 
 class FavoriteTechStackResponse implements IConvertible
 {
-    TechnologyStack result;
+    TechnologyStack? result;
 
     FavoriteTechStackResponse({this.result});
     FavoriteTechStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2782,7 +2782,7 @@ class FavoriteTechStackResponse implements IConvertible
 
 class GetFavoriteTechnologiesResponse implements IConvertible
 {
-    List<Technology> results;
+    List<Technology>? results;
 
     GetFavoriteTechnologiesResponse({this.results});
     GetFavoriteTechnologiesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2801,7 +2801,7 @@ class GetFavoriteTechnologiesResponse implements IConvertible
 
 class FavoriteTechnologyResponse implements IConvertible
 {
-    Technology result;
+    Technology? result;
 
     FavoriteTechnologyResponse({this.result});
     FavoriteTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2820,7 +2820,7 @@ class FavoriteTechnologyResponse implements IConvertible
 
 class GetUserFeedResponse implements IConvertible
 {
-    List<TechStackDetails> results;
+    List<TechStackDetails>? results;
 
     GetUserFeedResponse({this.results});
     GetUserFeedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2839,8 +2839,8 @@ class GetUserFeedResponse implements IConvertible
 
 class GetUsersKarmaResponse implements IConvertible
 {
-    Map<int,int> results;
-    ResponseStatus responseStatus;
+    Map<int,int>? results;
+    ResponseStatus? responseStatus;
 
     GetUsersKarmaResponse({this.results,this.responseStatus});
     GetUsersKarmaResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2861,15 +2861,15 @@ class GetUsersKarmaResponse implements IConvertible
 
 class GetUserInfoResponse implements IConvertible
 {
-    int id;
-    String userName;
-    DateTime created;
-    String avatarUrl;
-    List<TechnologyStack> techStacks;
-    List<TechnologyStack> favoriteTechStacks;
-    List<Technology> favoriteTechnologies;
-    UserActivity userActivity;
-    ResponseStatus responseStatus;
+    int? id;
+    String? userName;
+    DateTime? created;
+    String? avatarUrl;
+    List<TechnologyStack>? techStacks;
+    List<TechnologyStack>? favoriteTechStacks;
+    List<Technology>? favoriteTechnologies;
+    UserActivity? userActivity;
+    ResponseStatus? responseStatus;
 
     GetUserInfoResponse({this.id,this.userName,this.created,this.avatarUrl,this.techStacks,this.favoriteTechStacks,this.favoriteTechnologies,this.userActivity,this.responseStatus});
     GetUserInfoResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2904,10 +2904,10 @@ class GetUserInfoResponse implements IConvertible
 
 class SyncDiscourseSiteResponse implements IConvertible
 {
-    String timeTaken;
-    List<String> userLogs;
-    List<String> postsLogs;
-    ResponseStatus responseStatus;
+    String? timeTaken;
+    List<String>? userLogs;
+    List<String>? postsLogs;
+    ResponseStatus? responseStatus;
 
     SyncDiscourseSiteResponse({this.timeTaken,this.userLogs,this.postsLogs,this.responseStatus});
     SyncDiscourseSiteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2932,7 +2932,7 @@ class SyncDiscourseSiteResponse implements IConvertible
 
 class LogoUrlApprovalResponse implements IConvertible
 {
-    Technology result;
+    Technology? result;
 
     LogoUrlApprovalResponse({this.result});
     LogoUrlApprovalResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2963,7 +2963,7 @@ class LockStackResponse implements IConvertible
 
 class EmailTestRespoonse implements IConvertible
 {
-    ResponseStatus responseStatus;
+    ResponseStatus? responseStatus;
 
     EmailTestRespoonse({this.responseStatus});
     EmailTestRespoonse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -2982,8 +2982,8 @@ class EmailTestRespoonse implements IConvertible
 
 class ImportUserResponse implements IConvertible
 {
-    int id;
-    ResponseStatus responseStatus;
+    int? id;
+    ResponseStatus? responseStatus;
 
     ImportUserResponse({this.id,this.responseStatus});
     ImportUserResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3004,9 +3004,9 @@ class ImportUserResponse implements IConvertible
 
 class ImportUserVoiceSuggestionResponse implements IConvertible
 {
-    int postId;
-    String postSlug;
-    ResponseStatus responseStatus;
+    int? postId;
+    String? postSlug;
+    ResponseStatus? responseStatus;
 
     ImportUserVoiceSuggestionResponse({this.postId,this.postSlug,this.responseStatus});
     ImportUserVoiceSuggestionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3042,7 +3042,7 @@ class Ping implements IConvertible
 
 class DummyTypes implements IConvertible
 {
-    List<Post> post;
+    List<Post>? post;
 
     DummyTypes({this.post});
     DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3062,7 +3062,7 @@ class DummyTypes implements IConvertible
 // @Route("/orgs/{Id}", "GET")
 class GetOrganization implements IReturn<GetOrganizationResponse>, IGet, IConvertible
 {
-    int id;
+    int? id;
 
     GetOrganization({this.id});
     GetOrganization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3085,7 +3085,7 @@ class GetOrganization implements IReturn<GetOrganizationResponse>, IGet, IConver
 // @Route("/organizations/{Slug}", "GET")
 class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetOrganizationBySlug({this.slug});
     GetOrganizationBySlug.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3108,7 +3108,7 @@ class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IGet, I
 // @Route("/orgs/{Id}/members", "GET")
 class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>, IGet, IConvertible
 {
-    int id;
+    int? id;
 
     GetOrganizationMembers({this.id});
     GetOrganizationMembers.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3131,7 +3131,7 @@ class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>,
 // @Route("/orgs/{Id}/admin", "GET")
 class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, IGet, IConvertible
 {
-    int id;
+    int? id;
 
     GetOrganizationAdmin({this.id});
     GetOrganizationAdmin.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3154,8 +3154,8 @@ class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, IGe
 // @Route("/orgs/posts/new", "POST")
 class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTechnologyResponse>, IPost, IConvertible
 {
-    int technologyId;
-    int techStackId;
+    int? technologyId;
+    int? techStackId;
 
     CreateOrganizationForTechnology({this.technologyId,this.techStackId});
     CreateOrganizationForTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3180,12 +3180,12 @@ class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTe
 // @Route("/orgs", "POST")
 class CreateOrganization implements IReturn<CreateOrganizationResponse>, IPost, IConvertible
 {
-    String name;
-    String slug;
-    String description;
-    int refId;
-    String refSource;
-    String refUrn;
+    String? name;
+    String? slug;
+    String? description;
+    int? refId;
+    String? refSource;
+    String? refUrn;
 
     CreateOrganization({this.name,this.slug,this.description,this.refId,this.refSource,this.refUrn});
     CreateOrganization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3218,25 +3218,25 @@ class CreateOrganization implements IReturn<CreateOrganizationResponse>, IPost, 
 // @Route("/orgs/{Id}", "PUT")
 class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IPut, IConvertible
 {
-    int id;
-    String slug;
-    String name;
-    String description;
-    String color;
-    String textColor;
-    String linkColor;
-    String backgroundColor;
-    String backgroundUrl;
-    String logoUrl;
-    String heroUrl;
-    String lang;
-    int deletePostsWithReportCount;
-    bool disableInvites;
-    String defaultPostType;
-    List<String> defaultSubscriptionPostTypes;
-    List<String> postTypes;
-    List<String> moderatorPostTypes;
-    List<int> technologyIds;
+    int? id;
+    String? slug;
+    String? name;
+    String? description;
+    String? color;
+    String? textColor;
+    String? linkColor;
+    String? backgroundColor;
+    String? backgroundUrl;
+    String? logoUrl;
+    String? heroUrl;
+    String? lang;
+    int? deletePostsWithReportCount;
+    bool? disableInvites;
+    String? defaultPostType;
+    List<String>? defaultSubscriptionPostTypes;
+    List<String>? postTypes;
+    List<String>? moderatorPostTypes;
+    List<int>? technologyIds;
 
     UpdateOrganization({this.id,this.slug,this.name,this.description,this.color,this.textColor,this.linkColor,this.backgroundColor,this.backgroundUrl,this.logoUrl,this.heroUrl,this.lang,this.deletePostsWithReportCount,this.disableInvites,this.defaultPostType,this.defaultSubscriptionPostTypes,this.postTypes,this.moderatorPostTypes,this.technologyIds});
     UpdateOrganization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3295,7 +3295,7 @@ class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IPut, I
 // @Route("/orgs/{Id}", "DELETE")
 class DeleteOrganization implements IReturnVoid, IDelete, IConvertible
 {
-    int id;
+    int? id;
 
     DeleteOrganization({this.id});
     DeleteOrganization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3317,9 +3317,9 @@ class DeleteOrganization implements IReturnVoid, IDelete, IConvertible
 // @Route("/orgs/{Id}/lock", "PUT")
 class LockOrganization implements IReturnVoid, IPut, IConvertible
 {
-    int id;
-    bool lock;
-    String reason;
+    int? id;
+    bool? lock;
+    String? reason;
 
     LockOrganization({this.id,this.lock,this.reason});
     LockOrganization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3345,10 +3345,10 @@ class LockOrganization implements IReturnVoid, IPut, IConvertible
 // @Route("/orgs/{OrganizationId}/labels", "POST")
 class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPost, IConvertible
 {
-    int organizationId;
-    String slug;
-    String description;
-    String color;
+    int? organizationId;
+    String? slug;
+    String? description;
+    String? color;
 
     AddOrganizationLabel({this.organizationId,this.slug,this.description,this.color});
     AddOrganizationLabel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3377,10 +3377,10 @@ class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPost,
 // @Route("/orgs/{OrganizationId}/members/{Slug}", "PUT")
 class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPut, IConvertible
 {
-    int organizationId;
-    String slug;
-    String description;
-    String color;
+    int? organizationId;
+    String? slug;
+    String? description;
+    String? color;
 
     UpdateOrganizationLabel({this.organizationId,this.slug,this.description,this.color});
     UpdateOrganizationLabel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3409,8 +3409,8 @@ class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPu
 // @Route("/orgs/{OrganizationId}/labels/{Slug}", "DELETE")
 class RemoveOrganizationLabel implements IReturnVoid, IDelete, IConvertible
 {
-    int organizationId;
-    String slug;
+    int? organizationId;
+    String? slug;
 
     RemoveOrganizationLabel({this.organizationId,this.slug});
     RemoveOrganizationLabel.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3434,11 +3434,11 @@ class RemoveOrganizationLabel implements IReturnVoid, IDelete, IConvertible
 // @Route("/orgs/{OrganizationId}/categories", "POST")
 class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse>, IPost, IConvertible
 {
-    int organizationId;
-    String slug;
-    String name;
-    String description;
-    List<int> technologyIds;
+    int? organizationId;
+    String? slug;
+    String? name;
+    String? description;
+    List<int>? technologyIds;
 
     AddOrganizationCategory({this.organizationId,this.slug,this.name,this.description,this.technologyIds});
     AddOrganizationCategory.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3469,12 +3469,12 @@ class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "PUT")
 class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryResponse>, IPut, IConvertible
 {
-    int organizationId;
-    int id;
-    String name;
-    String slug;
-    String description;
-    List<int> technologyIds;
+    int? organizationId;
+    int? id;
+    String? name;
+    String? slug;
+    String? description;
+    List<int>? technologyIds;
 
     UpdateOrganizationCategory({this.organizationId,this.id,this.name,this.slug,this.description,this.technologyIds});
     UpdateOrganizationCategory.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3507,8 +3507,8 @@ class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryRe
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "DELETE")
 class DeleteOrganizationCategory implements IReturnVoid, IDelete, IConvertible
 {
-    int organizationId;
-    int id;
+    int? organizationId;
+    int? id;
 
     DeleteOrganizationCategory({this.organizationId,this.id});
     DeleteOrganizationCategory.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3532,14 +3532,14 @@ class DeleteOrganizationCategory implements IReturnVoid, IDelete, IConvertible
 // @Route("/orgs/{OrganizationId}/members", "POST")
 class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, IPost, IConvertible
 {
-    int organizationId;
-    String userName;
-    bool isOwner;
-    bool isModerator;
-    bool denyPosts;
-    bool denyComments;
-    bool denyAll;
-    String notes;
+    int? organizationId;
+    String? userName;
+    bool? isOwner;
+    bool? isModerator;
+    bool? denyPosts;
+    bool? denyComments;
+    bool? denyAll;
+    String? notes;
 
     AddOrganizationMember({this.organizationId,this.userName,this.isOwner,this.isModerator,this.denyPosts,this.denyComments,this.denyAll,this.notes});
     AddOrganizationMember.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3576,14 +3576,14 @@ class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, I
 // @Route("/orgs/{OrganizationId}/members/{Id}", "PUT")
 class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberResponse>, IPut, IConvertible
 {
-    int organizationId;
-    int userId;
-    bool isOwner;
-    bool isModerator;
-    bool denyPosts;
-    bool denyComments;
-    bool denyAll;
-    String notes;
+    int? organizationId;
+    int? userId;
+    bool? isOwner;
+    bool? isModerator;
+    bool? denyPosts;
+    bool? denyComments;
+    bool? denyAll;
+    String? notes;
 
     UpdateOrganizationMember({this.organizationId,this.userId,this.isOwner,this.isModerator,this.denyPosts,this.denyComments,this.denyAll,this.notes});
     UpdateOrganizationMember.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3620,8 +3620,8 @@ class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberRespon
 // @Route("/orgs/{OrganizationId}/members/{UserId}", "DELETE")
 class RemoveOrganizationMember implements IReturnVoid, IDelete, IConvertible
 {
-    int organizationId;
-    int userId;
+    int? organizationId;
+    int? userId;
 
     RemoveOrganizationMember({this.organizationId,this.userId});
     RemoveOrganizationMember.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3645,16 +3645,16 @@ class RemoveOrganizationMember implements IReturnVoid, IDelete, IConvertible
 // @Route("/orgs/{OrganizationId}/members/set", "POST")
 class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>, IPost, IConvertible
 {
-    int organizationId;
-    List<String> githubUserNames;
-    List<String> twitterUserNames;
-    List<String> emails;
-    bool removeUnspecifiedMembers;
-    bool isOwner;
-    bool isModerator;
-    bool denyPosts;
-    bool denyComments;
-    bool denyAll;
+    int? organizationId;
+    List<String>? githubUserNames;
+    List<String>? twitterUserNames;
+    List<String>? emails;
+    bool? removeUnspecifiedMembers;
+    bool? isOwner;
+    bool? isModerator;
+    bool? denyPosts;
+    bool? denyComments;
+    bool? denyAll;
 
     SetOrganizationMembers({this.organizationId,this.githubUserNames,this.twitterUserNames,this.emails,this.removeUnspecifiedMembers,this.isOwner,this.isModerator,this.denyPosts,this.denyComments,this.denyAll});
     SetOrganizationMembers.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3695,7 +3695,7 @@ class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>,
 // @Route("/orgs/{OrganizationId}/invites", "GET")
 class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvitesResponse>, IGet, IConvertible
 {
-    int organizationId;
+    int? organizationId;
 
     GetOrganizationMemberInvites({this.organizationId});
     GetOrganizationMemberInvites.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3718,7 +3718,7 @@ class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvit
 // @Route("/orgs/{OrganizationId}/invites", "POST")
 class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemberInviteResponse>, IPost, IConvertible
 {
-    int organizationId;
+    int? organizationId;
 
     RequestOrganizationMemberInvite({this.organizationId});
     RequestOrganizationMemberInvite.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3741,10 +3741,10 @@ class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemb
 // @Route("/orgs/{OrganizationId}/invites/{UserId}", "PUT")
 class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMemberInviteResponse>, IPut, IConvertible
 {
-    int organizationId;
-    String userName;
-    bool approve;
-    bool dismiss;
+    int? organizationId;
+    String? userName;
+    bool? approve;
+    bool? dismiss;
 
     UpdateOrganizationMemberInvite({this.organizationId,this.userName,this.approve,this.dismiss});
     UpdateOrganizationMemberInvite.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3773,12 +3773,12 @@ class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMember
 // @Route("/posts", "GET")
 class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>, IGet, IConvertible
 {
-    List<int> ids;
-    int organizationId;
-    List<int> organizationIds;
-    List<String> types;
-    List<int> anyTechnologyIds;
-    List<String> Is;
+    List<int>? ids;
+    int? organizationId;
+    List<int>? organizationIds;
+    List<String>? types;
+    List<int?>? anyTechnologyIds;
+    List<String>? Is;
 
     QueryPosts({this.ids,this.organizationId,this.organizationIds,this.types,this.anyTechnologyIds,this.Is});
     QueryPosts.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3812,8 +3812,8 @@ class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>,
 // @Route("/posts/{Id}", "GET")
 class GetPost implements IReturn<GetPostResponse>, IGet, IConvertible
 {
-    int id;
-    String include;
+    int? id;
+    String? include;
 
     GetPost({this.id,this.include});
     GetPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3838,23 +3838,23 @@ class GetPost implements IReturn<GetPostResponse>, IGet, IConvertible
 // @Route("/posts", "POST")
 class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
 {
-    int organizationId;
-    PostType type;
-    int categoryId;
-    String title;
-    String url;
-    String imageUrl;
-    String content;
-    bool lock;
-    List<int> technologyIds;
-    List<String> labels;
-    DateTime fromDate;
-    DateTime toDate;
-    String metaType;
-    String meta;
-    int refId;
-    String refSource;
-    String refUrn;
+    int? organizationId;
+    PostType? type;
+    int? categoryId;
+    String? title;
+    String? url;
+    String? imageUrl;
+    String? content;
+    bool? lock;
+    List<int>? technologyIds;
+    List<String>? labels;
+    DateTime? fromDate;
+    DateTime? toDate;
+    String? metaType;
+    String? meta;
+    int? refId;
+    String? refSource;
+    String? refUrn;
 
     CreatePost({this.organizationId,this.type,this.categoryId,this.title,this.url,this.imageUrl,this.content,this.lock,this.technologyIds,this.labels,this.fromDate,this.toDate,this.metaType,this.meta,this.refId,this.refSource,this.refUrn});
     CreatePost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3909,21 +3909,21 @@ class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
 // @Route("/posts/{Id}", "PUT")
 class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
 {
-    int id;
-    int organizationId;
-    PostType type;
-    int categoryId;
-    String title;
-    String url;
-    String imageUrl;
-    String content;
-    bool lock;
-    List<int> technologyIds;
-    List<String> labels;
-    DateTime fromDate;
-    DateTime toDate;
-    String metaType;
-    String meta;
+    int? id;
+    int? organizationId;
+    PostType? type;
+    int? categoryId;
+    String? title;
+    String? url;
+    String? imageUrl;
+    String? content;
+    bool? lock;
+    List<int>? technologyIds;
+    List<String>? labels;
+    DateTime? fromDate;
+    DateTime? toDate;
+    String? metaType;
+    String? meta;
 
     UpdatePost({this.id,this.organizationId,this.type,this.categoryId,this.title,this.url,this.imageUrl,this.content,this.lock,this.technologyIds,this.labels,this.fromDate,this.toDate,this.metaType,this.meta});
     UpdatePost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3974,7 +3974,7 @@ class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
 // @Route("/posts/{Id}", "DELETE")
 class DeletePost implements IReturn<DeletePostResponse>, IDelete, IConvertible
 {
-    int id;
+    int? id;
 
     DeletePost({this.id});
     DeletePost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -3997,9 +3997,9 @@ class DeletePost implements IReturn<DeletePostResponse>, IDelete, IConvertible
 // @Route("/posts/{Id}/lock", "PUT")
 class LockPost implements IReturnVoid, IPut, IConvertible
 {
-    int id;
-    bool lock;
-    String reason;
+    int? id;
+    bool? lock;
+    String? reason;
 
     LockPost({this.id,this.lock,this.reason});
     LockPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4025,9 +4025,9 @@ class LockPost implements IReturnVoid, IPut, IConvertible
 // @Route("/posts/{Id}/hide", "PUT")
 class HidePost implements IReturnVoid, IPut, IConvertible
 {
-    int id;
-    bool hide;
-    String reason;
+    int? id;
+    bool? hide;
+    String? reason;
 
     HidePost({this.id,this.hide,this.reason});
     HidePost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4053,9 +4053,9 @@ class HidePost implements IReturnVoid, IPut, IConvertible
 // @Route("/posts/{Id}/status/{Status}", "PUT")
 class ChangeStatusPost implements IReturnVoid, IPut, IConvertible
 {
-    int id;
-    String status;
-    String reason;
+    int? id;
+    String? status;
+    String? reason;
 
     ChangeStatusPost({this.id,this.status,this.reason});
     ChangeStatusPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4081,9 +4081,9 @@ class ChangeStatusPost implements IReturnVoid, IPut, IConvertible
 // @Route("/posts/{PostId}/report/{Id}", "POST")
 class ActionPostReport implements IReturnVoid, IPost, IConvertible
 {
-    int postId;
-    int id;
-    ReportAction reportAction;
+    int? postId;
+    int? id;
+    ReportAction? reportAction;
 
     ActionPostReport({this.postId,this.id,this.reportAction});
     ActionPostReport.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4109,9 +4109,9 @@ class ActionPostReport implements IReturnVoid, IPost, IConvertible
 // @Route("/posts/{PostId}/comments", "POST")
 class CreatePostComment implements IReturn<CreatePostCommentResponse>, IPost, IConvertible
 {
-    int postId;
-    int replyId;
-    String content;
+    int? postId;
+    int? replyId;
+    String? content;
 
     CreatePostComment({this.postId,this.replyId,this.content});
     CreatePostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4138,9 +4138,9 @@ class CreatePostComment implements IReturn<CreatePostCommentResponse>, IPost, IC
 // @Route("/posts/{PostId}/comments/{Id}", "PUT")
 class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IPut, IConvertible
 {
-    int id;
-    int postId;
-    String content;
+    int? id;
+    int? postId;
+    String? content;
 
     UpdatePostComment({this.id,this.postId,this.content});
     UpdatePostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4167,8 +4167,8 @@ class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IPut, ICo
 // @Route("/posts/{PostId}/comments/{Id}", "DELETE")
 class DeletePostComment implements IReturn<DeletePostCommentResponse>, IDelete, IConvertible
 {
-    int id;
-    int postId;
+    int? id;
+    int? postId;
 
     DeletePostComment({this.id,this.postId});
     DeletePostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4193,10 +4193,10 @@ class DeletePostComment implements IReturn<DeletePostCommentResponse>, IDelete, 
 // @Route("/posts/{PostId}/comments/{PostCommentId}/report/{Id}", "POST")
 class ActionPostCommentReport implements IReturnVoid, IPost, IConvertible
 {
-    int id;
-    int postCommentId;
-    int postId;
-    ReportAction reportAction;
+    int? id;
+    int? postCommentId;
+    int? postId;
+    ReportAction? reportAction;
 
     ActionPostCommentReport({this.id,this.postCommentId,this.postId,this.reportAction});
     ActionPostCommentReport.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4224,7 +4224,7 @@ class ActionPostCommentReport implements IReturnVoid, IPost, IConvertible
 // @Route("/user/comments/votes")
 class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse>, IGet, IConvertible
 {
-    int postId;
+    int? postId;
 
     GetUserPostCommentVotes({this.postId});
     GetUserPostCommentVotes.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4247,9 +4247,9 @@ class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse
 // @Route("/posts/{PostId}/comments/{Id}/pin", "PUT")
 class PinPostComment implements IReturn<PinPostCommentResponse>, IPut, IConvertible
 {
-    int id;
-    int postId;
-    bool pin;
+    int? id;
+    int? postId;
+    bool? pin;
 
     PinPostComment({this.id,this.postId,this.pin});
     PinPostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4276,7 +4276,7 @@ class PinPostComment implements IReturn<PinPostCommentResponse>, IPut, IConverti
 // @Route("/users/by-email")
 class GetUsersByEmails implements IReturn<GetUsersByEmailsResponse>, IGet, IConvertible
 {
-    List<String> emails;
+    List<String>? emails;
 
     GetUsersByEmails({this.emails});
     GetUsersByEmails.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4331,8 +4331,8 @@ class GetUserOrganizations implements IReturn<GetUserOrganizationsResponse>, IGe
 // @Route("/posts/{Id}/vote", "PUT")
 class UserPostVote implements IReturn<UserPostVoteResponse>, IPut, IConvertible
 {
-    int id;
-    int weight;
+    int? id;
+    int? weight;
 
     UserPostVote({this.id,this.weight});
     UserPostVote.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4357,7 +4357,7 @@ class UserPostVote implements IReturn<UserPostVoteResponse>, IPut, IConvertible
 // @Route("/posts/{Id}/favorite", "PUT")
 class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IPut, IConvertible
 {
-    int id;
+    int? id;
 
     UserPostFavorite({this.id});
     UserPostFavorite.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4380,9 +4380,9 @@ class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IPut, IConv
 // @Route("/posts/{Id}/report", "PUT")
 class UserPostReport implements IReturn<UserPostReportResponse>, IPut, IConvertible
 {
-    int id;
-    FlagType flagType;
-    String reportNotes;
+    int? id;
+    FlagType? flagType;
+    String? reportNotes;
 
     UserPostReport({this.id,this.flagType,this.reportNotes});
     UserPostReport.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4409,9 +4409,9 @@ class UserPostReport implements IReturn<UserPostReportResponse>, IPut, IConverti
 // @Route("/posts/{PostId}/comments/{Id}", "GET")
 class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IGet, IConvertible
 {
-    int id;
-    int postId;
-    int weight;
+    int? id;
+    int? postId;
+    int? weight;
 
     UserPostCommentVote({this.id,this.postId,this.weight});
     UserPostCommentVote.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4438,10 +4438,10 @@ class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IGet,
 // @Route("/posts/{PostId}/comments/{Id}/report", "PUT")
 class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, IPut, IConvertible
 {
-    int id;
-    int postId;
-    FlagType flagType;
-    String reportNotes;
+    int? id;
+    int? postId;
+    FlagType? flagType;
+    String? reportNotes;
 
     UserPostCommentReport({this.id,this.postId,this.flagType,this.reportNotes});
     UserPostCommentReport.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4470,7 +4470,7 @@ class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, I
 // @Route("/prerender/{Path*}", "PUT")
 class StorePreRender implements IReturnVoid, IPut, IConvertible
 {
-    String path;
+    String? path;
 
     StorePreRender({this.path});
     StorePreRender.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4492,7 +4492,7 @@ class StorePreRender implements IReturnVoid, IPut, IConvertible
 // @Route("/prerender/{Path*}", "GET")
 class GetPreRender implements IReturn<String>, IGet, IConvertible
 {
-    String path;
+    String? path;
 
     GetPreRender({this.path});
     GetPreRender.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4531,9 +4531,9 @@ class SessionInfo implements IReturn<SessionInfoResponse>, IGet, IConvertible
 // @Route("/orgs/{OrganizationId}/subscribe", "PUT")
 class SubscribeToOrganization implements IReturnVoid, IPut, IConvertible
 {
-    int organizationId;
-    List<PostType> postTypes;
-    Frequency frequency;
+    int? organizationId;
+    List<PostType>? postTypes;
+    Frequency? frequency;
 
     SubscribeToOrganization({this.organizationId,this.postTypes,this.frequency});
     SubscribeToOrganization.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4559,7 +4559,7 @@ class SubscribeToOrganization implements IReturnVoid, IPut, IConvertible
 // @Route("/posts/{PostId}/subscribe", "PUT")
 class SubscribeToPost implements IReturnVoid, IPut, IConvertible
 {
-    int postId;
+    int? postId;
 
     SubscribeToPost({this.postId});
     SubscribeToPost.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4581,7 +4581,7 @@ class SubscribeToPost implements IReturnVoid, IPut, IConvertible
 // @Route("/orgs/{OrganizationId}/subscribe", "DELETE")
 class DeleteOrganizationSubscription implements IReturnVoid, IDelete, IConvertible
 {
-    int organizationId;
+    int? organizationId;
 
     DeleteOrganizationSubscription({this.organizationId});
     DeleteOrganizationSubscription.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4603,7 +4603,7 @@ class DeleteOrganizationSubscription implements IReturnVoid, IDelete, IConvertib
 // @Route("/posts/{PostId}/subscribe", "DELETE")
 class DeletePostSubscription implements IReturnVoid, IDelete, IConvertible
 {
-    int postId;
+    int? postId;
 
     DeletePostSubscription({this.postId});
     DeletePostSubscription.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4625,7 +4625,7 @@ class DeletePostSubscription implements IReturnVoid, IDelete, IConvertible
 // @Route("/technology/{Slug}/previous-versions", "GET")
 class GetTechnologyPreviousVersions implements IReturn<GetTechnologyPreviousVersionsResponse>, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetTechnologyPreviousVersions({this.slug});
     GetTechnologyPreviousVersions.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4665,12 +4665,12 @@ class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IGet, I
 // @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies")
 class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
 {
-    List<int> ids;
-    String name;
-    String vendorName;
-    String nameContains;
-    String vendorNameContains;
-    String descriptionContains;
+    List<int>? ids;
+    String? name;
+    String? vendorName;
+    String? nameContains;
+    String? vendorNameContains;
+    String? descriptionContains;
 
     FindTechnologies({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
     FindTechnologies.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4704,12 +4704,12 @@ class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResp
 // @Route("/technology/query")
 class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
 {
-    List<int> ids;
-    String name;
-    String vendorName;
-    String nameContains;
-    String vendorNameContains;
-    String descriptionContains;
+    List<int>? ids;
+    String? name;
+    String? vendorName;
+    String? nameContains;
+    String? vendorNameContains;
+    String? descriptionContains;
 
     QueryTechnology({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
     QueryTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4743,7 +4743,7 @@ class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryRespo
 // @Route("/technology/{Slug}")
 class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetTechnology({this.slug});
     GetTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4766,7 +4766,7 @@ class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, I
 // @Route("/technology/{Slug}/favorites")
 class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetailsResponse>, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetTechnologyFavoriteDetails({this.slug});
     GetTechnologyFavoriteDetails.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4789,15 +4789,15 @@ class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetai
 // @Route("/technology", "POST")
 class CreateTechnology implements IReturn<CreateTechnologyResponse>, IPost, IConvertible
 {
-    String name;
-    String slug;
-    String vendorName;
-    String vendorUrl;
-    String productUrl;
-    String logoUrl;
-    String description;
-    bool isLocked;
-    TechnologyTier tier;
+    String? name;
+    String? slug;
+    String? vendorName;
+    String? vendorUrl;
+    String? productUrl;
+    String? logoUrl;
+    String? description;
+    bool? isLocked;
+    TechnologyTier? tier;
 
     CreateTechnology({this.name,this.slug,this.vendorName,this.vendorUrl,this.productUrl,this.logoUrl,this.description,this.isLocked,this.tier});
     CreateTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4836,15 +4836,15 @@ class CreateTechnology implements IReturn<CreateTechnologyResponse>, IPost, ICon
 // @Route("/technology/{Id}", "PUT")
 class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IPut, IConvertible
 {
-    int id;
-    String name;
-    String vendorName;
-    String vendorUrl;
-    String productUrl;
-    String logoUrl;
-    String description;
-    bool isLocked;
-    TechnologyTier tier;
+    int? id;
+    String? name;
+    String? vendorName;
+    String? vendorUrl;
+    String? productUrl;
+    String? logoUrl;
+    String? description;
+    bool? isLocked;
+    TechnologyTier? tier;
 
     UpdateTechnology({this.id,this.name,this.vendorName,this.vendorUrl,this.productUrl,this.logoUrl,this.description,this.isLocked,this.tier});
     UpdateTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4883,7 +4883,7 @@ class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IPut, IConv
 // @Route("/technology/{Id}", "DELETE")
 class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IDelete, IConvertible
 {
-    int id;
+    int? id;
 
     DeleteTechnology({this.id});
     DeleteTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4906,7 +4906,7 @@ class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IDelete, IC
 // @Route("/techstacks/{Slug}/previous-versions", "GET")
 class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPreviousVersionsResponse>, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetTechnologyStackPreviousVersions({this.slug});
     GetTechnologyStackPreviousVersions.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4929,9 +4929,9 @@ class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPr
 // @Route("/pagestats/{Type}/{Slug}")
 class GetPageStats implements IReturn<GetPageStatsResponse>, IGet, IConvertible
 {
-    String type;
-    String slug;
-    int id;
+    String? type;
+    String? slug;
+    int? id;
 
     GetPageStats({this.type,this.slug,this.id});
     GetPageStats.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4974,7 +4974,7 @@ class ClearCache implements IReturn<String>, IGet, IConvertible
 // @Route("/tasks/hourly")
 class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
 {
-    bool force;
+    bool? force;
 
     HourlyTask({this.force});
     HourlyTask.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -4998,12 +4998,12 @@ class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
 // @AutoQueryViewer(DefaultSearchField="Description", DefaultSearchText="ServiceStack", DefaultSearchType="Contains", Description="Explore different Technology Stacks", IconUrl="material-icons:cloud", Title="Find Technology Stacks")
 class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
 {
-    List<int> ids;
-    String name;
-    String vendorName;
-    String nameContains;
-    String vendorNameContains;
-    String descriptionContains;
+    List<int>? ids;
+    String? name;
+    String? vendorName;
+    String? nameContains;
+    String? vendorNameContains;
+    String? descriptionContains;
 
     FindTechStacks({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
     FindTechStacks.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5037,12 +5037,12 @@ class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryR
 // @Route("/techstacks/query")
 class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
 {
-    List<int> ids;
-    String name;
-    String vendorName;
-    String nameContains;
-    String vendorNameContains;
-    String descriptionContains;
+    List<int>? ids;
+    String? name;
+    String? vendorName;
+    String? nameContains;
+    String? vendorNameContains;
+    String? descriptionContains;
 
     QueryTechStacks({this.ids,this.name,this.vendorName,this.nameContains,this.vendorNameContains,this.descriptionContains});
     QueryTechStacks.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5076,7 +5076,7 @@ class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<Query
 // @Route("/overview")
 class Overview implements IReturn<OverviewResponse>, IGet, IConvertible
 {
-    bool reload;
+    bool? reload;
 
     Overview({this.reload});
     Overview.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5099,7 +5099,7 @@ class Overview implements IReturn<OverviewResponse>, IGet, IConvertible
 // @Route("/app-overview")
 class AppOverview implements IReturn<AppOverviewResponse>, IGet, IConvertible
 {
-    bool reload;
+    bool? reload;
 
     AppOverview({this.reload});
     AppOverview.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5138,7 +5138,7 @@ class GetAllTechnologyStacks implements IReturn<GetAllTechnologyStacksResponse>,
 // @Route("/techstacks/{Slug}", "GET")
 class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegisterStats, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetTechnologyStack({this.slug});
     GetTechnologyStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5161,7 +5161,7 @@ class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegist
 // @Route("/techstacks/{Slug}/favorites")
 class GetTechnologyStackFavoriteDetails implements IReturn<GetTechnologyStackFavoriteDetailsResponse>, IGet, IConvertible
 {
-    String slug;
+    String? slug;
 
     GetTechnologyStackFavoriteDetails({this.slug});
     GetTechnologyStackFavoriteDetails.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5200,15 +5200,15 @@ class GetConfig implements IReturn<GetConfigResponse>, IGet, IConvertible
 // @Route("/techstacks", "POST")
 class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, IPost, IConvertible
 {
-    String name;
-    String slug;
-    String vendorName;
-    String appUrl;
-    String screenshotUrl;
-    String description;
-    String details;
-    bool isLocked;
-    List<int> technologyIds;
+    String? name;
+    String? slug;
+    String? vendorName;
+    String? appUrl;
+    String? screenshotUrl;
+    String? description;
+    String? details;
+    bool? isLocked;
+    List<int>? technologyIds;
 
     CreateTechnologyStack({this.name,this.slug,this.vendorName,this.appUrl,this.screenshotUrl,this.description,this.details,this.isLocked,this.technologyIds});
     CreateTechnologyStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5247,15 +5247,15 @@ class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, I
 // @Route("/techstacks/{Id}", "PUT")
 class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, IPut, IConvertible
 {
-    int id;
-    String name;
-    String vendorName;
-    String appUrl;
-    String screenshotUrl;
-    String description;
-    String details;
-    bool isLocked;
-    List<int> technologyIds;
+    int? id;
+    String? name;
+    String? vendorName;
+    String? appUrl;
+    String? screenshotUrl;
+    String? description;
+    String? details;
+    bool? isLocked;
+    List<int>? technologyIds;
 
     UpdateTechnologyStack({this.id,this.name,this.vendorName,this.appUrl,this.screenshotUrl,this.description,this.details,this.isLocked,this.technologyIds});
     UpdateTechnologyStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5294,7 +5294,7 @@ class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, I
 // @Route("/techstacks/{Id}", "DELETE")
 class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, IDelete, IConvertible
 {
-    int id;
+    int? id;
 
     DeleteTechnologyStack({this.id});
     DeleteTechnologyStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5317,7 +5317,7 @@ class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, I
 // @Route("/favorites/techtacks", "GET")
 class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, IGet, IConvertible
 {
-    int technologyStackId;
+    int? technologyStackId;
 
     GetFavoriteTechStack({this.technologyStackId});
     GetFavoriteTechStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5340,7 +5340,7 @@ class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, IGe
 // @Route("/favorites/techtacks/{TechnologyStackId}", "PUT")
 class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IPut, IConvertible
 {
-    int technologyStackId;
+    int? technologyStackId;
 
     AddFavoriteTechStack({this.technologyStackId});
     AddFavoriteTechStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5363,7 +5363,7 @@ class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IPut, 
 // @Route("/favorites/techtacks/{TechnologyStackId}", "DELETE")
 class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IDelete, IConvertible
 {
-    int technologyStackId;
+    int? technologyStackId;
 
     RemoveFavoriteTechStack({this.technologyStackId});
     RemoveFavoriteTechStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5386,7 +5386,7 @@ class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IDe
 // @Route("/favorites/technology", "GET")
 class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse>, IGet, IConvertible
 {
-    int technologyId;
+    int? technologyId;
 
     GetFavoriteTechnologies({this.technologyId});
     GetFavoriteTechnologies.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5409,7 +5409,7 @@ class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse
 // @Route("/favorites/technology/{TechnologyId}", "PUT")
 class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IPut, IConvertible
 {
-    int technologyId;
+    int? technologyId;
 
     AddFavoriteTechnology({this.technologyId});
     AddFavoriteTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5432,7 +5432,7 @@ class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IPut
 // @Route("/favorites/technology/{TechnologyId}", "DELETE")
 class RemoveFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IDelete, IConvertible
 {
-    int technologyId;
+    int? technologyId;
 
     RemoveFavoriteTechnology({this.technologyId});
     RemoveFavoriteTechnology.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5471,7 +5471,7 @@ class GetUserFeed implements IReturn<GetUserFeedResponse>, IGet, IConvertible
 // @Route("/users/karma", "GET")
 class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IGet, IConvertible
 {
-    List<int> userIds;
+    List<int>? userIds;
 
     GetUsersKarma({this.userIds});
     GetUsersKarma.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5494,7 +5494,7 @@ class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IGet, IConvertibl
 // @Route("/userinfo/{UserName}")
 class GetUserInfo implements IReturn<GetUserInfoResponse>, IGet, IConvertible
 {
-    String userName;
+    String? userName;
 
     GetUserInfo({this.userName});
     GetUserInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5517,7 +5517,7 @@ class GetUserInfo implements IReturn<GetUserInfoResponse>, IGet, IConvertible
 // @Route("/users/{UserName}/avatar", "GET")
 class UserAvatar implements IGet, IConvertible
 {
-    String userName;
+    String? userName;
 
     UserAvatar({this.userName});
     UserAvatar.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5601,7 +5601,7 @@ class MqStatus implements IReturn<String>, IConvertible
 // @Route("/sync/discourse/{Site}")
 class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IPost, IConvertible
 {
-    String site;
+    String? site;
 
     SyncDiscourseSite({this.site});
     SyncDiscourseSite.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5624,8 +5624,8 @@ class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IPost, IC
 // @Route("/admin/technology/{TechnologyId}/logo")
 class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IPut, IConvertible
 {
-    int technologyId;
-    bool approved;
+    int? technologyId;
+    bool? approved;
 
     LogoUrlApproval({this.technologyId,this.approved});
     LogoUrlApproval.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5650,8 +5650,8 @@ class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IPut, IConver
 // @Route("/admin/techstacks/{TechnologyStackId}/lock")
 class LockTechStack implements IReturn<LockStackResponse>, IPut, IConvertible
 {
-    int technologyStackId;
-    bool isLocked;
+    int? technologyStackId;
+    bool? isLocked;
 
     LockTechStack({this.technologyStackId,this.isLocked});
     LockTechStack.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5676,8 +5676,8 @@ class LockTechStack implements IReturn<LockStackResponse>, IPut, IConvertible
 // @Route("/admin/technology/{TechnologyId}/lock")
 class LockTech implements IReturn<LockStackResponse>, IPut, IConvertible
 {
-    int technologyId;
-    bool isLocked;
+    int? technologyId;
+    bool? isLocked;
 
     LockTech({this.technologyId,this.isLocked});
     LockTech.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5702,7 +5702,7 @@ class LockTech implements IReturn<LockStackResponse>, IPut, IConvertible
 // @Route("/email/post/{PostId}")
 class EmailTest implements IReturn<EmailTestRespoonse>, IConvertible
 {
-    int postId;
+    int? postId;
 
     EmailTest({this.postId});
     EmailTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5724,18 +5724,18 @@ class EmailTest implements IReturn<EmailTestRespoonse>, IConvertible
 
 class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
 {
-    String userName;
-    String email;
-    String firstName;
-    String lastName;
-    String displayName;
-    String company;
-    String refSource;
-    int refId;
-    String refIdStr;
-    String refUrn;
-    String defaultProfileUrl;
-    Map<String,String> meta;
+    String? userName;
+    String? email;
+    String? firstName;
+    String? lastName;
+    String? displayName;
+    String? company;
+    String? refSource;
+    int? refId;
+    String? refIdStr;
+    String? refUrn;
+    String? defaultProfileUrl;
+    Map<String,String>? meta;
 
     ImportUser({this.userName,this.email,this.firstName,this.lastName,this.displayName,this.company,this.refSource,this.refId,this.refIdStr,this.refUrn,this.defaultProfileUrl,this.meta});
     ImportUser.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5780,25 +5780,25 @@ class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
 // @Route("/import/uservoice/suggestion")
 class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResponse>, IPost, IConvertible
 {
-    int organizationId;
-    String url;
-    int id;
-    int topicId;
-    String state;
-    String title;
-    String slug;
-    String category;
-    String text;
-    String formattedText;
-    int voteCount;
-    DateTime closedAt;
-    String statusKey;
-    String statusHexColor;
-    UserVoiceUser statusChangedBy;
-    UserVoiceUser creator;
-    UserVoiceComment response;
-    DateTime createdAt;
-    DateTime updatedAt;
+    int? organizationId;
+    String? url;
+    int? id;
+    int? topicId;
+    String? state;
+    String? title;
+    String? slug;
+    String? category;
+    String? text;
+    String? formattedText;
+    int? voteCount;
+    DateTime? closedAt;
+    String? statusKey;
+    String? statusHexColor;
+    UserVoiceUser? statusChangedBy;
+    UserVoiceUser? creator;
+    UserVoiceComment? response;
+    DateTime? createdAt;
+    DateTime? updatedAt;
 
     ImportUserVoiceSuggestion({this.organizationId,this.url,this.id,this.topicId,this.state,this.title,this.slug,this.category,this.text,this.formattedText,this.voteCount,this.closedAt,this.statusKey,this.statusHexColor,this.statusChangedBy,this.creator,this.response,this.createdAt,this.updatedAt});
     ImportUserVoiceSuggestion.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5857,20 +5857,20 @@ class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResp
 // @Route("/posts/comment", "GET")
 class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryResponse<PostComment>>, IGet, IConvertible
 {
-    int id;
-    int userId;
-    int postId;
-    String contentContains;
-    int upVotesAbove;
-    int upVotesBelow;
-    int downVotesAbove;
-    int downVotes;
-    int favoritesAbove;
-    int favoritesBelow;
-    int wordCountAbove;
-    int wordCountBelow;
-    int reportCountAbove;
-    int reportCountBelow;
+    int? id;
+    int? userId;
+    int? postId;
+    String? contentContains;
+    int? upVotesAbove;
+    int? upVotesBelow;
+    int? downVotesAbove;
+    int? downVotes;
+    int? favoritesAbove;
+    int? favoritesBelow;
+    int? wordCountAbove;
+    int? wordCountBelow;
+    int? reportCountAbove;
+    int? reportCountBelow;
 
     QueryPostComments({this.id,this.userId,this.postId,this.contentContains,this.upVotesAbove,this.upVotesBelow,this.downVotesAbove,this.downVotes,this.favoritesAbove,this.favoritesBelow,this.wordCountAbove,this.wordCountBelow,this.reportCountAbove,this.reportCountBelow});
     QueryPostComments.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5921,11 +5921,11 @@ class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryRe
 // @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies Admin")
 class FindTechnologiesAdmin extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IConvertible
 {
-    int id;
-    String name;
-    String vendorName;
-    String nameContains;
-    String vendorNameContains;
+    int? id;
+    String? name;
+    String? vendorName;
+    String? nameContains;
+    String? vendorNameContains;
 
     FindTechnologiesAdmin({this.id,this.name,this.vendorName,this.nameContains,this.vendorNameContains});
     FindTechnologiesAdmin.fromJson(Map<String, dynamic> json) { fromMap(json); }

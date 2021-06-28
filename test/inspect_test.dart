@@ -7,11 +7,11 @@ import '../lib/client.dart';
 import 'dtos/techstacks.dtos.dart';
 
 class GithubRepo {
-  final String name;
-  final String description;
-  final String lang;
-  final int watchers;
-  final int forks;
+  final String? name;
+  final String? description;
+  final String? lang;
+  final int? watchers;
+  final int? forks;
 
   GithubRepo(
       {this.name, this.description, this.lang, this.watchers, this.forks});
@@ -42,7 +42,7 @@ void main() {
       Iterable repos = jsonDecode(json);
 
       final orgRepos = repos.map((e) => GithubRepo.fromJson(e)).toList();
-      orgRepos.sort((a, b) => b.watchers - a.watchers);
+      orgRepos.sort((a, b) => b.watchers! - a.watchers!);
 
       var dump = Inspect.dump(orgRepos.take(3));
       expect(dump, isNotEmpty);
