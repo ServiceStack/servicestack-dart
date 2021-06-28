@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:io';
 import 'dart:convert';
+import 'package:collection/collection.dart';
+
 import './servicestack.dart';
 export './servicestack.dart';
 
@@ -22,8 +24,7 @@ class ClientFactory {
   static IServiceClient createWith(ClientOptions options) {
     var client = create(options.baseUrl);
     if (client is JsonServiceClient) {
-      if (options.ignoreCertificatesFor != null &&
-          options.ignoreCertificatesFor.isNotEmpty) {
+      if (options.ignoreCertificatesFor.isNotEmpty) {
         var ignoreCerts = toHostsMap(options.ignoreCertificatesFor);
         client.client.badCertificateCallback = (cert, host, port) {
           if (ignoreCerts.containsKey(host)) {
@@ -39,7 +40,7 @@ class ClientFactory {
 }
 
 class SendContext {
-  String? method;
+  String method;
   dynamic request;
   dynamic body;
   Map<String, dynamic>? args;
@@ -48,8 +49,15 @@ class SendContext {
   RequestFilter? requestFilter;
   ResponseFilter? responseFilter;
   dynamic responseAs;
+  String assertUrl() {
+    if (this.url != null)
+      return this.url!;
+    if (this.uri != null)
+      return this.uri!.toString();
+    throw StateError('no url');
+  }
   SendContext(
-      {this.method,
+      {this.method='GET',
       this.request,
       this.body,
       this.args,
@@ -95,11 +103,11 @@ class JsonServiceClient implements IServiceClient {
   void set client(HttpClient client) => _client = client;
   HttpClient get client => _client ??= HttpClient();
 
-  String getTokenCookie() {
-    return cookies.firstWhere((x) => x.name == 'ss-tok')?.value;
+  String? getTokenCookie() {
+    return cookies?.firstWhereOrNull((x) => x.name == 'ss-tok')?.value;
   }
-  String getRefreshTokenCookie() {
-    return cookies.firstWhere((x) => x.name == 'ss-reftok')?.value;
+  String? getRefreshTokenCookie() {
+    return cookies?.firstWhereOrNull((x) => x.name == 'ss-reftok')?.value;
   }
 
   void set connectionTimeout(Duration? duration) =>
@@ -249,7 +257,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<List<T>?> sendAll<T>(Iterable<IReturn<T>> requests,
       {RequestFilter? requestFilter, ResponseFilter? responseFilter}) async {
-    if (requests == null || requests.length == 0) return List<T>();
+    if (requests.length == 0) return <T>[];
     var url = combinePaths([replyBaseUrl, nameOf(requests.first)! + "[]"]);
 
     return this.sendRequest<List<T>>(SendContext(
@@ -263,7 +271,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {RequestFilter? requestFilter, ResponseFilter? responseFilter}) async {
-    if (requests == null || requests.length == 0) return List<T>();
+    if (requests.length == 0) return;
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first)! + "[]"]);
 
     await this.sendRequest<List<T>>(SendContext(
@@ -396,7 +404,11 @@ class JsonServiceClient implements IServiceClient {
         url = createUrlFromDto(method, request);
       }
     }
-    if (args != null) url = appendQueryString(url, args);
+    if (url == null)
+      throw ArgumentError.notNull('url');
+
+    if (args != null)
+      url = appendQueryString(url, args);
 
     String? bodyStr;
     if (hasRequestBody(method)) {
@@ -413,7 +425,7 @@ class JsonServiceClient implements IServiceClient {
 
     for (var attempt = 0; attempt < maxRetries; attempt++) {
       try {
-        req = await client.openUrl(method!, uri!);
+        req = await client.openUrl(method, uri!);
         break;
       } on Exception catch (e,trace) {
         Log.debug("createRequest(): $e\n$trace");
@@ -464,7 +476,6 @@ class JsonServiceClient implements IServiceClient {
   }
 
   Future<T?> createResponse<T>(HttpClientResponse res, SendContext info) async {
-    if (res == null) throw ArgumentError.notNull("res");
     if (res.statusCode >= 300) throw HttpResponseException(res);
 
     try {
@@ -510,8 +521,7 @@ class JsonServiceClient implements IServiceClient {
     }
 
     var contentType = res.headers.contentType.toString();
-    var isJson =
-        contentType != null && contentType.indexOf("application/json") != -1;
+    var isJson = contentType.indexOf("application/json") != -1;
     if (isJson) {
       var jsonStr = await readFully(res);
       var jsonObj = json.decode(jsonStr);
@@ -528,8 +538,7 @@ class JsonServiceClient implements IServiceClient {
       }
     }
 
-    if (res.headers.contentLength == 0 ||
-        (res.headers.contentLength == null && !isJson)) {
+    if (res.headers.contentLength == 0 || !isJson) {
       return responseAs as T?;
     }
 
@@ -582,7 +591,6 @@ class JsonServiceClient implements IServiceClient {
   }
 
   void mergeCookies(List<Cookie> cookies) {
-    if (cookies == null) return;
     for (var cookie in cookies) {
       this.cookies!.removeWhere((x) => x.name == cookie.name);
       this.cookies!.add(cookie);
@@ -604,7 +612,6 @@ Future<String> readFully(HttpClientResponse response) async {
 
 //https://docs.flutter.io/flutter/foundation/consolidateHttpClientResponseBytes.html
 Future<Uint8List> readFullyAsBytes(HttpClientResponse response) {
-  assert(response.contentLength != null);
   final Completer<Uint8List> completer = Completer<Uint8List>.sync();
   if (response.contentLength == -1) {
     final List<List<int>> chunks = <List<int>>[];

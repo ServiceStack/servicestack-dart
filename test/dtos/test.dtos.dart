@@ -1,22 +1,65 @@
 /* Options:
-Date: 2021-03-11 04:26:35
-Version: 5.105
+Date: 2021-06-29 02:37:52
+Version: 5.111
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: http://test.servicestack.net
+BaseUrl: https://localhost:5001
 
-//GlobalNamespace: 
+//GlobalNamespace:
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion: 
+//AddImplicitVersion:
 //AddDescriptionAsComments: True
-//IncludeTypes: 
-//ExcludeTypes: 
-DefaultImports: ../../lib/servicestack.dart
+//IncludeTypes:
+//ExcludeTypes:
+//DefaultImports: package:servicestack/servicestack.dart
 */
 
-import '../../lib/servicestack.dart';
+import 'package:servicestack/servicestack.dart';
 import 'dart:collection';
 import 'dart:typed_data';
+
+class Item implements IConvertible
+{
+    String? name;
+    String? description;
+
+    Item({this.name,this.description});
+    Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        description = json['description'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'description': description
+    };
+
+    getTypeName() => "Item";
+    TypeContext? context = _ctx;
+}
+
+class Poco implements IConvertible
+{
+    String? name;
+
+    Poco({this.name});
+    Poco.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    getTypeName() => "Poco";
+    TypeContext? context = _ctx;
+}
 
 class CustomType implements IConvertible
 {
@@ -38,7 +81,7 @@ class CustomType implements IConvertible
     };
 
     getTypeName() => "CustomType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SetterType implements IConvertible
@@ -61,30 +104,101 @@ class SetterType implements IConvertible
     };
 
     getTypeName() => "SetterType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
-class Item implements IConvertible
+class DeclarativeChildValidation implements IConvertible
 {
     String? name;
-    String? description;
+    // @Validate(Validator="MaximumLength(20)")
+    String? value;
 
-    Item({this.name,this.description});
-    Item.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    DeclarativeChildValidation({this.name,this.value});
+    DeclarativeChildValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        description = json['description'];
+        value = json['value'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'description': description
+        'value': value
     };
 
-    getTypeName() => "Item";
-    TypeContext context = _ctx;
+    getTypeName() => "DeclarativeChildValidation";
+    TypeContext? context = _ctx;
+}
+
+class FluentChildValidation implements IConvertible
+{
+    String? name;
+    String? value;
+
+    FluentChildValidation({this.name,this.value});
+    FluentChildValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        value = json['value'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'value': value
+    };
+
+    getTypeName() => "FluentChildValidation";
+    TypeContext? context = _ctx;
+}
+
+class DeclarativeSingleValidation implements IConvertible
+{
+    String? name;
+    // @Validate(Validator="MaximumLength(20)")
+    String? value;
+
+    DeclarativeSingleValidation({this.name,this.value});
+    DeclarativeSingleValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        value = json['value'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'value': value
+    };
+
+    getTypeName() => "DeclarativeSingleValidation";
+    TypeContext? context = _ctx;
+}
+
+class FluentSingleValidation implements IConvertible
+{
+    String? name;
+    String? value;
+
+    FluentSingleValidation({this.name,this.value});
+    FluentSingleValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        value = json['value'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'value': value
+    };
+
+    getTypeName() => "FluentSingleValidation";
+    TypeContext? context = _ctx;
 }
 
 abstract class IAuthTokens
@@ -97,7 +211,7 @@ abstract class IAuthTokens
     DateTime? refreshTokenExpiry;
     String? requestToken;
     String? requestTokenSecret;
-    Map<String,String>? items;
+    Map<String,String?>? items;
 }
 
 // @DataContract
@@ -233,7 +347,7 @@ class AuthUserSession implements IConvertible
     List<IAuthTokens>? providerOAuthAccess;
 
     // @DataMember(Order=44)
-    Map<String,String>? meta;
+    Map<String,String?>? meta;
 
     // @DataMember(Order=45)
     List<String>? audiences;
@@ -297,7 +411,7 @@ class AuthUserSession implements IConvertible
         email = json['email'];
         primaryEmail = json['primaryEmail'];
         phoneNumber = json['phoneNumber'];
-        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',context);
+        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',context!);
         birthDateRaw = json['birthDateRaw'];
         address = json['address'];
         address2 = json['address2'];
@@ -313,20 +427,20 @@ class AuthUserSession implements IConvertible
         postalCode = json['postalCode'];
         timeZone = json['timeZone'];
         requestTokenSecret = json['requestTokenSecret'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context);
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context);
-        roles = JsonConverters.fromJson(json['roles'],'List<String>',context);
-        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',context);
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
+        roles = JsonConverters.fromJson(json['roles'],'List<String>',context!);
+        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',context!);
         isAuthenticated = json['isAuthenticated'];
         fromToken = json['fromToken'];
         profileUrl = json['profileUrl'];
         sequence = json['sequence'];
         tag = json['tag'];
         authProvider = json['authProvider'];
-        providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',context);
-        meta = JsonConverters.toStringMap(json['meta']);
-        audiences = JsonConverters.fromJson(json['audiences'],'List<String>',context);
-        scopes = JsonConverters.fromJson(json['scopes'],'List<String>',context);
+        providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',context!);
+        meta = JsonConverters.fromJson(json['meta'],'Map<String,String?>',context!);
+        audiences = JsonConverters.fromJson(json['audiences'],'List<String>',context!);
+        scopes = JsonConverters.fromJson(json['scopes'],'List<String>',context!);
         dns = json['dns'];
         rsa = json['rsa'];
         sid = json['sid'];
@@ -359,7 +473,7 @@ class AuthUserSession implements IConvertible
         'email': email,
         'primaryEmail': primaryEmail,
         'phoneNumber': phoneNumber,
-        'birthDate': JsonConverters.toJson(birthDate,'DateTime',context),
+        'birthDate': JsonConverters.toJson(birthDate,'DateTime',context!),
         'birthDateRaw': birthDateRaw,
         'address': address,
         'address2': address2,
@@ -375,20 +489,20 @@ class AuthUserSession implements IConvertible
         'postalCode': postalCode,
         'timeZone': timeZone,
         'requestTokenSecret': requestTokenSecret,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context),
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context),
-        'roles': JsonConverters.toJson(roles,'List<String>',context),
-        'permissions': JsonConverters.toJson(permissions,'List<String>',context),
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
+        'roles': JsonConverters.toJson(roles,'List<String>',context!),
+        'permissions': JsonConverters.toJson(permissions,'List<String>',context!),
         'isAuthenticated': isAuthenticated,
         'fromToken': fromToken,
         'profileUrl': profileUrl,
         'sequence': sequence,
         'tag': tag,
         'authProvider': authProvider,
-        'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',context),
-        'meta': meta,
-        'audiences': JsonConverters.toJson(audiences,'List<String>',context),
-        'scopes': JsonConverters.toJson(scopes,'List<String>',context),
+        'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',context!),
+        'meta': JsonConverters.toJson(meta,'Map<String,String?>',context!),
+        'audiences': JsonConverters.toJson(audiences,'List<String>',context!),
+        'scopes': JsonConverters.toJson(scopes,'List<String>',context!),
         'dns': dns,
         'rsa': rsa,
         'sid': sid,
@@ -404,121 +518,7 @@ class AuthUserSession implements IConvertible
     };
 
     getTypeName() => "AuthUserSession";
-    TypeContext context = _ctx;
-}
-
-class MetadataTestNestedChild implements IConvertible
-{
-    String? name;
-
-    MetadataTestNestedChild({this.name});
-    MetadataTestNestedChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name': name
-    };
-
-    getTypeName() => "MetadataTestNestedChild";
-    TypeContext context = _ctx;
-}
-
-class MetadataTestChild implements IConvertible
-{
-    String? name;
-    List<MetadataTestNestedChild>? results;
-
-    MetadataTestChild({this.name,this.results});
-    MetadataTestChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        results = JsonConverters.fromJson(json['results'],'List<MetadataTestNestedChild>',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name': name,
-        'results': JsonConverters.toJson(results,'List<MetadataTestNestedChild>',context)
-    };
-
-    getTypeName() => "MetadataTestChild";
-    TypeContext context = _ctx;
-}
-
-class MenuItemExampleItem implements IConvertible
-{
-    // @DataMember(Order=1)
-    // @apiMember()
-    String? name1;
-
-    MenuItemExampleItem({this.name1});
-    MenuItemExampleItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name1 = json['name1'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name1': name1
-    };
-
-    getTypeName() => "MenuItemExampleItem";
-    TypeContext context = _ctx;
-}
-
-class MenuItemExample implements IConvertible
-{
-    // @DataMember(Order=1)
-    // @apiMember()
-    String? name1;
-
-    MenuItemExampleItem? menuItemExampleItem;
-
-    MenuItemExample({this.name1,this.menuItemExampleItem});
-    MenuItemExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name1 = json['name1'];
-        menuItemExampleItem = JsonConverters.fromJson(json['menuItemExampleItem'],'MenuItemExampleItem',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name1': name1,
-        'menuItemExampleItem': JsonConverters.toJson(menuItemExampleItem,'MenuItemExampleItem',context)
-    };
-
-    getTypeName() => "MenuItemExample";
-    TypeContext context = _ctx;
-}
-
-// @DataContract
-class MenuExample implements IConvertible
-{
-    // @DataMember(Order=1)
-    // @apiMember()
-    MenuItemExample? menuItemExample1;
-
-    MenuExample({this.menuItemExample1});
-    MenuExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        menuItemExample1 = JsonConverters.fromJson(json['menuItemExample1'],'MenuItemExample',context);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'menuItemExample1': JsonConverters.toJson(menuItemExample1,'MenuItemExample',context)
-    };
-
-    getTypeName() => "MenuExample";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class NestedClass implements IConvertible
@@ -538,47 +538,7 @@ class NestedClass implements IConvertible
     };
 
     getTypeName() => "NestedClass";
-    TypeContext context = _ctx;
-}
-
-class ListResult implements IConvertible
-{
-    String? result;
-
-    ListResult({this.result});
-    ListResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
-
-    getTypeName() => "ListResult";
-    TypeContext context = _ctx;
-}
-
-class ArrayResult implements IConvertible
-{
-    String? result;
-
-    ArrayResult({this.result});
-    ArrayResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
-
-    getTypeName() => "ArrayResult";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 enum EnumType
@@ -670,7 +630,7 @@ class SubType implements IConvertible
     };
 
     getTypeName() => "SubType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class AllTypesBase
@@ -698,8 +658,8 @@ abstract class AllTypesBase
     Duration? nullableTimeSpan;
     List<String>? stringList;
     List<String>? stringArray;
-    Map<String,String>? stringMap;
-    Map<int,String>? intStringMap;
+    Map<String,String?>? stringMap;
+    Map<int,String?>? intStringMap;
     SubType? subType;
 
     AllTypesBase({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
@@ -719,19 +679,19 @@ abstract class AllTypesBase
         Double = JsonConverters.toDouble(json['double']);
         decimal = JsonConverters.toDouble(json['decimal']);
         string = json['string'];
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
-        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context);
-        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context!);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context!);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context!);
         guid = json['guid'];
         char = json['char'];
-        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String,String>',context);
-        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',context);
-        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context);
-        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
-        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
-        stringMap = JsonConverters.toStringMap(json['stringMap']);
-        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
-        subType = JsonConverters.fromJson(json['subType'],'SubType',context);
+        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String,String>',context!);
+        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',context!);
+        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context!);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
+        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
+        subType = JsonConverters.fromJson(json['subType'],'SubType',context!);
         return this;
     }
 
@@ -749,43 +709,23 @@ abstract class AllTypesBase
         'double': Double,
         'decimal': decimal,
         'string': string,
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
-        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context),
-        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context!),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context!),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context!),
         'guid': guid,
         'char': char,
-        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String,String>',context),
-        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',context),
-        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context),
-        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
-        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
-        'stringMap': stringMap,
-        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context),
-        'subType': JsonConverters.toJson(subType,'SubType',context)
+        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String,String>',context!),
+        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',context!),
+        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context!),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
+        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!),
+        'subType': JsonConverters.toJson(subType,'SubType',context!)
     };
 
     getTypeName() => "AllTypesBase";
-    TypeContext context = _ctx;
-}
-
-class Poco implements IConvertible
-{
-    String? name;
-
-    Poco({this.name});
-    Poco.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name': name
-    };
-
-    getTypeName() => "Poco";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class HelloBase
@@ -805,27 +745,7 @@ abstract class HelloBase
     };
 
     getTypeName() => "HelloBase";
-    TypeContext context = _ctx;
-}
-
-abstract class HelloResponseBase
-{
-    int? refId;
-
-    HelloResponseBase({this.refId});
-    HelloResponseBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        refId = json['refId'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'refId': refId
-    };
-
-    getTypeName() => "HelloResponseBase";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class HelloBase1<T>
@@ -837,58 +757,18 @@ abstract class HelloBase1<T>
     HelloBase1.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        items = JsonConverters.fromJson(json['items'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context);
-        counts = JsonConverters.fromJson(json['counts'],'List<int>',context);
+        items = JsonConverters.fromJson(json['items'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context!);
+        counts = JsonConverters.fromJson(json['counts'],'List<int>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'items': JsonConverters.toJson(items,'List<T>',context),
-        'counts': JsonConverters.toJson(counts,'List<int>',context)
+        'items': JsonConverters.toJson(items,'List<T>',context!),
+        'counts': JsonConverters.toJson(counts,'List<int>',context!)
     };
 
     getTypeName() => "HelloBase<$T>";
-    TypeContext context = _ctx;
-}
-
-abstract class HelloWithReturnResponse
-{
-    String? result;
-
-    HelloWithReturnResponse({this.result});
-    HelloWithReturnResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
-
-    getTypeName() => "HelloWithReturnResponse";
-    TypeContext context = _ctx;
-}
-
-class HelloType implements IConvertible
-{
-    String? result;
-
-    HelloType({this.result});
-    HelloType.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
-
-    getTypeName() => "HelloType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class IPoco
@@ -910,37 +790,7 @@ class EmptyClass implements IConvertible
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "EmptyClass";
-    TypeContext context = _ctx;
-}
-
-class InnerType implements IConvertible
-{
-    int? id;
-    String? name;
-
-    InnerType({this.id,this.name});
-    InnerType.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        name = json['name'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name
-    };
-
-    getTypeName() => "InnerType";
-    TypeContext context = _ctx;
-}
-
-enum InnerEnum
-{
-    Foo,
-    Bar,
-    Baz,
+    TypeContext? context = _ctx;
 }
 
 enum DayOfWeek
@@ -956,7 +806,7 @@ enum DayOfWeek
 
 // @DataContract
 enum ScopeType
-{
+    {
     Global,
     Sale,
 }
@@ -971,74 +821,7 @@ class PingService implements IConvertible
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "PingService";
-    TypeContext context = _ctx;
-}
-
-class ReturnedDto implements IConvertible
-{
-    int? id;
-
-    ReturnedDto({this.id});
-    ReturnedDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id
-    };
-
-    getTypeName() => "ReturnedDto";
-    TypeContext context = _ctx;
-}
-
-class CustomUserSession extends AuthUserSession implements IConvertible
-{
-    // @DataMember
-    String? customName;
-
-    // @DataMember
-    String? customInfo;
-
-    CustomUserSession({this.customName,this.customInfo});
-    CustomUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        customName = json['customName'];
-        customInfo = json['customInfo'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'customName': customName,
-        'customInfo': customInfo
-    });
-
-    getTypeName() => "CustomUserSession";
-    TypeContext context = _ctx;
-}
-
-class UnAuthInfo implements IConvertible
-{
-    String? customInfo;
-
-    UnAuthInfo({this.customInfo});
-    UnAuthInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        customInfo = json['customInfo'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'customInfo': customInfo
-    };
-
-    getTypeName() => "UnAuthInfo";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Channel implements IConvertible
@@ -1061,7 +844,7 @@ class Channel implements IConvertible
     };
 
     getTypeName() => "Channel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Device implements IConvertible
@@ -1078,7 +861,7 @@ class Device implements IConvertible
         id = json['id'];
         type = json['type'];
         timeStamp = json['timeStamp'];
-        channels = JsonConverters.fromJson(json['channels'],'List<Channel>',context);
+        channels = JsonConverters.fromJson(json['channels'],'List<Channel>',context!);
         return this;
     }
 
@@ -1086,11 +869,11 @@ class Device implements IConvertible
         'id': id,
         'type': type,
         'timeStamp': timeStamp,
-        'channels': JsonConverters.toJson(channels,'List<Channel>',context)
+        'channels': JsonConverters.toJson(channels,'List<Channel>',context!)
     };
 
     getTypeName() => "Device";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Logger implements IConvertible
@@ -1103,17 +886,17 @@ class Logger implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        devices = JsonConverters.fromJson(json['devices'],'List<Device>',context);
+        devices = JsonConverters.fromJson(json['devices'],'List<Device>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'devices': JsonConverters.toJson(devices,'List<Device>',context)
+        'devices': JsonConverters.toJson(devices,'List<Device>',context!)
     };
 
     getTypeName() => "Logger";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Rockstar implements IConvertible
@@ -1142,7 +925,7 @@ class Rockstar implements IConvertible
     };
 
     getTypeName() => "Rockstar";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class QueryDbTenant<From,Into> extends QueryDb2<From,Into>
@@ -1156,7 +939,7 @@ abstract class QueryDbTenant<From,Into> extends QueryDb2<From,Into>
 
     Map<String, dynamic> toJson() => super.toJson();
     getTypeName() => "QueryDbTenant<$From,$Into>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 enum LivingStatus
@@ -1186,9 +969,9 @@ class RockstarAuditTenant extends AuditBase implements IConvertible
         firstName = json['firstName'];
         lastName = json['lastName'];
         age = json['age'];
-        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context);
-        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context);
-        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context!);
+        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context!);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context!);
         return this;
     }
 
@@ -1198,13 +981,13 @@ class RockstarAuditTenant extends AuditBase implements IConvertible
         'firstName': firstName,
         'lastName': lastName,
         'age': age,
-        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context),
-        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context),
-        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context!),
+        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context!),
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context!)
     });
 
     getTypeName() => "RockstarAuditTenant";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class RockstarBase
@@ -1223,9 +1006,9 @@ abstract class RockstarBase
         firstName = json['firstName'];
         lastName = json['lastName'];
         age = json['age'];
-        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context);
-        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context);
-        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context!);
+        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context!);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context!);
         return this;
     }
 
@@ -1233,13 +1016,13 @@ abstract class RockstarBase
         'firstName': firstName,
         'lastName': lastName,
         'age': age,
-        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context),
-        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context),
-        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context!),
+        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context!),
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context!)
     };
 
     getTypeName() => "RockstarBase";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarAuto extends RockstarBase implements IConvertible
@@ -1260,7 +1043,7 @@ class RockstarAuto extends RockstarBase implements IConvertible
     });
 
     getTypeName() => "RockstarAuto";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OnlyDefinedInGenericType implements IConvertible
@@ -1283,7 +1066,7 @@ class OnlyDefinedInGenericType implements IConvertible
     };
 
     getTypeName() => "OnlyDefinedInGenericType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OnlyDefinedInGenericTypeFrom implements IConvertible
@@ -1306,7 +1089,7 @@ class OnlyDefinedInGenericTypeFrom implements IConvertible
     };
 
     getTypeName() => "OnlyDefinedInGenericTypeFrom";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OnlyDefinedInGenericTypeInto implements IConvertible
@@ -1329,7 +1112,7 @@ class OnlyDefinedInGenericTypeInto implements IConvertible
     };
 
     getTypeName() => "OnlyDefinedInGenericTypeInto";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarAudit extends RockstarBase implements IConvertible
@@ -1348,10 +1131,10 @@ class RockstarAudit extends RockstarBase implements IConvertible
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
         id = json['id'];
-        createdDate = JsonConverters.fromJson(json['createdDate'],'DateTime',context);
+        createdDate = JsonConverters.fromJson(json['createdDate'],'DateTime',context!);
         createdBy = json['createdBy'];
         createdInfo = json['createdInfo'];
-        modifiedDate = JsonConverters.fromJson(json['modifiedDate'],'DateTime',context);
+        modifiedDate = JsonConverters.fromJson(json['modifiedDate'],'DateTime',context!);
         modifiedBy = json['modifiedBy'];
         modifiedInfo = json['modifiedInfo'];
         return this;
@@ -1359,16 +1142,16 @@ class RockstarAudit extends RockstarBase implements IConvertible
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'id': id,
-        'createdDate': JsonConverters.toJson(createdDate,'DateTime',context),
+        'createdDate': JsonConverters.toJson(createdDate,'DateTime',context!),
         'createdBy': createdBy,
         'createdInfo': createdInfo,
-        'modifiedDate': JsonConverters.toJson(modifiedDate,'DateTime',context),
+        'modifiedDate': JsonConverters.toJson(modifiedDate,'DateTime',context!),
         'modifiedBy': modifiedBy,
         'modifiedInfo': modifiedInfo
     });
 
     getTypeName() => "RockstarAudit";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class CreateAuditBase<Table,TResponse> implements ICreateDb<Table>
@@ -1381,7 +1164,7 @@ abstract class CreateAuditBase<Table,TResponse> implements ICreateDb<Table>
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "CreateAuditBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class CreateAuditTenantBase<Table,TResponse> extends CreateAuditBase<Table,TResponse>
@@ -1395,7 +1178,7 @@ abstract class CreateAuditTenantBase<Table,TResponse> extends CreateAuditBase<Ta
 
     Map<String, dynamic> toJson() => super.toJson();
     getTypeName() => "CreateAuditTenantBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class UpdateAuditBase<Table,TResponse> implements IUpdateDb<Table>
@@ -1408,7 +1191,7 @@ abstract class UpdateAuditBase<Table,TResponse> implements IUpdateDb<Table>
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "UpdateAuditBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class UpdateAuditTenantBase<Table,TResponse> extends UpdateAuditBase<Table,TResponse>
@@ -1422,7 +1205,7 @@ abstract class UpdateAuditTenantBase<Table,TResponse> extends UpdateAuditBase<Ta
 
     Map<String, dynamic> toJson() => super.toJson();
     getTypeName() => "UpdateAuditTenantBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class PatchAuditBase<Table,TResponse> implements IPatchDb<Table>
@@ -1435,7 +1218,7 @@ abstract class PatchAuditBase<Table,TResponse> implements IPatchDb<Table>
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "PatchAuditBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class PatchAuditTenantBase<Table,TResponse> extends PatchAuditBase<Table,TResponse>
@@ -1449,7 +1232,7 @@ abstract class PatchAuditTenantBase<Table,TResponse> extends PatchAuditBase<Tabl
 
     Map<String, dynamic> toJson() => super.toJson();
     getTypeName() => "PatchAuditTenantBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class SoftDeleteAuditBase<Table,TResponse> implements IUpdateDb<Table>
@@ -1462,7 +1245,7 @@ abstract class SoftDeleteAuditBase<Table,TResponse> implements IUpdateDb<Table>
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "SoftDeleteAuditBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class SoftDeleteAuditTenantBase<Table,TResponse> extends SoftDeleteAuditBase<Table,TResponse>
@@ -1476,7 +1259,7 @@ abstract class SoftDeleteAuditTenantBase<Table,TResponse> extends SoftDeleteAudi
 
     Map<String, dynamic> toJson() => super.toJson();
     getTypeName() => "SoftDeleteAuditTenantBase<$Table,$TResponse>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarVersion extends RockstarBase implements IConvertible
@@ -1500,7 +1283,343 @@ class RockstarVersion extends RockstarBase implements IConvertible
     });
 
     getTypeName() => "RockstarVersion";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
+}
+
+// @Route("/messages/crud/{Id}", "PUT")
+class MessageCrud implements IReturnVoid, ISaveDb<MessageCrud>, IConvertible
+{
+    int? id;
+    String? name;
+
+    MessageCrud({this.id,this.name});
+    MessageCrud.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name
+    };
+
+    createResponse() {}
+    getTypeName() => "MessageCrud";
+    TypeContext? context = _ctx;
+}
+
+class MetadataTestNestedChild implements IConvertible
+{
+    String? name;
+
+    MetadataTestNestedChild({this.name});
+    MetadataTestNestedChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    getTypeName() => "MetadataTestNestedChild";
+    TypeContext? context = _ctx;
+}
+
+class MetadataTestChild implements IConvertible
+{
+    String? name;
+    List<MetadataTestNestedChild>? results;
+
+    MetadataTestChild({this.name,this.results});
+    MetadataTestChild.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        results = JsonConverters.fromJson(json['results'],'List<MetadataTestNestedChild>',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'results': JsonConverters.toJson(results,'List<MetadataTestNestedChild>',context!)
+    };
+
+    getTypeName() => "MetadataTestChild";
+    TypeContext? context = _ctx;
+}
+
+class MenuItemExampleItem implements IConvertible
+{
+    // @DataMember(Order=1)
+    // @apiMember()
+    String? name1;
+
+    MenuItemExampleItem({this.name1});
+    MenuItemExampleItem.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name1 = json['name1'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name1': name1
+    };
+
+    getTypeName() => "MenuItemExampleItem";
+    TypeContext? context = _ctx;
+}
+
+class MenuItemExample implements IConvertible
+{
+    // @DataMember(Order=1)
+    // @apiMember()
+    String? name1;
+
+    MenuItemExampleItem? menuItemExampleItem;
+
+    MenuItemExample({this.name1,this.menuItemExampleItem});
+    MenuItemExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name1 = json['name1'];
+        menuItemExampleItem = JsonConverters.fromJson(json['menuItemExampleItem'],'MenuItemExampleItem',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name1': name1,
+        'menuItemExampleItem': JsonConverters.toJson(menuItemExampleItem,'MenuItemExampleItem',context!)
+    };
+
+    getTypeName() => "MenuItemExample";
+    TypeContext? context = _ctx;
+}
+
+// @DataContract
+class MenuExample implements IConvertible
+{
+    // @DataMember(Order=1)
+    // @apiMember()
+    MenuItemExample? menuItemExample1;
+
+    MenuExample({this.menuItemExample1});
+    MenuExample.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        menuItemExample1 = JsonConverters.fromJson(json['menuItemExample1'],'MenuItemExample',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'menuItemExample1': JsonConverters.toJson(menuItemExample1,'MenuItemExample',context!)
+    };
+
+    getTypeName() => "MenuExample";
+    TypeContext? context = _ctx;
+}
+
+class ListResult implements IConvertible
+{
+    String? result;
+
+    ListResult({this.result});
+    ListResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        result = json['result'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'result': result
+    };
+
+    getTypeName() => "ListResult";
+    TypeContext? context = _ctx;
+}
+
+class ArrayResult implements IConvertible
+{
+    String? result;
+
+    ArrayResult({this.result});
+    ArrayResult.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        result = json['result'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'result': result
+    };
+
+    getTypeName() => "ArrayResult";
+    TypeContext? context = _ctx;
+}
+
+abstract class HelloResponseBase
+{
+    int? refId;
+
+    HelloResponseBase({this.refId});
+    HelloResponseBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        refId = json['refId'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'refId': refId
+    };
+
+    getTypeName() => "HelloResponseBase";
+    TypeContext? context = _ctx;
+}
+
+abstract class HelloWithReturnResponse
+{
+    String? result;
+
+    HelloWithReturnResponse({this.result});
+    HelloWithReturnResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        result = json['result'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'result': result
+    };
+
+    getTypeName() => "HelloWithReturnResponse";
+    TypeContext? context = _ctx;
+}
+
+class HelloType implements IConvertible
+{
+    String? result;
+
+    HelloType({this.result});
+    HelloType.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        result = json['result'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'result': result
+    };
+
+    getTypeName() => "HelloType";
+    TypeContext? context = _ctx;
+}
+
+class InnerType implements IConvertible
+{
+    int? id;
+    String? name;
+
+    InnerType({this.id,this.name});
+    InnerType.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name
+    };
+
+    getTypeName() => "InnerType";
+    TypeContext? context = _ctx;
+}
+
+enum InnerEnum
+{
+    Foo,
+    Bar,
+    Baz,
+}
+
+class ReturnedDto implements IConvertible
+{
+    int? id;
+
+    ReturnedDto({this.id});
+    ReturnedDto.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id
+    };
+
+    getTypeName() => "ReturnedDto";
+    TypeContext? context = _ctx;
+}
+
+class CustomUserSession extends AuthUserSession implements IConvertible
+{
+    // @DataMember
+    String? customName;
+
+    // @DataMember
+    String? customInfo;
+
+    CustomUserSession({this.customName,this.customInfo});
+    CustomUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        customName = json['customName'];
+        customInfo = json['customInfo'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'customName': customName,
+        'customInfo': customInfo
+    });
+
+    getTypeName() => "CustomUserSession";
+    TypeContext? context = _ctx;
+}
+
+class UnAuthInfo implements IConvertible
+{
+    String? customInfo;
+
+    UnAuthInfo({this.customInfo});
+    UnAuthInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        customInfo = json['customInfo'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'customInfo': customInfo
+    };
+
+    getTypeName() => "UnAuthInfo";
+    TypeContext? context = _ctx;
 }
 
 class TypesGroup implements IConvertible
@@ -1513,7 +1632,7 @@ class TypesGroup implements IConvertible
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "TypesGroup";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ChatMessage implements IConvertible
@@ -1554,7 +1673,7 @@ class ChatMessage implements IConvertible
     };
 
     getTypeName() => "ChatMessage";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetChatHistoryResponse implements IConvertible
@@ -1566,18 +1685,18 @@ class GetChatHistoryResponse implements IConvertible
     GetChatHistoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<ChatMessage>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        results = JsonConverters.fromJson(json['results'],'List<ChatMessage>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<ChatMessage>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'results': JsonConverters.toJson(results,'List<ChatMessage>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "GetChatHistoryResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUserDetailsResponse implements IConvertible
@@ -1621,7 +1740,7 @@ class GetUserDetailsResponse implements IConvertible
         company = json['company'];
         email = json['email'];
         phoneNumber = json['phoneNumber'];
-        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',context);
+        birthDate = JsonConverters.fromJson(json['birthDate'],'DateTime',context!);
         birthDateRaw = json['birthDateRaw'];
         address = json['address'];
         address2 = json['address2'];
@@ -1649,7 +1768,7 @@ class GetUserDetailsResponse implements IConvertible
         'company': company,
         'email': email,
         'phoneNumber': phoneNumber,
-        'birthDate': JsonConverters.toJson(birthDate,'DateTime',context),
+        'birthDate': JsonConverters.toJson(birthDate,'DateTime',context!),
         'birthDateRaw': birthDateRaw,
         'address': address,
         'address2': address2,
@@ -1666,7 +1785,7 @@ class GetUserDetailsResponse implements IConvertible
     };
 
     getTypeName() => "GetUserDetailsResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CustomHttpErrorResponse implements IConvertible
@@ -1679,17 +1798,17 @@ class CustomHttpErrorResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         custom = json['custom'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'custom': custom,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "CustomHttpErrorResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class QueryResponseAlt<T> implements IConvertible
@@ -1697,7 +1816,7 @@ class QueryResponseAlt<T> implements IConvertible
     int? offset;
     int? total;
     List<T>? results;
-    Map<String,String>? meta;
+    Map<String,String?>? meta;
     ResponseStatus? responseStatus;
 
     QueryResponseAlt({this.offset,this.total,this.results,this.meta,this.responseStatus});
@@ -1706,22 +1825,22 @@ class QueryResponseAlt<T> implements IConvertible
     fromMap(Map<String, dynamic> json) {
         offset = json['offset'];
         total = json['total'];
-        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context);
-        meta = JsonConverters.toStringMap(json['meta']);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context!);
+        meta = JsonConverters.fromJson(json['meta'],'Map<String,String?>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'offset': offset,
         'total': total,
-        'results': JsonConverters.toJson(results,'List<T>',context),
-        'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'results': JsonConverters.toJson(results,'List<T>',context!),
+        'meta': JsonConverters.toJson(meta,'Map<String,String?>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "QueryResponseAlt<$T>";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Items implements IConvertible
@@ -1732,16 +1851,16 @@ class Items implements IConvertible
     Items.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<Item>',context);
+        results = JsonConverters.fromJson(json['results'],'List<Item>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<Item>',context)
+        'results': JsonConverters.toJson(results,'List<Item>',context!)
     };
 
     getTypeName() => "Items";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ThrowTypeResponse implements IConvertible
@@ -1752,16 +1871,16 @@ class ThrowTypeResponse implements IConvertible
     ThrowTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "ThrowTypeResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ThrowValidationResponse implements IConvertible
@@ -1778,7 +1897,7 @@ class ThrowValidationResponse implements IConvertible
         age = json['age'];
         required = json['required'];
         email = json['email'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
@@ -1786,11 +1905,11 @@ class ThrowValidationResponse implements IConvertible
         'age': age,
         'required': required,
         'email': email,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "ThrowValidationResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ThrowBusinessErrorResponse implements IConvertible
@@ -1801,16 +1920,16 @@ class ThrowBusinessErrorResponse implements IConvertible
     ThrowBusinessErrorResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "ThrowBusinessErrorResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Account implements IConvertible
@@ -1830,7 +1949,7 @@ class Account implements IConvertible
     };
 
     getTypeName() => "Account";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Project implements IConvertible
@@ -1853,7 +1972,7 @@ class Project implements IConvertible
     };
 
     getTypeName() => "Project";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SecuredResponse implements IConvertible
@@ -1866,17 +1985,17 @@ class SecuredResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         result = json['result'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "SecuredResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateJwtResponse implements IConvertible
@@ -1889,17 +2008,17 @@ class CreateJwtResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         token = json['token'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'token': token,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "CreateJwtResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateRefreshJwtResponse implements IConvertible
@@ -1912,17 +2031,17 @@ class CreateRefreshJwtResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         token = json['token'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'token': token,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "CreateRefreshJwtResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class MetadataTestResponse implements IConvertible
@@ -1935,17 +2054,17 @@ class MetadataTestResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        results = JsonConverters.fromJson(json['results'],'List<MetadataTestChild>',context);
+        results = JsonConverters.fromJson(json['results'],'List<MetadataTestChild>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'results': JsonConverters.toJson(results,'List<MetadataTestChild>',context)
+        'results': JsonConverters.toJson(results,'List<MetadataTestChild>',context!)
     };
 
     getTypeName() => "MetadataTestResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @DataContract
@@ -1962,18 +2081,44 @@ class GetExampleResponse implements IConvertible
     GetExampleResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
-        menuExample1 = JsonConverters.fromJson(json['menuExample1'],'MenuExample',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
+        menuExample1 = JsonConverters.fromJson(json['menuExample1'],'MenuExample',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context),
-        'menuExample1': JsonConverters.toJson(menuExample1,'MenuExample',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!),
+        'menuExample1': JsonConverters.toJson(menuExample1,'MenuExample',context!)
     };
 
     getTypeName() => "GetExampleResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
+}
+
+// @Route("/messages/{Id}", "PUT")
+class Message implements IReturn<Message>, IConvertible
+{
+    int? id;
+    String? name;
+
+    Message({this.id,this.name});
+    Message.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name
+    };
+
+    createResponse() => Message();
+    getResponseTypeName() => "Message";
+    getTypeName() => "Message";
+    TypeContext? context = _ctx;
 }
 
 class GetRandomIdsResponse implements IConvertible
@@ -1984,16 +2129,16 @@ class GetRandomIdsResponse implements IConvertible
     GetRandomIdsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<String>',context);
+        results = JsonConverters.fromJson(json['results'],'List<String>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<String>',context)
+        'results': JsonConverters.toJson(results,'List<String>',context!)
     };
 
     getTypeName() => "GetRandomIdsResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloResponse implements IConvertible
@@ -2013,12 +2158,12 @@ class HelloResponse implements IConvertible
     };
 
     getTypeName() => "HelloResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 /**
-* Description on HelloAllResponse type
-*/
+ * Description on HelloAllResponse type
+ */
 // @DataContract
 class HelloAnnotatedResponse implements IConvertible
 {
@@ -2038,7 +2183,7 @@ class HelloAnnotatedResponse implements IConvertible
     };
 
     getTypeName() => "HelloAnnotatedResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class AllTypes implements IReturn<AllTypes>, IConvertible
@@ -2066,8 +2211,8 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
     Duration? nullableTimeSpan;
     List<String>? stringList;
     List<String>? stringArray;
-    Map<String,String>? stringMap;
-    Map<int,String>? intStringMap;
+    Map<String,String?>? stringMap;
+    Map<int,String?>? intStringMap;
     SubType? subType;
 
     AllTypes({this.id,this.nullableId,this.byte,this.short,this.Int,this.long,this.uShort,this.uInt,this.uLong,this.float,this.Double,this.decimal,this.string,this.dateTime,this.timeSpan,this.dateTimeOffset,this.guid,this.char,this.keyValuePair,this.nullableDateTime,this.nullableTimeSpan,this.stringList,this.stringArray,this.stringMap,this.intStringMap,this.subType});
@@ -2087,19 +2232,19 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
         Double = JsonConverters.toDouble(json['double']);
         decimal = JsonConverters.toDouble(json['decimal']);
         string = json['string'];
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
-        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context);
-        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context!);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context!);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context!);
         guid = json['guid'];
         char = json['char'];
-        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String,String>',context);
-        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',context);
-        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context);
-        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
-        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
-        stringMap = JsonConverters.toStringMap(json['stringMap']);
-        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
-        subType = JsonConverters.fromJson(json['subType'],'SubType',context);
+        keyValuePair = JsonConverters.fromJson(json['keyValuePair'],'KeyValuePair<String,String>',context!);
+        nullableDateTime = JsonConverters.fromJson(json['nullableDateTime'],'DateTime',context!);
+        nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context!);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
+        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
+        subType = JsonConverters.fromJson(json['subType'],'SubType',context!);
         return this;
     }
 
@@ -2117,25 +2262,25 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
         'double': Double,
         'decimal': decimal,
         'string': string,
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
-        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context),
-        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context!),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context!),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context!),
         'guid': guid,
         'char': char,
-        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String,String>',context),
-        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',context),
-        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context),
-        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
-        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
-        'stringMap': stringMap,
-        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context),
-        'subType': JsonConverters.toJson(subType,'SubType',context)
+        'keyValuePair': JsonConverters.toJson(keyValuePair,'KeyValuePair<String,String>',context!),
+        'nullableDateTime': JsonConverters.toJson(nullableDateTime,'DateTime',context!),
+        'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context!),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
+        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!),
+        'subType': JsonConverters.toJson(subType,'SubType',context!)
     };
 
     createResponse() => AllTypes();
     getResponseTypeName() => "AllTypes";
     getTypeName() => "AllTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
@@ -2151,49 +2296,49 @@ class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
     List<double>? decimalList;
     List<Poco>? pocoArray;
     List<Poco>? pocoList;
-    Map<String,List<Poco>>? pocoLookup;
-    Map<String,List<Map<String,Poco>>>? pocoLookupMap;
+    Map<String,List<Poco>?>? pocoLookup;
+    Map<String,List<Map<String,Poco>>?>? pocoLookupMap;
 
     AllCollectionTypes({this.intArray,this.intList,this.stringArray,this.stringList,this.floatArray,this.doubleList,this.byteArray,this.charArray,this.decimalList,this.pocoArray,this.pocoList,this.pocoLookup,this.pocoLookupMap});
     AllCollectionTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        intArray = JsonConverters.fromJson(json['intArray'],'List<int>',context);
-        intList = JsonConverters.fromJson(json['intList'],'List<int>',context);
-        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
-        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
-        floatArray = JsonConverters.fromJson(json['floatArray'],'List<double>',context);
-        doubleList = JsonConverters.fromJson(json['doubleList'],'List<double>',context);
-        byteArray = JsonConverters.fromJson(json['byteArray'],'Uint8List',context);
-        charArray = JsonConverters.fromJson(json['charArray'],'List<String>',context);
-        decimalList = JsonConverters.fromJson(json['decimalList'],'List<double>',context);
-        pocoArray = JsonConverters.fromJson(json['pocoArray'],'List<Poco>',context);
-        pocoList = JsonConverters.fromJson(json['pocoList'],'List<Poco>',context);
-        pocoLookup = JsonConverters.fromJson(json['pocoLookup'],'Map<String,List<Poco>>',context);
-        pocoLookupMap = JsonConverters.fromJson(json['pocoLookupMap'],'Map<String,List<Map<String,Poco>>>',context);
+        intArray = JsonConverters.fromJson(json['intArray'],'List<int>',context!);
+        intList = JsonConverters.fromJson(json['intList'],'List<int>',context!);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
+        floatArray = JsonConverters.fromJson(json['floatArray'],'List<double>',context!);
+        doubleList = JsonConverters.fromJson(json['doubleList'],'List<double>',context!);
+        byteArray = JsonConverters.fromJson(json['byteArray'],'Uint8List',context!);
+        charArray = JsonConverters.fromJson(json['charArray'],'List<String>',context!);
+        decimalList = JsonConverters.fromJson(json['decimalList'],'List<double>',context!);
+        pocoArray = JsonConverters.fromJson(json['pocoArray'],'List<Poco>',context!);
+        pocoList = JsonConverters.fromJson(json['pocoList'],'List<Poco>',context!);
+        pocoLookup = JsonConverters.fromJson(json['pocoLookup'],'Map<String,List<Poco>?>',context!);
+        pocoLookupMap = JsonConverters.fromJson(json['pocoLookupMap'],'Map<String,List<Map<String,Poco>>?>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'intArray': JsonConverters.toJson(intArray,'List<int>',context),
-        'intList': JsonConverters.toJson(intList,'List<int>',context),
-        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
-        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
-        'floatArray': JsonConverters.toJson(floatArray,'List<double>',context),
-        'doubleList': JsonConverters.toJson(doubleList,'List<double>',context),
-        'byteArray': JsonConverters.toJson(byteArray,'Uint8List',context),
-        'charArray': JsonConverters.toJson(charArray,'List<String>',context),
-        'decimalList': JsonConverters.toJson(decimalList,'List<double>',context),
-        'pocoArray': JsonConverters.toJson(pocoArray,'List<Poco>',context),
-        'pocoList': JsonConverters.toJson(pocoList,'List<Poco>',context),
-        'pocoLookup': JsonConverters.toJson(pocoLookup,'Map<String,List<Poco>>',context),
-        'pocoLookupMap': JsonConverters.toJson(pocoLookupMap,'Map<String,List<Map<String,Poco>>>',context)
+        'intArray': JsonConverters.toJson(intArray,'List<int>',context!),
+        'intList': JsonConverters.toJson(intList,'List<int>',context!),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
+        'floatArray': JsonConverters.toJson(floatArray,'List<double>',context!),
+        'doubleList': JsonConverters.toJson(doubleList,'List<double>',context!),
+        'byteArray': JsonConverters.toJson(byteArray,'Uint8List',context!),
+        'charArray': JsonConverters.toJson(charArray,'List<String>',context!),
+        'decimalList': JsonConverters.toJson(decimalList,'List<double>',context!),
+        'pocoArray': JsonConverters.toJson(pocoArray,'List<Poco>',context!),
+        'pocoList': JsonConverters.toJson(pocoList,'List<Poco>',context!),
+        'pocoLookup': JsonConverters.toJson(pocoLookup,'Map<String,List<Poco>?>',context!),
+        'pocoLookupMap': JsonConverters.toJson(pocoLookupMap,'Map<String,List<Map<String,Poco>>?>',context!)
     };
 
     createResponse() => AllCollectionTypes();
     getResponseTypeName() => "AllCollectionTypes";
     getTypeName() => "AllCollectionTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloAllTypesResponse implements IConvertible
@@ -2207,19 +2352,19 @@ class HelloAllTypesResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         result = json['result'];
-        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context);
-        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context);
+        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context!);
+        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context),
-        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
+        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context!),
+        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context!)
     };
 
     getTypeName() => "HelloAllTypesResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SubAllTypes extends AllTypesBase implements IConvertible
@@ -2240,7 +2385,7 @@ class SubAllTypes extends AllTypesBase implements IConvertible
     });
 
     getTypeName() => "SubAllTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
@@ -2251,18 +2396,18 @@ class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
     HelloDateTime.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context)
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context!)
     };
 
     createResponse() => HelloDateTime();
     getResponseTypeName() => "HelloDateTime";
     getTypeName() => "HelloDateTime";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @DataContract
@@ -2284,12 +2429,12 @@ class HelloWithDataContractResponse implements IConvertible
     };
 
     getTypeName() => "HelloWithDataContractResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 /**
-* Description on HelloWithDescriptionResponse type
-*/
+ * Description on HelloWithDescriptionResponse type
+ */
 class HelloWithDescriptionResponse implements IConvertible
 {
     String? result;
@@ -2307,7 +2452,7 @@ class HelloWithDescriptionResponse implements IConvertible
     };
 
     getTypeName() => "HelloWithDescriptionResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithInheritanceResponse extends HelloResponseBase implements IConvertible
@@ -2328,7 +2473,7 @@ class HelloWithInheritanceResponse extends HelloResponseBase implements IConvert
     });
 
     getTypeName() => "HelloWithInheritanceResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithAlternateReturnResponse extends HelloWithReturnResponse implements IConvertible
@@ -2349,7 +2494,7 @@ class HelloWithAlternateReturnResponse extends HelloWithReturnResponse implement
     });
 
     getTypeName() => "HelloWithAlternateReturnResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithRouteResponse implements IConvertible
@@ -2369,7 +2514,7 @@ class HelloWithRouteResponse implements IConvertible
     };
 
     getTypeName() => "HelloWithRouteResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithTypeResponse implements IConvertible
@@ -2380,16 +2525,16 @@ class HelloWithTypeResponse implements IConvertible
     HelloWithTypeResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'HelloType',context);
+        result = JsonConverters.fromJson(json['result'],'HelloType',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'HelloType',context)
+        'result': JsonConverters.toJson(result,'HelloType',context!)
     };
 
     getTypeName() => "HelloWithTypeResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloInnerTypesResponse implements IConvertible
@@ -2401,18 +2546,18 @@ class HelloInnerTypesResponse implements IConvertible
     HelloInnerTypesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        innerType = JsonConverters.fromJson(json['innerType'],'InnerType',context);
-        innerEnum = JsonConverters.fromJson(json['innerEnum'],'InnerEnum',context);
+        innerType = JsonConverters.fromJson(json['innerType'],'InnerType',context!);
+        innerEnum = JsonConverters.fromJson(json['innerEnum'],'InnerEnum',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'innerType': JsonConverters.toJson(innerType,'InnerType',context),
-        'innerEnum': JsonConverters.toJson(innerEnum,'InnerEnum',context)
+        'innerType': JsonConverters.toJson(innerType,'InnerType',context!),
+        'innerEnum': JsonConverters.toJson(innerEnum,'InnerEnum',context!)
     };
 
     getTypeName() => "HelloInnerTypesResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloVerbResponse implements IConvertible
@@ -2432,7 +2577,7 @@ class HelloVerbResponse implements IConvertible
     };
 
     getTypeName() => "HelloVerbResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class EnumResponse implements IConvertible
@@ -2443,16 +2588,16 @@ class EnumResponse implements IConvertible
     EnumResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context);
+        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'operator': JsonConverters.toJson(Operator,'ScopeType',context)
+        'operator': JsonConverters.toJson(Operator,'ScopeType',context!)
     };
 
     getTypeName() => "EnumResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/hellotypes/{Name}")
@@ -2481,7 +2626,7 @@ class HelloTypes implements IReturn<HelloTypes>, IConvertible
     createResponse() => HelloTypes();
     getResponseTypeName() => "HelloTypes";
     getTypeName() => "HelloTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @DataContract
@@ -2503,30 +2648,30 @@ class HelloZipResponse implements IConvertible
     };
 
     getTypeName() => "HelloZipResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class PingResponse implements IConvertible
 {
-    Map<String,ResponseStatus>? responses;
+    Map<String,ResponseStatus?>? responses;
     ResponseStatus? responseStatus;
 
     PingResponse({this.responses,this.responseStatus});
     PingResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responses = JsonConverters.fromJson(json['responses'],'Map<String,ResponseStatus>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responses = JsonConverters.fromJson(json['responses'],'Map<String,ResponseStatus?>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responses': JsonConverters.toJson(responses,'Map<String,ResponseStatus>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responses': JsonConverters.toJson(responses,'Map<String,ResponseStatus?>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "PingResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RequiresRoleResponse implements IConvertible
@@ -2539,17 +2684,17 @@ class RequiresRoleResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         result = json['result'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'result': result,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "RequiresRoleResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SendVerbResponse implements IConvertible
@@ -2575,7 +2720,7 @@ class SendVerbResponse implements IConvertible
     };
 
     getTypeName() => "SendVerbResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetSessionResponse implements IConvertible
@@ -2588,20 +2733,20 @@ class GetSessionResponse implements IConvertible
     GetSessionResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'CustomUserSession',context);
-        unAuthInfo = JsonConverters.fromJson(json['unAuthInfo'],'UnAuthInfo',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'CustomUserSession',context!);
+        unAuthInfo = JsonConverters.fromJson(json['unAuthInfo'],'UnAuthInfo',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'CustomUserSession',context),
-        'unAuthInfo': JsonConverters.toJson(unAuthInfo,'UnAuthInfo',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'CustomUserSession',context!),
+        'unAuthInfo': JsonConverters.toJson(unAuthInfo,'UnAuthInfo',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "GetSessionResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @DataContract(Namespace="http://schemas.servicestack.net/types")
@@ -2626,8 +2771,8 @@ class GetStuffResponse implements IConvertible
     GetStuffResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
-        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
+        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context!);
+        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context!);
         symbol = json['symbol'];
         email = json['email'];
         isEnabled = json['isEnabled'];
@@ -2635,15 +2780,15 @@ class GetStuffResponse implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {
-        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
-        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
+        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context!),
+        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context!),
         'symbol': symbol,
         'email': email,
         'isEnabled': isEnabled
     };
 
     getTypeName() => "GetStuffResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class StoreLogsResponse implements IConvertible
@@ -2655,18 +2800,18 @@ class StoreLogsResponse implements IConvertible
     StoreLogsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        existingLogs = JsonConverters.fromJson(json['existingLogs'],'List<Logger>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        existingLogs = JsonConverters.fromJson(json['existingLogs'],'List<Logger>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'existingLogs': JsonConverters.toJson(existingLogs,'List<Logger>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'existingLogs': JsonConverters.toJson(existingLogs,'List<Logger>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "StoreLogsResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class TestAuthResponse implements IConvertible
@@ -2685,7 +2830,7 @@ class TestAuthResponse implements IConvertible
         sessionId = json['sessionId'];
         userName = json['userName'];
         displayName = json['displayName'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
@@ -2694,11 +2839,11 @@ class TestAuthResponse implements IConvertible
         'sessionId': sessionId,
         'userName': userName,
         'displayName': displayName,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "TestAuthResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
@@ -2720,7 +2865,7 @@ class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
     createResponse() => RequiresAdmin();
     getResponseTypeName() => "RequiresAdmin";
     getTypeName() => "RequiresAdmin";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/custom")
@@ -2744,7 +2889,7 @@ class CustomRoute implements IReturn<CustomRoute>, IConvertible
     createResponse() => CustomRoute();
     getResponseTypeName() => "CustomRoute";
     getTypeName() => "CustomRoute";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/wait/{ForMs}")
@@ -2767,7 +2912,7 @@ class Wait implements IReturn<Wait>, IConvertible
     createResponse() => Wait();
     getResponseTypeName() => "Wait";
     getTypeName() => "Wait";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/echo/types")
@@ -2805,9 +2950,9 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
         Double = JsonConverters.toDouble(json['double']);
         decimal = JsonConverters.toDouble(json['decimal']);
         string = json['string'];
-        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context);
-        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context);
-        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context);
+        dateTime = JsonConverters.fromJson(json['dateTime'],'DateTime',context!);
+        timeSpan = JsonConverters.fromJson(json['timeSpan'],'Duration',context!);
+        dateTimeOffset = JsonConverters.fromJson(json['dateTimeOffset'],'DateTime',context!);
         guid = json['guid'];
         char = json['char'];
         return this;
@@ -2825,9 +2970,9 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
         'double': Double,
         'decimal': decimal,
         'string': string,
-        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context),
-        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context),
-        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context),
+        'dateTime': JsonConverters.toJson(dateTime,'DateTime',context!),
+        'timeSpan': JsonConverters.toJson(timeSpan,'Duration',context!),
+        'dateTimeOffset': JsonConverters.toJson(dateTimeOffset,'DateTime',context!),
         'guid': guid,
         'char': char
     };
@@ -2835,7 +2980,7 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
     createResponse() => EchoTypes();
     getResponseTypeName() => "EchoTypes";
     getTypeName() => "EchoTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/echo/collections")
@@ -2843,31 +2988,31 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
 {
     List<String>? stringList;
     List<String>? stringArray;
-    Map<String,String>? stringMap;
-    Map<int,String>? intStringMap;
+    Map<String,String?>? stringMap;
+    Map<int,String?>? intStringMap;
 
     EchoCollections({this.stringList,this.stringArray,this.stringMap,this.intStringMap});
     EchoCollections.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context);
-        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context);
-        stringMap = JsonConverters.toStringMap(json['stringMap']);
-        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
+        stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
+        stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
+        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'stringList': JsonConverters.toJson(stringList,'List<String>',context),
-        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context),
-        'stringMap': stringMap,
-        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context)
+        'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
+        'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
+        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!)
     };
 
     createResponse() => EchoCollections();
     getResponseTypeName() => "EchoCollections";
     getTypeName() => "EchoCollections";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/echo/complex")
@@ -2875,34 +3020,34 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
 {
     SubType? subType;
     List<SubType>? subTypes;
-    Map<String,SubType>? subTypeMap;
-    Map<String,String>? stringMap;
-    Map<int,String>? intStringMap;
+    Map<String,SubType?>? subTypeMap;
+    Map<String,String?>? stringMap;
+    Map<int,String?>? intStringMap;
 
     EchoComplexTypes({this.subType,this.subTypes,this.subTypeMap,this.stringMap,this.intStringMap});
     EchoComplexTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        subType = JsonConverters.fromJson(json['subType'],'SubType',context);
-        subTypes = JsonConverters.fromJson(json['subTypes'],'List<SubType>',context);
-        subTypeMap = JsonConverters.fromJson(json['subTypeMap'],'Map<String,SubType>',context);
-        stringMap = JsonConverters.toStringMap(json['stringMap']);
-        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String>',context);
+        subType = JsonConverters.fromJson(json['subType'],'SubType',context!);
+        subTypes = JsonConverters.fromJson(json['subTypes'],'List<SubType>',context!);
+        subTypeMap = JsonConverters.fromJson(json['subTypeMap'],'Map<String,SubType?>',context!);
+        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'subType': JsonConverters.toJson(subType,'SubType',context),
-        'subTypes': JsonConverters.toJson(subTypes,'List<SubType>',context),
-        'subTypeMap': JsonConverters.toJson(subTypeMap,'Map<String,SubType>',context),
-        'stringMap': stringMap,
-        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String>',context)
+        'subType': JsonConverters.toJson(subType,'SubType',context!),
+        'subTypes': JsonConverters.toJson(subTypes,'List<SubType>',context!),
+        'subTypeMap': JsonConverters.toJson(subTypeMap,'Map<String,SubType?>',context!),
+        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!)
     };
 
     createResponse() => EchoComplexTypes();
     getResponseTypeName() => "EchoComplexTypes";
     getTypeName() => "EchoComplexTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/rockstars", "POST")
@@ -2923,7 +3068,7 @@ class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstar
     createResponse() => StoreRockstars();
     getResponseTypeName() => "StoreRockstars";
     getTypeName() => "StoreRockstars";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarWithIdResponse implements IConvertible
@@ -2936,17 +3081,17 @@ class RockstarWithIdResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "RockstarWithIdResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarWithIdAndResultResponse implements IConvertible
@@ -2960,19 +3105,19 @@ class RockstarWithIdAndResultResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        result = JsonConverters.fromJson(json['result'],'RockstarAuto',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'RockstarAuto',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'result': JsonConverters.toJson(result,'RockstarAuto',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'RockstarAuto',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "RockstarWithIdAndResultResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarWithIdAndCountResponse implements IConvertible
@@ -2987,18 +3132,18 @@ class RockstarWithIdAndCountResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         count = json['count'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'count': count,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "RockstarWithIdAndCountResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RockstarWithIdAndRowVersionResponse implements IConvertible
@@ -3013,18 +3158,34 @@ class RockstarWithIdAndRowVersionResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         rowVersion = json['rowVersion'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'rowVersion': rowVersion,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
     getTypeName() => "RockstarWithIdAndRowVersionResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
+}
+
+class QueryItems extends QueryDb2<Item,Poco> implements IReturn<QueryResponse<Poco>>, IConvertible
+{
+    QueryItems();
+    QueryItems.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    createResponse() => QueryResponse<Poco>();
+    getResponseTypeName() => "QueryResponse<Poco>";
+    getTypeName() => "QueryItems";
+    TypeContext? context = _ctx;
 }
 
 // @Route("/channels/{Channel}/raw")
@@ -3058,7 +3219,7 @@ class PostRawToChannel implements IReturnVoid, IConvertible
 
     createResponse() {}
     getTypeName() => "PostRawToChannel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/channels/{Channel}/chat")
@@ -3093,7 +3254,7 @@ class PostChatToChannel implements IReturn<ChatMessage>, IConvertible
     createResponse() => ChatMessage();
     getResponseTypeName() => "ChatMessage";
     getTypeName() => "PostChatToChannel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/chathistory")
@@ -3107,14 +3268,14 @@ class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible
     GetChatHistory.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        channels = JsonConverters.fromJson(json['channels'],'List<String>',context);
+        channels = JsonConverters.fromJson(json['channels'],'List<String>',context!);
         afterId = json['afterId'];
         take = json['take'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'channels': JsonConverters.toJson(channels,'List<String>',context),
+        'channels': JsonConverters.toJson(channels,'List<String>',context!),
         'afterId': afterId,
         'take': take
     };
@@ -3122,7 +3283,7 @@ class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible
     createResponse() => GetChatHistoryResponse();
     getResponseTypeName() => "GetChatHistoryResponse";
     getTypeName() => "GetChatHistory";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/reset")
@@ -3137,7 +3298,7 @@ class ClearChatHistory implements IReturnVoid, IConvertible
     Map<String, dynamic> toJson() => {};
     createResponse() {}
     getTypeName() => "ClearChatHistory";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/reset-serverevents")
@@ -3152,7 +3313,7 @@ class ResetServerEvents implements IReturnVoid, IConvertible
     Map<String, dynamic> toJson() => {};
     createResponse() {}
     getTypeName() => "ResetServerEvents";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/channels/{Channel}/object")
@@ -3171,8 +3332,8 @@ class PostObjectToChannel implements IReturnVoid, IConvertible
         toUserId = json['toUserId'];
         channel = json['channel'];
         selector = json['selector'];
-        customType = JsonConverters.fromJson(json['customType'],'CustomType',context);
-        setterType = JsonConverters.fromJson(json['setterType'],'SetterType',context);
+        customType = JsonConverters.fromJson(json['customType'],'CustomType',context!);
+        setterType = JsonConverters.fromJson(json['setterType'],'SetterType',context!);
         return this;
     }
 
@@ -3180,13 +3341,13 @@ class PostObjectToChannel implements IReturnVoid, IConvertible
         'toUserId': toUserId,
         'channel': channel,
         'selector': selector,
-        'customType': JsonConverters.toJson(customType,'CustomType',context),
-        'setterType': JsonConverters.toJson(setterType,'SetterType',context)
+        'customType': JsonConverters.toJson(customType,'CustomType',context!),
+        'setterType': JsonConverters.toJson(setterType,'SetterType',context!)
     };
 
     createResponse() {}
     getTypeName() => "PostObjectToChannel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/account")
@@ -3202,7 +3363,7 @@ class GetUserDetails implements IReturn<GetUserDetailsResponse>, IConvertible
     createResponse() => GetUserDetailsResponse();
     getResponseTypeName() => "GetUserDetailsResponse";
     getTypeName() => "GetUserDetails";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
@@ -3227,7 +3388,7 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
     createResponse() => CustomHttpErrorResponse();
     getResponseTypeName() => "CustomHttpErrorResponse";
     getTypeName() => "CustomHttpError";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible
@@ -3249,7 +3410,7 @@ class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible
     createResponse() => QueryResponseAlt<Item>();
     getResponseTypeName() => "QueryResponseAlt<Item>";
     getTypeName() => "AltQueryItems";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetItems implements IReturn<Items>, IConvertible
@@ -3264,7 +3425,7 @@ class GetItems implements IReturn<Items>, IConvertible
     createResponse() => Items();
     getResponseTypeName() => "Items";
     getTypeName() => "GetItems";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetNakedItems implements IReturn<List<Item>>, IConvertible
@@ -3279,7 +3440,69 @@ class GetNakedItems implements IReturn<List<Item>>, IConvertible
     createResponse() => <Item>[];
     getResponseTypeName() => "List<Item>";
     getTypeName() => "GetNakedItems";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
+}
+
+class DeclarativeCollectiveValidationTest implements IReturn<EmptyResponse>, IConvertible
+{
+    // @Validate(Validator="NotEmpty")
+    // @Validate(Validator="MaximumLength(20)")
+    String? site;
+
+    List<DeclarativeChildValidation>? declarativeValidations;
+    List<FluentChildValidation>? fluentValidations;
+
+    DeclarativeCollectiveValidationTest({this.site,this.declarativeValidations,this.fluentValidations});
+    DeclarativeCollectiveValidationTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        site = json['site'];
+        declarativeValidations = JsonConverters.fromJson(json['declarativeValidations'],'List<DeclarativeChildValidation>',context!);
+        fluentValidations = JsonConverters.fromJson(json['fluentValidations'],'List<FluentChildValidation>',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'site': site,
+        'declarativeValidations': JsonConverters.toJson(declarativeValidations,'List<DeclarativeChildValidation>',context!),
+        'fluentValidations': JsonConverters.toJson(fluentValidations,'List<FluentChildValidation>',context!)
+    };
+
+    createResponse() => EmptyResponse();
+    getResponseTypeName() => "EmptyResponse";
+    getTypeName() => "DeclarativeCollectiveValidationTest";
+    TypeContext? context = _ctx;
+}
+
+class DeclarativeSingleValidationTest implements IReturn<EmptyResponse>, IConvertible
+{
+    // @Validate(Validator="NotEmpty")
+    // @Validate(Validator="MaximumLength(20)")
+    String? site;
+
+    DeclarativeSingleValidation? declarativeSingleValidation;
+    FluentSingleValidation? fluentSingleValidation;
+
+    DeclarativeSingleValidationTest({this.site,this.declarativeSingleValidation,this.fluentSingleValidation});
+    DeclarativeSingleValidationTest.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        site = json['site'];
+        declarativeSingleValidation = JsonConverters.fromJson(json['declarativeSingleValidation'],'DeclarativeSingleValidation',context!);
+        fluentSingleValidation = JsonConverters.fromJson(json['fluentSingleValidation'],'FluentSingleValidation',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'site': site,
+        'declarativeSingleValidation': JsonConverters.toJson(declarativeSingleValidation,'DeclarativeSingleValidation',context!),
+        'fluentSingleValidation': JsonConverters.toJson(fluentSingleValidation,'FluentSingleValidation',context!)
+    };
+
+    createResponse() => EmptyResponse();
+    getResponseTypeName() => "EmptyResponse";
+    getTypeName() => "DeclarativeSingleValidationTest";
+    TypeContext? context = _ctx;
 }
 
 class DummyTypes implements IConvertible
@@ -3292,20 +3515,20 @@ class DummyTypes implements IConvertible
     DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        helloResponses = JsonConverters.fromJson(json['helloResponses'],'List<HelloResponse>',context);
-        listResult = JsonConverters.fromJson(json['listResult'],'List<ListResult>',context);
-        arrayResult = JsonConverters.fromJson(json['arrayResult'],'List<ArrayResult>',context);
+        helloResponses = JsonConverters.fromJson(json['helloResponses'],'List<HelloResponse>',context!);
+        listResult = JsonConverters.fromJson(json['listResult'],'List<ListResult>',context!);
+        arrayResult = JsonConverters.fromJson(json['arrayResult'],'List<ArrayResult>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'helloResponses': JsonConverters.toJson(helloResponses,'List<HelloResponse>',context),
-        'listResult': JsonConverters.toJson(listResult,'List<ListResult>',context),
-        'arrayResult': JsonConverters.toJson(arrayResult,'List<ArrayResult>',context)
+        'helloResponses': JsonConverters.toJson(helloResponses,'List<HelloResponse>',context!),
+        'listResult': JsonConverters.toJson(listResult,'List<ListResult>',context!),
+        'arrayResult': JsonConverters.toJson(arrayResult,'List<ArrayResult>',context!)
     };
 
     getTypeName() => "DummyTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/throwhttperror/{Status}")
@@ -3329,7 +3552,7 @@ class ThrowHttpError implements IConvertible
     };
 
     getTypeName() => "ThrowHttpError";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/throw404")
@@ -3351,7 +3574,7 @@ class Throw404 implements IConvertible
     };
 
     getTypeName() => "Throw404";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/throwcustom400")
@@ -3373,7 +3596,7 @@ class ThrowCustom400 implements IConvertible
     };
 
     getTypeName() => "ThrowCustom400";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/throw/{Type}")
@@ -3399,7 +3622,7 @@ class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
     createResponse() => ThrowTypeResponse();
     getResponseTypeName() => "ThrowTypeResponse";
     getTypeName() => "ThrowType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/throwvalidation")
@@ -3428,7 +3651,7 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
     createResponse() => ThrowValidationResponse();
     getResponseTypeName() => "ThrowValidationResponse";
     getTypeName() => "ThrowValidation";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/throwbusinesserror")
@@ -3444,7 +3667,7 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
     createResponse() => ThrowBusinessErrorResponse();
     getResponseTypeName() => "ThrowBusinessErrorResponse";
     getTypeName() => "ThrowBusinessError";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RootPathRoutes implements IConvertible
@@ -3464,7 +3687,7 @@ class RootPathRoutes implements IConvertible
     };
 
     getTypeName() => "RootPathRoutes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetAccount implements IReturn<Account>, IConvertible
@@ -3486,7 +3709,7 @@ class GetAccount implements IReturn<Account>, IConvertible
     createResponse() => Account();
     getResponseTypeName() => "Account";
     getTypeName() => "GetAccount";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetProject implements IReturn<Project>, IConvertible
@@ -3511,7 +3734,7 @@ class GetProject implements IReturn<Project>, IConvertible
     createResponse() => Project();
     getResponseTypeName() => "Project";
     getTypeName() => "GetProject";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/image-stream")
@@ -3534,7 +3757,7 @@ class ImageAsStream implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ImageAsStream";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/image-bytes")
@@ -3557,7 +3780,7 @@ class ImageAsBytes implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ImageAsBytes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/image-custom")
@@ -3580,7 +3803,7 @@ class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ImageAsCustomResult";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/image-response")
@@ -3603,7 +3826,7 @@ class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ImageWriteToResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/image-file")
@@ -3626,7 +3849,7 @@ class ImageAsFile implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ImageAsFile";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/image-redirect")
@@ -3647,7 +3870,7 @@ class ImageAsRedirect implements IConvertible
     };
 
     getTypeName() => "ImageAsRedirect";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/hello-image/{Name}")
@@ -3691,7 +3914,7 @@ class HelloImage implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "HelloImage";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/secured")
@@ -3715,7 +3938,7 @@ class Secured implements IReturn<SecuredResponse>, IConvertible
     createResponse() => SecuredResponse();
     getResponseTypeName() => "SecuredResponse";
     getTypeName() => "Secured";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/jwt")
@@ -3728,18 +3951,18 @@ class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, I
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context);
+        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
+        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context!)
     });
 
     createResponse() => CreateJwtResponse();
     getResponseTypeName() => "CreateJwtResponse";
     getTypeName() => "CreateJwt";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/jwt-refresh")
@@ -3753,19 +3976,19 @@ class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertibl
 
     fromMap(Map<String, dynamic> json) {
         userAuthId = json['userAuthId'];
-        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context);
+        jwtExpiry = JsonConverters.fromJson(json['jwtExpiry'],'DateTime',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'userAuthId': userAuthId,
-        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context)
+        'jwtExpiry': JsonConverters.toJson(jwtExpiry,'DateTime',context!)
     };
 
     createResponse() => CreateRefreshJwtResponse();
     getResponseTypeName() => "CreateRefreshJwtResponse";
     getTypeName() => "CreateRefreshJwt";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/jwt-invalidate")
@@ -3781,7 +4004,7 @@ class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible
     createResponse() => EmptyResponse();
     getResponseTypeName() => "EmptyResponse";
     getTypeName() => "InvalidateLastAccessToken";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/logs")
@@ -3804,7 +4027,7 @@ class ViewLogs implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "ViewLogs";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/metadatatest")
@@ -3827,7 +4050,7 @@ class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
     createResponse() => MetadataTestResponse();
     getResponseTypeName() => "MetadataTestResponse";
     getTypeName() => "MetadataTest";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/metadatatest-array")
@@ -3850,7 +4073,7 @@ class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertibl
     createResponse() => <MetadataTestChild>[];
     getResponseTypeName() => "List<MetadataTestChild>";
     getTypeName() => "MetadataTestArray";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/example", "GET")
@@ -3867,7 +4090,30 @@ class GetExample implements IReturn<GetExampleResponse>, IConvertible
     createResponse() => GetExampleResponse();
     getResponseTypeName() => "GetExampleResponse";
     getTypeName() => "GetExample";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
+}
+
+// @Route("/messages/{Id}", "GET")
+class RequestMessage implements IReturn<Message>, IConvertible
+{
+    int? id;
+
+    RequestMessage({this.id});
+    RequestMessage.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id
+    };
+
+    createResponse() => Message();
+    getResponseTypeName() => "Message";
+    getTypeName() => "RequestMessage";
+    TypeContext? context = _ctx;
 }
 
 // @Route("/randomids")
@@ -3890,7 +4136,7 @@ class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
     createResponse() => GetRandomIdsResponse();
     getResponseTypeName() => "GetRandomIdsResponse";
     getTypeName() => "GetRandomIds";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/textfile-test")
@@ -3911,7 +4157,7 @@ class TextFileTest implements IConvertible
     };
 
     getTypeName() => "TextFileTest";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/return/text")
@@ -3932,7 +4178,7 @@ class ReturnText implements IConvertible
     };
 
     getTypeName() => "ReturnText";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/return/html")
@@ -3953,7 +4199,7 @@ class ReturnHtml implements IConvertible
     };
 
     getTypeName() => "ReturnHtml";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/hello")
@@ -3982,12 +4228,12 @@ class Hello implements IReturn<HelloResponse>, IConvertible
     createResponse() => HelloResponse();
     getResponseTypeName() => "HelloResponse";
     getTypeName() => "Hello";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 /**
-* Description on HelloAll type
-*/
+ * Description on HelloAll type
+ */
 // @DataContract
 class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
 {
@@ -4009,7 +4255,7 @@ class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
     createResponse() => HelloAnnotatedResponse();
     getResponseTypeName() => "HelloAnnotatedResponse";
     getTypeName() => "HelloAnnotated";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
@@ -4022,19 +4268,19 @@ class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
 
     fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        nestedClassProp = JsonConverters.fromJson(json['nestedClassProp'],'NestedClass',context);
+        nestedClassProp = JsonConverters.fromJson(json['nestedClassProp'],'NestedClass',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',context)
+        'nestedClassProp': JsonConverters.toJson(nestedClassProp,'NestedClass',context!)
     };
 
     createResponse() => HelloResponse();
     getResponseTypeName() => "HelloResponse";
     getTypeName() => "HelloWithNestedClass";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloList implements IReturn<List<ListResult>>, IConvertible
@@ -4045,18 +4291,18 @@ class HelloList implements IReturn<List<ListResult>>, IConvertible
     HelloList.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        names = JsonConverters.fromJson(json['names'],'List<String>',context);
+        names = JsonConverters.fromJson(json['names'],'List<String>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.toJson(names,'List<String>',context)
+        'names': JsonConverters.toJson(names,'List<String>',context!)
     };
 
     createResponse() => <ListResult>[];
     getResponseTypeName() => "List<ListResult>";
     getTypeName() => "HelloList";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
@@ -4067,18 +4313,18 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
     HelloArray.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        names = JsonConverters.fromJson(json['names'],'List<String>',context);
+        names = JsonConverters.fromJson(json['names'],'List<String>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'names': JsonConverters.toJson(names,'List<String>',context)
+        'names': JsonConverters.toJson(names,'List<String>',context!)
     };
 
     createResponse() => <ArrayResult>[];
     getResponseTypeName() => "List<ArrayResult>";
     getTypeName() => "HelloArray";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithEnum implements IConvertible
@@ -4096,30 +4342,30 @@ class HelloWithEnum implements IConvertible
     HelloWithEnum.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',context);
-        enumTypeFlags = JsonConverters.fromJson(json['enumTypeFlags'],'EnumTypeFlags',context);
-        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'EnumWithValues',context);
-        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',context);
-        enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',context);
-        enumAsInt = JsonConverters.fromJson(json['enumAsInt'],'EnumAsInt',context);
-        enumStyle = JsonConverters.fromJson(json['enumStyle'],'EnumStyle',context);
-        enumStyleMembers = JsonConverters.fromJson(json['enumStyleMembers'],'EnumStyleMembers',context);
+        enumProp = JsonConverters.fromJson(json['enumProp'],'EnumType',context!);
+        enumTypeFlags = JsonConverters.fromJson(json['enumTypeFlags'],'EnumTypeFlags',context!);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'EnumWithValues',context!);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'EnumType',context!);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'EnumFlags',context!);
+        enumAsInt = JsonConverters.fromJson(json['enumAsInt'],'EnumAsInt',context!);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'EnumStyle',context!);
+        enumStyleMembers = JsonConverters.fromJson(json['enumStyleMembers'],'EnumStyleMembers',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'enumProp': JsonConverters.toJson(enumProp,'EnumType',context),
-        'enumTypeFlags': JsonConverters.toJson(enumTypeFlags,'EnumTypeFlags',context),
-        'enumWithValues': JsonConverters.toJson(enumWithValues,'EnumWithValues',context),
-        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',context),
-        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context),
-        'enumAsInt': JsonConverters.toJson(enumAsInt,'EnumAsInt',context),
-        'enumStyle': JsonConverters.toJson(enumStyle,'EnumStyle',context),
-        'enumStyleMembers': JsonConverters.toJson(enumStyleMembers,'EnumStyleMembers',context)
+        'enumProp': JsonConverters.toJson(enumProp,'EnumType',context!),
+        'enumTypeFlags': JsonConverters.toJson(enumTypeFlags,'EnumTypeFlags',context!),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'EnumWithValues',context!),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'EnumType',context!),
+        'enumFlags': JsonConverters.toJson(enumFlags,'EnumFlags',context!),
+        'enumAsInt': JsonConverters.toJson(enumAsInt,'EnumAsInt',context!),
+        'enumStyle': JsonConverters.toJson(enumStyle,'EnumStyle',context!),
+        'enumStyleMembers': JsonConverters.toJson(enumStyleMembers,'EnumStyleMembers',context!)
     };
 
     getTypeName() => "HelloWithEnum";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithEnumList implements IConvertible
@@ -4134,56 +4380,56 @@ class HelloWithEnumList implements IConvertible
     HelloWithEnumList.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        enumProp = JsonConverters.fromJson(json['enumProp'],'List<EnumType>',context);
-        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'List<EnumWithValues>',context);
-        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'List<EnumType>',context);
-        enumFlags = JsonConverters.fromJson(json['enumFlags'],'List<EnumFlags>',context);
-        enumStyle = JsonConverters.fromJson(json['enumStyle'],'List<EnumStyle>',context);
+        enumProp = JsonConverters.fromJson(json['enumProp'],'List<EnumType>',context!);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'List<EnumWithValues>',context!);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'List<EnumType>',context!);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'List<EnumFlags>',context!);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'List<EnumStyle>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'enumProp': JsonConverters.toJson(enumProp,'List<EnumType>',context),
-        'enumWithValues': JsonConverters.toJson(enumWithValues,'List<EnumWithValues>',context),
-        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'List<EnumType>',context),
-        'enumFlags': JsonConverters.toJson(enumFlags,'List<EnumFlags>',context),
-        'enumStyle': JsonConverters.toJson(enumStyle,'List<EnumStyle>',context)
+        'enumProp': JsonConverters.toJson(enumProp,'List<EnumType>',context!),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'List<EnumWithValues>',context!),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'List<EnumType>',context!),
+        'enumFlags': JsonConverters.toJson(enumFlags,'List<EnumFlags>',context!),
+        'enumStyle': JsonConverters.toJson(enumStyle,'List<EnumStyle>',context!)
     };
 
     getTypeName() => "HelloWithEnumList";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithEnumMap implements IConvertible
 {
-    Map<EnumType,EnumType>? enumProp;
-    Map<EnumWithValues,EnumWithValues>? enumWithValues;
-    Map<EnumType,EnumType>? nullableEnumProp;
-    Map<EnumFlags,EnumFlags>? enumFlags;
-    Map<EnumStyle,EnumStyle>? enumStyle;
+    Map<EnumType,EnumType?>? enumProp;
+    Map<EnumWithValues,EnumWithValues?>? enumWithValues;
+    Map<EnumType,EnumType?>? nullableEnumProp;
+    Map<EnumFlags,EnumFlags?>? enumFlags;
+    Map<EnumStyle,EnumStyle?>? enumStyle;
 
     HelloWithEnumMap({this.enumProp,this.enumWithValues,this.nullableEnumProp,this.enumFlags,this.enumStyle});
     HelloWithEnumMap.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        enumProp = JsonConverters.fromJson(json['enumProp'],'Map<EnumType,EnumType>',context);
-        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'Map<EnumWithValues,EnumWithValues>',context);
-        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'Map<EnumType,EnumType>',context);
-        enumFlags = JsonConverters.fromJson(json['enumFlags'],'Map<EnumFlags,EnumFlags>',context);
-        enumStyle = JsonConverters.fromJson(json['enumStyle'],'Map<EnumStyle,EnumStyle>',context);
+        enumProp = JsonConverters.fromJson(json['enumProp'],'Map<EnumType,EnumType?>',context!);
+        enumWithValues = JsonConverters.fromJson(json['enumWithValues'],'Map<EnumWithValues,EnumWithValues?>',context!);
+        nullableEnumProp = JsonConverters.fromJson(json['nullableEnumProp'],'Map<EnumType,EnumType?>',context!);
+        enumFlags = JsonConverters.fromJson(json['enumFlags'],'Map<EnumFlags,EnumFlags?>',context!);
+        enumStyle = JsonConverters.fromJson(json['enumStyle'],'Map<EnumStyle,EnumStyle?>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'enumProp': JsonConverters.toJson(enumProp,'Map<EnumType,EnumType>',context),
-        'enumWithValues': JsonConverters.toJson(enumWithValues,'Map<EnumWithValues,EnumWithValues>',context),
-        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'Map<EnumType,EnumType>',context),
-        'enumFlags': JsonConverters.toJson(enumFlags,'Map<EnumFlags,EnumFlags>',context),
-        'enumStyle': JsonConverters.toJson(enumStyle,'Map<EnumStyle,EnumStyle>',context)
+        'enumProp': JsonConverters.toJson(enumProp,'Map<EnumType,EnumType?>',context!),
+        'enumWithValues': JsonConverters.toJson(enumWithValues,'Map<EnumWithValues,EnumWithValues?>',context!),
+        'nullableEnumProp': JsonConverters.toJson(nullableEnumProp,'Map<EnumType,EnumType?>',context!),
+        'enumFlags': JsonConverters.toJson(enumFlags,'Map<EnumFlags,EnumFlags?>',context!),
+        'enumStyle': JsonConverters.toJson(enumStyle,'Map<EnumStyle,EnumStyle?>',context!)
     };
 
     getTypeName() => "HelloWithEnumMap";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RestrictedAttributes implements IConvertible
@@ -4198,23 +4444,23 @@ class RestrictedAttributes implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
-        hello = JsonConverters.fromJson(json['hello'],'Hello',context);
+        hello = JsonConverters.fromJson(json['hello'],'Hello',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'hello': JsonConverters.toJson(hello,'Hello',context)
+        'hello': JsonConverters.toJson(hello,'Hello',context!)
     };
 
     getTypeName() => "RestrictedAttributes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 /**
-* AllowedAttributes Description
-*/
+ * AllowedAttributes Description
+ */
 // @Route("/allowed-attributes", "GET")
 // @Api(Description="AllowedAttributes Description")
 // @ApiResponse(Description="Your request was not understood", StatusCode=400)
@@ -4222,8 +4468,8 @@ class RestrictedAttributes implements IConvertible
 class AllowedAttributes implements IConvertible
 {
     /**
-    * Range Description
-    */
+     * Range Description
+     */
     // @DataMember(Name="Aliased")
     // @ApiMember(DataType="double", Description="Range Description", IsRequired=true, ParameterType="path")
     double? range;
@@ -4241,7 +4487,7 @@ class AllowedAttributes implements IConvertible
     };
 
     getTypeName() => "AllowedAttributes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/all-types")
@@ -4256,21 +4502,21 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
 
     fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context);
-        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context);
+        allTypes = JsonConverters.fromJson(json['allTypes'],'AllTypes',context!);
+        allCollectionTypes = JsonConverters.fromJson(json['allCollectionTypes'],'AllCollectionTypes',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context),
-        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context)
+        'allTypes': JsonConverters.toJson(allTypes,'AllTypes',context!),
+        'allCollectionTypes': JsonConverters.toJson(allCollectionTypes,'AllCollectionTypes',context!)
     };
 
     createResponse() => HelloAllTypesResponse();
     getResponseTypeName() => "HelloAllTypesResponse";
     getTypeName() => "HelloAllTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, IConvertible
@@ -4293,7 +4539,7 @@ class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, ICo
     createResponse() => SubAllTypes();
     getResponseTypeName() => "SubAllTypes";
     getTypeName() => "HelloSubAllTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloString implements IReturn<String>, IConvertible
@@ -4315,7 +4561,7 @@ class HelloString implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "HelloString";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloVoid implements IConvertible
@@ -4335,7 +4581,7 @@ class HelloVoid implements IConvertible
     };
 
     getTypeName() => "HelloVoid";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @DataContract
@@ -4364,12 +4610,12 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, I
     createResponse() => HelloWithDataContractResponse();
     getResponseTypeName() => "HelloWithDataContractResponse";
     getTypeName() => "HelloWithDataContract";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 /**
-* Description on HelloWithDescription type
-*/
+ * Description on HelloWithDescription type
+ */
 class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible
 {
     String? name;
@@ -4389,7 +4635,7 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, ICo
     createResponse() => HelloWithDescriptionResponse();
     getResponseTypeName() => "HelloWithDescriptionResponse";
     getTypeName() => "HelloWithDescription";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>, IConvertible
@@ -4412,7 +4658,7 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
     createResponse() => HelloWithInheritanceResponse();
     getResponseTypeName() => "HelloWithInheritanceResponse";
     getTypeName() => "HelloWithInheritance";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertible
@@ -4433,7 +4679,7 @@ class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertib
     });
 
     getTypeName() => "HelloWithGenericInheritance";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvertible
@@ -4454,21 +4700,7 @@ class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvert
     });
 
     getTypeName() => "HelloWithGenericInheritance2";
-    TypeContext context = _ctx;
-}
-
-class HelloWithNestedInheritance extends HelloBase1<Item> implements IConvertible
-{
-    HelloWithNestedInheritance();
-    HelloWithNestedInheritance.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson();
-    getTypeName() => "HelloWithNestedInheritance";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, IConvertible
@@ -4490,7 +4722,7 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, ICon
     createResponse() => HelloWithAlternateReturnResponse();
     getResponseTypeName() => "HelloWithAlternateReturnResponse";
     getTypeName() => "HelloWithReturn";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/helloroute")
@@ -4513,7 +4745,7 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
     createResponse() => HelloWithRouteResponse();
     getResponseTypeName() => "HelloWithRouteResponse";
     getTypeName() => "HelloWithRoute";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
@@ -4535,7 +4767,7 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
     createResponse() => HelloWithTypeResponse();
     getResponseTypeName() => "HelloWithTypeResponse";
     getTypeName() => "HelloWithType";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloInterface implements IConvertible
@@ -4548,20 +4780,20 @@ class HelloInterface implements IConvertible
     HelloInterface.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        poco = JsonConverters.fromJson(json['poco'],'IPoco',context);
-        emptyInterface = JsonConverters.fromJson(json['emptyInterface'],'IEmptyInterface',context);
-        emptyClass = JsonConverters.fromJson(json['emptyClass'],'EmptyClass',context);
+        poco = JsonConverters.fromJson(json['poco'],'IPoco',context!);
+        emptyInterface = JsonConverters.fromJson(json['emptyInterface'],'IEmptyInterface',context!);
+        emptyClass = JsonConverters.fromJson(json['emptyClass'],'EmptyClass',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'poco': JsonConverters.toJson(poco,'IPoco',context),
-        'emptyInterface': JsonConverters.toJson(emptyInterface,'IEmptyInterface',context),
-        'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',context)
+        'poco': JsonConverters.toJson(poco,'IPoco',context!),
+        'emptyInterface': JsonConverters.toJson(emptyInterface,'IEmptyInterface',context!),
+        'emptyClass': JsonConverters.toJson(emptyClass,'EmptyClass',context!)
     };
 
     getTypeName() => "HelloInterface";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
@@ -4576,7 +4808,7 @@ class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
     createResponse() => HelloInnerTypesResponse();
     getResponseTypeName() => "HelloInnerTypesResponse";
     getTypeName() => "HelloInnerTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloBuiltin implements IConvertible
@@ -4587,16 +4819,16 @@ class HelloBuiltin implements IConvertible
     HelloBuiltin.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',context);
+        dayOfWeek = JsonConverters.fromJson(json['dayOfWeek'],'DayOfWeek',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context)
+        'dayOfWeek': JsonConverters.toJson(dayOfWeek,'DayOfWeek',context!)
     };
 
     getTypeName() => "HelloBuiltin";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
@@ -4618,7 +4850,7 @@ class HelloGet implements IReturn<HelloVerbResponse>, IGet, IConvertible
     createResponse() => HelloVerbResponse();
     getResponseTypeName() => "HelloVerbResponse";
     getTypeName() => "HelloGet";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, IConvertible
@@ -4634,7 +4866,7 @@ class HelloPost extends HelloBase implements IReturn<HelloVerbResponse>, IPost, 
     createResponse() => HelloVerbResponse();
     getResponseTypeName() => "HelloVerbResponse";
     getTypeName() => "HelloPost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
@@ -4656,7 +4888,7 @@ class HelloPut implements IReturn<HelloVerbResponse>, IPut, IConvertible
     createResponse() => HelloVerbResponse();
     getResponseTypeName() => "HelloVerbResponse";
     getTypeName() => "HelloPut";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
@@ -4678,7 +4910,7 @@ class HelloDelete implements IReturn<HelloVerbResponse>, IDelete, IConvertible
     createResponse() => HelloVerbResponse();
     getResponseTypeName() => "HelloVerbResponse";
     getTypeName() => "HelloDelete";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
@@ -4700,7 +4932,7 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
     createResponse() => HelloVerbResponse();
     getResponseTypeName() => "HelloVerbResponse";
     getTypeName() => "HelloPatch";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloReturnVoid implements IReturnVoid, IConvertible
@@ -4721,7 +4953,7 @@ class HelloReturnVoid implements IReturnVoid, IConvertible
 
     createResponse() {}
     getTypeName() => "HelloReturnVoid";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
@@ -4732,18 +4964,18 @@ class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
     EnumRequest.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context);
+        Operator = JsonConverters.fromJson(json['operator'],'ScopeType',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'operator': JsonConverters.toJson(Operator,'ScopeType',context)
+        'operator': JsonConverters.toJson(Operator,'ScopeType',context!)
     };
 
     createResponse() => EnumResponse();
     getResponseTypeName() => "EnumResponse";
     getTypeName() => "EnumRequest";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/hellozip")
@@ -4761,19 +4993,19 @@ class HelloZip implements IReturn<HelloZipResponse>, IConvertible
 
     fromMap(Map<String, dynamic> json) {
         name = json['name'];
-        test = JsonConverters.fromJson(json['test'],'List<String>',context);
+        test = JsonConverters.fromJson(json['test'],'List<String>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
-        'test': JsonConverters.toJson(test,'List<String>',context)
+        'test': JsonConverters.toJson(test,'List<String>',context!)
     };
 
     createResponse() => HelloZipResponse();
     getResponseTypeName() => "HelloZipResponse";
     getTypeName() => "HelloZip";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/ping")
@@ -4789,7 +5021,7 @@ class Ping implements IReturn<PingResponse>, IConvertible
     createResponse() => PingResponse();
     getResponseTypeName() => "PingResponse";
     getTypeName() => "Ping";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/reset-connections")
@@ -4803,7 +5035,7 @@ class ResetConnections implements IConvertible
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "ResetConnections";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/requires-role")
@@ -4819,7 +5051,7 @@ class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
     createResponse() => RequiresRoleResponse();
     getResponseTypeName() => "RequiresRoleResponse";
     getTypeName() => "RequiresRole";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/return/string")
@@ -4842,7 +5074,7 @@ class ReturnString implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "ReturnString";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/return/bytes")
@@ -4854,18 +5086,18 @@ class ReturnBytes implements IReturn<Uint8List>, IConvertible
     ReturnBytes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        data = JsonConverters.fromJson(json['data'],'Uint8List',context);
+        data = JsonConverters.fromJson(json['data'],'Uint8List',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.toJson(data,'Uint8List',context)
+        'data': JsonConverters.toJson(data,'Uint8List',context!)
     };
 
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ReturnBytes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/return/stream")
@@ -4877,18 +5109,18 @@ class ReturnStream implements IReturn<Uint8List>, IConvertible
     ReturnStream.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        data = JsonConverters.fromJson(json['data'],'Uint8List',context);
+        data = JsonConverters.fromJson(json['data'],'Uint8List',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'data': JsonConverters.toJson(data,'Uint8List',context)
+        'data': JsonConverters.toJson(data,'Uint8List',context!)
     };
 
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "ReturnStream";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/Request1", "GET")
@@ -4904,7 +5136,7 @@ class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
     createResponse() => <ReturnedDto>[];
     getResponseTypeName() => "List<ReturnedDto>";
     getTypeName() => "GetRequest1";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/Request2", "GET")
@@ -4920,7 +5152,7 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
     createResponse() => <ReturnedDto>[];
     getResponseTypeName() => "List<ReturnedDto>";
     getTypeName() => "GetRequest2";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/sendjson")
@@ -4946,7 +5178,7 @@ class SendJson implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "SendJson";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/sendtext")
@@ -4975,7 +5207,7 @@ class SendText implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "SendText";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/sendraw")
@@ -5004,7 +5236,7 @@ class SendRaw implements IReturn<Uint8List>, IConvertible
     createResponse() => Uint8List(0);
     getResponseTypeName() => "Uint8List";
     getTypeName() => "SendRaw";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SendDefault implements IReturn<SendVerbResponse>, IConvertible
@@ -5026,7 +5258,7 @@ class SendDefault implements IReturn<SendVerbResponse>, IConvertible
     createResponse() => SendVerbResponse();
     getResponseTypeName() => "SendVerbResponse";
     getTypeName() => "SendDefault";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/sendrestget/{Id}", "GET")
@@ -5049,7 +5281,7 @@ class SendRestGet implements IReturn<SendVerbResponse>, IGet, IConvertible
     createResponse() => SendVerbResponse();
     getResponseTypeName() => "SendVerbResponse";
     getTypeName() => "SendRestGet";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
@@ -5071,7 +5303,7 @@ class SendGet implements IReturn<SendVerbResponse>, IGet, IConvertible
     createResponse() => SendVerbResponse();
     getResponseTypeName() => "SendVerbResponse";
     getTypeName() => "SendGet";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
@@ -5093,7 +5325,7 @@ class SendPost implements IReturn<SendVerbResponse>, IPost, IConvertible
     createResponse() => SendVerbResponse();
     getResponseTypeName() => "SendVerbResponse";
     getTypeName() => "SendPost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
@@ -5115,7 +5347,7 @@ class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
     createResponse() => SendVerbResponse();
     getResponseTypeName() => "SendVerbResponse";
     getTypeName() => "SendPut";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SendReturnVoid implements IReturnVoid, IConvertible
@@ -5136,7 +5368,7 @@ class SendReturnVoid implements IReturnVoid, IConvertible
 
     createResponse() {}
     getTypeName() => "SendReturnVoid";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/session")
@@ -5152,7 +5384,7 @@ class GetSession implements IReturn<GetSessionResponse>, IConvertible
     createResponse() => GetSessionResponse();
     getResponseTypeName() => "GetSessionResponse";
     getTypeName() => "GetSession";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/session/edit/{CustomName}")
@@ -5175,7 +5407,7 @@ class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
     createResponse() => GetSessionResponse();
     getResponseTypeName() => "GetSessionResponse";
     getTypeName() => "UpdateSession";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/Stuff")
@@ -5206,8 +5438,8 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
     GetStuff.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context);
-        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context);
+        summaryDate = JsonConverters.fromJson(json['summaryDate'],'DateTime',context!);
+        summaryEndDate = JsonConverters.fromJson(json['summaryEndDate'],'DateTime',context!);
         symbol = json['symbol'];
         email = json['email'];
         isEnabled = json['isEnabled'];
@@ -5215,8 +5447,8 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
     }
 
     Map<String, dynamic> toJson() => {
-        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context),
-        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context),
+        'summaryDate': JsonConverters.toJson(summaryDate,'DateTime',context!),
+        'summaryEndDate': JsonConverters.toJson(summaryEndDate,'DateTime',context!),
         'symbol': symbol,
         'email': email,
         'isEnabled': isEnabled
@@ -5225,7 +5457,7 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
     createResponse() => GetStuffResponse();
     getResponseTypeName() => "GetStuffResponse";
     getTypeName() => "GetStuff";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
@@ -5236,18 +5468,18 @@ class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
     StoreLogs.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        loggers = JsonConverters.fromJson(json['loggers'],'List<Logger>',context);
+        loggers = JsonConverters.fromJson(json['loggers'],'List<Logger>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'loggers': JsonConverters.toJson(loggers,'List<Logger>',context)
+        'loggers': JsonConverters.toJson(loggers,'List<Logger>',context!)
     };
 
     createResponse() => StoreLogsResponse();
     getResponseTypeName() => "StoreLogsResponse";
     getTypeName() => "StoreLogs";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HelloAuth implements IReturn<HelloResponse>, IConvertible
@@ -5269,7 +5501,7 @@ class HelloAuth implements IReturn<HelloResponse>, IConvertible
     createResponse() => HelloResponse();
     getResponseTypeName() => "HelloResponse";
     getTypeName() => "HelloAuth";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/testauth")
@@ -5285,7 +5517,7 @@ class TestAuth implements IReturn<TestAuthResponse>, IConvertible
     createResponse() => TestAuthResponse();
     getResponseTypeName() => "TestAuthResponse";
     getTypeName() => "TestAuth";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/testdata/AllTypes")
@@ -5301,7 +5533,7 @@ class TestDataAllTypes implements IReturn<AllTypes>, IConvertible
     createResponse() => AllTypes();
     getResponseTypeName() => "AllTypes";
     getTypeName() => "TestDataAllTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/testdata/AllCollectionTypes")
@@ -5317,7 +5549,7 @@ class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConver
     createResponse() => AllCollectionTypes();
     getResponseTypeName() => "AllCollectionTypes";
     getTypeName() => "TestDataAllCollectionTypes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/void-response")
@@ -5331,7 +5563,7 @@ class TestVoidResponse implements IConvertible
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "TestVoidResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/null-response")
@@ -5345,7 +5577,7 @@ class TestNullResponse implements IConvertible
 
     Map<String, dynamic> toJson() => {};
     getTypeName() => "TestNullResponse";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
@@ -5368,7 +5600,7 @@ class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto>
     createResponse() => QueryResponse<RockstarAuto>();
     getResponseTypeName() => "QueryResponse<RockstarAuto>";
     getTypeName() => "QueryRockstarAudit";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
@@ -5394,7 +5626,7 @@ class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto>
     createResponse() => QueryResponse<RockstarAuto>();
     getResponseTypeName() => "QueryResponse<RockstarAuto>";
     getTypeName() => "QueryRockstarAuditSubOr";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
@@ -5417,7 +5649,7 @@ class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IRetur
     createResponse() => QueryResponse<OnlyDefinedInGenericType>();
     getResponseTypeName() => "QueryResponse<OnlyDefinedInGenericType>";
     getTypeName() => "QueryPocoBase";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IConvertible
@@ -5440,7 +5672,31 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefine
     createResponse() => QueryResponse<OnlyDefinedInGenericTypeInto>();
     getResponseTypeName() => "QueryResponse<OnlyDefinedInGenericTypeInto>";
     getTypeName() => "QueryPocoIntoBase";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
+}
+
+// @Route("/message/query/{Id}", "GET")
+class MessageQuery extends QueryDb1<MessageQuery> implements IReturn<QueryResponse<MessageQuery>>, IConvertible
+{
+    int? id;
+
+    MessageQuery({this.id});
+    MessageQuery.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        id = json['id'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson()..addAll({
+        'id': id
+    });
+
+    createResponse() => QueryResponse<MessageQuery>();
+    getResponseTypeName() => "QueryResponse<MessageQuery>";
+    getTypeName() => "MessageQuery";
+    TypeContext? context = _ctx;
 }
 
 // @Route("/rockstars", "GET")
@@ -5457,7 +5713,7 @@ class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse
     createResponse() => QueryResponse<Rockstar>();
     getResponseTypeName() => "QueryResponse<Rockstar>";
     getTypeName() => "QueryRockstars";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IConvertible
@@ -5473,12 +5729,12 @@ class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithId
     createResponse() => RockstarWithIdResponse();
     getResponseTypeName() => "RockstarWithIdResponse";
     getTypeName() => "CreateRockstarAudit";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
 {
-    String sessionId;
+    String? sessionId;
     String? firstName;
     String? lastName;
     int? age;
@@ -5486,7 +5742,7 @@ class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenan
     DateTime? dateDied;
     LivingStatus? livingStatus;
 
-    CreateRockstarAuditTenant({required this.sessionId,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
+    CreateRockstarAuditTenant({this.sessionId,this.firstName,this.lastName,this.age,this.dateOfBirth,this.dateDied,this.livingStatus});
     CreateRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5495,9 +5751,9 @@ class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenan
         firstName = json['firstName'];
         lastName = json['lastName'];
         age = json['age'];
-        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context);
-        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context);
-        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        dateOfBirth = JsonConverters.fromJson(json['dateOfBirth'],'DateTime',context!);
+        dateDied = JsonConverters.fromJson(json['dateDied'],'DateTime',context!);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context!);
         return this;
     }
 
@@ -5506,25 +5762,25 @@ class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenan
         'firstName': firstName,
         'lastName': lastName,
         'age': age,
-        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context),
-        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context),
-        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+        'dateOfBirth': JsonConverters.toJson(dateOfBirth,'DateTime',context!),
+        'dateDied': JsonConverters.toJson(dateDied,'DateTime',context!),
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context!)
     });
 
     createResponse() => RockstarWithIdAndResultResponse();
     getResponseTypeName() => "RockstarWithIdAndResultResponse";
     getTypeName() => "CreateRockstarAuditTenant";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
 {
-    String sessionId;
+    String? sessionId;
     int? id;
     String? firstName;
     LivingStatus? livingStatus;
 
-    UpdateRockstarAuditTenant({required this.sessionId,this.id,this.firstName,this.livingStatus});
+    UpdateRockstarAuditTenant({this.sessionId,this.id,this.firstName,this.livingStatus});
     UpdateRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5532,7 +5788,7 @@ class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenan
         sessionId = json['sessionId'];
         id = json['id'];
         firstName = json['firstName'];
-        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context!);
         return this;
     }
 
@@ -5540,23 +5796,23 @@ class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenan
         'sessionId': sessionId,
         'id': id,
         'firstName': firstName,
-        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context!)
     });
 
     createResponse() => RockstarWithIdAndResultResponse();
     getResponseTypeName() => "RockstarWithIdAndResultResponse";
     getTypeName() => "UpdateRockstarAuditTenant";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
 {
-    String sessionId;
+    String? sessionId;
     int? id;
     String? firstName;
     LivingStatus? livingStatus;
 
-    PatchRockstarAuditTenant({required this.sessionId,this.id,this.firstName,this.livingStatus});
+    PatchRockstarAuditTenant({this.sessionId,this.id,this.firstName,this.livingStatus});
     PatchRockstarAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5564,7 +5820,7 @@ class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,
         sessionId = json['sessionId'];
         id = json['id'];
         firstName = json['firstName'];
-        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context);
+        livingStatus = JsonConverters.fromJson(json['livingStatus'],'LivingStatus',context!);
         return this;
     }
 
@@ -5572,13 +5828,13 @@ class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,
         'sessionId': sessionId,
         'id': id,
         'firstName': firstName,
-        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context)
+        'livingStatus': JsonConverters.toJson(livingStatus,'LivingStatus',context!)
     });
 
     createResponse() => RockstarWithIdAndResultResponse();
     getResponseTypeName() => "RockstarWithIdAndResultResponse";
     getTypeName() => "PatchRockstarAuditTenant";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IConvertible
@@ -5601,14 +5857,14 @@ class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenan
     createResponse() => RockstarWithIdAndResultResponse();
     getResponseTypeName() => "RockstarWithIdAndResultResponse";
     getTypeName() => "SoftDeleteAuditTenant";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IHasBearerToken, IConvertible
 {
-    String bearerToken;
+    String? bearerToken;
 
-    CreateRockstarAuditMqToken({required this.bearerToken});
+    CreateRockstarAuditMqToken({this.bearerToken});
     CreateRockstarAuditMqToken.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5624,16 +5880,16 @@ class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<Rocksta
     createResponse() => RockstarWithIdResponse();
     getResponseTypeName() => "RockstarWithIdResponse";
     getTypeName() => "CreateRockstarAuditMqToken";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, IDeleteDb<RockstarAuditTenant>, IHasSessionId, IConvertible
 {
-    String sessionId;
+    String? sessionId;
     int? id;
     int? age;
 
-    RealDeleteAuditTenant({required this.sessionId,this.id,this.age});
+    RealDeleteAuditTenant({this.sessionId,this.id,this.age});
     RealDeleteAuditTenant.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -5652,7 +5908,7 @@ class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, 
     createResponse() => RockstarWithIdAndCountResponse();
     getResponseTypeName() => "RockstarWithIdAndCountResponse";
     getTypeName() => "RealDeleteAuditTenant";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWithIdAndRowVersionResponse>, ICreateDb<RockstarVersion>, IConvertible
@@ -5668,25 +5924,23 @@ class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWith
     createResponse() => RockstarWithIdAndRowVersionResponse();
     getResponseTypeName() => "RockstarWithIdAndRowVersionResponse";
     getTypeName() => "CreateRockstarVersion";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
-TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
+TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
+    'Item': TypeInfo(TypeOf.Class, create:() => Item()),
+    'Poco': TypeInfo(TypeOf.Class, create:() => Poco()),
     'CustomType': TypeInfo(TypeOf.Class, create:() => CustomType()),
     'SetterType': TypeInfo(TypeOf.Class, create:() => SetterType()),
-    'Item': TypeInfo(TypeOf.Class, create:() => Item()),
+    'DeclarativeChildValidation': TypeInfo(TypeOf.Class, create:() => DeclarativeChildValidation()),
+    'FluentChildValidation': TypeInfo(TypeOf.Class, create:() => FluentChildValidation()),
+    'DeclarativeSingleValidation': TypeInfo(TypeOf.Class, create:() => DeclarativeSingleValidation()),
+    'FluentSingleValidation': TypeInfo(TypeOf.Class, create:() => FluentSingleValidation()),
     'IAuthTokens': TypeInfo(TypeOf.Interface),
     'AuthUserSession': TypeInfo(TypeOf.Class, create:() => AuthUserSession()),
     'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => <IAuthTokens>[]),
-    'MetadataTestNestedChild': TypeInfo(TypeOf.Class, create:() => MetadataTestNestedChild()),
-    'MetadataTestChild': TypeInfo(TypeOf.Class, create:() => MetadataTestChild()),
-    'List<MetadataTestNestedChild>': TypeInfo(TypeOf.Class, create:() => <MetadataTestNestedChild>[]),
-    'MenuItemExampleItem': TypeInfo(TypeOf.Class, create:() => MenuItemExampleItem()),
-    'MenuItemExample': TypeInfo(TypeOf.Class, create:() => MenuItemExample()),
-    'MenuExample': TypeInfo(TypeOf.Class, create:() => MenuExample()),
+    'Map<String,String?>': TypeInfo(TypeOf.Class, create:() => Map<String,String?>()),
     'NestedClass': TypeInfo(TypeOf.Class, create:() => NestedClass()),
-    'ListResult': TypeInfo(TypeOf.Class, create:() => ListResult()),
-    'ArrayResult': TypeInfo(TypeOf.Class, create:() => ArrayResult()),
     'EnumType': TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
     'EnumTypeFlags': TypeInfo(TypeOf.Enum, enumValues:EnumTypeFlags.values),
     'EnumWithValues': TypeInfo(TypeOf.Enum, enumValues:EnumWithValues.values),
@@ -5696,24 +5950,15 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'EnumStyleMembers': TypeInfo(TypeOf.Enum, enumValues:EnumStyleMembers.values),
     'SubType': TypeInfo(TypeOf.Class, create:() => SubType()),
     'AllTypesBase': TypeInfo(TypeOf.AbstractClass),
-    'Map<int,String>': TypeInfo(TypeOf.Class, create:() => Map<int,String>()),
-    'Poco': TypeInfo(TypeOf.Class, create:() => Poco()),
+    'Map<int,String?>': TypeInfo(TypeOf.Class, create:() => Map<int,String?>()),
     'HelloBase': TypeInfo(TypeOf.AbstractClass),
-    'HelloResponseBase': TypeInfo(TypeOf.AbstractClass),
     'HelloBase1<T>': TypeInfo(TypeOf.AbstractClass),
-    'HelloWithReturnResponse': TypeInfo(TypeOf.AbstractClass),
-    'HelloType': TypeInfo(TypeOf.Class, create:() => HelloType()),
     'IPoco': TypeInfo(TypeOf.Interface),
     'IEmptyInterface': TypeInfo(TypeOf.Interface),
     'EmptyClass': TypeInfo(TypeOf.Class, create:() => EmptyClass()),
-    'InnerType': TypeInfo(TypeOf.Class, create:() => InnerType()),
-    'InnerEnum': TypeInfo(TypeOf.Enum, enumValues:InnerEnum.values),
     'DayOfWeek': TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
     'ScopeType': TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
     'PingService': TypeInfo(TypeOf.Class, create:() => PingService()),
-    'ReturnedDto': TypeInfo(TypeOf.Class, create:() => ReturnedDto()),
-    'CustomUserSession': TypeInfo(TypeOf.Class, create:() => CustomUserSession()),
-    'UnAuthInfo': TypeInfo(TypeOf.Class, create:() => UnAuthInfo()),
     'Channel': TypeInfo(TypeOf.Class, create:() => Channel()),
     'Device': TypeInfo(TypeOf.Class, create:() => Device()),
     'List<Channel>': TypeInfo(TypeOf.Class, create:() => <Channel>[]),
@@ -5738,6 +5983,23 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'SoftDeleteAuditBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
     'SoftDeleteAuditTenantBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
     'RockstarVersion': TypeInfo(TypeOf.Class, create:() => RockstarVersion()),
+    'MessageCrud': TypeInfo(TypeOf.Class, create:() => MessageCrud()),
+    'MetadataTestNestedChild': TypeInfo(TypeOf.Class, create:() => MetadataTestNestedChild()),
+    'MetadataTestChild': TypeInfo(TypeOf.Class, create:() => MetadataTestChild()),
+    'List<MetadataTestNestedChild>': TypeInfo(TypeOf.Class, create:() => <MetadataTestNestedChild>[]),
+    'MenuItemExampleItem': TypeInfo(TypeOf.Class, create:() => MenuItemExampleItem()),
+    'MenuItemExample': TypeInfo(TypeOf.Class, create:() => MenuItemExample()),
+    'MenuExample': TypeInfo(TypeOf.Class, create:() => MenuExample()),
+    'ListResult': TypeInfo(TypeOf.Class, create:() => ListResult()),
+    'ArrayResult': TypeInfo(TypeOf.Class, create:() => ArrayResult()),
+    'HelloResponseBase': TypeInfo(TypeOf.AbstractClass),
+    'HelloWithReturnResponse': TypeInfo(TypeOf.AbstractClass),
+    'HelloType': TypeInfo(TypeOf.Class, create:() => HelloType()),
+    'InnerType': TypeInfo(TypeOf.Class, create:() => InnerType()),
+    'InnerEnum': TypeInfo(TypeOf.Enum, enumValues:InnerEnum.values),
+    'ReturnedDto': TypeInfo(TypeOf.Class, create:() => ReturnedDto()),
+    'CustomUserSession': TypeInfo(TypeOf.Class, create:() => CustomUserSession()),
+    'UnAuthInfo': TypeInfo(TypeOf.Class, create:() => UnAuthInfo()),
     'TypesGroup': TypeInfo(TypeOf.Class, create:() => TypesGroup()),
     'ChatMessage': TypeInfo(TypeOf.Class, create:() => ChatMessage()),
     'GetChatHistoryResponse': TypeInfo(TypeOf.Class, create:() => GetChatHistoryResponse()),
@@ -5758,6 +6020,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'MetadataTestResponse': TypeInfo(TypeOf.Class, create:() => MetadataTestResponse()),
     'List<MetadataTestChild>': TypeInfo(TypeOf.Class, create:() => <MetadataTestChild>[]),
     'GetExampleResponse': TypeInfo(TypeOf.Class, create:() => GetExampleResponse()),
+    'Message': TypeInfo(TypeOf.Class, create:() => Message()),
     'GetRandomIdsResponse': TypeInfo(TypeOf.Class, create:() => GetRandomIdsResponse()),
     'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
     'HelloAnnotatedResponse': TypeInfo(TypeOf.Class, create:() => HelloAnnotatedResponse()),
@@ -5765,8 +6028,8 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'AllCollectionTypes': TypeInfo(TypeOf.Class, create:() => AllCollectionTypes()),
     'Uint8List': TypeInfo(TypeOf.Class, create:() => Uint8List(0)),
     'List<Poco>': TypeInfo(TypeOf.Class, create:() => <Poco>[]),
-    'Map<String,List<Poco>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Poco>>()),
-    'Map<String,List<Map<String,Poco>>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Map<String,Poco>>>()),
+    'Map<String,List<Poco>?>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Poco>?>()),
+    'Map<String,List<Map<String,Poco>>?>': TypeInfo(TypeOf.Class, create:() => Map<String,List<Map<String,Poco>>?>()),
     'List<Map<String,Poco>>': TypeInfo(TypeOf.Class, create:() => <Map<String,Poco>>[]),
     'Map<String,Poco>': TypeInfo(TypeOf.Class, create:() => Map<String,Poco>()),
     'HelloAllTypesResponse': TypeInfo(TypeOf.Class, create:() => HelloAllTypesResponse()),
@@ -5784,7 +6047,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'HelloTypes': TypeInfo(TypeOf.Class, create:() => HelloTypes()),
     'HelloZipResponse': TypeInfo(TypeOf.Class, create:() => HelloZipResponse()),
     'PingResponse': TypeInfo(TypeOf.Class, create:() => PingResponse()),
-    'Map<String,ResponseStatus>': TypeInfo(TypeOf.Class, create:() => Map<String,ResponseStatus>()),
+    'Map<String,ResponseStatus?>': TypeInfo(TypeOf.Class, create:() => Map<String,ResponseStatus?>()),
     'RequiresRoleResponse': TypeInfo(TypeOf.Class, create:() => RequiresRoleResponse()),
     'SendVerbResponse': TypeInfo(TypeOf.Class, create:() => SendVerbResponse()),
     'GetSessionResponse': TypeInfo(TypeOf.Class, create:() => GetSessionResponse()),
@@ -5799,12 +6062,14 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'EchoCollections': TypeInfo(TypeOf.Class, create:() => EchoCollections()),
     'EchoComplexTypes': TypeInfo(TypeOf.Class, create:() => EchoComplexTypes()),
     'List<SubType>': TypeInfo(TypeOf.Class, create:() => <SubType>[]),
-    'Map<String,SubType>': TypeInfo(TypeOf.Class, create:() => Map<String,SubType>()),
+    'Map<String,SubType?>': TypeInfo(TypeOf.Class, create:() => Map<String,SubType?>()),
     'StoreRockstars': TypeInfo(TypeOf.Class, create:() => StoreRockstars()),
     'RockstarWithIdResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdResponse()),
     'RockstarWithIdAndResultResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdAndResultResponse()),
     'RockstarWithIdAndCountResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdAndCountResponse()),
     'RockstarWithIdAndRowVersionResponse': TypeInfo(TypeOf.Class, create:() => RockstarWithIdAndRowVersionResponse()),
+    'QueryResponse<Poco>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Poco>()),
+    'QueryItems': TypeInfo(TypeOf.Class, create:() => QueryItems()),
     'PostRawToChannel': TypeInfo(TypeOf.Class, create:() => PostRawToChannel()),
     'PostChatToChannel': TypeInfo(TypeOf.Class, create:() => PostChatToChannel()),
     'GetChatHistory': TypeInfo(TypeOf.Class, create:() => GetChatHistory()),
@@ -5816,6 +6081,10 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'AltQueryItems': TypeInfo(TypeOf.Class, create:() => AltQueryItems()),
     'GetItems': TypeInfo(TypeOf.Class, create:() => GetItems()),
     'GetNakedItems': TypeInfo(TypeOf.Class, create:() => GetNakedItems()),
+    'DeclarativeCollectiveValidationTest': TypeInfo(TypeOf.Class, create:() => DeclarativeCollectiveValidationTest()),
+    'List<DeclarativeChildValidation>': TypeInfo(TypeOf.Class, create:() => <DeclarativeChildValidation>[]),
+    'List<FluentChildValidation>': TypeInfo(TypeOf.Class, create:() => <FluentChildValidation>[]),
+    'DeclarativeSingleValidationTest': TypeInfo(TypeOf.Class, create:() => DeclarativeSingleValidationTest()),
     'DummyTypes': TypeInfo(TypeOf.Class, create:() => DummyTypes()),
     'List<HelloResponse>': TypeInfo(TypeOf.Class, create:() => <HelloResponse>[]),
     'List<ListResult>': TypeInfo(TypeOf.Class, create:() => <ListResult>[]),
@@ -5844,6 +6113,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'MetadataTest': TypeInfo(TypeOf.Class, create:() => MetadataTest()),
     'MetadataTestArray': TypeInfo(TypeOf.Class, create:() => MetadataTestArray()),
     'GetExample': TypeInfo(TypeOf.Class, create:() => GetExample()),
+    'RequestMessage': TypeInfo(TypeOf.Class, create:() => RequestMessage()),
     'GetRandomIds': TypeInfo(TypeOf.Class, create:() => GetRandomIds()),
     'TextFileTest': TypeInfo(TypeOf.Class, create:() => TextFileTest()),
     'ReturnText': TypeInfo(TypeOf.Class, create:() => ReturnText()),
@@ -5860,10 +6130,10 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'List<EnumFlags>': TypeInfo(TypeOf.Class, create:() => <EnumFlags>[]),
     'List<EnumStyle>': TypeInfo(TypeOf.Class, create:() => <EnumStyle>[]),
     'HelloWithEnumMap': TypeInfo(TypeOf.Class, create:() => HelloWithEnumMap()),
-    'Map<EnumType,EnumType>': TypeInfo(TypeOf.Class, create:() => Map<EnumType,EnumType>()),
-    'Map<EnumWithValues,EnumWithValues>': TypeInfo(TypeOf.Class, create:() => Map<EnumWithValues,EnumWithValues>()),
-    'Map<EnumFlags,EnumFlags>': TypeInfo(TypeOf.Class, create:() => Map<EnumFlags,EnumFlags>()),
-    'Map<EnumStyle,EnumStyle>': TypeInfo(TypeOf.Class, create:() => Map<EnumStyle,EnumStyle>()),
+    'Map<EnumType,EnumType?>': TypeInfo(TypeOf.Class, create:() => Map<EnumType,EnumType?>()),
+    'Map<EnumWithValues,EnumWithValues?>': TypeInfo(TypeOf.Class, create:() => Map<EnumWithValues,EnumWithValues?>()),
+    'Map<EnumFlags,EnumFlags?>': TypeInfo(TypeOf.Class, create:() => Map<EnumFlags,EnumFlags?>()),
+    'Map<EnumStyle,EnumStyle?>': TypeInfo(TypeOf.Class, create:() => Map<EnumStyle,EnumStyle?>()),
     'RestrictedAttributes': TypeInfo(TypeOf.Class, create:() => RestrictedAttributes()),
     'AllowedAttributes': TypeInfo(TypeOf.Class, create:() => AllowedAttributes()),
     'HelloAllTypes': TypeInfo(TypeOf.Class, create:() => HelloAllTypes()),
@@ -5875,7 +6145,6 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'HelloWithInheritance': TypeInfo(TypeOf.Class, create:() => HelloWithInheritance()),
     'HelloWithGenericInheritance': TypeInfo(TypeOf.Class, create:() => HelloWithGenericInheritance()),
     'HelloWithGenericInheritance2': TypeInfo(TypeOf.Class, create:() => HelloWithGenericInheritance2()),
-    'HelloWithNestedInheritance': TypeInfo(TypeOf.Class, create:() => HelloWithNestedInheritance()),
     'HelloWithReturn': TypeInfo(TypeOf.Class, create:() => HelloWithReturn()),
     'HelloWithRoute': TypeInfo(TypeOf.Class, create:() => HelloWithRoute()),
     'HelloWithType': TypeInfo(TypeOf.Class, create:() => HelloWithType()),
@@ -5927,6 +6196,8 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'QueryResponse<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => QueryResponse<OnlyDefinedInGenericTypeInto>()),
     'QueryPocoIntoBase': TypeInfo(TypeOf.Class, create:() => QueryPocoIntoBase()),
     'List<OnlyDefinedInGenericTypeInto>': TypeInfo(TypeOf.Class, create:() => <OnlyDefinedInGenericTypeInto>[]),
+    'QueryResponse<MessageQuery>': TypeInfo(TypeOf.Class, create:() => QueryResponse<MessageQuery>()),
+    'MessageQuery': TypeInfo(TypeOf.Class, create:() => MessageQuery()),
     'QueryResponse<Rockstar>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Rockstar>()),
     'QueryRockstars': TypeInfo(TypeOf.Class, create:() => QueryRockstars()),
     'List<Rockstar>': TypeInfo(TypeOf.Class, create:() => <Rockstar>[]),
@@ -5939,4 +6210,3 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'RealDeleteAuditTenant': TypeInfo(TypeOf.Class, create:() => RealDeleteAuditTenant()),
     'CreateRockstarVersion': TypeInfo(TypeOf.Class, create:() => CreateRockstarVersion()),
 });
-

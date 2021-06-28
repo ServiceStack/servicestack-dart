@@ -213,18 +213,18 @@ WebServiceException createErrorResponse(String errorCode, String message,
   return error;
 }
 
-bool hasRequestBody(String? method) => !(method == "GET" ||
+bool hasRequestBody(String method) => !(method == "GET" ||
     method == "DELETE" ||
     method == "HEAD" ||
     method == "OPTIONS");
 
-bool isJsonObject(String str) => str != null && str.trim().startsWith("{");
+bool isJsonObject(String str) => str.trim().startsWith("{");
 
-String? appendQueryString(String? url, Map<String, dynamic>? args) {
+String? appendQueryString(String url, Map<String, dynamic>? args) {
   if (args != null) {
     args.forEach((key, val) {
       if (val == null) return;
-      url += url!.indexOf("?") >= 0 ? "&" : "?";
+      url += url.indexOf("?") >= 0 ? "&" : "?";
       url += key + "=" + qsValue(val)!;
     });
   }
@@ -363,3 +363,4 @@ String fromGuid(String guid) => guid;
 
 // From Guid string to .NET Guid
 String toGuid(String guid) => guid;
+

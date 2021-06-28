@@ -151,13 +151,13 @@ dynamic convert(dynamic value, String typeName, [TypeContext? context = null]) {
           return converter.fromJson(value, context.newContext(typeName));
         }
         try {
-          if (context != null && o is IConvertible) {
+          if (o is IConvertible) {
             o.context = context;
           }
           var ret = o.fromMap(value);
           return ret;
         } catch (e, trace) {
-          Log.error("convert(): $e\n$trace", e);
+          Log.error("convert(): $e\n$trace", e as Exception?);
           rethrow;
         }
       }
@@ -186,7 +186,7 @@ String? getResponseType(dynamic request, dynamic responseAs) {
       return getResponseTypeName();
     }
   } catch (e, trace) {
-    Log.error("getResponseType(): $e\n$trace", e);
+    Log.error("getResponseType(): $e\n$trace", e as Exception?);
   }
   return nameOf(responseAs);
 }
@@ -369,13 +369,9 @@ class MapConverter implements IConverter {
     if (map != null) {
       map.forEach((key, val) {
         var keyConverter = JsonConverters.resolve(nameOf(key), context);
-        var mapKey = keyConverter != null
-          ? keyConverter.toJson(key, context)
-          : key;
-        var valueConverter = val != null ? JsonConverters.resolve(nameOf(val), context) : null!;
-        to[mapKey.toString()] = valueConverter != null
-            ? valueConverter.toJson(val, context)
-            : val;
+        var mapKey = keyConverter.toJson(key, context);
+        var valueConverter = val != null ? JsonConverters.resolve(nameOf(val), context) : null;
+        to[mapKey.toString()] = valueConverter?.toJson(val, context);
       });
       return to;
     }
@@ -409,12 +405,8 @@ class ListConverter implements IConverter {
     if (list != null) {
       for (var x in list) {
         var converter = JsonConverters.resolve(getTypeName(x, context), context);
-        if (converter != null) {
-          var item = converter.toJson(x, context);
-          to.add(item);
-        } else {
-          to.add(x);
-        }
+        var item = converter.toJson(x, context);
+        to.add(item);
       }
       return to;
     }

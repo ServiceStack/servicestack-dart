@@ -1370,5 +1370,5 @@ abstract class AuditBase {
       };
 
   getTypeName() => "AuditBase";
-  TypeContext context = _ctx;
+  TypeContext? context = _ctx;
 }

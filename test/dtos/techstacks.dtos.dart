@@ -97,7 +97,7 @@ class Post implements IConvertible
         id = json['id'];
         organizationId = json['organizationId'];
         userId = json['userId'];
-        type = JsonConverters.fromJson(json['type'],'PostType',context);
+        type = JsonConverters.fromJson(json['type'],'PostType',context!);
         categoryId = json['categoryId'];
         title = json['title'];
         slug = json['slug'];
@@ -106,9 +106,9 @@ class Post implements IConvertible
         content = json['content'];
         contentHtml = json['contentHtml'];
         pinCommentId = json['pinCommentId'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
-        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context);
-        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
+        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context!);
+        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context!);
         location = json['location'];
         metaType = json['metaType'];
         meta = json['meta'];
@@ -127,27 +127,27 @@ class Post implements IConvertible
         linkedToCount = json['linkedToCount'];
         score = json['score'];
         rank = json['rank'];
-        labels = JsonConverters.fromJson(json['labels'],'List<String>',context);
-        refUserIds = JsonConverters.fromJson(json['refUserIds'],'List<int>',context);
-        refLinks = JsonConverters.fromJson(json['refLinks'],'List<String>',context);
-        muteUserIds = JsonConverters.fromJson(json['muteUserIds'],'List<int>',context);
-        lastCommentDate = JsonConverters.fromJson(json['lastCommentDate'],'DateTime',context);
+        labels = JsonConverters.fromJson(json['labels'],'List<String>',context!);
+        refUserIds = JsonConverters.fromJson(json['refUserIds'],'List<int>',context!);
+        refLinks = JsonConverters.fromJson(json['refLinks'],'List<String>',context!);
+        muteUserIds = JsonConverters.fromJson(json['muteUserIds'],'List<int>',context!);
+        lastCommentDate = JsonConverters.fromJson(json['lastCommentDate'],'DateTime',context!);
         lastCommentId = json['lastCommentId'];
         lastCommentUserId = json['lastCommentUserId'];
-        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context);
+        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context!);
         deletedBy = json['deletedBy'];
-        locked = JsonConverters.fromJson(json['locked'],'DateTime',context);
+        locked = JsonConverters.fromJson(json['locked'],'DateTime',context!);
         lockedBy = json['lockedBy'];
-        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context);
+        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context!);
         hiddenBy = json['hiddenBy'];
         status = json['status'];
-        statusDate = JsonConverters.fromJson(json['statusDate'],'DateTime',context);
+        statusDate = JsonConverters.fromJson(json['statusDate'],'DateTime',context!);
         statusBy = json['statusBy'];
         archived = json['archived'];
-        bumped = JsonConverters.fromJson(json['bumped'],'DateTime',context);
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        bumped = JsonConverters.fromJson(json['bumped'],'DateTime',context!);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         createdBy = json['createdBy'];
-        modified = JsonConverters.fromJson(json['modified'],'DateTime',context);
+        modified = JsonConverters.fromJson(json['modified'],'DateTime',context!);
         modifiedBy = json['modifiedBy'];
         refId = json['refId'];
         refSource = json['refSource'];
@@ -159,7 +159,7 @@ class Post implements IConvertible
         'id': id,
         'organizationId': organizationId,
         'userId': userId,
-        'type': JsonConverters.toJson(type,'PostType',context),
+        'type': JsonConverters.toJson(type,'PostType',context!),
         'categoryId': categoryId,
         'title': title,
         'slug': slug,
@@ -168,9 +168,9 @@ class Post implements IConvertible
         'content': content,
         'contentHtml': contentHtml,
         'pinCommentId': pinCommentId,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context),
-        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context),
-        'toDate': JsonConverters.toJson(toDate,'DateTime',context),
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!),
+        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context!),
+        'toDate': JsonConverters.toJson(toDate,'DateTime',context!),
         'location': location,
         'metaType': metaType,
         'meta': meta,
@@ -189,34 +189,34 @@ class Post implements IConvertible
         'linkedToCount': linkedToCount,
         'score': score,
         'rank': rank,
-        'labels': JsonConverters.toJson(labels,'List<String>',context),
-        'refUserIds': JsonConverters.toJson(refUserIds,'List<int>',context),
-        'refLinks': JsonConverters.toJson(refLinks,'List<String>',context),
-        'muteUserIds': JsonConverters.toJson(muteUserIds,'List<int>',context),
-        'lastCommentDate': JsonConverters.toJson(lastCommentDate,'DateTime',context),
+        'labels': JsonConverters.toJson(labels,'List<String>',context!),
+        'refUserIds': JsonConverters.toJson(refUserIds,'List<int>',context!),
+        'refLinks': JsonConverters.toJson(refLinks,'List<String>',context!),
+        'muteUserIds': JsonConverters.toJson(muteUserIds,'List<int>',context!),
+        'lastCommentDate': JsonConverters.toJson(lastCommentDate,'DateTime',context!),
         'lastCommentId': lastCommentId,
         'lastCommentUserId': lastCommentUserId,
-        'deleted': JsonConverters.toJson(deleted,'DateTime',context),
+        'deleted': JsonConverters.toJson(deleted,'DateTime',context!),
         'deletedBy': deletedBy,
-        'locked': JsonConverters.toJson(locked,'DateTime',context),
+        'locked': JsonConverters.toJson(locked,'DateTime',context!),
         'lockedBy': lockedBy,
-        'hidden': JsonConverters.toJson(hidden,'DateTime',context),
+        'hidden': JsonConverters.toJson(hidden,'DateTime',context!),
         'hiddenBy': hiddenBy,
         'status': status,
-        'statusDate': JsonConverters.toJson(statusDate,'DateTime',context),
+        'statusDate': JsonConverters.toJson(statusDate,'DateTime',context!),
         'statusBy': statusBy,
         'archived': archived,
-        'bumped': JsonConverters.toJson(bumped,'DateTime',context),
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'bumped': JsonConverters.toJson(bumped,'DateTime',context!),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'createdBy': createdBy,
-        'modified': JsonConverters.toJson(modified,'DateTime',context),
+        'modified': JsonConverters.toJson(modified,'DateTime',context!),
         'modifiedBy': modifiedBy,
         'refId': refId,
         'refSource': refSource,
         'refUrn': refUrn
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Organization implements IConvertible
@@ -280,9 +280,9 @@ class Organization implements IConvertible
         heroUrl = json['heroUrl'];
         lang = json['lang'];
         defaultPostType = json['defaultPostType'];
-        defaultSubscriptionPostTypes = JsonConverters.fromJson(json['defaultSubscriptionPostTypes'],'List<String>',context);
-        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context);
-        moderatorPostTypes = JsonConverters.fromJson(json['moderatorPostTypes'],'List<String>',context);
+        defaultSubscriptionPostTypes = JsonConverters.fromJson(json['defaultSubscriptionPostTypes'],'List<String>',context!);
+        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context!);
+        moderatorPostTypes = JsonConverters.fromJson(json['moderatorPostTypes'],'List<String>',context!);
         deletePostsWithReportCount = json['deletePostsWithReportCount'];
         disableInvites = json['disableInvites'];
         upVotes = json['upVotes'];
@@ -296,15 +296,15 @@ class Organization implements IConvertible
         rank = json['rank'];
         refId = json['refId'];
         refSource = json['refSource'];
-        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context);
+        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context!);
         hiddenBy = json['hiddenBy'];
-        locked = JsonConverters.fromJson(json['locked'],'DateTime',context);
+        locked = JsonConverters.fromJson(json['locked'],'DateTime',context!);
         lockedBy = json['lockedBy'];
-        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context);
+        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context!);
         deletedBy = json['deletedBy'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         createdBy = json['createdBy'];
-        modified = JsonConverters.fromJson(json['modified'],'DateTime',context);
+        modified = JsonConverters.fromJson(json['modified'],'DateTime',context!);
         modifiedBy = json['modifiedBy'];
         return this;
     }
@@ -324,9 +324,9 @@ class Organization implements IConvertible
         'heroUrl': heroUrl,
         'lang': lang,
         'defaultPostType': defaultPostType,
-        'defaultSubscriptionPostTypes': JsonConverters.toJson(defaultSubscriptionPostTypes,'List<String>',context),
-        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context),
-        'moderatorPostTypes': JsonConverters.toJson(moderatorPostTypes,'List<String>',context),
+        'defaultSubscriptionPostTypes': JsonConverters.toJson(defaultSubscriptionPostTypes,'List<String>',context!),
+        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context!),
+        'moderatorPostTypes': JsonConverters.toJson(moderatorPostTypes,'List<String>',context!),
         'deletePostsWithReportCount': deletePostsWithReportCount,
         'disableInvites': disableInvites,
         'upVotes': upVotes,
@@ -340,19 +340,19 @@ class Organization implements IConvertible
         'rank': rank,
         'refId': refId,
         'refSource': refSource,
-        'hidden': JsonConverters.toJson(hidden,'DateTime',context),
+        'hidden': JsonConverters.toJson(hidden,'DateTime',context!),
         'hiddenBy': hiddenBy,
-        'locked': JsonConverters.toJson(locked,'DateTime',context),
+        'locked': JsonConverters.toJson(locked,'DateTime',context!),
         'lockedBy': lockedBy,
-        'deleted': JsonConverters.toJson(deleted,'DateTime',context),
+        'deleted': JsonConverters.toJson(deleted,'DateTime',context!),
         'deletedBy': deletedBy,
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'createdBy': createdBy,
-        'modified': JsonConverters.toJson(modified,'DateTime',context),
+        'modified': JsonConverters.toJson(modified,'DateTime',context!),
         'modifiedBy': modifiedBy
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OrganizationLabel implements IConvertible
@@ -380,7 +380,7 @@ class OrganizationLabel implements IConvertible
         'color': color
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Category implements IConvertible
@@ -407,7 +407,7 @@ class Category implements IConvertible
         slug = json['slug'];
         description = json['description'];
         color = json['color'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         commentsCount = json['commentsCount'];
         postsCount = json['postsCount'];
         score = json['score'];
@@ -422,14 +422,14 @@ class Category implements IConvertible
         'slug': slug,
         'description': description,
         'color': color,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context),
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!),
         'commentsCount': commentsCount,
         'postsCount': postsCount,
         'score': score,
         'rank': rank
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OrganizationMember implements IConvertible
@@ -475,7 +475,7 @@ class OrganizationMember implements IConvertible
         'notes': notes
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OrganizationMemberInvite implements IConvertible
@@ -494,7 +494,7 @@ class OrganizationMemberInvite implements IConvertible
         organizationId = json['organizationId'];
         userId = json['userId'];
         userName = json['userName'];
-        dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context);
+        dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context!);
         return this;
     }
 
@@ -503,10 +503,10 @@ class OrganizationMemberInvite implements IConvertible
         'organizationId': organizationId,
         'userId': userId,
         'userName': userName,
-        'dismissed': JsonConverters.toJson(dismissed,'DateTime',context)
+        'dismissed': JsonConverters.toJson(dismissed,'DateTime',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 enum FlagType
@@ -546,12 +546,12 @@ class PostReportInfo implements IConvertible
         postId = json['postId'];
         userId = json['userId'];
         userName = json['userName'];
-        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context);
+        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context!);
         reportNotes = json['reportNotes'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        acknowledged = JsonConverters.fromJson(json['acknowledged'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        acknowledged = JsonConverters.fromJson(json['acknowledged'],'DateTime',context!);
         acknowledgedBy = json['acknowledgedBy'];
-        dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context);
+        dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context!);
         dismissedBy = json['dismissedBy'];
         title = json['title'];
         reportCount = json['reportCount'];
@@ -565,19 +565,19 @@ class PostReportInfo implements IConvertible
         'postId': postId,
         'userId': userId,
         'userName': userName,
-        'flagType': JsonConverters.toJson(flagType,'FlagType',context),
+        'flagType': JsonConverters.toJson(flagType,'FlagType',context!),
         'reportNotes': reportNotes,
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'acknowledged': JsonConverters.toJson(acknowledged,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'acknowledged': JsonConverters.toJson(acknowledged,'DateTime',context!),
         'acknowledgedBy': acknowledgedBy,
-        'dismissed': JsonConverters.toJson(dismissed,'DateTime',context),
+        'dismissed': JsonConverters.toJson(dismissed,'DateTime',context!),
         'dismissedBy': dismissedBy,
         'title': title,
         'reportCount': reportCount,
         'createdBy': createdBy
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class PostCommentReportInfo implements IConvertible
@@ -609,12 +609,12 @@ class PostCommentReportInfo implements IConvertible
         postCommentId = json['postCommentId'];
         userId = json['userId'];
         userName = json['userName'];
-        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context);
+        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context!);
         reportNotes = json['reportNotes'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        acknowledged = JsonConverters.fromJson(json['acknowledged'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        acknowledged = JsonConverters.fromJson(json['acknowledged'],'DateTime',context!);
         acknowledgedBy = json['acknowledgedBy'];
-        dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context);
+        dismissed = JsonConverters.fromJson(json['dismissed'],'DateTime',context!);
         dismissedBy = json['dismissedBy'];
         contentHtml = json['contentHtml'];
         reportCount = json['reportCount'];
@@ -629,19 +629,19 @@ class PostCommentReportInfo implements IConvertible
         'postCommentId': postCommentId,
         'userId': userId,
         'userName': userName,
-        'flagType': JsonConverters.toJson(flagType,'FlagType',context),
+        'flagType': JsonConverters.toJson(flagType,'FlagType',context!),
         'reportNotes': reportNotes,
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'acknowledged': JsonConverters.toJson(acknowledged,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'acknowledged': JsonConverters.toJson(acknowledged,'DateTime',context!),
         'acknowledgedBy': acknowledgedBy,
-        'dismissed': JsonConverters.toJson(dismissed,'DateTime',context),
+        'dismissed': JsonConverters.toJson(dismissed,'DateTime',context!),
         'dismissedBy': dismissedBy,
         'contentHtml': contentHtml,
         'reportCount': reportCount,
         'createdBy': createdBy
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class PostComment implements IConvertible
@@ -689,10 +689,10 @@ class PostComment implements IConvertible
         favorites = json['favorites'];
         wordCount = json['wordCount'];
         reportCount = json['reportCount'];
-        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context);
-        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context);
-        modified = JsonConverters.fromJson(json['modified'],'DateTime',context);
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context!);
+        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context!);
+        modified = JsonConverters.fromJson(json['modified'],'DateTime',context!);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         createdBy = json['createdBy'];
         refId = json['refId'];
         refSource = json['refSource'];
@@ -714,17 +714,17 @@ class PostComment implements IConvertible
         'favorites': favorites,
         'wordCount': wordCount,
         'reportCount': reportCount,
-        'deleted': JsonConverters.toJson(deleted,'DateTime',context),
-        'hidden': JsonConverters.toJson(hidden,'DateTime',context),
-        'modified': JsonConverters.toJson(modified,'DateTime',context),
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'deleted': JsonConverters.toJson(deleted,'DateTime',context!),
+        'hidden': JsonConverters.toJson(hidden,'DateTime',context!),
+        'modified': JsonConverters.toJson(modified,'DateTime',context!),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'createdBy': createdBy,
         'refId': refId,
         'refSource': refSource,
         'refUrn': refUrn
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 enum ReportAction
@@ -764,7 +764,7 @@ class UserRef implements IConvertible
         'refUrn': refUrn
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OrganizationSubscription implements IConvertible
@@ -787,11 +787,11 @@ class OrganizationSubscription implements IConvertible
         organizationId = json['organizationId'];
         userId = json['userId'];
         userName = json['userName'];
-        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context);
+        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context!);
         frequencyDays = json['frequencyDays'];
         lastSyncedId = json['lastSyncedId'];
-        lastSynced = JsonConverters.fromJson(json['lastSynced'],'DateTime',context);
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        lastSynced = JsonConverters.fromJson(json['lastSynced'],'DateTime',context!);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         return this;
     }
 
@@ -800,14 +800,14 @@ class OrganizationSubscription implements IConvertible
         'organizationId': organizationId,
         'userId': userId,
         'userName': userName,
-        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context),
+        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context!),
         'frequencyDays': frequencyDays,
         'lastSyncedId': lastSyncedId,
-        'lastSynced': JsonConverters.toJson(lastSynced,'DateTime',context),
-        'created': JsonConverters.toJson(created,'DateTime',context)
+        'lastSynced': JsonConverters.toJson(lastSynced,'DateTime',context!),
+        'created': JsonConverters.toJson(created,'DateTime',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class TechnologyStackBase
@@ -847,16 +847,16 @@ abstract class TechnologyStackBase
         description = json['description'];
         appUrl = json['appUrl'];
         screenshotUrl = json['screenshotUrl'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         createdBy = json['createdBy'];
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
         lastModifiedBy = json['lastModifiedBy'];
         isLocked = json['isLocked'];
         ownerId = json['ownerId'];
         slug = json['slug'];
         details = json['details'];
         detailsHtml = json['detailsHtml'];
-        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context);
+        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
         organizationId = json['organizationId'];
         commentsPostId = json['commentsPostId'];
         viewCount = json['viewCount'];
@@ -871,23 +871,23 @@ abstract class TechnologyStackBase
         'description': description,
         'appUrl': appUrl,
         'screenshotUrl': screenshotUrl,
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'createdBy': createdBy,
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
         'lastModifiedBy': lastModifiedBy,
         'isLocked': isLocked,
         'ownerId': ownerId,
         'slug': slug,
         'details': details,
         'detailsHtml': detailsHtml,
-        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context),
+        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
         'organizationId': organizationId,
         'commentsPostId': commentsPostId,
         'viewCount': viewCount,
         'favCount': favCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class TechnologyStack extends TechnologyStackBase implements IConvertible
@@ -900,7 +900,7 @@ class TechnologyStack extends TechnologyStackBase implements IConvertible
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 enum TechnologyTier
@@ -951,16 +951,16 @@ abstract class TechnologyBase
         productUrl = json['productUrl'];
         logoUrl = json['logoUrl'];
         description = json['description'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         createdBy = json['createdBy'];
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
         lastModifiedBy = json['lastModifiedBy'];
         ownerId = json['ownerId'];
         slug = json['slug'];
         logoApproved = json['logoApproved'];
         isLocked = json['isLocked'];
-        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context);
-        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context);
+        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
+        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
         organizationId = json['organizationId'];
         commentsPostId = json['commentsPostId'];
         viewCount = json['viewCount'];
@@ -976,23 +976,23 @@ abstract class TechnologyBase
         'productUrl': productUrl,
         'logoUrl': logoUrl,
         'description': description,
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'createdBy': createdBy,
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
         'lastModifiedBy': lastModifiedBy,
         'ownerId': ownerId,
         'slug': slug,
         'logoApproved': logoApproved,
         'isLocked': isLocked,
-        'tier': JsonConverters.toJson(tier,'TechnologyTier',context),
-        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context),
+        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!),
+        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
         'organizationId': organizationId,
         'commentsPostId': commentsPostId,
         'viewCount': viewCount,
         'favCount': favCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Technology extends TechnologyBase implements IConvertible
@@ -1005,7 +1005,7 @@ class Technology extends TechnologyBase implements IConvertible
     }
 
     Map<String, dynamic> toJson() => super.toJson();
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserActivity implements IConvertible
@@ -1045,8 +1045,8 @@ class UserActivity implements IConvertible
         pinnedCommentCount = json['pinnedCommentCount'];
         postReportCount = json['postReportCount'];
         postCommentReportCount = json['postCommentReportCount'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        modified = JsonConverters.fromJson(json['modified'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        modified = JsonConverters.fromJson(json['modified'],'DateTime',context!);
         return this;
     }
 
@@ -1065,11 +1065,11 @@ class UserActivity implements IConvertible
         'pinnedCommentCount': pinnedCommentCount,
         'postReportCount': postReportCount,
         'postCommentReportCount': postCommentReportCount,
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'modified': JsonConverters.toJson(modified,'DateTime',context)
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'modified': JsonConverters.toJson(modified,'DateTime',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 enum Frequency
@@ -1100,7 +1100,7 @@ class TechnologyHistory extends TechnologyBase implements IConvertible
         'operation': operation
     });
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class IRegisterStats
@@ -1120,17 +1120,17 @@ class TechnologyStackHistory extends TechnologyStackBase implements IConvertible
         super.fromMap(json);
         technologyStackId = json['technologyStackId'];
         operation = json['operation'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
         'technologyStackId': technologyStackId,
         'operation': operation,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     });
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserInfo implements IConvertible
@@ -1155,7 +1155,7 @@ class UserInfo implements IConvertible
         'stacksCount': stacksCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class TechnologyInfo implements IConvertible
@@ -1170,7 +1170,7 @@ class TechnologyInfo implements IConvertible
     TechnologyInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context);
+        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
         slug = json['slug'];
         name = json['name'];
         logoUrl = json['logoUrl'];
@@ -1179,14 +1179,14 @@ class TechnologyInfo implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {
-        'tier': JsonConverters.toJson(tier,'TechnologyTier',context),
+        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!),
         'slug': slug,
         'name': name,
         'logoUrl': logoUrl,
         'stacksCount': stacksCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class TechnologyInStack extends TechnologyBase implements IConvertible
@@ -1212,7 +1212,7 @@ class TechnologyInStack extends TechnologyBase implements IConvertible
         'justification': justification
     });
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class TechStackDetails extends TechnologyStackBase implements IConvertible
@@ -1224,15 +1224,15 @@ class TechStackDetails extends TechnologyStackBase implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        technologyChoices = JsonConverters.fromJson(json['technologyChoices'],'List<TechnologyInStack>',context);
+        technologyChoices = JsonConverters.fromJson(json['technologyChoices'],'List<TechnologyInStack>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'technologyChoices': JsonConverters.toJson(technologyChoices,'List<TechnologyInStack>',context)
+        'technologyChoices': JsonConverters.toJson(technologyChoices,'List<TechnologyInStack>',context!)
     });
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class LabelInfo implements IConvertible
@@ -1254,7 +1254,7 @@ class LabelInfo implements IConvertible
         'color': color
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CategoryInfo implements IConvertible
@@ -1279,7 +1279,7 @@ class CategoryInfo implements IConvertible
         'slug': slug
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OrganizationInfo implements IConvertible
@@ -1316,11 +1316,11 @@ class OrganizationInfo implements IConvertible
         rank = json['rank'];
         disableInvites = json['disableInvites'];
         lang = json['lang'];
-        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context);
-        moderatorPostTypes = JsonConverters.fromJson(json['moderatorPostTypes'],'List<String>',context);
-        locked = JsonConverters.fromJson(json['locked'],'DateTime',context);
-        labels = JsonConverters.fromJson(json['labels'],'List<LabelInfo>',context);
-        categories = JsonConverters.fromJson(json['categories'],'List<CategoryInfo>',context);
+        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context!);
+        moderatorPostTypes = JsonConverters.fromJson(json['moderatorPostTypes'],'List<String>',context!);
+        locked = JsonConverters.fromJson(json['locked'],'DateTime',context!);
+        labels = JsonConverters.fromJson(json['labels'],'List<LabelInfo>',context!);
+        categories = JsonConverters.fromJson(json['categories'],'List<CategoryInfo>',context!);
         return this;
     }
 
@@ -1336,14 +1336,14 @@ class OrganizationInfo implements IConvertible
         'rank': rank,
         'disableInvites': disableInvites,
         'lang': lang,
-        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context),
-        'moderatorPostTypes': JsonConverters.toJson(moderatorPostTypes,'List<String>',context),
-        'locked': JsonConverters.toJson(locked,'DateTime',context),
-        'labels': JsonConverters.toJson(labels,'List<LabelInfo>',context),
-        'categories': JsonConverters.toJson(categories,'List<CategoryInfo>',context)
+        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context!),
+        'moderatorPostTypes': JsonConverters.toJson(moderatorPostTypes,'List<String>',context!),
+        'locked': JsonConverters.toJson(locked,'DateTime',context!),
+        'labels': JsonConverters.toJson(labels,'List<LabelInfo>',context!),
+        'categories': JsonConverters.toJson(categories,'List<CategoryInfo>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @DataContract
@@ -1364,17 +1364,17 @@ class Option implements IConvertible
     fromMap(Map<String, dynamic> json) {
         name = json['name'];
         title = json['title'];
-        value = JsonConverters.fromJson(json['value'],'TechnologyTier',context);
+        value = JsonConverters.fromJson(json['value'],'TechnologyTier',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'name': name,
         'title': title,
-        'value': JsonConverters.toJson(value,'TechnologyTier',context)
+        'value': JsonConverters.toJson(value,'TechnologyTier',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserVoiceUser implements IConvertible
@@ -1394,8 +1394,8 @@ class UserVoiceUser implements IConvertible
         name = json['name'];
         email = json['email'];
         avatarUrl = json['avatarUrl'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context);
-        updatedAt = JsonConverters.fromJson(json['updatedAt'],'DateTime',context);
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        updatedAt = JsonConverters.fromJson(json['updatedAt'],'DateTime',context!);
         return this;
     }
 
@@ -1404,11 +1404,11 @@ class UserVoiceUser implements IConvertible
         'name': name,
         'email': email,
         'avatarUrl': avatarUrl,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context),
-        'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context)
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserVoiceComment implements IConvertible
@@ -1424,19 +1424,19 @@ class UserVoiceComment implements IConvertible
     fromMap(Map<String, dynamic> json) {
         text = json['text'];
         formattedText = json['formattedText'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context);
-        creator = JsonConverters.fromJson(json['creator'],'UserVoiceUser',context);
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        creator = JsonConverters.fromJson(json['creator'],'UserVoiceUser',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'text': text,
         'formattedText': formattedText,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context),
-        'creator': JsonConverters.toJson(creator,'UserVoiceUser',context)
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'creator': JsonConverters.toJson(creator,'UserVoiceUser',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetOrganizationResponse implements IConvertible
@@ -1459,13 +1459,13 @@ class GetOrganizationResponse implements IConvertible
         cache = json['cache'];
         id = json['id'];
         slug = json['slug'];
-        organization = JsonConverters.fromJson(json['organization'],'Organization',context);
-        labels = JsonConverters.fromJson(json['labels'],'List<OrganizationLabel>',context);
-        categories = JsonConverters.fromJson(json['categories'],'List<Category>',context);
-        owners = JsonConverters.fromJson(json['owners'],'List<OrganizationMember>',context);
-        moderators = JsonConverters.fromJson(json['moderators'],'List<OrganizationMember>',context);
+        organization = JsonConverters.fromJson(json['organization'],'Organization',context!);
+        labels = JsonConverters.fromJson(json['labels'],'List<OrganizationLabel>',context!);
+        categories = JsonConverters.fromJson(json['categories'],'List<Category>',context!);
+        owners = JsonConverters.fromJson(json['owners'],'List<OrganizationMember>',context!);
+        moderators = JsonConverters.fromJson(json['moderators'],'List<OrganizationMember>',context!);
         membersCount = json['membersCount'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
@@ -1473,16 +1473,16 @@ class GetOrganizationResponse implements IConvertible
         'cache': cache,
         'id': id,
         'slug': slug,
-        'organization': JsonConverters.toJson(organization,'Organization',context),
-        'labels': JsonConverters.toJson(labels,'List<OrganizationLabel>',context),
-        'categories': JsonConverters.toJson(categories,'List<Category>',context),
-        'owners': JsonConverters.toJson(owners,'List<OrganizationMember>',context),
-        'moderators': JsonConverters.toJson(moderators,'List<OrganizationMember>',context),
+        'organization': JsonConverters.toJson(organization,'Organization',context!),
+        'labels': JsonConverters.toJson(labels,'List<OrganizationLabel>',context!),
+        'categories': JsonConverters.toJson(categories,'List<Category>',context!),
+        'owners': JsonConverters.toJson(owners,'List<OrganizationMember>',context!),
+        'moderators': JsonConverters.toJson(moderators,'List<OrganizationMember>',context!),
         'membersCount': membersCount,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetOrganizationMembersResponse implements IConvertible
@@ -1496,18 +1496,18 @@ class GetOrganizationMembersResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         organizationId = json['organizationId'];
-        results = JsonConverters.fromJson(json['results'],'List<OrganizationMember>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        results = JsonConverters.fromJson(json['results'],'List<OrganizationMember>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'organizationId': organizationId,
-        'results': JsonConverters.toJson(results,'List<OrganizationMember>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'results': JsonConverters.toJson(results,'List<OrganizationMember>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetOrganizationAdminResponse implements IConvertible
@@ -1523,25 +1523,25 @@ class GetOrganizationAdminResponse implements IConvertible
     GetOrganizationAdminResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        labels = JsonConverters.fromJson(json['labels'],'List<OrganizationLabel>',context);
-        members = JsonConverters.fromJson(json['members'],'List<OrganizationMember>',context);
-        memberInvites = JsonConverters.fromJson(json['memberInvites'],'List<OrganizationMemberInvite>',context);
-        reportedPosts = JsonConverters.fromJson(json['reportedPosts'],'List<PostReportInfo>',context);
-        reportedPostComments = JsonConverters.fromJson(json['reportedPostComments'],'List<PostCommentReportInfo>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        labels = JsonConverters.fromJson(json['labels'],'List<OrganizationLabel>',context!);
+        members = JsonConverters.fromJson(json['members'],'List<OrganizationMember>',context!);
+        memberInvites = JsonConverters.fromJson(json['memberInvites'],'List<OrganizationMemberInvite>',context!);
+        reportedPosts = JsonConverters.fromJson(json['reportedPosts'],'List<PostReportInfo>',context!);
+        reportedPostComments = JsonConverters.fromJson(json['reportedPostComments'],'List<PostCommentReportInfo>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'labels': JsonConverters.toJson(labels,'List<OrganizationLabel>',context),
-        'members': JsonConverters.toJson(members,'List<OrganizationMember>',context),
-        'memberInvites': JsonConverters.toJson(memberInvites,'List<OrganizationMemberInvite>',context),
-        'reportedPosts': JsonConverters.toJson(reportedPosts,'List<PostReportInfo>',context),
-        'reportedPostComments': JsonConverters.toJson(reportedPostComments,'List<PostCommentReportInfo>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'labels': JsonConverters.toJson(labels,'List<OrganizationLabel>',context!),
+        'members': JsonConverters.toJson(members,'List<OrganizationMember>',context!),
+        'memberInvites': JsonConverters.toJson(memberInvites,'List<OrganizationMemberInvite>',context!),
+        'reportedPosts': JsonConverters.toJson(reportedPosts,'List<PostReportInfo>',context!),
+        'reportedPostComments': JsonConverters.toJson(reportedPostComments,'List<PostCommentReportInfo>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateOrganizationForTechnologyResponse implements IConvertible
@@ -1560,7 +1560,7 @@ class CreateOrganizationForTechnologyResponse implements IConvertible
         organizationSlug = json['organizationSlug'];
         commentsPostId = json['commentsPostId'];
         commentsPostSlug = json['commentsPostSlug'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
@@ -1569,10 +1569,10 @@ class CreateOrganizationForTechnologyResponse implements IConvertible
         'organizationSlug': organizationSlug,
         'commentsPostId': commentsPostId,
         'commentsPostSlug': commentsPostSlug,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateOrganizationResponse implements IConvertible
@@ -1587,17 +1587,17 @@ class CreateOrganizationResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         slug = json['slug'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'slug': slug,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateOrganizationResponse implements IConvertible
@@ -1608,15 +1608,15 @@ class UpdateOrganizationResponse implements IConvertible
     UpdateOrganizationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OrganizationLabelResponse implements IConvertible
@@ -1627,15 +1627,15 @@ class OrganizationLabelResponse implements IConvertible
     OrganizationLabelResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class AddOrganizationCategoryResponse implements IConvertible
@@ -1650,17 +1650,17 @@ class AddOrganizationCategoryResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         slug = json['slug'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'slug': slug,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateOrganizationCategoryResponse implements IConvertible
@@ -1671,15 +1671,15 @@ class UpdateOrganizationCategoryResponse implements IConvertible
     UpdateOrganizationCategoryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class AddOrganizationMemberResponse implements IConvertible
@@ -1690,15 +1690,15 @@ class AddOrganizationMemberResponse implements IConvertible
     AddOrganizationMemberResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateOrganizationMemberResponse implements IConvertible
@@ -1709,15 +1709,15 @@ class UpdateOrganizationMemberResponse implements IConvertible
     UpdateOrganizationMemberResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SetOrganizationMembersResponse implements IConvertible
@@ -1730,19 +1730,19 @@ class SetOrganizationMembersResponse implements IConvertible
     SetOrganizationMembersResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        userIdsAdded = JsonConverters.fromJson(json['userIdsAdded'],'List<int>',context);
-        userIdsRemoved = JsonConverters.fromJson(json['userIdsRemoved'],'List<int>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        userIdsAdded = JsonConverters.fromJson(json['userIdsAdded'],'List<int>',context!);
+        userIdsRemoved = JsonConverters.fromJson(json['userIdsRemoved'],'List<int>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'userIdsAdded': JsonConverters.toJson(userIdsAdded,'List<int>',context),
-        'userIdsRemoved': JsonConverters.toJson(userIdsRemoved,'List<int>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'userIdsAdded': JsonConverters.toJson(userIdsAdded,'List<int>',context!),
+        'userIdsRemoved': JsonConverters.toJson(userIdsRemoved,'List<int>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetOrganizationMemberInvitesResponse implements IConvertible
@@ -1754,17 +1754,17 @@ class GetOrganizationMemberInvitesResponse implements IConvertible
     GetOrganizationMemberInvitesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<OrganizationMemberInvite>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        results = JsonConverters.fromJson(json['results'],'List<OrganizationMemberInvite>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<OrganizationMemberInvite>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'results': JsonConverters.toJson(results,'List<OrganizationMemberInvite>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class RequestOrganizationMemberInviteResponse implements IConvertible
@@ -1777,16 +1777,16 @@ class RequestOrganizationMemberInviteResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         organizationId = json['organizationId'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'organizationId': organizationId,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateOrganizationMemberInviteResponse implements IConvertible
@@ -1797,15 +1797,15 @@ class UpdateOrganizationMemberInviteResponse implements IConvertible
     UpdateOrganizationMemberInviteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetPostResponse implements IConvertible
@@ -1820,20 +1820,20 @@ class GetPostResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         cache = json['cache'];
-        post = JsonConverters.fromJson(json['post'],'Post',context);
-        comments = JsonConverters.fromJson(json['comments'],'List<PostComment>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        post = JsonConverters.fromJson(json['post'],'Post',context!);
+        comments = JsonConverters.fromJson(json['comments'],'List<PostComment>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'cache': cache,
-        'post': JsonConverters.toJson(post,'Post',context),
-        'comments': JsonConverters.toJson(comments,'List<PostComment>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'post': JsonConverters.toJson(post,'Post',context!),
+        'comments': JsonConverters.toJson(comments,'List<PostComment>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreatePostResponse implements IConvertible
@@ -1848,17 +1848,17 @@ class CreatePostResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         slug = json['slug'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'slug': slug,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdatePostResponse implements IConvertible
@@ -1869,15 +1869,15 @@ class UpdatePostResponse implements IConvertible
     UpdatePostResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class DeletePostResponse implements IConvertible
@@ -1890,16 +1890,16 @@ class DeletePostResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreatePostCommentResponse implements IConvertible
@@ -1914,17 +1914,17 @@ class CreatePostCommentResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         postId = json['postId'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'postId': postId,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdatePostCommentResponse implements IConvertible
@@ -1935,15 +1935,15 @@ class UpdatePostCommentResponse implements IConvertible
     UpdatePostCommentResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class DeletePostCommentResponse implements IConvertible
@@ -1958,17 +1958,17 @@ class DeletePostCommentResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         postId = json['postId'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'postId': postId,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUserPostCommentVotesResponse implements IConvertible
@@ -1982,18 +1982,18 @@ class GetUserPostCommentVotesResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         postId = json['postId'];
-        upVotedCommentIds = JsonConverters.fromJson(json['upVotedCommentIds'],'List<int>',context);
-        downVotedCommentIds = JsonConverters.fromJson(json['downVotedCommentIds'],'List<int>',context);
+        upVotedCommentIds = JsonConverters.fromJson(json['upVotedCommentIds'],'List<int>',context!);
+        downVotedCommentIds = JsonConverters.fromJson(json['downVotedCommentIds'],'List<int>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'postId': postId,
-        'upVotedCommentIds': JsonConverters.toJson(upVotedCommentIds,'List<int>',context),
-        'downVotedCommentIds': JsonConverters.toJson(downVotedCommentIds,'List<int>',context)
+        'upVotedCommentIds': JsonConverters.toJson(upVotedCommentIds,'List<int>',context!),
+        'downVotedCommentIds': JsonConverters.toJson(downVotedCommentIds,'List<int>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class PinPostCommentResponse implements IConvertible
@@ -2004,15 +2004,15 @@ class PinPostCommentResponse implements IConvertible
     PinPostCommentResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUsersByEmailsResponse implements IConvertible
@@ -2024,17 +2024,17 @@ class GetUsersByEmailsResponse implements IConvertible
     GetUsersByEmailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<UserRef>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        results = JsonConverters.fromJson(json['results'],'List<UserRef>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<UserRef>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'results': JsonConverters.toJson(results,'List<UserRef>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUserPostActivityResponse implements IConvertible
@@ -2048,21 +2048,21 @@ class GetUserPostActivityResponse implements IConvertible
     GetUserPostActivityResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        upVotedPostIds = JsonConverters.fromJson(json['upVotedPostIds'],'List<int>',context);
-        downVotedPostIds = JsonConverters.fromJson(json['downVotedPostIds'],'List<int>',context);
-        favoritePostIds = JsonConverters.fromJson(json['favoritePostIds'],'List<int>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        upVotedPostIds = JsonConverters.fromJson(json['upVotedPostIds'],'List<int>',context!);
+        downVotedPostIds = JsonConverters.fromJson(json['downVotedPostIds'],'List<int>',context!);
+        favoritePostIds = JsonConverters.fromJson(json['favoritePostIds'],'List<int>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'upVotedPostIds': JsonConverters.toJson(upVotedPostIds,'List<int>',context),
-        'downVotedPostIds': JsonConverters.toJson(downVotedPostIds,'List<int>',context),
-        'favoritePostIds': JsonConverters.toJson(favoritePostIds,'List<int>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'upVotedPostIds': JsonConverters.toJson(upVotedPostIds,'List<int>',context!),
+        'downVotedPostIds': JsonConverters.toJson(downVotedPostIds,'List<int>',context!),
+        'favoritePostIds': JsonConverters.toJson(favoritePostIds,'List<int>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUserOrganizationsResponse implements IConvertible
@@ -2075,19 +2075,19 @@ class GetUserOrganizationsResponse implements IConvertible
     GetUserOrganizationsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        members = JsonConverters.fromJson(json['members'],'List<OrganizationMember>',context);
-        memberInvites = JsonConverters.fromJson(json['memberInvites'],'List<OrganizationMemberInvite>',context);
-        subscriptions = JsonConverters.fromJson(json['subscriptions'],'List<OrganizationSubscription>',context);
+        members = JsonConverters.fromJson(json['members'],'List<OrganizationMember>',context!);
+        memberInvites = JsonConverters.fromJson(json['memberInvites'],'List<OrganizationMemberInvite>',context!);
+        subscriptions = JsonConverters.fromJson(json['subscriptions'],'List<OrganizationSubscription>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'members': JsonConverters.toJson(members,'List<OrganizationMember>',context),
-        'memberInvites': JsonConverters.toJson(memberInvites,'List<OrganizationMemberInvite>',context),
-        'subscriptions': JsonConverters.toJson(subscriptions,'List<OrganizationSubscription>',context)
+        'members': JsonConverters.toJson(members,'List<OrganizationMember>',context!),
+        'memberInvites': JsonConverters.toJson(memberInvites,'List<OrganizationMemberInvite>',context!),
+        'subscriptions': JsonConverters.toJson(subscriptions,'List<OrganizationSubscription>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserPostVoteResponse implements IConvertible
@@ -2098,15 +2098,15 @@ class UserPostVoteResponse implements IConvertible
     UserPostVoteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserPostFavoriteResponse implements IConvertible
@@ -2117,15 +2117,15 @@ class UserPostFavoriteResponse implements IConvertible
     UserPostFavoriteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserPostReportResponse implements IConvertible
@@ -2136,15 +2136,15 @@ class UserPostReportResponse implements IConvertible
     UserPostReportResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserPostCommentVoteResponse implements IConvertible
@@ -2155,15 +2155,15 @@ class UserPostCommentVoteResponse implements IConvertible
     UserPostCommentVoteResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UserPostCommentReportResponse implements IConvertible
@@ -2174,15 +2174,15 @@ class UserPostCommentReportResponse implements IConvertible
     UserPostCommentReportResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SessionInfoResponse implements IConvertible
@@ -2221,7 +2221,7 @@ class SessionInfoResponse implements IConvertible
     SessionInfoResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         id = json['id'];
         referrerUrl = json['referrerUrl'];
         userAuthId = json['userAuthId'];
@@ -2231,10 +2231,10 @@ class SessionInfoResponse implements IConvertible
         firstName = json['firstName'];
         lastName = json['lastName'];
         email = json['email'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context);
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context);
-        roles = JsonConverters.fromJson(json['roles'],'List<String>',context);
-        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',context);
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
+        roles = JsonConverters.fromJson(json['roles'],'List<String>',context!);
+        permissions = JsonConverters.fromJson(json['permissions'],'List<String>',context!);
         isAuthenticated = json['isAuthenticated'];
         authProvider = json['authProvider'];
         profileUrl = json['profileUrl'];
@@ -2242,19 +2242,19 @@ class SessionInfoResponse implements IConvertible
         twitterProfileUrl = json['twitterProfileUrl'];
         accessToken = json['accessToken'];
         avatarUrl = json['avatarUrl'];
-        techStacks = JsonConverters.fromJson(json['techStacks'],'List<TechnologyStack>',context);
-        favoriteTechStacks = JsonConverters.fromJson(json['favoriteTechStacks'],'List<TechnologyStack>',context);
-        favoriteTechnologies = JsonConverters.fromJson(json['favoriteTechnologies'],'List<Technology>',context);
-        userActivity = JsonConverters.fromJson(json['userActivity'],'UserActivity',context);
-        members = JsonConverters.fromJson(json['members'],'List<OrganizationMember>',context);
-        memberInvites = JsonConverters.fromJson(json['memberInvites'],'List<OrganizationMemberInvite>',context);
-        subscriptions = JsonConverters.fromJson(json['subscriptions'],'List<OrganizationSubscription>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        techStacks = JsonConverters.fromJson(json['techStacks'],'List<TechnologyStack>',context!);
+        favoriteTechStacks = JsonConverters.fromJson(json['favoriteTechStacks'],'List<TechnologyStack>',context!);
+        favoriteTechnologies = JsonConverters.fromJson(json['favoriteTechnologies'],'List<Technology>',context!);
+        userActivity = JsonConverters.fromJson(json['userActivity'],'UserActivity',context!);
+        members = JsonConverters.fromJson(json['members'],'List<OrganizationMember>',context!);
+        memberInvites = JsonConverters.fromJson(json['memberInvites'],'List<OrganizationMemberInvite>',context!);
+        subscriptions = JsonConverters.fromJson(json['subscriptions'],'List<OrganizationSubscription>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'id': id,
         'referrerUrl': referrerUrl,
         'userAuthId': userAuthId,
@@ -2264,10 +2264,10 @@ class SessionInfoResponse implements IConvertible
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context),
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context),
-        'roles': JsonConverters.toJson(roles,'List<String>',context),
-        'permissions': JsonConverters.toJson(permissions,'List<String>',context),
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
+        'roles': JsonConverters.toJson(roles,'List<String>',context!),
+        'permissions': JsonConverters.toJson(permissions,'List<String>',context!),
         'isAuthenticated': isAuthenticated,
         'authProvider': authProvider,
         'profileUrl': profileUrl,
@@ -2275,17 +2275,17 @@ class SessionInfoResponse implements IConvertible
         'twitterProfileUrl': twitterProfileUrl,
         'accessToken': accessToken,
         'avatarUrl': avatarUrl,
-        'techStacks': JsonConverters.toJson(techStacks,'List<TechnologyStack>',context),
-        'favoriteTechStacks': JsonConverters.toJson(favoriteTechStacks,'List<TechnologyStack>',context),
-        'favoriteTechnologies': JsonConverters.toJson(favoriteTechnologies,'List<Technology>',context),
-        'userActivity': JsonConverters.toJson(userActivity,'UserActivity',context),
-        'members': JsonConverters.toJson(members,'List<OrganizationMember>',context),
-        'memberInvites': JsonConverters.toJson(memberInvites,'List<OrganizationMemberInvite>',context),
-        'subscriptions': JsonConverters.toJson(subscriptions,'List<OrganizationSubscription>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'techStacks': JsonConverters.toJson(techStacks,'List<TechnologyStack>',context!),
+        'favoriteTechStacks': JsonConverters.toJson(favoriteTechStacks,'List<TechnologyStack>',context!),
+        'favoriteTechnologies': JsonConverters.toJson(favoriteTechnologies,'List<Technology>',context!),
+        'userActivity': JsonConverters.toJson(userActivity,'UserActivity',context!),
+        'members': JsonConverters.toJson(members,'List<OrganizationMember>',context!),
+        'memberInvites': JsonConverters.toJson(memberInvites,'List<OrganizationMemberInvite>',context!),
+        'subscriptions': JsonConverters.toJson(subscriptions,'List<OrganizationSubscription>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetTechnologyPreviousVersionsResponse implements IConvertible
@@ -2296,15 +2296,15 @@ class GetTechnologyPreviousVersionsResponse implements IConvertible
     GetTechnologyPreviousVersionsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<TechnologyHistory>',context);
+        results = JsonConverters.fromJson(json['results'],'List<TechnologyHistory>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<TechnologyHistory>',context)
+        'results': JsonConverters.toJson(results,'List<TechnologyHistory>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetAllTechnologiesResponse implements IConvertible
@@ -2316,17 +2316,17 @@ class GetAllTechnologiesResponse implements IConvertible
     GetAllTechnologiesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<Technology>',context);
+        results = JsonConverters.fromJson(json['results'],'List<Technology>',context!);
         total = json['total'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<Technology>',context),
+        'results': JsonConverters.toJson(results,'List<Technology>',context!),
         'total': total
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetTechnologyResponse implements IConvertible
@@ -2340,21 +2340,21 @@ class GetTechnologyResponse implements IConvertible
     GetTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        technology = JsonConverters.fromJson(json['technology'],'Technology',context);
-        technologyStacks = JsonConverters.fromJson(json['technologyStacks'],'List<TechnologyStack>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        technology = JsonConverters.fromJson(json['technology'],'Technology',context!);
+        technologyStacks = JsonConverters.fromJson(json['technologyStacks'],'List<TechnologyStack>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'technology': JsonConverters.toJson(technology,'Technology',context),
-        'technologyStacks': JsonConverters.toJson(technologyStacks,'List<TechnologyStack>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'technology': JsonConverters.toJson(technology,'Technology',context!),
+        'technologyStacks': JsonConverters.toJson(technologyStacks,'List<TechnologyStack>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetTechnologyFavoriteDetailsResponse implements IConvertible
@@ -2366,17 +2366,17 @@ class GetTechnologyFavoriteDetailsResponse implements IConvertible
     GetTechnologyFavoriteDetailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        users = JsonConverters.fromJson(json['users'],'List<String>',context);
+        users = JsonConverters.fromJson(json['users'],'List<String>',context!);
         favoriteCount = json['favoriteCount'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'users': JsonConverters.toJson(users,'List<String>',context),
+        'users': JsonConverters.toJson(users,'List<String>',context!),
         'favoriteCount': favoriteCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateTechnologyResponse implements IConvertible
@@ -2388,17 +2388,17 @@ class CreateTechnologyResponse implements IConvertible
     CreateTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'Technology',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'Technology',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'Technology',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'Technology',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateTechnologyResponse implements IConvertible
@@ -2410,17 +2410,17 @@ class UpdateTechnologyResponse implements IConvertible
     UpdateTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'Technology',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'Technology',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'Technology',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'Technology',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class DeleteTechnologyResponse implements IConvertible
@@ -2432,17 +2432,17 @@ class DeleteTechnologyResponse implements IConvertible
     DeleteTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'Technology',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'Technology',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'Technology',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'Technology',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetTechnologyStackPreviousVersionsResponse implements IConvertible
@@ -2453,15 +2453,15 @@ class GetTechnologyStackPreviousVersionsResponse implements IConvertible
     GetTechnologyStackPreviousVersionsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<TechnologyStackHistory>',context);
+        results = JsonConverters.fromJson(json['results'],'List<TechnologyStackHistory>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<TechnologyStackHistory>',context)
+        'results': JsonConverters.toJson(results,'List<TechnologyStackHistory>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetPageStatsResponse implements IConvertible
@@ -2489,12 +2489,12 @@ class GetPageStatsResponse implements IConvertible
         'favCount': favCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class HourlyTaskResponse implements IConvertible
 {
-    Map<String,String>? meta;
+    Map<String,String?>? meta;
     ResponseStatus? responseStatus;
 
     HourlyTaskResponse({this.meta,this.responseStatus});
@@ -2502,16 +2502,16 @@ class HourlyTaskResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         meta = JsonConverters.toStringMap(json['meta']);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class OverviewResponse implements IConvertible
@@ -2529,29 +2529,29 @@ class OverviewResponse implements IConvertible
     OverviewResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        topUsers = JsonConverters.fromJson(json['topUsers'],'List<UserInfo>',context);
-        topTechnologies = JsonConverters.fromJson(json['topTechnologies'],'List<TechnologyInfo>',context);
-        latestTechStacks = JsonConverters.fromJson(json['latestTechStacks'],'List<TechStackDetails>',context);
-        popularTechStacks = JsonConverters.fromJson(json['popularTechStacks'],'List<TechnologyStack>',context);
-        allOrganizations = JsonConverters.fromJson(json['allOrganizations'],'List<OrganizationInfo>',context);
-        topTechnologiesByTier = JsonConverters.fromJson(json['topTechnologiesByTier'],'Map<String,List<TechnologyInfo>>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        topUsers = JsonConverters.fromJson(json['topUsers'],'List<UserInfo>',context!);
+        topTechnologies = JsonConverters.fromJson(json['topTechnologies'],'List<TechnologyInfo>',context!);
+        latestTechStacks = JsonConverters.fromJson(json['latestTechStacks'],'List<TechStackDetails>',context!);
+        popularTechStacks = JsonConverters.fromJson(json['popularTechStacks'],'List<TechnologyStack>',context!);
+        allOrganizations = JsonConverters.fromJson(json['allOrganizations'],'List<OrganizationInfo>',context!);
+        topTechnologiesByTier = JsonConverters.fromJson(json['topTechnologiesByTier'],'Map<String,List<TechnologyInfo>>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'topUsers': JsonConverters.toJson(topUsers,'List<UserInfo>',context),
-        'topTechnologies': JsonConverters.toJson(topTechnologies,'List<TechnologyInfo>',context),
-        'latestTechStacks': JsonConverters.toJson(latestTechStacks,'List<TechStackDetails>',context),
-        'popularTechStacks': JsonConverters.toJson(popularTechStacks,'List<TechnologyStack>',context),
-        'allOrganizations': JsonConverters.toJson(allOrganizations,'List<OrganizationInfo>',context),
-        'topTechnologiesByTier': JsonConverters.toJson(topTechnologiesByTier,'Map<String,List<TechnologyInfo>>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'topUsers': JsonConverters.toJson(topUsers,'List<UserInfo>',context!),
+        'topTechnologies': JsonConverters.toJson(topTechnologies,'List<TechnologyInfo>',context!),
+        'latestTechStacks': JsonConverters.toJson(latestTechStacks,'List<TechStackDetails>',context!),
+        'popularTechStacks': JsonConverters.toJson(popularTechStacks,'List<TechnologyStack>',context!),
+        'allOrganizations': JsonConverters.toJson(allOrganizations,'List<OrganizationInfo>',context!),
+        'topTechnologiesByTier': JsonConverters.toJson(topTechnologiesByTier,'Map<String,List<TechnologyInfo>>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class AppOverviewResponse implements IConvertible
@@ -2565,21 +2565,21 @@ class AppOverviewResponse implements IConvertible
     AppOverviewResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        allTiers = JsonConverters.fromJson(json['allTiers'],'List<Option>',context);
-        topTechnologies = JsonConverters.fromJson(json['topTechnologies'],'List<TechnologyInfo>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        allTiers = JsonConverters.fromJson(json['allTiers'],'List<Option>',context!);
+        topTechnologies = JsonConverters.fromJson(json['topTechnologies'],'List<TechnologyInfo>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'allTiers': JsonConverters.toJson(allTiers,'List<Option>',context),
-        'topTechnologies': JsonConverters.toJson(topTechnologies,'List<TechnologyInfo>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'allTiers': JsonConverters.toJson(allTiers,'List<Option>',context!),
+        'topTechnologies': JsonConverters.toJson(topTechnologies,'List<TechnologyInfo>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetAllTechnologyStacksResponse implements IConvertible
@@ -2591,17 +2591,17 @@ class GetAllTechnologyStacksResponse implements IConvertible
     GetAllTechnologyStacksResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<TechnologyStack>',context);
+        results = JsonConverters.fromJson(json['results'],'List<TechnologyStack>',context!);
         total = json['total'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<TechnologyStack>',context),
+        'results': JsonConverters.toJson(results,'List<TechnologyStack>',context!),
         'total': total
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetTechnologyStackResponse implements IConvertible
@@ -2614,19 +2614,19 @@ class GetTechnologyStackResponse implements IConvertible
     GetTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
-        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'created': JsonConverters.toJson(created,'DateTime',context),
-        'result': JsonConverters.toJson(result,'TechStackDetails',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'result': JsonConverters.toJson(result,'TechStackDetails',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetTechnologyStackFavoriteDetailsResponse implements IConvertible
@@ -2638,17 +2638,17 @@ class GetTechnologyStackFavoriteDetailsResponse implements IConvertible
     GetTechnologyStackFavoriteDetailsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        users = JsonConverters.fromJson(json['users'],'List<String>',context);
+        users = JsonConverters.fromJson(json['users'],'List<String>',context!);
         favoriteCount = json['favoriteCount'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'users': JsonConverters.toJson(users,'List<String>',context),
+        'users': JsonConverters.toJson(users,'List<String>',context!),
         'favoriteCount': favoriteCount
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetConfigResponse implements IConvertible
@@ -2661,19 +2661,19 @@ class GetConfigResponse implements IConvertible
     GetConfigResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        allTiers = JsonConverters.fromJson(json['allTiers'],'List<Option>',context);
-        allPostTypes = JsonConverters.fromJson(json['allPostTypes'],'List<Option>',context);
-        allFlagTypes = JsonConverters.fromJson(json['allFlagTypes'],'List<Option>',context);
+        allTiers = JsonConverters.fromJson(json['allTiers'],'List<Option>',context!);
+        allPostTypes = JsonConverters.fromJson(json['allPostTypes'],'List<Option>',context!);
+        allFlagTypes = JsonConverters.fromJson(json['allFlagTypes'],'List<Option>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'allTiers': JsonConverters.toJson(allTiers,'List<Option>',context),
-        'allPostTypes': JsonConverters.toJson(allPostTypes,'List<Option>',context),
-        'allFlagTypes': JsonConverters.toJson(allFlagTypes,'List<Option>',context)
+        'allTiers': JsonConverters.toJson(allTiers,'List<Option>',context!),
+        'allPostTypes': JsonConverters.toJson(allPostTypes,'List<Option>',context!),
+        'allFlagTypes': JsonConverters.toJson(allFlagTypes,'List<Option>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class CreateTechnologyStackResponse implements IConvertible
@@ -2685,17 +2685,17 @@ class CreateTechnologyStackResponse implements IConvertible
     CreateTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'TechStackDetails',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'TechStackDetails',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UpdateTechnologyStackResponse implements IConvertible
@@ -2707,17 +2707,17 @@ class UpdateTechnologyStackResponse implements IConvertible
     UpdateTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'TechStackDetails',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'TechStackDetails',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class DeleteTechnologyStackResponse implements IConvertible
@@ -2729,17 +2729,17 @@ class DeleteTechnologyStackResponse implements IConvertible
     DeleteTechnologyStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        result = JsonConverters.fromJson(json['result'],'TechStackDetails',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'TechStackDetails',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'result': JsonConverters.toJson(result,'TechStackDetails',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetFavoriteTechStackResponse implements IConvertible
@@ -2750,15 +2750,15 @@ class GetFavoriteTechStackResponse implements IConvertible
     GetFavoriteTechStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<TechnologyStack>',context);
+        results = JsonConverters.fromJson(json['results'],'List<TechnologyStack>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<TechnologyStack>',context)
+        'results': JsonConverters.toJson(results,'List<TechnologyStack>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class FavoriteTechStackResponse implements IConvertible
@@ -2769,15 +2769,15 @@ class FavoriteTechStackResponse implements IConvertible
     FavoriteTechStackResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'TechnologyStack',context);
+        result = JsonConverters.fromJson(json['result'],'TechnologyStack',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'TechnologyStack',context)
+        'result': JsonConverters.toJson(result,'TechnologyStack',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetFavoriteTechnologiesResponse implements IConvertible
@@ -2788,15 +2788,15 @@ class GetFavoriteTechnologiesResponse implements IConvertible
     GetFavoriteTechnologiesResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<Technology>',context);
+        results = JsonConverters.fromJson(json['results'],'List<Technology>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<Technology>',context)
+        'results': JsonConverters.toJson(results,'List<Technology>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class FavoriteTechnologyResponse implements IConvertible
@@ -2807,15 +2807,15 @@ class FavoriteTechnologyResponse implements IConvertible
     FavoriteTechnologyResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'Technology',context);
+        result = JsonConverters.fromJson(json['result'],'Technology',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'Technology',context)
+        'result': JsonConverters.toJson(result,'Technology',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUserFeedResponse implements IConvertible
@@ -2826,15 +2826,15 @@ class GetUserFeedResponse implements IConvertible
     GetUserFeedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'List<TechStackDetails>',context);
+        results = JsonConverters.fromJson(json['results'],'List<TechStackDetails>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'List<TechStackDetails>',context)
+        'results': JsonConverters.toJson(results,'List<TechStackDetails>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUsersKarmaResponse implements IConvertible
@@ -2846,17 +2846,17 @@ class GetUsersKarmaResponse implements IConvertible
     GetUsersKarmaResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'Map<int,int>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        results = JsonConverters.fromJson(json['results'],'Map<int,int>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'Map<int,int>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'results': JsonConverters.toJson(results,'Map<int,int>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetUserInfoResponse implements IConvertible
@@ -2877,29 +2877,29 @@ class GetUserInfoResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         userName = json['userName'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
         avatarUrl = json['avatarUrl'];
-        techStacks = JsonConverters.fromJson(json['techStacks'],'List<TechnologyStack>',context);
-        favoriteTechStacks = JsonConverters.fromJson(json['favoriteTechStacks'],'List<TechnologyStack>',context);
-        favoriteTechnologies = JsonConverters.fromJson(json['favoriteTechnologies'],'List<Technology>',context);
-        userActivity = JsonConverters.fromJson(json['userActivity'],'UserActivity',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        techStacks = JsonConverters.fromJson(json['techStacks'],'List<TechnologyStack>',context!);
+        favoriteTechStacks = JsonConverters.fromJson(json['favoriteTechStacks'],'List<TechnologyStack>',context!);
+        favoriteTechnologies = JsonConverters.fromJson(json['favoriteTechnologies'],'List<Technology>',context!);
+        userActivity = JsonConverters.fromJson(json['userActivity'],'UserActivity',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'userName': userName,
-        'created': JsonConverters.toJson(created,'DateTime',context),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
         'avatarUrl': avatarUrl,
-        'techStacks': JsonConverters.toJson(techStacks,'List<TechnologyStack>',context),
-        'favoriteTechStacks': JsonConverters.toJson(favoriteTechStacks,'List<TechnologyStack>',context),
-        'favoriteTechnologies': JsonConverters.toJson(favoriteTechnologies,'List<Technology>',context),
-        'userActivity': JsonConverters.toJson(userActivity,'UserActivity',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'techStacks': JsonConverters.toJson(techStacks,'List<TechnologyStack>',context!),
+        'favoriteTechStacks': JsonConverters.toJson(favoriteTechStacks,'List<TechnologyStack>',context!),
+        'favoriteTechnologies': JsonConverters.toJson(favoriteTechnologies,'List<Technology>',context!),
+        'userActivity': JsonConverters.toJson(userActivity,'UserActivity',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class SyncDiscourseSiteResponse implements IConvertible
@@ -2914,20 +2914,20 @@ class SyncDiscourseSiteResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         timeTaken = json['timeTaken'];
-        userLogs = JsonConverters.fromJson(json['userLogs'],'List<String>',context);
-        postsLogs = JsonConverters.fromJson(json['postsLogs'],'List<String>',context);
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        userLogs = JsonConverters.fromJson(json['userLogs'],'List<String>',context!);
+        postsLogs = JsonConverters.fromJson(json['postsLogs'],'List<String>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'timeTaken': timeTaken,
-        'userLogs': JsonConverters.toJson(userLogs,'List<String>',context),
-        'postsLogs': JsonConverters.toJson(postsLogs,'List<String>',context),
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'userLogs': JsonConverters.toJson(userLogs,'List<String>',context!),
+        'postsLogs': JsonConverters.toJson(postsLogs,'List<String>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class LogoUrlApprovalResponse implements IConvertible
@@ -2938,15 +2938,15 @@ class LogoUrlApprovalResponse implements IConvertible
     LogoUrlApprovalResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        result = JsonConverters.fromJson(json['result'],'Technology',context);
+        result = JsonConverters.fromJson(json['result'],'Technology',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'result': JsonConverters.toJson(result,'Technology',context)
+        'result': JsonConverters.toJson(result,'Technology',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class LockStackResponse implements IConvertible
@@ -2958,7 +2958,7 @@ class LockStackResponse implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class EmailTestRespoonse implements IConvertible
@@ -2969,15 +2969,15 @@ class EmailTestRespoonse implements IConvertible
     EmailTestRespoonse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ImportUserResponse implements IConvertible
@@ -2990,16 +2990,16 @@ class ImportUserResponse implements IConvertible
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ImportUserVoiceSuggestionResponse implements IConvertible
@@ -3014,17 +3014,17 @@ class ImportUserVoiceSuggestionResponse implements IConvertible
     fromMap(Map<String, dynamic> json) {
         postId = json['postId'];
         postSlug = json['postSlug'];
-        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'postId': postId,
         'postSlug': postSlug,
-        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context)
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/ping")
@@ -3037,7 +3037,7 @@ class Ping implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class DummyTypes implements IConvertible
@@ -3048,15 +3048,15 @@ class DummyTypes implements IConvertible
     DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        post = JsonConverters.fromJson(json['post'],'List<Post>',context);
+        post = JsonConverters.fromJson(json['post'],'List<Post>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'post': JsonConverters.toJson(post,'List<Post>',context)
+        'post': JsonConverters.toJson(post,'List<Post>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{Id}", "GET")
@@ -3079,7 +3079,7 @@ class GetOrganization implements IReturn<GetOrganizationResponse>, IGet, IConver
     createResponse() => GetOrganizationResponse();
     getResponseTypeName() => "GetOrganizationResponse";
     getTypeName() => "GetOrganization";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/organizations/{Slug}", "GET")
@@ -3102,7 +3102,7 @@ class GetOrganizationBySlug implements IReturn<GetOrganizationResponse>, IGet, I
     createResponse() => GetOrganizationResponse();
     getResponseTypeName() => "GetOrganizationResponse";
     getTypeName() => "GetOrganizationBySlug";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{Id}/members", "GET")
@@ -3125,7 +3125,7 @@ class GetOrganizationMembers implements IReturn<GetOrganizationMembersResponse>,
     createResponse() => GetOrganizationMembersResponse();
     getResponseTypeName() => "GetOrganizationMembersResponse";
     getTypeName() => "GetOrganizationMembers";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{Id}/admin", "GET")
@@ -3148,7 +3148,7 @@ class GetOrganizationAdmin implements IReturn<GetOrganizationAdminResponse>, IGe
     createResponse() => GetOrganizationAdminResponse();
     getResponseTypeName() => "GetOrganizationAdminResponse";
     getTypeName() => "GetOrganizationAdmin";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/posts/new", "POST")
@@ -3174,7 +3174,7 @@ class CreateOrganizationForTechnology implements IReturn<CreateOrganizationForTe
     createResponse() => CreateOrganizationForTechnologyResponse();
     getResponseTypeName() => "CreateOrganizationForTechnologyResponse";
     getTypeName() => "CreateOrganizationForTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs", "POST")
@@ -3212,7 +3212,7 @@ class CreateOrganization implements IReturn<CreateOrganizationResponse>, IPost, 
     createResponse() => CreateOrganizationResponse();
     getResponseTypeName() => "CreateOrganizationResponse";
     getTypeName() => "CreateOrganization";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{Id}", "PUT")
@@ -3257,10 +3257,10 @@ class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IPut, I
         deletePostsWithReportCount = json['deletePostsWithReportCount'];
         disableInvites = json['disableInvites'];
         defaultPostType = json['defaultPostType'];
-        defaultSubscriptionPostTypes = JsonConverters.fromJson(json['defaultSubscriptionPostTypes'],'List<String>',context);
-        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context);
-        moderatorPostTypes = JsonConverters.fromJson(json['moderatorPostTypes'],'List<String>',context);
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        defaultSubscriptionPostTypes = JsonConverters.fromJson(json['defaultSubscriptionPostTypes'],'List<String>',context!);
+        postTypes = JsonConverters.fromJson(json['postTypes'],'List<String>',context!);
+        moderatorPostTypes = JsonConverters.fromJson(json['moderatorPostTypes'],'List<String>',context!);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         return this;
     }
 
@@ -3280,16 +3280,16 @@ class UpdateOrganization implements IReturn<UpdateOrganizationResponse>, IPut, I
         'deletePostsWithReportCount': deletePostsWithReportCount,
         'disableInvites': disableInvites,
         'defaultPostType': defaultPostType,
-        'defaultSubscriptionPostTypes': JsonConverters.toJson(defaultSubscriptionPostTypes,'List<String>',context),
-        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context),
-        'moderatorPostTypes': JsonConverters.toJson(moderatorPostTypes,'List<String>',context),
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
+        'defaultSubscriptionPostTypes': JsonConverters.toJson(defaultSubscriptionPostTypes,'List<String>',context!),
+        'postTypes': JsonConverters.toJson(postTypes,'List<String>',context!),
+        'moderatorPostTypes': JsonConverters.toJson(moderatorPostTypes,'List<String>',context!),
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     };
 
     createResponse() => UpdateOrganizationResponse();
     getResponseTypeName() => "UpdateOrganizationResponse";
     getTypeName() => "UpdateOrganization";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{Id}", "DELETE")
@@ -3311,7 +3311,7 @@ class DeleteOrganization implements IReturnVoid, IDelete, IConvertible
 
     createResponse() {}
     getTypeName() => "DeleteOrganization";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{Id}/lock", "PUT")
@@ -3339,7 +3339,7 @@ class LockOrganization implements IReturnVoid, IPut, IConvertible
 
     createResponse() {}
     getTypeName() => "LockOrganization";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/labels", "POST")
@@ -3371,7 +3371,7 @@ class AddOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPost,
     createResponse() => OrganizationLabelResponse();
     getResponseTypeName() => "OrganizationLabelResponse";
     getTypeName() => "AddOrganizationLabel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/members/{Slug}", "PUT")
@@ -3403,7 +3403,7 @@ class UpdateOrganizationLabel implements IReturn<OrganizationLabelResponse>, IPu
     createResponse() => OrganizationLabelResponse();
     getResponseTypeName() => "OrganizationLabelResponse";
     getTypeName() => "UpdateOrganizationLabel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/labels/{Slug}", "DELETE")
@@ -3428,7 +3428,7 @@ class RemoveOrganizationLabel implements IReturnVoid, IDelete, IConvertible
 
     createResponse() {}
     getTypeName() => "RemoveOrganizationLabel";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/categories", "POST")
@@ -3448,7 +3448,7 @@ class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse
         slug = json['slug'];
         name = json['name'];
         description = json['description'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         return this;
     }
 
@@ -3457,13 +3457,13 @@ class AddOrganizationCategory implements IReturn<AddOrganizationCategoryResponse
         'slug': slug,
         'name': name,
         'description': description,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     };
 
     createResponse() => AddOrganizationCategoryResponse();
     getResponseTypeName() => "AddOrganizationCategoryResponse";
     getTypeName() => "AddOrganizationCategory";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "PUT")
@@ -3485,7 +3485,7 @@ class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryRe
         name = json['name'];
         slug = json['slug'];
         description = json['description'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         return this;
     }
 
@@ -3495,13 +3495,13 @@ class UpdateOrganizationCategory implements IReturn<UpdateOrganizationCategoryRe
         'name': name,
         'slug': slug,
         'description': description,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     };
 
     createResponse() => UpdateOrganizationCategoryResponse();
     getResponseTypeName() => "UpdateOrganizationCategoryResponse";
     getTypeName() => "UpdateOrganizationCategory";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/categories/{Id}", "DELETE")
@@ -3526,7 +3526,7 @@ class DeleteOrganizationCategory implements IReturnVoid, IDelete, IConvertible
 
     createResponse() {}
     getTypeName() => "DeleteOrganizationCategory";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/members", "POST")
@@ -3570,7 +3570,7 @@ class AddOrganizationMember implements IReturn<AddOrganizationMemberResponse>, I
     createResponse() => AddOrganizationMemberResponse();
     getResponseTypeName() => "AddOrganizationMemberResponse";
     getTypeName() => "AddOrganizationMember";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/members/{Id}", "PUT")
@@ -3614,7 +3614,7 @@ class UpdateOrganizationMember implements IReturn<UpdateOrganizationMemberRespon
     createResponse() => UpdateOrganizationMemberResponse();
     getResponseTypeName() => "UpdateOrganizationMemberResponse";
     getTypeName() => "UpdateOrganizationMember";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/members/{UserId}", "DELETE")
@@ -3639,7 +3639,7 @@ class RemoveOrganizationMember implements IReturnVoid, IDelete, IConvertible
 
     createResponse() {}
     getTypeName() => "RemoveOrganizationMember";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/members/set", "POST")
@@ -3661,9 +3661,9 @@ class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>,
 
     fromMap(Map<String, dynamic> json) {
         organizationId = json['organizationId'];
-        githubUserNames = JsonConverters.fromJson(json['githubUserNames'],'List<String>',context);
-        twitterUserNames = JsonConverters.fromJson(json['twitterUserNames'],'List<String>',context);
-        emails = JsonConverters.fromJson(json['emails'],'List<String>',context);
+        githubUserNames = JsonConverters.fromJson(json['githubUserNames'],'List<String>',context!);
+        twitterUserNames = JsonConverters.fromJson(json['twitterUserNames'],'List<String>',context!);
+        emails = JsonConverters.fromJson(json['emails'],'List<String>',context!);
         removeUnspecifiedMembers = json['removeUnspecifiedMembers'];
         isOwner = json['isOwner'];
         isModerator = json['isModerator'];
@@ -3675,9 +3675,9 @@ class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>,
 
     Map<String, dynamic> toJson() => {
         'organizationId': organizationId,
-        'githubUserNames': JsonConverters.toJson(githubUserNames,'List<String>',context),
-        'twitterUserNames': JsonConverters.toJson(twitterUserNames,'List<String>',context),
-        'emails': JsonConverters.toJson(emails,'List<String>',context),
+        'githubUserNames': JsonConverters.toJson(githubUserNames,'List<String>',context!),
+        'twitterUserNames': JsonConverters.toJson(twitterUserNames,'List<String>',context!),
+        'emails': JsonConverters.toJson(emails,'List<String>',context!),
         'removeUnspecifiedMembers': removeUnspecifiedMembers,
         'isOwner': isOwner,
         'isModerator': isModerator,
@@ -3689,7 +3689,7 @@ class SetOrganizationMembers implements IReturn<SetOrganizationMembersResponse>,
     createResponse() => SetOrganizationMembersResponse();
     getResponseTypeName() => "SetOrganizationMembersResponse";
     getTypeName() => "SetOrganizationMembers";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/invites", "GET")
@@ -3712,7 +3712,7 @@ class GetOrganizationMemberInvites implements IReturn<GetOrganizationMemberInvit
     createResponse() => GetOrganizationMemberInvitesResponse();
     getResponseTypeName() => "GetOrganizationMemberInvitesResponse";
     getTypeName() => "GetOrganizationMemberInvites";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/invites", "POST")
@@ -3735,7 +3735,7 @@ class RequestOrganizationMemberInvite implements IReturn<RequestOrganizationMemb
     createResponse() => RequestOrganizationMemberInviteResponse();
     getResponseTypeName() => "RequestOrganizationMemberInviteResponse";
     getTypeName() => "RequestOrganizationMemberInvite";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/invites/{UserId}", "PUT")
@@ -3767,7 +3767,7 @@ class UpdateOrganizationMemberInvite implements IReturn<UpdateOrganizationMember
     createResponse() => UpdateOrganizationMemberInviteResponse();
     getResponseTypeName() => "UpdateOrganizationMemberInviteResponse";
     getTypeName() => "UpdateOrganizationMemberInvite";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts", "GET")
@@ -3785,28 +3785,28 @@ class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>,
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context!);
         organizationId = json['organizationId'];
-        organizationIds = JsonConverters.fromJson(json['organizationIds'],'List<int>',context);
-        types = JsonConverters.fromJson(json['types'],'List<String>',context);
-        anyTechnologyIds = JsonConverters.fromJson(json['anyTechnologyIds'],'List<int>',context);
-        Is = JsonConverters.fromJson(json['is'],'List<String>',context);
+        organizationIds = JsonConverters.fromJson(json['organizationIds'],'List<int>',context!);
+        types = JsonConverters.fromJson(json['types'],'List<String>',context!);
+        anyTechnologyIds = JsonConverters.fromJson(json['anyTechnologyIds'],'List<int>',context!);
+        Is = JsonConverters.fromJson(json['is'],'List<String>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'ids': JsonConverters.toJson(ids,'List<int>',context!),
         'organizationId': organizationId,
-        'organizationIds': JsonConverters.toJson(organizationIds,'List<int>',context),
-        'types': JsonConverters.toJson(types,'List<String>',context),
-        'anyTechnologyIds': JsonConverters.toJson(anyTechnologyIds,'List<int>',context),
-        'is': JsonConverters.toJson(Is,'List<String>',context)
+        'organizationIds': JsonConverters.toJson(organizationIds,'List<int>',context!),
+        'types': JsonConverters.toJson(types,'List<String>',context!),
+        'anyTechnologyIds': JsonConverters.toJson(anyTechnologyIds,'List<int>',context!),
+        'is': JsonConverters.toJson(Is,'List<String>',context!)
     });
 
     createResponse() => QueryResponse<Post>();
     getResponseTypeName() => "QueryResponse<Post>";
     getTypeName() => "QueryPosts";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}", "GET")
@@ -3832,7 +3832,7 @@ class GetPost implements IReturn<GetPostResponse>, IGet, IConvertible
     createResponse() => GetPostResponse();
     getResponseTypeName() => "GetPostResponse";
     getTypeName() => "GetPost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts", "POST")
@@ -3861,17 +3861,17 @@ class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
 
     fromMap(Map<String, dynamic> json) {
         organizationId = json['organizationId'];
-        type = JsonConverters.fromJson(json['type'],'PostType',context);
+        type = JsonConverters.fromJson(json['type'],'PostType',context!);
         categoryId = json['categoryId'];
         title = json['title'];
         url = json['url'];
         imageUrl = json['imageUrl'];
         content = json['content'];
         lock = json['lock'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
-        labels = JsonConverters.fromJson(json['labels'],'List<String>',context);
-        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context);
-        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
+        labels = JsonConverters.fromJson(json['labels'],'List<String>',context!);
+        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context!);
+        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context!);
         metaType = json['metaType'];
         meta = json['meta'];
         refId = json['refId'];
@@ -3882,17 +3882,17 @@ class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
 
     Map<String, dynamic> toJson() => {
         'organizationId': organizationId,
-        'type': JsonConverters.toJson(type,'PostType',context),
+        'type': JsonConverters.toJson(type,'PostType',context!),
         'categoryId': categoryId,
         'title': title,
         'url': url,
         'imageUrl': imageUrl,
         'content': content,
         'lock': lock,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context),
-        'labels': JsonConverters.toJson(labels,'List<String>',context),
-        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context),
-        'toDate': JsonConverters.toJson(toDate,'DateTime',context),
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!),
+        'labels': JsonConverters.toJson(labels,'List<String>',context!),
+        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context!),
+        'toDate': JsonConverters.toJson(toDate,'DateTime',context!),
         'metaType': metaType,
         'meta': meta,
         'refId': refId,
@@ -3903,7 +3903,7 @@ class CreatePost implements IReturn<CreatePostResponse>, IPost, IConvertible
     createResponse() => CreatePostResponse();
     getResponseTypeName() => "CreatePostResponse";
     getTypeName() => "CreatePost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}", "PUT")
@@ -3931,17 +3931,17 @@ class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         organizationId = json['organizationId'];
-        type = JsonConverters.fromJson(json['type'],'PostType',context);
+        type = JsonConverters.fromJson(json['type'],'PostType',context!);
         categoryId = json['categoryId'];
         title = json['title'];
         url = json['url'];
         imageUrl = json['imageUrl'];
         content = json['content'];
         lock = json['lock'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
-        labels = JsonConverters.fromJson(json['labels'],'List<String>',context);
-        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context);
-        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
+        labels = JsonConverters.fromJson(json['labels'],'List<String>',context!);
+        fromDate = JsonConverters.fromJson(json['fromDate'],'DateTime',context!);
+        toDate = JsonConverters.fromJson(json['toDate'],'DateTime',context!);
         metaType = json['metaType'];
         meta = json['meta'];
         return this;
@@ -3950,17 +3950,17 @@ class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
     Map<String, dynamic> toJson() => {
         'id': id,
         'organizationId': organizationId,
-        'type': JsonConverters.toJson(type,'PostType',context),
+        'type': JsonConverters.toJson(type,'PostType',context!),
         'categoryId': categoryId,
         'title': title,
         'url': url,
         'imageUrl': imageUrl,
         'content': content,
         'lock': lock,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context),
-        'labels': JsonConverters.toJson(labels,'List<String>',context),
-        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context),
-        'toDate': JsonConverters.toJson(toDate,'DateTime',context),
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!),
+        'labels': JsonConverters.toJson(labels,'List<String>',context!),
+        'fromDate': JsonConverters.toJson(fromDate,'DateTime',context!),
+        'toDate': JsonConverters.toJson(toDate,'DateTime',context!),
         'metaType': metaType,
         'meta': meta
     };
@@ -3968,7 +3968,7 @@ class UpdatePost implements IReturn<UpdatePostResponse>, IPut, IConvertible
     createResponse() => UpdatePostResponse();
     getResponseTypeName() => "UpdatePostResponse";
     getTypeName() => "UpdatePost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}", "DELETE")
@@ -3991,7 +3991,7 @@ class DeletePost implements IReturn<DeletePostResponse>, IDelete, IConvertible
     createResponse() => DeletePostResponse();
     getResponseTypeName() => "DeletePostResponse";
     getTypeName() => "DeletePost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}/lock", "PUT")
@@ -4019,7 +4019,7 @@ class LockPost implements IReturnVoid, IPut, IConvertible
 
     createResponse() {}
     getTypeName() => "LockPost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}/hide", "PUT")
@@ -4047,7 +4047,7 @@ class HidePost implements IReturnVoid, IPut, IConvertible
 
     createResponse() {}
     getTypeName() => "HidePost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}/status/{Status}", "PUT")
@@ -4075,7 +4075,7 @@ class ChangeStatusPost implements IReturnVoid, IPut, IConvertible
 
     createResponse() {}
     getTypeName() => "ChangeStatusPost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/report/{Id}", "POST")
@@ -4091,19 +4091,19 @@ class ActionPostReport implements IReturnVoid, IPost, IConvertible
     fromMap(Map<String, dynamic> json) {
         postId = json['postId'];
         id = json['id'];
-        reportAction = JsonConverters.fromJson(json['reportAction'],'ReportAction',context);
+        reportAction = JsonConverters.fromJson(json['reportAction'],'ReportAction',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'postId': postId,
         'id': id,
-        'reportAction': JsonConverters.toJson(reportAction,'ReportAction',context)
+        'reportAction': JsonConverters.toJson(reportAction,'ReportAction',context!)
     };
 
     createResponse() {}
     getTypeName() => "ActionPostReport";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments", "POST")
@@ -4132,7 +4132,7 @@ class CreatePostComment implements IReturn<CreatePostCommentResponse>, IPost, IC
     createResponse() => CreatePostCommentResponse();
     getResponseTypeName() => "CreatePostCommentResponse";
     getTypeName() => "CreatePostComment";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments/{Id}", "PUT")
@@ -4161,7 +4161,7 @@ class UpdatePostComment implements IReturn<UpdatePostCommentResponse>, IPut, ICo
     createResponse() => UpdatePostCommentResponse();
     getResponseTypeName() => "UpdatePostCommentResponse";
     getTypeName() => "UpdatePostComment";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments/{Id}", "DELETE")
@@ -4187,7 +4187,7 @@ class DeletePostComment implements IReturn<DeletePostCommentResponse>, IDelete, 
     createResponse() => DeletePostCommentResponse();
     getResponseTypeName() => "DeletePostCommentResponse";
     getTypeName() => "DeletePostComment";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments/{PostCommentId}/report/{Id}", "POST")
@@ -4205,7 +4205,7 @@ class ActionPostCommentReport implements IReturnVoid, IPost, IConvertible
         id = json['id'];
         postCommentId = json['postCommentId'];
         postId = json['postId'];
-        reportAction = JsonConverters.fromJson(json['reportAction'],'ReportAction',context);
+        reportAction = JsonConverters.fromJson(json['reportAction'],'ReportAction',context!);
         return this;
     }
 
@@ -4213,12 +4213,12 @@ class ActionPostCommentReport implements IReturnVoid, IPost, IConvertible
         'id': id,
         'postCommentId': postCommentId,
         'postId': postId,
-        'reportAction': JsonConverters.toJson(reportAction,'ReportAction',context)
+        'reportAction': JsonConverters.toJson(reportAction,'ReportAction',context!)
     };
 
     createResponse() {}
     getTypeName() => "ActionPostCommentReport";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/user/comments/votes")
@@ -4241,7 +4241,7 @@ class GetUserPostCommentVotes implements IReturn<GetUserPostCommentVotesResponse
     createResponse() => GetUserPostCommentVotesResponse();
     getResponseTypeName() => "GetUserPostCommentVotesResponse";
     getTypeName() => "GetUserPostCommentVotes";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments/{Id}/pin", "PUT")
@@ -4270,7 +4270,7 @@ class PinPostComment implements IReturn<PinPostCommentResponse>, IPut, IConverti
     createResponse() => PinPostCommentResponse();
     getResponseTypeName() => "PinPostCommentResponse";
     getTypeName() => "PinPostComment";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/users/by-email")
@@ -4282,18 +4282,18 @@ class GetUsersByEmails implements IReturn<GetUsersByEmailsResponse>, IGet, IConv
     GetUsersByEmails.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        emails = JsonConverters.fromJson(json['emails'],'List<String>',context);
+        emails = JsonConverters.fromJson(json['emails'],'List<String>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'emails': JsonConverters.toJson(emails,'List<String>',context)
+        'emails': JsonConverters.toJson(emails,'List<String>',context!)
     };
 
     createResponse() => GetUsersByEmailsResponse();
     getResponseTypeName() => "GetUsersByEmailsResponse";
     getTypeName() => "GetUsersByEmails";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/user/posts/activity")
@@ -4309,7 +4309,7 @@ class GetUserPostActivity implements IReturn<GetUserPostActivityResponse>, IGet,
     createResponse() => GetUserPostActivityResponse();
     getResponseTypeName() => "GetUserPostActivityResponse";
     getTypeName() => "GetUserPostActivity";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/user/organizations")
@@ -4325,7 +4325,7 @@ class GetUserOrganizations implements IReturn<GetUserOrganizationsResponse>, IGe
     createResponse() => GetUserOrganizationsResponse();
     getResponseTypeName() => "GetUserOrganizationsResponse";
     getTypeName() => "GetUserOrganizations";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}/vote", "PUT")
@@ -4351,7 +4351,7 @@ class UserPostVote implements IReturn<UserPostVoteResponse>, IPut, IConvertible
     createResponse() => UserPostVoteResponse();
     getResponseTypeName() => "UserPostVoteResponse";
     getTypeName() => "UserPostVote";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}/favorite", "PUT")
@@ -4374,7 +4374,7 @@ class UserPostFavorite implements IReturn<UserPostFavoriteResponse>, IPut, IConv
     createResponse() => UserPostFavoriteResponse();
     getResponseTypeName() => "UserPostFavoriteResponse";
     getTypeName() => "UserPostFavorite";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{Id}/report", "PUT")
@@ -4389,21 +4389,21 @@ class UserPostReport implements IReturn<UserPostReportResponse>, IPut, IConverti
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
-        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context);
+        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context!);
         reportNotes = json['reportNotes'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'flagType': JsonConverters.toJson(flagType,'FlagType',context),
+        'flagType': JsonConverters.toJson(flagType,'FlagType',context!),
         'reportNotes': reportNotes
     };
 
     createResponse() => UserPostReportResponse();
     getResponseTypeName() => "UserPostReportResponse";
     getTypeName() => "UserPostReport";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments/{Id}", "GET")
@@ -4432,7 +4432,7 @@ class UserPostCommentVote implements IReturn<UserPostCommentVoteResponse>, IGet,
     createResponse() => UserPostCommentVoteResponse();
     getResponseTypeName() => "UserPostCommentVoteResponse";
     getTypeName() => "UserPostCommentVote";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/comments/{Id}/report", "PUT")
@@ -4449,7 +4449,7 @@ class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, I
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         postId = json['postId'];
-        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context);
+        flagType = JsonConverters.fromJson(json['flagType'],'FlagType',context!);
         reportNotes = json['reportNotes'];
         return this;
     }
@@ -4457,14 +4457,14 @@ class UserPostCommentReport implements IReturn<UserPostCommentReportResponse>, I
     Map<String, dynamic> toJson() => {
         'id': id,
         'postId': postId,
-        'flagType': JsonConverters.toJson(flagType,'FlagType',context),
+        'flagType': JsonConverters.toJson(flagType,'FlagType',context!),
         'reportNotes': reportNotes
     };
 
     createResponse() => UserPostCommentReportResponse();
     getResponseTypeName() => "UserPostCommentReportResponse";
     getTypeName() => "UserPostCommentReport";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/prerender/{Path*}", "PUT")
@@ -4486,7 +4486,7 @@ class StorePreRender implements IReturnVoid, IPut, IConvertible
 
     createResponse() {}
     getTypeName() => "StorePreRender";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/prerender/{Path*}", "GET")
@@ -4509,7 +4509,7 @@ class GetPreRender implements IReturn<String>, IGet, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "GetPreRender";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/my-session")
@@ -4525,7 +4525,7 @@ class SessionInfo implements IReturn<SessionInfoResponse>, IGet, IConvertible
     createResponse() => SessionInfoResponse();
     getResponseTypeName() => "SessionInfoResponse";
     getTypeName() => "SessionInfo";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/subscribe", "PUT")
@@ -4540,20 +4540,20 @@ class SubscribeToOrganization implements IReturnVoid, IPut, IConvertible
 
     fromMap(Map<String, dynamic> json) {
         organizationId = json['organizationId'];
-        postTypes = JsonConverters.fromJson(json['postTypes'],'List<PostType>',context);
-        frequency = JsonConverters.fromJson(json['frequency'],'Frequency',context);
+        postTypes = JsonConverters.fromJson(json['postTypes'],'List<PostType>',context!);
+        frequency = JsonConverters.fromJson(json['frequency'],'Frequency',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'organizationId': organizationId,
-        'postTypes': JsonConverters.toJson(postTypes,'List<PostType>',context),
-        'frequency': JsonConverters.toJson(frequency,'Frequency',context)
+        'postTypes': JsonConverters.toJson(postTypes,'List<PostType>',context!),
+        'frequency': JsonConverters.toJson(frequency,'Frequency',context!)
     };
 
     createResponse() {}
     getTypeName() => "SubscribeToOrganization";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/subscribe", "PUT")
@@ -4575,7 +4575,7 @@ class SubscribeToPost implements IReturnVoid, IPut, IConvertible
 
     createResponse() {}
     getTypeName() => "SubscribeToPost";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/orgs/{OrganizationId}/subscribe", "DELETE")
@@ -4597,7 +4597,7 @@ class DeleteOrganizationSubscription implements IReturnVoid, IDelete, IConvertib
 
     createResponse() {}
     getTypeName() => "DeleteOrganizationSubscription";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/{PostId}/subscribe", "DELETE")
@@ -4619,7 +4619,7 @@ class DeletePostSubscription implements IReturnVoid, IDelete, IConvertible
 
     createResponse() {}
     getTypeName() => "DeletePostSubscription";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/{Slug}/previous-versions", "GET")
@@ -4642,7 +4642,7 @@ class GetTechnologyPreviousVersions implements IReturn<GetTechnologyPreviousVers
     createResponse() => GetTechnologyPreviousVersionsResponse();
     getResponseTypeName() => "GetTechnologyPreviousVersionsResponse";
     getTypeName() => "GetTechnologyPreviousVersions";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology", "GET")
@@ -4658,7 +4658,7 @@ class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IGet, I
     createResponse() => GetAllTechnologiesResponse();
     getResponseTypeName() => "GetAllTechnologiesResponse";
     getTypeName() => "GetAllTechnologies";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/search")
@@ -4677,7 +4677,7 @@ class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResp
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context!);
         name = json['name'];
         vendorName = json['vendorName'];
         nameContains = json['nameContains'];
@@ -4687,7 +4687,7 @@ class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResp
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'ids': JsonConverters.toJson(ids,'List<int>',context!),
         'name': name,
         'vendorName': vendorName,
         'nameContains': nameContains,
@@ -4698,7 +4698,7 @@ class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResp
     createResponse() => QueryResponse<Technology>();
     getResponseTypeName() => "QueryResponse<Technology>";
     getTypeName() => "FindTechnologies";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/query")
@@ -4716,7 +4716,7 @@ class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryRespo
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context!);
         name = json['name'];
         vendorName = json['vendorName'];
         nameContains = json['nameContains'];
@@ -4726,7 +4726,7 @@ class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryRespo
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'ids': JsonConverters.toJson(ids,'List<int>',context!),
         'name': name,
         'vendorName': vendorName,
         'nameContains': nameContains,
@@ -4737,7 +4737,7 @@ class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryRespo
     createResponse() => QueryResponse<Technology>();
     getResponseTypeName() => "QueryResponse<Technology>";
     getTypeName() => "QueryTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/{Slug}")
@@ -4760,7 +4760,7 @@ class GetTechnology implements IReturn<GetTechnologyResponse>, IRegisterStats, I
     createResponse() => GetTechnologyResponse();
     getResponseTypeName() => "GetTechnologyResponse";
     getTypeName() => "GetTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/{Slug}/favorites")
@@ -4783,7 +4783,7 @@ class GetTechnologyFavoriteDetails implements IReturn<GetTechnologyFavoriteDetai
     createResponse() => GetTechnologyFavoriteDetailsResponse();
     getResponseTypeName() => "GetTechnologyFavoriteDetailsResponse";
     getTypeName() => "GetTechnologyFavoriteDetails";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology", "POST")
@@ -4811,7 +4811,7 @@ class CreateTechnology implements IReturn<CreateTechnologyResponse>, IPost, ICon
         logoUrl = json['logoUrl'];
         description = json['description'];
         isLocked = json['isLocked'];
-        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context);
+        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
         return this;
     }
 
@@ -4824,13 +4824,13 @@ class CreateTechnology implements IReturn<CreateTechnologyResponse>, IPost, ICon
         'logoUrl': logoUrl,
         'description': description,
         'isLocked': isLocked,
-        'tier': JsonConverters.toJson(tier,'TechnologyTier',context)
+        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!)
     };
 
     createResponse() => CreateTechnologyResponse();
     getResponseTypeName() => "CreateTechnologyResponse";
     getTypeName() => "CreateTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/{Id}", "PUT")
@@ -4858,7 +4858,7 @@ class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IPut, IConv
         logoUrl = json['logoUrl'];
         description = json['description'];
         isLocked = json['isLocked'];
-        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context);
+        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
         return this;
     }
 
@@ -4871,13 +4871,13 @@ class UpdateTechnology implements IReturn<UpdateTechnologyResponse>, IPut, IConv
         'logoUrl': logoUrl,
         'description': description,
         'isLocked': isLocked,
-        'tier': JsonConverters.toJson(tier,'TechnologyTier',context)
+        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!)
     };
 
     createResponse() => UpdateTechnologyResponse();
     getResponseTypeName() => "UpdateTechnologyResponse";
     getTypeName() => "UpdateTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/technology/{Id}", "DELETE")
@@ -4900,7 +4900,7 @@ class DeleteTechnology implements IReturn<DeleteTechnologyResponse>, IDelete, IC
     createResponse() => DeleteTechnologyResponse();
     getResponseTypeName() => "DeleteTechnologyResponse";
     getTypeName() => "DeleteTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/{Slug}/previous-versions", "GET")
@@ -4923,7 +4923,7 @@ class GetTechnologyStackPreviousVersions implements IReturn<GetTechnologyStackPr
     createResponse() => GetTechnologyStackPreviousVersionsResponse();
     getResponseTypeName() => "GetTechnologyStackPreviousVersionsResponse";
     getTypeName() => "GetTechnologyStackPreviousVersions";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/pagestats/{Type}/{Slug}")
@@ -4952,7 +4952,7 @@ class GetPageStats implements IReturn<GetPageStatsResponse>, IGet, IConvertible
     createResponse() => GetPageStatsResponse();
     getResponseTypeName() => "GetPageStatsResponse";
     getTypeName() => "GetPageStats";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/cache/clear")
@@ -4968,7 +4968,7 @@ class ClearCache implements IReturn<String>, IGet, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "ClearCache";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/tasks/hourly")
@@ -4991,7 +4991,7 @@ class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
     createResponse() => HourlyTaskResponse();
     getResponseTypeName() => "HourlyTaskResponse";
     getTypeName() => "HourlyTask";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/search")
@@ -5010,7 +5010,7 @@ class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryR
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context!);
         name = json['name'];
         vendorName = json['vendorName'];
         nameContains = json['nameContains'];
@@ -5020,7 +5020,7 @@ class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryR
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'ids': JsonConverters.toJson(ids,'List<int>',context!),
         'name': name,
         'vendorName': vendorName,
         'nameContains': nameContains,
@@ -5031,7 +5031,7 @@ class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryR
     createResponse() => QueryResponse<TechnologyStack>();
     getResponseTypeName() => "QueryResponse<TechnologyStack>";
     getTypeName() => "FindTechStacks";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/query")
@@ -5049,7 +5049,7 @@ class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<Query
 
     fromMap(Map<String, dynamic> json) {
         super.fromMap(json);
-        ids = JsonConverters.fromJson(json['ids'],'List<int>',context);
+        ids = JsonConverters.fromJson(json['ids'],'List<int>',context!);
         name = json['name'];
         vendorName = json['vendorName'];
         nameContains = json['nameContains'];
@@ -5059,7 +5059,7 @@ class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<Query
     }
 
     Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'ids': JsonConverters.toJson(ids,'List<int>',context),
+        'ids': JsonConverters.toJson(ids,'List<int>',context!),
         'name': name,
         'vendorName': vendorName,
         'nameContains': nameContains,
@@ -5070,7 +5070,7 @@ class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<Query
     createResponse() => QueryResponse<TechnologyStack>();
     getResponseTypeName() => "QueryResponse<TechnologyStack>";
     getTypeName() => "QueryTechStacks";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/overview")
@@ -5093,7 +5093,7 @@ class Overview implements IReturn<OverviewResponse>, IGet, IConvertible
     createResponse() => OverviewResponse();
     getResponseTypeName() => "OverviewResponse";
     getTypeName() => "Overview";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/app-overview")
@@ -5116,7 +5116,7 @@ class AppOverview implements IReturn<AppOverviewResponse>, IGet, IConvertible
     createResponse() => AppOverviewResponse();
     getResponseTypeName() => "AppOverviewResponse";
     getTypeName() => "AppOverview";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks", "GET")
@@ -5132,7 +5132,7 @@ class GetAllTechnologyStacks implements IReturn<GetAllTechnologyStacksResponse>,
     createResponse() => GetAllTechnologyStacksResponse();
     getResponseTypeName() => "GetAllTechnologyStacksResponse";
     getTypeName() => "GetAllTechnologyStacks";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/{Slug}", "GET")
@@ -5155,7 +5155,7 @@ class GetTechnologyStack implements IReturn<GetTechnologyStackResponse>, IRegist
     createResponse() => GetTechnologyStackResponse();
     getResponseTypeName() => "GetTechnologyStackResponse";
     getTypeName() => "GetTechnologyStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/{Slug}/favorites")
@@ -5178,7 +5178,7 @@ class GetTechnologyStackFavoriteDetails implements IReturn<GetTechnologyStackFav
     createResponse() => GetTechnologyStackFavoriteDetailsResponse();
     getResponseTypeName() => "GetTechnologyStackFavoriteDetailsResponse";
     getTypeName() => "GetTechnologyStackFavoriteDetails";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/config")
@@ -5194,7 +5194,7 @@ class GetConfig implements IReturn<GetConfigResponse>, IGet, IConvertible
     createResponse() => GetConfigResponse();
     getResponseTypeName() => "GetConfigResponse";
     getTypeName() => "GetConfig";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks", "POST")
@@ -5222,7 +5222,7 @@ class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, I
         description = json['description'];
         details = json['details'];
         isLocked = json['isLocked'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         return this;
     }
 
@@ -5235,13 +5235,13 @@ class CreateTechnologyStack implements IReturn<CreateTechnologyStackResponse>, I
         'description': description,
         'details': details,
         'isLocked': isLocked,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     };
 
     createResponse() => CreateTechnologyStackResponse();
     getResponseTypeName() => "CreateTechnologyStackResponse";
     getTypeName() => "CreateTechnologyStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/{Id}", "PUT")
@@ -5269,7 +5269,7 @@ class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, I
         description = json['description'];
         details = json['details'];
         isLocked = json['isLocked'];
-        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context);
+        technologyIds = JsonConverters.fromJson(json['technologyIds'],'List<int>',context!);
         return this;
     }
 
@@ -5282,13 +5282,13 @@ class UpdateTechnologyStack implements IReturn<UpdateTechnologyStackResponse>, I
         'description': description,
         'details': details,
         'isLocked': isLocked,
-        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context)
+        'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     };
 
     createResponse() => UpdateTechnologyStackResponse();
     getResponseTypeName() => "UpdateTechnologyStackResponse";
     getTypeName() => "UpdateTechnologyStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/{Id}", "DELETE")
@@ -5311,7 +5311,7 @@ class DeleteTechnologyStack implements IReturn<DeleteTechnologyStackResponse>, I
     createResponse() => DeleteTechnologyStackResponse();
     getResponseTypeName() => "DeleteTechnologyStackResponse";
     getTypeName() => "DeleteTechnologyStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/favorites/techtacks", "GET")
@@ -5334,7 +5334,7 @@ class GetFavoriteTechStack implements IReturn<GetFavoriteTechStackResponse>, IGe
     createResponse() => GetFavoriteTechStackResponse();
     getResponseTypeName() => "GetFavoriteTechStackResponse";
     getTypeName() => "GetFavoriteTechStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/favorites/techtacks/{TechnologyStackId}", "PUT")
@@ -5357,7 +5357,7 @@ class AddFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IPut, 
     createResponse() => FavoriteTechStackResponse();
     getResponseTypeName() => "FavoriteTechStackResponse";
     getTypeName() => "AddFavoriteTechStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/favorites/techtacks/{TechnologyStackId}", "DELETE")
@@ -5380,7 +5380,7 @@ class RemoveFavoriteTechStack implements IReturn<FavoriteTechStackResponse>, IDe
     createResponse() => FavoriteTechStackResponse();
     getResponseTypeName() => "FavoriteTechStackResponse";
     getTypeName() => "RemoveFavoriteTechStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/favorites/technology", "GET")
@@ -5403,7 +5403,7 @@ class GetFavoriteTechnologies implements IReturn<GetFavoriteTechnologiesResponse
     createResponse() => GetFavoriteTechnologiesResponse();
     getResponseTypeName() => "GetFavoriteTechnologiesResponse";
     getTypeName() => "GetFavoriteTechnologies";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/favorites/technology/{TechnologyId}", "PUT")
@@ -5426,7 +5426,7 @@ class AddFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, IPut
     createResponse() => FavoriteTechnologyResponse();
     getResponseTypeName() => "FavoriteTechnologyResponse";
     getTypeName() => "AddFavoriteTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/favorites/technology/{TechnologyId}", "DELETE")
@@ -5449,7 +5449,7 @@ class RemoveFavoriteTechnology implements IReturn<FavoriteTechnologyResponse>, I
     createResponse() => FavoriteTechnologyResponse();
     getResponseTypeName() => "FavoriteTechnologyResponse";
     getTypeName() => "RemoveFavoriteTechnology";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/my-feed")
@@ -5465,7 +5465,7 @@ class GetUserFeed implements IReturn<GetUserFeedResponse>, IGet, IConvertible
     createResponse() => GetUserFeedResponse();
     getResponseTypeName() => "GetUserFeedResponse";
     getTypeName() => "GetUserFeed";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/users/karma", "GET")
@@ -5477,18 +5477,18 @@ class GetUsersKarma implements IReturn<GetUsersKarmaResponse>, IGet, IConvertibl
     GetUsersKarma.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        userIds = JsonConverters.fromJson(json['userIds'],'List<int>',context);
+        userIds = JsonConverters.fromJson(json['userIds'],'List<int>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'userIds': JsonConverters.toJson(userIds,'List<int>',context)
+        'userIds': JsonConverters.toJson(userIds,'List<int>',context!)
     };
 
     createResponse() => GetUsersKarmaResponse();
     getResponseTypeName() => "GetUsersKarmaResponse";
     getTypeName() => "GetUsersKarma";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/userinfo/{UserName}")
@@ -5511,7 +5511,7 @@ class GetUserInfo implements IReturn<GetUserInfoResponse>, IGet, IConvertible
     createResponse() => GetUserInfoResponse();
     getResponseTypeName() => "GetUserInfoResponse";
     getTypeName() => "GetUserInfo";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/users/{UserName}/avatar", "GET")
@@ -5531,7 +5531,7 @@ class UserAvatar implements IGet, IConvertible
         'userName': userName
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/mq/start")
@@ -5547,7 +5547,7 @@ class MqStart implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "MqStart";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/mq/stop")
@@ -5563,7 +5563,7 @@ class MqStop implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "MqStop";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/mq/stats")
@@ -5579,7 +5579,7 @@ class MqStats implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "MqStats";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/mq/status")
@@ -5595,7 +5595,7 @@ class MqStatus implements IReturn<String>, IConvertible
     createResponse() => "";
     getResponseTypeName() => "String";
     getTypeName() => "MqStatus";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/sync/discourse/{Site}")
@@ -5618,7 +5618,7 @@ class SyncDiscourseSite implements IReturn<SyncDiscourseSiteResponse>, IPost, IC
     createResponse() => SyncDiscourseSiteResponse();
     getResponseTypeName() => "SyncDiscourseSiteResponse";
     getTypeName() => "SyncDiscourseSite";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/admin/technology/{TechnologyId}/logo")
@@ -5644,7 +5644,7 @@ class LogoUrlApproval implements IReturn<LogoUrlApprovalResponse>, IPut, IConver
     createResponse() => LogoUrlApprovalResponse();
     getResponseTypeName() => "LogoUrlApprovalResponse";
     getTypeName() => "LogoUrlApproval";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/admin/techstacks/{TechnologyStackId}/lock")
@@ -5670,7 +5670,7 @@ class LockTechStack implements IReturn<LockStackResponse>, IPut, IConvertible
     createResponse() => LockStackResponse();
     getResponseTypeName() => "LockStackResponse";
     getTypeName() => "LockTechStack";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/admin/technology/{TechnologyId}/lock")
@@ -5696,7 +5696,7 @@ class LockTech implements IReturn<LockStackResponse>, IPut, IConvertible
     createResponse() => LockStackResponse();
     getResponseTypeName() => "LockStackResponse";
     getTypeName() => "LockTech";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/email/post/{PostId}")
@@ -5719,7 +5719,7 @@ class EmailTest implements IReturn<EmailTestRespoonse>, IConvertible
     createResponse() => EmailTestRespoonse();
     getResponseTypeName() => "EmailTestRespoonse";
     getTypeName() => "EmailTest";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
@@ -5735,7 +5735,7 @@ class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
     String? refIdStr;
     String? refUrn;
     String? defaultProfileUrl;
-    Map<String,String>? meta;
+    Map<String,String?>? meta;
 
     ImportUser({this.userName,this.email,this.firstName,this.lastName,this.displayName,this.company,this.refSource,this.refId,this.refIdStr,this.refUrn,this.defaultProfileUrl,this.meta});
     ImportUser.fromJson(Map<String, dynamic> json) { fromMap(json); }
@@ -5774,7 +5774,7 @@ class ImportUser implements IReturn<ImportUserResponse>, IPost, IConvertible
     createResponse() => ImportUserResponse();
     getResponseTypeName() => "ImportUserResponse";
     getTypeName() => "ImportUser";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/import/uservoice/suggestion")
@@ -5815,14 +5815,14 @@ class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResp
         text = json['text'];
         formattedText = json['formattedText'];
         voteCount = json['voteCount'];
-        closedAt = JsonConverters.fromJson(json['closedAt'],'DateTime',context);
+        closedAt = JsonConverters.fromJson(json['closedAt'],'DateTime',context!);
         statusKey = json['statusKey'];
         statusHexColor = json['statusHexColor'];
-        statusChangedBy = JsonConverters.fromJson(json['statusChangedBy'],'UserVoiceUser',context);
-        creator = JsonConverters.fromJson(json['creator'],'UserVoiceUser',context);
-        response = JsonConverters.fromJson(json['response'],'UserVoiceComment',context);
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context);
-        updatedAt = JsonConverters.fromJson(json['updatedAt'],'DateTime',context);
+        statusChangedBy = JsonConverters.fromJson(json['statusChangedBy'],'UserVoiceUser',context!);
+        creator = JsonConverters.fromJson(json['creator'],'UserVoiceUser',context!);
+        response = JsonConverters.fromJson(json['response'],'UserVoiceComment',context!);
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        updatedAt = JsonConverters.fromJson(json['updatedAt'],'DateTime',context!);
         return this;
     }
 
@@ -5838,20 +5838,20 @@ class ImportUserVoiceSuggestion implements IReturn<ImportUserVoiceSuggestionResp
         'text': text,
         'formattedText': formattedText,
         'voteCount': voteCount,
-        'closedAt': JsonConverters.toJson(closedAt,'DateTime',context),
+        'closedAt': JsonConverters.toJson(closedAt,'DateTime',context!),
         'statusKey': statusKey,
         'statusHexColor': statusHexColor,
-        'statusChangedBy': JsonConverters.toJson(statusChangedBy,'UserVoiceUser',context),
-        'creator': JsonConverters.toJson(creator,'UserVoiceUser',context),
-        'response': JsonConverters.toJson(response,'UserVoiceComment',context),
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context),
-        'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context)
+        'statusChangedBy': JsonConverters.toJson(statusChangedBy,'UserVoiceUser',context!),
+        'creator': JsonConverters.toJson(creator,'UserVoiceUser',context!),
+        'response': JsonConverters.toJson(response,'UserVoiceComment',context!),
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context!)
     };
 
     createResponse() => ImportUserVoiceSuggestionResponse();
     getResponseTypeName() => "ImportUserVoiceSuggestionResponse";
     getTypeName() => "ImportUserVoiceSuggestion";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/posts/comment", "GET")
@@ -5914,7 +5914,7 @@ class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryRe
     createResponse() => QueryResponse<PostComment>();
     getResponseTypeName() => "QueryResponse<PostComment>";
     getTypeName() => "QueryPostComments";
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/admin/technology/search")
@@ -5951,7 +5951,7 @@ class FindTechnologiesAdmin extends QueryDb1<Technology> implements IReturn<Quer
     createResponse() => QueryResponse<Technology>();
     getResponseTypeName() => "QueryResponse<Technology>";
     getTypeName() => "FindTechnologiesAdmin";
-    TypeContext context = _ctx;
+    get context => _ctx;
 }
 
 TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, TypeInfo> {

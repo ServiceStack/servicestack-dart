@@ -1,3 +1,7 @@
+## 2.0.0-alpha.1
+
+* Upgrade to null safety
+
 ## 1.0.32
 
 * Upgraded **http** dependency to ^0.13.3

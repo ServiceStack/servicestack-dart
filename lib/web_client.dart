@@ -27,7 +27,7 @@ class ClientFactory {
 }
 
 class SendWebContext {
-  String? method;
+  String method;
   dynamic request;
   dynamic body;
   Map<String, dynamic>? args;
@@ -37,7 +37,7 @@ class SendWebContext {
   WebResponseFilter? responseFilter;
   dynamic responseAs;
   SendWebContext(
-      {this.method,
+      {this.method='GET',
       this.request,
       this.body,
       this.args,
@@ -80,7 +80,7 @@ class JsonWebClient implements IServiceClient {
   late int maxRetries;
 
   set withCredentials(bool value) => client.withCredentials = value;
-  get withCredentials => client.withCredentials;
+  bool get withCredentials => client.withCredentials;
 
   JsonWebClient([this.baseUrl = "/"]) {
     replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
@@ -93,8 +93,8 @@ class JsonWebClient implements IServiceClient {
     useTokenCookie = false;
   }
 
-  String getTokenCookie() => cookies['ss-tok'];
-  String getRefreshTokenCookie() => cookies['ss-reftok'];
+  String? getTokenCookie() => cookies['ss-tok'];
+  String? getRefreshTokenCookie() => cookies['ss-reftok'];
 
   get cookies {
     var map = Map<String,String>();
@@ -244,7 +244,7 @@ class JsonWebClient implements IServiceClient {
   Future<List<T>?> sendAll<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter? requestFilter,
       WebResponseFilter? responseFilter}) async {
-    if (requests == null || requests.length == 0) return <T>[];
+    if (requests.length == 0) return <T>[];
     var url = combinePaths([replyBaseUrl, nameOf(requests.first)! + "[]"]);
 
     return this.sendRequest<List<T>>(SendWebContext(
@@ -259,7 +259,7 @@ class JsonWebClient implements IServiceClient {
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter? requestFilter,
       WebResponseFilter? responseFilter}) async {
-    if (requests == null || requests.length == 0) return <T>[];
+    if (requests.length == 0) return;
     var url = combinePaths([oneWayBaseUrl, nameOf(requests.first)! + "[]"]);
 
     await this.sendRequest<List<T>>(SendWebContext(
@@ -393,7 +393,11 @@ class JsonWebClient implements IServiceClient {
         url = createUrlFromDto(method, request);
       }
     }
-    if (args != null) url = appendQueryString(url, args);
+    if (url == null)
+      throw ArgumentError.notNull('url');
+
+    if (args != null)
+      url = appendQueryString(url, args);
 
     String? bodyStr = null;
     if (hasRequestBody(method)) {
@@ -410,7 +414,7 @@ class JsonWebClient implements IServiceClient {
 
     for (var attempt = 0; attempt < maxRetries; attempt++) {
       try {
-        req = Request(method!, uri!);
+        req = Request(method, uri!);
         break;
       } on Exception catch (e, trace) {
         Log.debug("createRequest(): $e\n$trace");
@@ -529,7 +533,7 @@ class JsonWebClient implements IServiceClient {
       String str = res.body;
       if (!isJsonObject(str)) {
         webEx.responseStatus = createErrorResponse(
-                res.statusCode.toString(), res.reasonPhrase, type)
+                res.statusCode.toString(), res.reasonPhrase ?? res.statusCode.toString(), type)
             .responseStatus;
       } else {
         var jsonObj = json.decode(str);
