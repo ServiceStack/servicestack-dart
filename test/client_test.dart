@@ -34,7 +34,7 @@ void main() {
 
   test('Does fire Request and Response Filters', () async {
     var client = createTestClient();
-    var events = List<String>();
+    var events = <String>[];
 
     JsonServiceClient.globalRequestFilter =
         (req) => events.add("globalRequestFilter");
@@ -58,8 +58,8 @@ void main() {
           "globalResponseFilter"
         ]));
 
-    JsonServiceClient.globalRequestFilter = null!;
-    JsonServiceClient.globalResponseFilter = null!;
+    JsonServiceClient.globalRequestFilter = null;
+    JsonServiceClient.globalResponseFilter = null;
   });
 
   test('Can GET Hello with CustomPath', () async {
@@ -153,7 +153,7 @@ void main() {
       await client.put(request);
       fail("should throw");
     } on WebServiceException catch (ex) {
-      var status = ex.responseStatus;
+      var status = ex.responseStatus!;
       expect(status.errorCode, equals("NotFound"));
       expect(status.message, equals("not here"));
       //expect(status.stackTrace, isNotNull);
@@ -167,25 +167,26 @@ void main() {
       await client.post(request);
       fail("should throw");
     } on WebServiceException catch (ex) {
-      var status = ex.responseStatus;
+      var status = ex.responseStatus!;
+      var errors = status.errors!;
 
-      expect(status.errors.length, equals(3));
-      expect(status.errors[0].errorCode, equals(status.errorCode));
-      expect(status.errors[0].message, equals(status.message));
+      expect(errors.length, equals(3));
+      expect(errors[0].errorCode, equals(status.errorCode));
+      expect(errors[0].message, equals(status.message));
 
-      expect(status.errors[0].errorCode, equals("InclusiveBetween"));
-      expect(status.errors[0].message,
+      expect(errors[0].errorCode, equals("InclusiveBetween"));
+      expect(errors[0].message,
           equals("'Age' must be between 1 and 120. You entered 0."));
-      expect(status.errors[0].fieldName, equals("Age"));
+      expect(errors[0].fieldName, equals("Age"));
 
-      expect(status.errors[1].errorCode, equals("NotEmpty"));
-      expect(status.errors[1].message, equals("'Required' must not be empty."));
-      expect(status.errors[1].fieldName, equals("Required"));
+      expect(errors[1].errorCode, equals("NotEmpty"));
+      expect(errors[1].message, equals("'Required' must not be empty."));
+      expect(errors[1].fieldName, equals("Required"));
 
-      expect(status.errors[2].errorCode, equals("Email"));
-      expect(status.errors[2].message,
+      expect(errors[2].errorCode, equals("Email"));
+      expect(errors[2].message,
           equals("'Email' is not a valid email address."));
-      expect(status.errors[2].fieldName, equals("Email"));
+      expect(errors[2].fieldName, equals("Email"));
     }
   });
 
@@ -211,7 +212,7 @@ void main() {
   });
 
   test('Can send ReturnVoid', () async {
-    var sentMethods = List<String>();
+    var sentMethods = <String>[];
     var client = createTestClient();
     client.requestFilter = (req) => sentMethods.add(req.method);
 
@@ -405,12 +406,12 @@ void main() {
       await client.post(ThrowValidation(),
           args: {"jsconfig": "EmitCamelCaseNames:true"});
     } on WebServiceException catch (e) {
-      expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
-      expect(e.responseStatus.message,
+      expect(e.responseStatus!.errorCode, equals("InclusiveBetween"));
+      expect(e.responseStatus!.message,
           equals("'Age' must be between 1 and 120. You entered 0."));
-      expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
-      expect(e.responseStatus.errors[1].fieldName, equals("Required"));
-      expect(e.responseStatus.errors[1].message,
+      expect(e.responseStatus!.errors![1].errorCode, equals("NotEmpty"));
+      expect(e.responseStatus!.errors![1].fieldName, equals("Required"));
+      expect(e.responseStatus!.errors![1].message,
           equals("'Required' must not be empty."));
     }
   });
@@ -425,12 +426,12 @@ void main() {
       await client.post(ThrowValidation(),
           args: {"jsconfig": "EmitCamelCaseNames:false"});
     } on WebServiceException catch (e) {
-      expect(e.responseStatus.errorCode, equals("InclusiveBetween"));
-      expect(e.responseStatus.message,
+      expect(e.responseStatus!.errorCode, equals("InclusiveBetween"));
+      expect(e.responseStatus!.message,
           equals("'Age' must be between 1 and 120. You entered 0."));
-      expect(e.responseStatus.errors[1].errorCode, equals("NotEmpty"));
-      expect(e.responseStatus.errors[1].fieldName, equals("Required"));
-      expect(e.responseStatus.errors[1].message,
+      expect(e.responseStatus!.errors![1].errorCode, equals("NotEmpty"));
+      expect(e.responseStatus!.errors![1].fieldName, equals("Required"));
+      expect(e.responseStatus!.errors![1].message,
           equals("'Required' must not be empty."));
     }
   });

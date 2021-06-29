@@ -7,7 +7,7 @@ List<String?> splitOnFirst(String? s, String c) {
 }
 
 List<String> splitOnLast(String s, String c) {
-  if (s == null || s == "") return [s];
+  if (s == "") return [s];
   var pos = s.lastIndexOf(c);
   return pos >= 0 ? [s.substring(0, pos), s.substring(pos + 1)] : [s];
 }
@@ -31,13 +31,12 @@ String? rightPart(String? strVal, String needle) {
 }
 
 String lastRightPart(String strVal, String needle) {
-  if (strVal == null) return null!;
   var pos = strVal.lastIndexOf(needle);
   return pos == -1 ? strVal : strVal.substring(pos + needle.length);
 }
 
 String trimStart(String text, String character) {
-  if (text == null || text.length == 0) return "";
+  if (text.length == 0) return "";
 
   int i = 0;
   while (text[i] == character) {
@@ -47,7 +46,7 @@ String trimStart(String text, String character) {
 }
 
 String trimEnd(String text, String character) {
-  if (text == null || text.length == 0) return "";
+  if (text.length == 0) return "";
 
   int i = text.length - 1;
   while (text[i] == character) {
@@ -118,7 +117,7 @@ String combinePaths(List<String?> paths) {
   List<String> combinedPaths = [];
   for (int i = 0; i < parts.length; i++) {
     var part = parts[i];
-    if (part == null || part == "" || part == ".") continue;
+    if (part == "" || part == ".") continue;
     if (part == "..")
       combinedPaths.removeLast();
     else
@@ -273,8 +272,7 @@ Map<String, dynamic>? toMap(request) {
   }
 }
 
-String sanitizeKey(String key) =>
-    key != null ? key.toLowerCase().replaceAll("_", "") : null!;
+String sanitizeKey(String key) => key.toLowerCase().replaceAll("_", "");
 
 ResponseStatus? createResponseStatus(Map<String, dynamic>? obj) {
   if (obj == null) return null;
@@ -292,7 +290,7 @@ ResponseStatus? createResponseStatus(Map<String, dynamic>? obj) {
     } else if (sanitizedKey == "errors") {
       List errors = val;
       to.errors = [];
-      for (Map error in errors as Iterable<Map<dynamic, dynamic>>) {
+      for (Map error in errors) {
         var fieldError = ResponseError();
         to.errors!.add(fieldError);
         error.forEach((fieldKey, fieldVal) {
@@ -316,12 +314,10 @@ ResponseStatus? createResponseStatus(Map<String, dynamic>? obj) {
 }
 
 dynamic findValue(Map<String, dynamic> map, String key) {
-  if (map != null) {
-    var findKey = sanitizeKey(key);
-    for (var k in map.keys) {
-      if (sanitizeKey(k) == findKey) {
-        return map[k];
-      }
+  var findKey = sanitizeKey(key);
+  for (var k in map.keys) {
+    if (sanitizeKey(k) == findKey) {
+      return map[k];
     }
   }
   return null;

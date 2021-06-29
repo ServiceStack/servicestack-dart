@@ -115,6 +115,7 @@ bool _equals(left,right) {
 }
 
 dynamic convert(dynamic value, String typeName, [TypeContext? context = null]) {
+  typeName = trimEnd(typeName, '?'); // test without optional
   if (typeName == "dynamic") {
     Log.warn("convert(): skipping converting '${value.runtimeType}' to 'dynamic' type");
     return value;

@@ -51,6 +51,7 @@ class TypeContext {
   Map<String, TypeInfo>? types;
   String? typeName;
   TypeContext? childContext;
+  static TypeContext Default = _ctx;
 
   static Map<String?, TypeInfo>? MinifiedTypes;
   static late Map<String?, String> MinifiedTypeNames;
@@ -196,51 +197,51 @@ abstract class IServiceClient {
 
   void clearCookies();
 
-  Future<T?> get<T>(IReturn<T> request, {Map<String, dynamic>? args});
+  Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>?> getUrl(String path, {Map<String, dynamic>? args});
+  Future<Map<String, dynamic>> getUrl(String path, {Map<String, dynamic>? args});
 
-  Future<T?> getAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
+  Future<T> getAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
 
-  Future<T?> post<T>(IReturn<T> request,
+  Future<T> post<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>?> postToUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic>? args});
 
-  Future<T?> postAs<T>(String path, dynamic body,
+  Future<T> postAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args, T? responseAs});
 
-  Future<T?> delete<T>(IReturn<T> request, {Map<String, dynamic>? args});
+  Future<T> delete<T>(IReturn<T> request, {Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>?> deleteUrl(String path,
+  Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic>? args});
 
-  Future<T?> deleteAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
+  Future<T> deleteAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
 
-  Future<T?> put<T>(IReturn<T> request,
+  Future<T> put<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>?> putToUrl(String path, dynamic body,
+  Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic>? args});
 
-  Future<T?> putAs<T>(String path, dynamic body,
+  Future<T> putAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args, T? responseAs});
 
-  Future<T?> patch<T>(IReturn<T> request,
+  Future<T> patch<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>?> patchToUrl(String path, dynamic body,
-      {Map<String, dynamic>? args});
+  Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
+      {Map<String, dynamic> args});
 
-  Future<T?> patchAs<T>(String path, dynamic body,
+  Future<T> patchAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args, T? responseAs});
 
-  Future<List<T>?> sendAll<T>(Iterable<IReturn<T>> requests);
+  Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests);
 
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests);
 
-  Future<T?> send<T>(IReturn<T> request,
+  Future<T> send<T>(IReturn<T> request,
       {String? method, Map<String, dynamic>? args, T? responseAs});
 
   void close({bool force = false});
@@ -272,7 +273,7 @@ class WebServiceException implements Exception {
 }
 
 extension ServiceClientExtensions on IServiceClient {
-  void setCredentials(String userName, String password) {
+  void setCredentials(String? userName, String? password) {
     this.userName = userName;
     this.password = password;
   }

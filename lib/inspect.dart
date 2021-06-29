@@ -133,7 +133,6 @@ class Inspect {
 
   static String _alignCenter(String str, int len, [String pad = ' ']) {
     if (len < 0) return '';
-    str ??= '';
     var nLen = str.length;
     var half = (len / 2 - nLen / 2).floor();
     var odds = ((nLen % 2) - (len % 2)).abs();

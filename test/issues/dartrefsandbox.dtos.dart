@@ -32,7 +32,7 @@ class FooListDto implements IConvertible
         'id': id
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class PagedRequest
@@ -54,7 +54,7 @@ abstract class PagedRequest
         'pageSize': pageSize
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 abstract class PagedAndOrderedRequest extends PagedRequest
@@ -74,7 +74,7 @@ abstract class PagedAndOrderedRequest extends PagedRequest
         'orderBy': orderBy
     });
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class PagedResult<T> implements IConvertible
@@ -91,7 +91,7 @@ class PagedResult<T> implements IConvertible
         page = json['page'];
         pageSize = json['pageSize'];
         totalResults = json['totalResults'];
-        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context);
+        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context!);
         return this;
     }
 
@@ -99,10 +99,10 @@ class PagedResult<T> implements IConvertible
         'page': page,
         'pageSize': pageSize,
         'totalResults': totalResults,
-        'results': JsonConverters.toJson(results,'List<T>',context)
+        'results': JsonConverters.toJson(results,'List<T>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class UnknownTypes implements IConvertible
@@ -113,15 +113,15 @@ class UnknownTypes implements IConvertible
     UnknownTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        fooListDtos = JsonConverters.fromJson(json['fooListDtos'],'List<FooListDto>',context);
+        fooListDtos = JsonConverters.fromJson(json['fooListDtos'],'List<FooListDto>',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'fooListDtos': JsonConverters.toJson(fooListDtos,'List<FooListDto>',context)
+        'fooListDtos': JsonConverters.toJson(fooListDtos,'List<FooListDto>',context!)
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 // @Route("/foos", "GET")
@@ -137,7 +137,7 @@ class GetFoos extends PagedAndOrderedRequest implements IReturn<PagedResult<FooL
     Map<String, dynamic> toJson() => super.toJson();
     createResponse() { return PagedResult<FooListDto>(); }
     String getTypeName() { return "GetFoos"; }
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class Item implements IConvertible
@@ -156,7 +156,7 @@ class Item implements IConvertible
         'id': id
     };
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 class GetItemsRequest implements IReturn<List<Item>>, IConvertible {
@@ -168,14 +168,14 @@ class GetItemsRequest implements IReturn<List<Item>>, IConvertible {
 
     Map<String, dynamic> toJson() => {};
     createResponse() {
-        return List<Item>();
+        return <Item>[];
     }
 
     String getTypeName() {
         return "GetItemsRequest";
     }
 
-    TypeContext context = _ctx;
+    TypeContext? context = _ctx;
 }
 
 TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
@@ -184,9 +184,9 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'PagedAndOrderedRequest': TypeInfo(TypeOf.AbstractClass),
     'PagedResult<T>': TypeInfo(TypeOf.GenericDef,create:() => PagedResult()),
     'UnknownTypes': TypeInfo(TypeOf.Class, create:() => UnknownTypes()),
-    'List<FooListDto>': TypeInfo(TypeOf.Class, create:() => List<FooListDto>()),
+    'List<FooListDto>': TypeInfo(TypeOf.Class, create:() => <FooListDto>[]),
     'GetFoos': TypeInfo(TypeOf.Class, create:() => GetFoos()),
     'Item': TypeInfo(TypeOf.Class, create: () => Item()),
-    'List<Item>': TypeInfo(TypeOf.Class, create: () => List<Item>()),
+    'List<Item>': TypeInfo(TypeOf.Class, create: () => <Item>[]),
 });
 

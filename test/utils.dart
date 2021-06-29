@@ -15,7 +15,7 @@ JsonServiceClient createTestClient() =>
       };
 
 JsonServiceClient createTechStacksClient() =>
-    JsonServiceClient("https://www.techstacks.io")
+    JsonServiceClient("https://techstacks.io")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
           print("ERROR: " + json.encode(e.responseStatus));

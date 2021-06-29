@@ -13,7 +13,7 @@ CreateJwt createJwt([Map? options]) {
   return to;
 }
 
-void clearSession(JsonServiceClient client) async =>
+Future<void> clearSession(JsonServiceClient client) async =>
     await client.post(Authenticate(provider: "logout"));
 
 void main() {
@@ -40,7 +40,7 @@ void main() {
       await client.get(TestAuth());
       fail("should throw");
     } on WebServiceException catch (e) {
-      var status = e.responseStatus;
+      var status = e.responseStatus!;
       expect(status.errorCode, equals("401"));
       expect(status.message, equals("Unauthorized"));
       expect(count, equals(1));
@@ -108,7 +108,7 @@ void main() {
     var authResponse = await client.post(Authenticate());
 
     client.refreshToken = authResponse.refreshToken;
-    client.setCredentials(null!, null!);
+    client.setCredentials(null, null);
 
     var createExpiredJwt = createJwt();
     createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
@@ -144,7 +144,7 @@ void main() {
       await client.post(auth);
       fail("should throw");
     } on WebServiceException catch (e) {
-      var status = e.responseStatus;
+      var status = e.responseStatus!;
       expect(status.errorCode, equals("Unauthorized"));
       expect(status.message, equals("Invalid Username or Password"));
     }
@@ -183,8 +183,8 @@ void main() {
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.type, equals(WebServiceExceptionType.RefreshTokenException));
-      expect(e.responseStatus.errorCode, equals("ArgumentException"));
-      expect(e.responseStatus.message, equals("Illegal base64url string!"));
+      expect(e.responseStatus!.errorCode, equals("ArgumentException"));
+      expect(e.responseStatus!.message, equals("Illegal base64url string!"));
     }
   });
 
@@ -199,10 +199,10 @@ void main() {
     try {
       await client.get(TestAuth());
       fail("should throw");
-    } catch (e) {
+    } on WebServiceException catch (e) {
       expect(e.type, equals(WebServiceExceptionType.RefreshTokenException));
-      expect(e.responseStatus.errorCode, equals("TokenException"));
-      expect(e.responseStatus.message, equals("Token has expired"));
+      expect(e.responseStatus!.errorCode, equals("TokenException"));
+      expect(e.responseStatus!.message, equals("Token has expired"));
     }
   });
 

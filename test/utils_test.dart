@@ -13,7 +13,7 @@ void main() {
 
   test('Can parse complex Uri', () {
     var url = r"http://test.servicestack.net/echo/complex.json?subType={id:1,name:foo}&subTypes=[{id:2,name:bar},{id:3,name:baz}]&subTypeMap={a:{id:4,name:qux}}&stringMap={a:b}&intStringMap=1:A";
-    var uri = createUri(url);
+    var uri = createUri(url)!;
 
     expect(uri.path, equals("/echo/complex.json"));
 

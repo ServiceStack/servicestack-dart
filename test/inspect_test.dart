@@ -72,12 +72,12 @@ void main() {
       print(dump);
 
       expect(response.total, equals(15));
-      expect(response.results.length, equals(3));
-      var names = response.results.map((x) => x.name).join(",");
+      expect(response.results!.length, equals(3));
+      var names = response.results!.map((x) => x.name).join(",");
       expect(names, equals("AngularJS,Go,Protocol Buffers"));
-      var ids = response.results.map((x) => x.id.toString()).join(",");
+      var ids = response.results!.map((x) => x.id.toString()).join(",");
       expect(ids, equals("7,18,77"));
-      var tiers = response.results.map((x) => rightPart(x.tier.toString(), ".")).join(",");
+      var tiers = response.results!.map((x) => rightPart(x.tier.toString(), ".")).join(",");
       expect(tiers, equals("Client,ProgrammingLanguage,Server"));
     });
 

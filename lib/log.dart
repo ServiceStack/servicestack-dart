@@ -16,7 +16,6 @@ abstract class Logger {
       case LogLevel.Error:
         return "ERROR";
     }
-    throw AssertionError("LogLevel");
   }
   log(LogLevel level, String msg, [Exception? error=null]);
 }

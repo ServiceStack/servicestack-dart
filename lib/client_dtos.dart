@@ -1351,21 +1351,21 @@ abstract class AuditBase {
   }
 
   fromMap(Map<String, dynamic> json) {
-    createdDate = JsonConverters.fromJson(json['createdDate'], 'DateTime', context);
+    createdDate = JsonConverters.fromJson(json['createdDate'], 'DateTime', context!);
     createdBy = json['createdBy'];
-    modifiedDate = JsonConverters.fromJson(json['modifiedDate'], 'DateTime', context);
+    modifiedDate = JsonConverters.fromJson(json['modifiedDate'], 'DateTime', context!);
     modifiedBy = json['modifiedBy'];
-    deletedDate = JsonConverters.fromJson(json['deletedDate'], 'DateTime', context);
+    deletedDate = JsonConverters.fromJson(json['deletedDate'], 'DateTime', context!);
     deletedBy = json['deletedBy'];
     return this;
   }
 
   Map<String, dynamic> toJson() => {
-        'createdDate': JsonConverters.toJson(createdDate, 'DateTime', context),
+        'createdDate': JsonConverters.toJson(createdDate, 'DateTime', context!),
         'createdBy': createdBy,
-        'modifiedDate': JsonConverters.toJson(modifiedDate, 'DateTime', context),
+        'modifiedDate': JsonConverters.toJson(modifiedDate, 'DateTime', context!),
         'modifiedBy': modifiedBy,
-        'deletedDate': JsonConverters.toJson(deletedDate, 'DateTime', context),
+        'deletedDate': JsonConverters.toJson(deletedDate, 'DateTime', context!),
         'deletedBy': deletedBy
       };
 

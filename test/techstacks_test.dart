@@ -31,8 +31,8 @@ void main() {
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(405));
-      expect(e.responseStatus.errorCode, equals("NotImplementedException"));
-      expect(e.responseStatus.message,
+      expect(e.responseStatus!.errorCode, equals("NotImplementedException"));
+      expect(e.responseStatus!.message,
           equals("The operation 'Overview' does not exist for this service"));
     }
   });
@@ -44,8 +44,8 @@ void main() {
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(401));
-      expect(e.responseStatus.errorCode, equals("401"));
-      expect(e.responseStatus.message, equals("Unauthorized"));
+      expect(e.responseStatus!.errorCode, equals("401"));
+      expect(e.responseStatus!.message, equals("Unauthorized"));
     }
   });
 
@@ -55,8 +55,8 @@ void main() {
 
     var response = await client.get(request, args: {"VendorName": "Amazon"});
 
-    expect(response.results.length, equals(3));
-    expect(response.results.map((x) => x.vendorName),
+    expect(response.results!.length, equals(3));
+    expect(response.results!.map((x) => x.vendorName),
         equals(["Amazon", "Amazon", "Amazon"]));
   });
 
@@ -70,8 +70,8 @@ void main() {
         responseAs: QueryResponse<Technology>()
           ..context = techstacksContext);
 
-    expect(response.results.length, equals(3));
-    expect(response.results.map((x) => x.vendorName),
+    expect(response.results!.length, equals(3));
+    expect(response.results!.map((x) => x.vendorName),
         equals(["Amazon", "Amazon", "Amazon"]));
   });
 
@@ -80,11 +80,11 @@ void main() {
     var techs =
         await client.get(FindTechnologies(), args: {"slug": "flutter"});
     var posts = await client.get(QueryPosts(
-        anyTechnologyIds: [techs.results[0].id],
+        anyTechnologyIds: [techs.results![0].id],
         types: ['Announcement', 'Showcase'])
       ..take = 1);
 
-    expect(techs.results[0].name, equals("Flutter"));
-    expect(posts.results[0].title, isNotEmpty);
+    expect(techs.results![0].name, equals("Flutter"));
+    expect(posts.results![0].title, isNotEmpty);
   });
 }
