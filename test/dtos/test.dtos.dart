@@ -1,16 +1,16 @@
 /* Options:
-Date: 2021-06-29 02:37:52
+Date: 2021-06-29 13:47:02
 Version: 5.111
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://localhost:5001
 
-//GlobalNamespace:
+//GlobalNamespace: 
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion:
+//AddImplicitVersion: 
 //AddDescriptionAsComments: True
-//IncludeTypes:
-//ExcludeTypes:
+//IncludeTypes: 
+//ExcludeTypes: 
 DefaultImports: ../../lib/servicestack.dart
 */
 
@@ -438,7 +438,7 @@ class AuthUserSession implements IConvertible
         tag = json['tag'];
         authProvider = json['authProvider'];
         providerOAuthAccess = JsonConverters.fromJson(json['providerOAuthAccess'],'List<IAuthTokens>',context!);
-        meta = JsonConverters.fromJson(json['meta'],'Map<String,String?>',context!);
+        meta = JsonConverters.toStringMap(json['meta']);
         audiences = JsonConverters.fromJson(json['audiences'],'List<String>',context!);
         scopes = JsonConverters.fromJson(json['scopes'],'List<String>',context!);
         dns = json['dns'];
@@ -500,7 +500,7 @@ class AuthUserSession implements IConvertible
         'tag': tag,
         'authProvider': authProvider,
         'providerOAuthAccess': JsonConverters.toJson(providerOAuthAccess,'List<IAuthTokens>',context!),
-        'meta': JsonConverters.toJson(meta,'Map<String,String?>',context!),
+        'meta': meta,
         'audiences': JsonConverters.toJson(audiences,'List<String>',context!),
         'scopes': JsonConverters.toJson(scopes,'List<String>',context!),
         'dns': dns,
@@ -689,7 +689,7 @@ abstract class AllTypesBase
         nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context!);
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
-        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
         intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
         subType = JsonConverters.fromJson(json['subType'],'SubType',context!);
         return this;
@@ -719,7 +719,7 @@ abstract class AllTypesBase
         'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context!),
         'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
         'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
-        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'stringMap': stringMap,
         'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!),
         'subType': JsonConverters.toJson(subType,'SubType',context!)
     };
@@ -806,7 +806,7 @@ enum DayOfWeek
 
 // @DataContract
 enum ScopeType
-    {
+{
     Global,
     Sale,
 }
@@ -1826,7 +1826,7 @@ class QueryResponseAlt<T> implements IConvertible
         offset = json['offset'];
         total = json['total'];
         results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context!);
-        meta = JsonConverters.fromJson(json['meta'],'Map<String,String?>',context!);
+        meta = JsonConverters.toStringMap(json['meta']);
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
@@ -1835,7 +1835,7 @@ class QueryResponseAlt<T> implements IConvertible
         'offset': offset,
         'total': total,
         'results': JsonConverters.toJson(results,'List<T>',context!),
-        'meta': JsonConverters.toJson(meta,'Map<String,String?>',context!),
+        'meta': meta,
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
@@ -2162,8 +2162,8 @@ class HelloResponse implements IConvertible
 }
 
 /**
- * Description on HelloAllResponse type
- */
+* Description on HelloAllResponse type
+*/
 // @DataContract
 class HelloAnnotatedResponse implements IConvertible
 {
@@ -2242,7 +2242,7 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
         nullableTimeSpan = JsonConverters.fromJson(json['nullableTimeSpan'],'Duration',context!);
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
-        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
         intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
         subType = JsonConverters.fromJson(json['subType'],'SubType',context!);
         return this;
@@ -2272,7 +2272,7 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
         'nullableTimeSpan': JsonConverters.toJson(nullableTimeSpan,'Duration',context!),
         'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
         'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
-        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'stringMap': stringMap,
         'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!),
         'subType': JsonConverters.toJson(subType,'SubType',context!)
     };
@@ -2433,8 +2433,8 @@ class HelloWithDataContractResponse implements IConvertible
 }
 
 /**
- * Description on HelloWithDescriptionResponse type
- */
+* Description on HelloWithDescriptionResponse type
+*/
 class HelloWithDescriptionResponse implements IConvertible
 {
     String? result;
@@ -2997,7 +2997,7 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
     fromMap(Map<String, dynamic> json) {
         stringList = JsonConverters.fromJson(json['stringList'],'List<String>',context!);
         stringArray = JsonConverters.fromJson(json['stringArray'],'List<String>',context!);
-        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
         intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
         return this;
     }
@@ -3005,7 +3005,7 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
     Map<String, dynamic> toJson() => {
         'stringList': JsonConverters.toJson(stringList,'List<String>',context!),
         'stringArray': JsonConverters.toJson(stringArray,'List<String>',context!),
-        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'stringMap': stringMap,
         'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!)
     };
 
@@ -3031,7 +3031,7 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
         subType = JsonConverters.fromJson(json['subType'],'SubType',context!);
         subTypes = JsonConverters.fromJson(json['subTypes'],'List<SubType>',context!);
         subTypeMap = JsonConverters.fromJson(json['subTypeMap'],'Map<String,SubType?>',context!);
-        stringMap = JsonConverters.fromJson(json['stringMap'],'Map<String,String?>',context!);
+        stringMap = JsonConverters.toStringMap(json['stringMap']);
         intStringMap = JsonConverters.fromJson(json['intStringMap'],'Map<int,String?>',context!);
         return this;
     }
@@ -3040,7 +3040,7 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
         'subType': JsonConverters.toJson(subType,'SubType',context!),
         'subTypes': JsonConverters.toJson(subTypes,'List<SubType>',context!),
         'subTypeMap': JsonConverters.toJson(subTypeMap,'Map<String,SubType?>',context!),
-        'stringMap': JsonConverters.toJson(stringMap,'Map<String,String?>',context!),
+        'stringMap': stringMap,
         'intStringMap': JsonConverters.toJson(intStringMap,'Map<int,String?>',context!)
     };
 
@@ -4232,8 +4232,8 @@ class Hello implements IReturn<HelloResponse>, IConvertible
 }
 
 /**
- * Description on HelloAll type
- */
+* Description on HelloAll type
+*/
 // @DataContract
 class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
 {
@@ -4459,8 +4459,8 @@ class RestrictedAttributes implements IConvertible
 }
 
 /**
- * AllowedAttributes Description
- */
+* AllowedAttributes Description
+*/
 // @Route("/allowed-attributes", "GET")
 // @Api(Description="AllowedAttributes Description")
 // @ApiResponse(Description="Your request was not understood", StatusCode=400)
@@ -4468,8 +4468,8 @@ class RestrictedAttributes implements IConvertible
 class AllowedAttributes implements IConvertible
 {
     /**
-     * Range Description
-     */
+    * Range Description
+    */
     // @DataMember(Name="Aliased")
     // @ApiMember(DataType="double", Description="Range Description", IsRequired=true, ParameterType="path")
     double? range;
@@ -4614,8 +4614,8 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, I
 }
 
 /**
- * Description on HelloWithDescription type
- */
+* Description on HelloWithDescription type
+*/
 class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible
 {
     String? name;
@@ -5939,7 +5939,6 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'IAuthTokens': TypeInfo(TypeOf.Interface),
     'AuthUserSession': TypeInfo(TypeOf.Class, create:() => AuthUserSession()),
     'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => <IAuthTokens>[]),
-    'Map<String,String?>': TypeInfo(TypeOf.Class, create:() => Map<String,String?>()),
     'NestedClass': TypeInfo(TypeOf.Class, create:() => NestedClass()),
     'EnumType': TypeInfo(TypeOf.Enum, enumValues:EnumType.values),
     'EnumTypeFlags': TypeInfo(TypeOf.Enum, enumValues:EnumTypeFlags.values),
@@ -6210,3 +6209,4 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'RealDeleteAuditTenant': TypeInfo(TypeOf.Class, create:() => RealDeleteAuditTenant()),
     'CreateRockstarVersion': TypeInfo(TypeOf.Class, create:() => CreateRockstarVersion()),
 });
+
