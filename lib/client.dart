@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:io';
 import 'dart:convert';
-import 'package:collection/collection.dart';
 
 import './servicestack.dart';
 export './servicestack.dart';
