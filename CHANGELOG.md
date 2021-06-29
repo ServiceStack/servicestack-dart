@@ -1,6 +1,6 @@
-## 2.0.0-alpha.1
+## 2.0.0
 
-* Upgrade to null safety
+* Upgrade code base to null safety 
 
 ## 1.0.32
 
