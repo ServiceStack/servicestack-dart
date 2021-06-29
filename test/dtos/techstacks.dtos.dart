@@ -1,8 +1,8 @@
 /* Options:
-Date: 2021-03-10 07:17:08
-Version: 5.105
+Date: 2021-06-29 06:37:22
+Version: 5.111
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: https://www.techstacks.io
+BaseUrl: https://techstacks.io
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True
@@ -216,6 +216,542 @@ class Post implements IConvertible
         'refUrn': refUrn
     };
 
+    getTypeName() => "Post";
+    TypeContext? context = _ctx;
+}
+
+enum ReportAction
+{
+    Dismiss,
+    Delete,
+}
+
+enum FlagType
+{
+    Violation,
+    Spam,
+    Abusive,
+    Confidential,
+    OffTopic,
+    Other,
+}
+
+enum Frequency
+{
+    Daily,
+    Weekly,
+    Monthly,
+    Quarterly,
+}
+
+enum TechnologyTier
+{
+    ProgrammingLanguage,
+    Client,
+    Http,
+    Server,
+    Data,
+    SoftwareInfrastructure,
+    OperatingSystem,
+    HardwareInfrastructure,
+    ThirdPartyServices,
+}
+
+abstract class TechnologyBase
+{
+    int? id;
+    String? name;
+    String? vendorName;
+    String? vendorUrl;
+    String? productUrl;
+    String? logoUrl;
+    String? description;
+    DateTime? created;
+    String? createdBy;
+    DateTime? lastModified;
+    String? lastModifiedBy;
+    String? ownerId;
+    String? slug;
+    bool? logoApproved;
+    bool? isLocked;
+    TechnologyTier? tier;
+    DateTime? lastStatusUpdate;
+    int? organizationId;
+    int? commentsPostId;
+    int? viewCount;
+    int? favCount;
+
+    TechnologyBase({this.id,this.name,this.vendorName,this.vendorUrl,this.productUrl,this.logoUrl,this.description,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.ownerId,this.slug,this.logoApproved,this.isLocked,this.tier,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
+    TechnologyBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        vendorName = json['vendorName'];
+        vendorUrl = json['vendorUrl'];
+        productUrl = json['productUrl'];
+        logoUrl = json['logoUrl'];
+        description = json['description'];
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        createdBy = json['createdBy'];
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
+        lastModifiedBy = json['lastModifiedBy'];
+        ownerId = json['ownerId'];
+        slug = json['slug'];
+        logoApproved = json['logoApproved'];
+        isLocked = json['isLocked'];
+        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
+        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
+        organizationId = json['organizationId'];
+        commentsPostId = json['commentsPostId'];
+        viewCount = json['viewCount'];
+        favCount = json['favCount'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'vendorName': vendorName,
+        'vendorUrl': vendorUrl,
+        'productUrl': productUrl,
+        'logoUrl': logoUrl,
+        'description': description,
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'createdBy': createdBy,
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
+        'lastModifiedBy': lastModifiedBy,
+        'ownerId': ownerId,
+        'slug': slug,
+        'logoApproved': logoApproved,
+        'isLocked': isLocked,
+        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!),
+        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
+        'organizationId': organizationId,
+        'commentsPostId': commentsPostId,
+        'viewCount': viewCount,
+        'favCount': favCount
+    };
+
+    getTypeName() => "TechnologyBase";
+    TypeContext? context = _ctx;
+}
+
+class Technology extends TechnologyBase implements IConvertible
+{
+    Technology();
+    Technology.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "Technology";
+    TypeContext? context = _ctx;
+}
+
+class TechnologyView implements IConvertible
+{
+    int? id;
+    String? name;
+    String? vendorName;
+    String? vendorUrl;
+    String? productUrl;
+    String? logoUrl;
+    String? description;
+    DateTime? created;
+    String? createdBy;
+    DateTime? lastModified;
+    String? lastModifiedBy;
+    String? ownerId;
+    String? slug;
+    bool? logoApproved;
+    bool? isLocked;
+    TechnologyTier? tier;
+    DateTime? lastStatusUpdate;
+    int? organizationId;
+    int? commentsPostId;
+    int? viewCount;
+    int? favCount;
+
+    TechnologyView({this.id,this.name,this.vendorName,this.vendorUrl,this.productUrl,this.logoUrl,this.description,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.ownerId,this.slug,this.logoApproved,this.isLocked,this.tier,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
+    TechnologyView.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        vendorName = json['vendorName'];
+        vendorUrl = json['vendorUrl'];
+        productUrl = json['productUrl'];
+        logoUrl = json['logoUrl'];
+        description = json['description'];
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        createdBy = json['createdBy'];
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
+        lastModifiedBy = json['lastModifiedBy'];
+        ownerId = json['ownerId'];
+        slug = json['slug'];
+        logoApproved = json['logoApproved'];
+        isLocked = json['isLocked'];
+        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
+        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
+        organizationId = json['organizationId'];
+        commentsPostId = json['commentsPostId'];
+        viewCount = json['viewCount'];
+        favCount = json['favCount'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'vendorName': vendorName,
+        'vendorUrl': vendorUrl,
+        'productUrl': productUrl,
+        'logoUrl': logoUrl,
+        'description': description,
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'createdBy': createdBy,
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
+        'lastModifiedBy': lastModifiedBy,
+        'ownerId': ownerId,
+        'slug': slug,
+        'logoApproved': logoApproved,
+        'isLocked': isLocked,
+        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!),
+        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
+        'organizationId': organizationId,
+        'commentsPostId': commentsPostId,
+        'viewCount': viewCount,
+        'favCount': favCount
+    };
+
+    getTypeName() => "TechnologyView";
+    TypeContext? context = _ctx;
+}
+
+abstract class IRegisterStats
+{
+}
+
+abstract class TechnologyStackBase
+{
+    int? id;
+    String? name;
+    String? vendorName;
+    String? description;
+    String? appUrl;
+    String? screenshotUrl;
+    DateTime? created;
+    String? createdBy;
+    DateTime? lastModified;
+    String? lastModifiedBy;
+    bool? isLocked;
+    String? ownerId;
+    String? slug;
+    // @StringLength(2147483647)
+    String? details;
+
+    // @StringLength(2147483647)
+    String? detailsHtml;
+
+    DateTime? lastStatusUpdate;
+    int? organizationId;
+    int? commentsPostId;
+    int? viewCount;
+    int? favCount;
+
+    TechnologyStackBase({this.id,this.name,this.vendorName,this.description,this.appUrl,this.screenshotUrl,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.isLocked,this.ownerId,this.slug,this.details,this.detailsHtml,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
+    TechnologyStackBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        vendorName = json['vendorName'];
+        description = json['description'];
+        appUrl = json['appUrl'];
+        screenshotUrl = json['screenshotUrl'];
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        createdBy = json['createdBy'];
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
+        lastModifiedBy = json['lastModifiedBy'];
+        isLocked = json['isLocked'];
+        ownerId = json['ownerId'];
+        slug = json['slug'];
+        details = json['details'];
+        detailsHtml = json['detailsHtml'];
+        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
+        organizationId = json['organizationId'];
+        commentsPostId = json['commentsPostId'];
+        viewCount = json['viewCount'];
+        favCount = json['favCount'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'vendorName': vendorName,
+        'description': description,
+        'appUrl': appUrl,
+        'screenshotUrl': screenshotUrl,
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'createdBy': createdBy,
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
+        'lastModifiedBy': lastModifiedBy,
+        'isLocked': isLocked,
+        'ownerId': ownerId,
+        'slug': slug,
+        'details': details,
+        'detailsHtml': detailsHtml,
+        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
+        'organizationId': organizationId,
+        'commentsPostId': commentsPostId,
+        'viewCount': viewCount,
+        'favCount': favCount
+    };
+
+    getTypeName() => "TechnologyStackBase";
+    TypeContext? context = _ctx;
+}
+
+class TechnologyStack extends TechnologyStackBase implements IConvertible
+{
+    TechnologyStack();
+    TechnologyStack.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+    fromMap(Map<String, dynamic> json) {
+        super.fromMap(json);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "TechnologyStack";
+    TypeContext? context = _ctx;
+}
+
+class TechnologyStackView implements IConvertible
+{
+    int? id;
+    String? name;
+    String? vendorName;
+    String? description;
+    String? appUrl;
+    String? screenshotUrl;
+    DateTime? created;
+    String? createdBy;
+    DateTime? lastModified;
+    String? lastModifiedBy;
+    bool? isLocked;
+    String? ownerId;
+    String? slug;
+    String? details;
+    String? detailsHtml;
+    DateTime? lastStatusUpdate;
+    int? organizationId;
+    int? commentsPostId;
+    int? viewCount;
+    int? favCount;
+
+    TechnologyStackView({this.id,this.name,this.vendorName,this.description,this.appUrl,this.screenshotUrl,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.isLocked,this.ownerId,this.slug,this.details,this.detailsHtml,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
+    TechnologyStackView.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        vendorName = json['vendorName'];
+        description = json['description'];
+        appUrl = json['appUrl'];
+        screenshotUrl = json['screenshotUrl'];
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        createdBy = json['createdBy'];
+        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
+        lastModifiedBy = json['lastModifiedBy'];
+        isLocked = json['isLocked'];
+        ownerId = json['ownerId'];
+        slug = json['slug'];
+        details = json['details'];
+        detailsHtml = json['detailsHtml'];
+        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
+        organizationId = json['organizationId'];
+        commentsPostId = json['commentsPostId'];
+        viewCount = json['viewCount'];
+        favCount = json['favCount'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'vendorName': vendorName,
+        'description': description,
+        'appUrl': appUrl,
+        'screenshotUrl': screenshotUrl,
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'createdBy': createdBy,
+        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
+        'lastModifiedBy': lastModifiedBy,
+        'isLocked': isLocked,
+        'ownerId': ownerId,
+        'slug': slug,
+        'details': details,
+        'detailsHtml': detailsHtml,
+        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
+        'organizationId': organizationId,
+        'commentsPostId': commentsPostId,
+        'viewCount': viewCount,
+        'favCount': favCount
+    };
+
+    getTypeName() => "TechnologyStackView";
+    TypeContext? context = _ctx;
+}
+
+class UserVoiceUser implements IConvertible
+{
+    int? id;
+    String? name;
+    String? email;
+    String? avatarUrl;
+    DateTime? createdAt;
+    DateTime? updatedAt;
+
+    UserVoiceUser({this.id,this.name,this.email,this.avatarUrl,this.createdAt,this.updatedAt});
+    UserVoiceUser.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        name = json['name'];
+        email = json['email'];
+        avatarUrl = json['avatarUrl'];
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        updatedAt = JsonConverters.fromJson(json['updatedAt'],'DateTime',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'email': email,
+        'avatarUrl': avatarUrl,
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context!)
+    };
+
+    getTypeName() => "UserVoiceUser";
+    TypeContext? context = _ctx;
+}
+
+class UserVoiceComment implements IConvertible
+{
+    String? text;
+    String? formattedText;
+    DateTime? createdAt;
+    UserVoiceUser? creator;
+
+    UserVoiceComment({this.text,this.formattedText,this.createdAt,this.creator});
+    UserVoiceComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        text = json['text'];
+        formattedText = json['formattedText'];
+        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
+        creator = JsonConverters.fromJson(json['creator'],'UserVoiceUser',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'text': text,
+        'formattedText': formattedText,
+        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
+        'creator': JsonConverters.toJson(creator,'UserVoiceUser',context!)
+    };
+
+    getTypeName() => "UserVoiceComment";
+    TypeContext? context = _ctx;
+}
+
+class PostComment implements IConvertible
+{
+    int? id;
+    int? postId;
+    int? userId;
+    int? replyId;
+    // @StringLength(2147483647)
+    String? content;
+
+    // @StringLength(2147483647)
+    String? contentHtml;
+
+    int? score;
+    int? rank;
+    int? upVotes;
+    int? downVotes;
+    int? favorites;
+    int? wordCount;
+    int? reportCount;
+    DateTime? deleted;
+    DateTime? hidden;
+    DateTime? modified;
+    DateTime? created;
+    String? createdBy;
+    int? refId;
+    String? refSource;
+    String? refUrn;
+
+    PostComment({this.id,this.postId,this.userId,this.replyId,this.content,this.contentHtml,this.score,this.rank,this.upVotes,this.downVotes,this.favorites,this.wordCount,this.reportCount,this.deleted,this.hidden,this.modified,this.created,this.createdBy,this.refId,this.refSource,this.refUrn});
+    PostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        postId = json['postId'];
+        userId = json['userId'];
+        replyId = json['replyId'];
+        content = json['content'];
+        contentHtml = json['contentHtml'];
+        score = json['score'];
+        rank = json['rank'];
+        upVotes = json['upVotes'];
+        downVotes = json['downVotes'];
+        favorites = json['favorites'];
+        wordCount = json['wordCount'];
+        reportCount = json['reportCount'];
+        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context!);
+        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context!);
+        modified = JsonConverters.fromJson(json['modified'],'DateTime',context!);
+        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
+        createdBy = json['createdBy'];
+        refId = json['refId'];
+        refSource = json['refSource'];
+        refUrn = json['refUrn'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'postId': postId,
+        'userId': userId,
+        'replyId': replyId,
+        'content': content,
+        'contentHtml': contentHtml,
+        'score': score,
+        'rank': rank,
+        'upVotes': upVotes,
+        'downVotes': downVotes,
+        'favorites': favorites,
+        'wordCount': wordCount,
+        'reportCount': reportCount,
+        'deleted': JsonConverters.toJson(deleted,'DateTime',context!),
+        'hidden': JsonConverters.toJson(hidden,'DateTime',context!),
+        'modified': JsonConverters.toJson(modified,'DateTime',context!),
+        'created': JsonConverters.toJson(created,'DateTime',context!),
+        'createdBy': createdBy,
+        'refId': refId,
+        'refSource': refSource,
+        'refUrn': refUrn
+    };
+
+    getTypeName() => "PostComment";
     TypeContext? context = _ctx;
 }
 
@@ -352,6 +888,7 @@ class Organization implements IConvertible
         'modifiedBy': modifiedBy
     };
 
+    getTypeName() => "Organization";
     TypeContext? context = _ctx;
 }
 
@@ -380,6 +917,7 @@ class OrganizationLabel implements IConvertible
         'color': color
     };
 
+    getTypeName() => "OrganizationLabel";
     TypeContext? context = _ctx;
 }
 
@@ -429,6 +967,7 @@ class Category implements IConvertible
         'rank': rank
     };
 
+    getTypeName() => "Category";
     TypeContext? context = _ctx;
 }
 
@@ -475,6 +1014,7 @@ class OrganizationMember implements IConvertible
         'notes': notes
     };
 
+    getTypeName() => "OrganizationMember";
     TypeContext? context = _ctx;
 }
 
@@ -506,17 +1046,8 @@ class OrganizationMemberInvite implements IConvertible
         'dismissed': JsonConverters.toJson(dismissed,'DateTime',context!)
     };
 
+    getTypeName() => "OrganizationMemberInvite";
     TypeContext? context = _ctx;
-}
-
-enum FlagType
-{
-    Violation,
-    Spam,
-    Abusive,
-    Confidential,
-    OffTopic,
-    Other,
 }
 
 class PostReportInfo implements IConvertible
@@ -577,6 +1108,7 @@ class PostReportInfo implements IConvertible
         'createdBy': createdBy
     };
 
+    getTypeName() => "PostReportInfo";
     TypeContext? context = _ctx;
 }
 
@@ -641,96 +1173,8 @@ class PostCommentReportInfo implements IConvertible
         'createdBy': createdBy
     };
 
+    getTypeName() => "PostCommentReportInfo";
     TypeContext? context = _ctx;
-}
-
-class PostComment implements IConvertible
-{
-    int? id;
-    int? postId;
-    int? userId;
-    int? replyId;
-    // @StringLength(2147483647)
-    String? content;
-
-    // @StringLength(2147483647)
-    String? contentHtml;
-
-    int? score;
-    int? rank;
-    int? upVotes;
-    int? downVotes;
-    int? favorites;
-    int? wordCount;
-    int? reportCount;
-    DateTime? deleted;
-    DateTime? hidden;
-    DateTime? modified;
-    DateTime? created;
-    String? createdBy;
-    int? refId;
-    String? refSource;
-    String? refUrn;
-
-    PostComment({this.id,this.postId,this.userId,this.replyId,this.content,this.contentHtml,this.score,this.rank,this.upVotes,this.downVotes,this.favorites,this.wordCount,this.reportCount,this.deleted,this.hidden,this.modified,this.created,this.createdBy,this.refId,this.refSource,this.refUrn});
-    PostComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        postId = json['postId'];
-        userId = json['userId'];
-        replyId = json['replyId'];
-        content = json['content'];
-        contentHtml = json['contentHtml'];
-        score = json['score'];
-        rank = json['rank'];
-        upVotes = json['upVotes'];
-        downVotes = json['downVotes'];
-        favorites = json['favorites'];
-        wordCount = json['wordCount'];
-        reportCount = json['reportCount'];
-        deleted = JsonConverters.fromJson(json['deleted'],'DateTime',context!);
-        hidden = JsonConverters.fromJson(json['hidden'],'DateTime',context!);
-        modified = JsonConverters.fromJson(json['modified'],'DateTime',context!);
-        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
-        createdBy = json['createdBy'];
-        refId = json['refId'];
-        refSource = json['refSource'];
-        refUrn = json['refUrn'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'postId': postId,
-        'userId': userId,
-        'replyId': replyId,
-        'content': content,
-        'contentHtml': contentHtml,
-        'score': score,
-        'rank': rank,
-        'upVotes': upVotes,
-        'downVotes': downVotes,
-        'favorites': favorites,
-        'wordCount': wordCount,
-        'reportCount': reportCount,
-        'deleted': JsonConverters.toJson(deleted,'DateTime',context!),
-        'hidden': JsonConverters.toJson(hidden,'DateTime',context!),
-        'modified': JsonConverters.toJson(modified,'DateTime',context!),
-        'created': JsonConverters.toJson(created,'DateTime',context!),
-        'createdBy': createdBy,
-        'refId': refId,
-        'refSource': refSource,
-        'refUrn': refUrn
-    };
-
-    TypeContext? context = _ctx;
-}
-
-enum ReportAction
-{
-    Dismiss,
-    Delete,
 }
 
 class UserRef implements IConvertible
@@ -764,6 +1208,7 @@ class UserRef implements IConvertible
         'refUrn': refUrn
     };
 
+    getTypeName() => "UserRef";
     TypeContext? context = _ctx;
 }
 
@@ -807,204 +1252,7 @@ class OrganizationSubscription implements IConvertible
         'created': JsonConverters.toJson(created,'DateTime',context!)
     };
 
-    TypeContext? context = _ctx;
-}
-
-abstract class TechnologyStackBase
-{
-    int? id;
-    String? name;
-    String? vendorName;
-    String? description;
-    String? appUrl;
-    String? screenshotUrl;
-    DateTime? created;
-    String? createdBy;
-    DateTime? lastModified;
-    String? lastModifiedBy;
-    bool? isLocked;
-    String? ownerId;
-    String? slug;
-    // @StringLength(2147483647)
-    String? details;
-
-    // @StringLength(2147483647)
-    String? detailsHtml;
-
-    DateTime? lastStatusUpdate;
-    int? organizationId;
-    int? commentsPostId;
-    int? viewCount;
-    int? favCount;
-
-    TechnologyStackBase({this.id,this.name,this.vendorName,this.description,this.appUrl,this.screenshotUrl,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.isLocked,this.ownerId,this.slug,this.details,this.detailsHtml,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
-    TechnologyStackBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        name = json['name'];
-        vendorName = json['vendorName'];
-        description = json['description'];
-        appUrl = json['appUrl'];
-        screenshotUrl = json['screenshotUrl'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
-        createdBy = json['createdBy'];
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
-        lastModifiedBy = json['lastModifiedBy'];
-        isLocked = json['isLocked'];
-        ownerId = json['ownerId'];
-        slug = json['slug'];
-        details = json['details'];
-        detailsHtml = json['detailsHtml'];
-        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
-        organizationId = json['organizationId'];
-        commentsPostId = json['commentsPostId'];
-        viewCount = json['viewCount'];
-        favCount = json['favCount'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'vendorName': vendorName,
-        'description': description,
-        'appUrl': appUrl,
-        'screenshotUrl': screenshotUrl,
-        'created': JsonConverters.toJson(created,'DateTime',context!),
-        'createdBy': createdBy,
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
-        'lastModifiedBy': lastModifiedBy,
-        'isLocked': isLocked,
-        'ownerId': ownerId,
-        'slug': slug,
-        'details': details,
-        'detailsHtml': detailsHtml,
-        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
-        'organizationId': organizationId,
-        'commentsPostId': commentsPostId,
-        'viewCount': viewCount,
-        'favCount': favCount
-    };
-
-    TypeContext? context = _ctx;
-}
-
-class TechnologyStack extends TechnologyStackBase implements IConvertible
-{
-    TechnologyStack();
-    TechnologyStack.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson();
-    TypeContext? context = _ctx;
-}
-
-enum TechnologyTier
-{
-    ProgrammingLanguage,
-    Client,
-    Http,
-    Server,
-    Data,
-    SoftwareInfrastructure,
-    OperatingSystem,
-    HardwareInfrastructure,
-    ThirdPartyServices,
-}
-
-abstract class TechnologyBase
-{
-    int? id;
-    String? name;
-    String? vendorName;
-    String? vendorUrl;
-    String? productUrl;
-    String? logoUrl;
-    String? description;
-    DateTime? created;
-    String? createdBy;
-    DateTime? lastModified;
-    String? lastModifiedBy;
-    String? ownerId;
-    String? slug;
-    bool? logoApproved;
-    bool? isLocked;
-    TechnologyTier? tier;
-    DateTime? lastStatusUpdate;
-    int? organizationId;
-    int? commentsPostId;
-    int? viewCount;
-    int? favCount;
-
-    TechnologyBase({this.id,this.name,this.vendorName,this.vendorUrl,this.productUrl,this.logoUrl,this.description,this.created,this.createdBy,this.lastModified,this.lastModifiedBy,this.ownerId,this.slug,this.logoApproved,this.isLocked,this.tier,this.lastStatusUpdate,this.organizationId,this.commentsPostId,this.viewCount,this.favCount});
-    TechnologyBase.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        name = json['name'];
-        vendorName = json['vendorName'];
-        vendorUrl = json['vendorUrl'];
-        productUrl = json['productUrl'];
-        logoUrl = json['logoUrl'];
-        description = json['description'];
-        created = JsonConverters.fromJson(json['created'],'DateTime',context!);
-        createdBy = json['createdBy'];
-        lastModified = JsonConverters.fromJson(json['lastModified'],'DateTime',context!);
-        lastModifiedBy = json['lastModifiedBy'];
-        ownerId = json['ownerId'];
-        slug = json['slug'];
-        logoApproved = json['logoApproved'];
-        isLocked = json['isLocked'];
-        tier = JsonConverters.fromJson(json['tier'],'TechnologyTier',context!);
-        lastStatusUpdate = JsonConverters.fromJson(json['lastStatusUpdate'],'DateTime',context!);
-        organizationId = json['organizationId'];
-        commentsPostId = json['commentsPostId'];
-        viewCount = json['viewCount'];
-        favCount = json['favCount'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'vendorName': vendorName,
-        'vendorUrl': vendorUrl,
-        'productUrl': productUrl,
-        'logoUrl': logoUrl,
-        'description': description,
-        'created': JsonConverters.toJson(created,'DateTime',context!),
-        'createdBy': createdBy,
-        'lastModified': JsonConverters.toJson(lastModified,'DateTime',context!),
-        'lastModifiedBy': lastModifiedBy,
-        'ownerId': ownerId,
-        'slug': slug,
-        'logoApproved': logoApproved,
-        'isLocked': isLocked,
-        'tier': JsonConverters.toJson(tier,'TechnologyTier',context!),
-        'lastStatusUpdate': JsonConverters.toJson(lastStatusUpdate,'DateTime',context!),
-        'organizationId': organizationId,
-        'commentsPostId': commentsPostId,
-        'viewCount': viewCount,
-        'favCount': favCount
-    };
-
-    TypeContext? context = _ctx;
-}
-
-class Technology extends TechnologyBase implements IConvertible
-{
-    Technology();
-    Technology.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson();
+    getTypeName() => "OrganizationSubscription";
     TypeContext? context = _ctx;
 }
 
@@ -1069,15 +1317,8 @@ class UserActivity implements IConvertible
         'modified': JsonConverters.toJson(modified,'DateTime',context!)
     };
 
+    getTypeName() => "UserActivity";
     TypeContext? context = _ctx;
-}
-
-enum Frequency
-{
-    Daily,
-    Weekly,
-    Monthly,
-    Quarterly,
 }
 
 class TechnologyHistory extends TechnologyBase implements IConvertible
@@ -1100,11 +1341,8 @@ class TechnologyHistory extends TechnologyBase implements IConvertible
         'operation': operation
     });
 
+    getTypeName() => "TechnologyHistory";
     TypeContext? context = _ctx;
-}
-
-abstract class IRegisterStats
-{
 }
 
 class TechnologyStackHistory extends TechnologyStackBase implements IConvertible
@@ -1130,6 +1368,7 @@ class TechnologyStackHistory extends TechnologyStackBase implements IConvertible
         'technologyIds': JsonConverters.toJson(technologyIds,'List<int>',context!)
     });
 
+    getTypeName() => "TechnologyStackHistory";
     TypeContext? context = _ctx;
 }
 
@@ -1155,6 +1394,7 @@ class UserInfo implements IConvertible
         'stacksCount': stacksCount
     };
 
+    getTypeName() => "UserInfo";
     TypeContext? context = _ctx;
 }
 
@@ -1186,6 +1426,7 @@ class TechnologyInfo implements IConvertible
         'stacksCount': stacksCount
     };
 
+    getTypeName() => "TechnologyInfo";
     TypeContext? context = _ctx;
 }
 
@@ -1212,6 +1453,7 @@ class TechnologyInStack extends TechnologyBase implements IConvertible
         'justification': justification
     });
 
+    getTypeName() => "TechnologyInStack";
     TypeContext? context = _ctx;
 }
 
@@ -1232,6 +1474,7 @@ class TechStackDetails extends TechnologyStackBase implements IConvertible
         'technologyChoices': JsonConverters.toJson(technologyChoices,'List<TechnologyInStack>',context!)
     });
 
+    getTypeName() => "TechStackDetails";
     TypeContext? context = _ctx;
 }
 
@@ -1254,6 +1497,7 @@ class LabelInfo implements IConvertible
         'color': color
     };
 
+    getTypeName() => "LabelInfo";
     TypeContext? context = _ctx;
 }
 
@@ -1279,6 +1523,7 @@ class CategoryInfo implements IConvertible
         'slug': slug
     };
 
+    getTypeName() => "CategoryInfo";
     TypeContext? context = _ctx;
 }
 
@@ -1343,6 +1588,7 @@ class OrganizationInfo implements IConvertible
         'categories': JsonConverters.toJson(categories,'List<CategoryInfo>',context!)
     };
 
+    getTypeName() => "OrganizationInfo";
     TypeContext? context = _ctx;
 }
 
@@ -1374,68 +1620,7 @@ class Option implements IConvertible
         'value': JsonConverters.toJson(value,'TechnologyTier',context!)
     };
 
-    TypeContext? context = _ctx;
-}
-
-class UserVoiceUser implements IConvertible
-{
-    int? id;
-    String? name;
-    String? email;
-    String? avatarUrl;
-    DateTime? createdAt;
-    DateTime? updatedAt;
-
-    UserVoiceUser({this.id,this.name,this.email,this.avatarUrl,this.createdAt,this.updatedAt});
-    UserVoiceUser.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        id = json['id'];
-        name = json['name'];
-        email = json['email'];
-        avatarUrl = json['avatarUrl'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
-        updatedAt = JsonConverters.fromJson(json['updatedAt'],'DateTime',context!);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'avatarUrl': avatarUrl,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
-        'updatedAt': JsonConverters.toJson(updatedAt,'DateTime',context!)
-    };
-
-    TypeContext? context = _ctx;
-}
-
-class UserVoiceComment implements IConvertible
-{
-    String? text;
-    String? formattedText;
-    DateTime? createdAt;
-    UserVoiceUser? creator;
-
-    UserVoiceComment({this.text,this.formattedText,this.createdAt,this.creator});
-    UserVoiceComment.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        text = json['text'];
-        formattedText = json['formattedText'];
-        createdAt = JsonConverters.fromJson(json['createdAt'],'DateTime',context!);
-        creator = JsonConverters.fromJson(json['creator'],'UserVoiceUser',context!);
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'text': text,
-        'formattedText': formattedText,
-        'createdAt': JsonConverters.toJson(createdAt,'DateTime',context!),
-        'creator': JsonConverters.toJson(creator,'UserVoiceUser',context!)
-    };
-
+    getTypeName() => "Option";
     TypeContext? context = _ctx;
 }
 
@@ -1482,6 +1667,7 @@ class GetOrganizationResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetOrganizationResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1507,6 +1693,7 @@ class GetOrganizationMembersResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetOrganizationMembersResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1541,6 +1728,7 @@ class GetOrganizationAdminResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetOrganizationAdminResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1572,6 +1760,7 @@ class CreateOrganizationForTechnologyResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "CreateOrganizationForTechnologyResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1597,6 +1786,7 @@ class CreateOrganizationResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "CreateOrganizationResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1616,6 +1806,7 @@ class UpdateOrganizationResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdateOrganizationResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1635,6 +1826,7 @@ class OrganizationLabelResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "OrganizationLabelResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1660,6 +1852,7 @@ class AddOrganizationCategoryResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "AddOrganizationCategoryResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1679,6 +1872,7 @@ class UpdateOrganizationCategoryResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdateOrganizationCategoryResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1698,6 +1892,7 @@ class AddOrganizationMemberResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "AddOrganizationMemberResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1717,6 +1912,7 @@ class UpdateOrganizationMemberResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdateOrganizationMemberResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1742,6 +1938,7 @@ class SetOrganizationMembersResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "SetOrganizationMembersResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1764,6 +1961,7 @@ class GetOrganizationMemberInvitesResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetOrganizationMemberInvitesResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1786,6 +1984,7 @@ class RequestOrganizationMemberInviteResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "RequestOrganizationMemberInviteResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1805,6 +2004,7 @@ class UpdateOrganizationMemberInviteResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdateOrganizationMemberInviteResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1833,6 +2033,7 @@ class GetPostResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetPostResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1858,6 +2059,7 @@ class CreatePostResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "CreatePostResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1877,6 +2079,7 @@ class UpdatePostResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdatePostResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1899,6 +2102,7 @@ class DeletePostResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "DeletePostResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1924,6 +2128,7 @@ class CreatePostCommentResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "CreatePostCommentResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1943,6 +2148,7 @@ class UpdatePostCommentResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdatePostCommentResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1968,6 +2174,7 @@ class DeletePostCommentResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "DeletePostCommentResponse";
     TypeContext? context = _ctx;
 }
 
@@ -1993,6 +2200,7 @@ class GetUserPostCommentVotesResponse implements IConvertible
         'downVotedCommentIds': JsonConverters.toJson(downVotedCommentIds,'List<int>',context!)
     };
 
+    getTypeName() => "GetUserPostCommentVotesResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2012,6 +2220,7 @@ class PinPostCommentResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "PinPostCommentResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2034,6 +2243,7 @@ class GetUsersByEmailsResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetUsersByEmailsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2062,6 +2272,7 @@ class GetUserPostActivityResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetUserPostActivityResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2087,6 +2298,7 @@ class GetUserOrganizationsResponse implements IConvertible
         'subscriptions': JsonConverters.toJson(subscriptions,'List<OrganizationSubscription>',context!)
     };
 
+    getTypeName() => "GetUserOrganizationsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2106,6 +2318,7 @@ class UserPostVoteResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UserPostVoteResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2125,6 +2338,7 @@ class UserPostFavoriteResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UserPostFavoriteResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2144,6 +2358,7 @@ class UserPostReportResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UserPostReportResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2163,6 +2378,7 @@ class UserPostCommentVoteResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UserPostCommentVoteResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2182,6 +2398,7 @@ class UserPostCommentReportResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UserPostCommentReportResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2285,6 +2502,7 @@ class SessionInfoResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "SessionInfoResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2304,6 +2522,7 @@ class GetTechnologyPreviousVersionsResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<TechnologyHistory>',context!)
     };
 
+    getTypeName() => "GetTechnologyPreviousVersionsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2326,6 +2545,7 @@ class GetAllTechnologiesResponse implements IConvertible
         'total': total
     };
 
+    getTypeName() => "GetAllTechnologiesResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2354,6 +2574,7 @@ class GetTechnologyResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetTechnologyResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2376,6 +2597,7 @@ class GetTechnologyFavoriteDetailsResponse implements IConvertible
         'favoriteCount': favoriteCount
     };
 
+    getTypeName() => "GetTechnologyFavoriteDetailsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2398,6 +2620,7 @@ class CreateTechnologyResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "CreateTechnologyResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2420,6 +2643,7 @@ class UpdateTechnologyResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdateTechnologyResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2442,6 +2666,7 @@ class DeleteTechnologyResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "DeleteTechnologyResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2461,6 +2686,7 @@ class GetTechnologyStackPreviousVersionsResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<TechnologyStackHistory>',context!)
     };
 
+    getTypeName() => "GetTechnologyStackPreviousVersionsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2489,6 +2715,7 @@ class GetPageStatsResponse implements IConvertible
         'favCount': favCount
     };
 
+    getTypeName() => "GetPageStatsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2511,6 +2738,7 @@ class HourlyTaskResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "HourlyTaskResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2522,7 +2750,7 @@ class OverviewResponse implements IConvertible
     List<TechStackDetails>? latestTechStacks;
     List<TechnologyStack>? popularTechStacks;
     List<OrganizationInfo>? allOrganizations;
-    Map<String,List<TechnologyInfo>>? topTechnologiesByTier;
+    Map<String,List<TechnologyInfo>?>? topTechnologiesByTier;
     ResponseStatus? responseStatus;
 
     OverviewResponse({this.created,this.topUsers,this.topTechnologies,this.latestTechStacks,this.popularTechStacks,this.allOrganizations,this.topTechnologiesByTier,this.responseStatus});
@@ -2535,7 +2763,7 @@ class OverviewResponse implements IConvertible
         latestTechStacks = JsonConverters.fromJson(json['latestTechStacks'],'List<TechStackDetails>',context!);
         popularTechStacks = JsonConverters.fromJson(json['popularTechStacks'],'List<TechnologyStack>',context!);
         allOrganizations = JsonConverters.fromJson(json['allOrganizations'],'List<OrganizationInfo>',context!);
-        topTechnologiesByTier = JsonConverters.fromJson(json['topTechnologiesByTier'],'Map<String,List<TechnologyInfo>>',context!);
+        topTechnologiesByTier = JsonConverters.fromJson(json['topTechnologiesByTier'],'Map<String,List<TechnologyInfo>?>',context!);
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
@@ -2547,10 +2775,11 @@ class OverviewResponse implements IConvertible
         'latestTechStacks': JsonConverters.toJson(latestTechStacks,'List<TechStackDetails>',context!),
         'popularTechStacks': JsonConverters.toJson(popularTechStacks,'List<TechnologyStack>',context!),
         'allOrganizations': JsonConverters.toJson(allOrganizations,'List<OrganizationInfo>',context!),
-        'topTechnologiesByTier': JsonConverters.toJson(topTechnologiesByTier,'Map<String,List<TechnologyInfo>>',context!),
+        'topTechnologiesByTier': JsonConverters.toJson(topTechnologiesByTier,'Map<String,List<TechnologyInfo>?>',context!),
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "OverviewResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2579,6 +2808,7 @@ class AppOverviewResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "AppOverviewResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2601,6 +2831,7 @@ class GetAllTechnologyStacksResponse implements IConvertible
         'total': total
     };
 
+    getTypeName() => "GetAllTechnologyStacksResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2626,6 +2857,7 @@ class GetTechnologyStackResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetTechnologyStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2648,6 +2880,7 @@ class GetTechnologyStackFavoriteDetailsResponse implements IConvertible
         'favoriteCount': favoriteCount
     };
 
+    getTypeName() => "GetTechnologyStackFavoriteDetailsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2673,6 +2906,7 @@ class GetConfigResponse implements IConvertible
         'allFlagTypes': JsonConverters.toJson(allFlagTypes,'List<Option>',context!)
     };
 
+    getTypeName() => "GetConfigResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2695,6 +2929,7 @@ class CreateTechnologyStackResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "CreateTechnologyStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2717,6 +2952,7 @@ class UpdateTechnologyStackResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "UpdateTechnologyStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2739,6 +2975,7 @@ class DeleteTechnologyStackResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "DeleteTechnologyStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2758,6 +2995,7 @@ class GetFavoriteTechStackResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<TechnologyStack>',context!)
     };
 
+    getTypeName() => "GetFavoriteTechStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2777,6 +3015,7 @@ class FavoriteTechStackResponse implements IConvertible
         'result': JsonConverters.toJson(result,'TechnologyStack',context!)
     };
 
+    getTypeName() => "FavoriteTechStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2796,6 +3035,7 @@ class GetFavoriteTechnologiesResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<Technology>',context!)
     };
 
+    getTypeName() => "GetFavoriteTechnologiesResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2815,6 +3055,7 @@ class FavoriteTechnologyResponse implements IConvertible
         'result': JsonConverters.toJson(result,'Technology',context!)
     };
 
+    getTypeName() => "FavoriteTechnologyResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2834,28 +3075,30 @@ class GetUserFeedResponse implements IConvertible
         'results': JsonConverters.toJson(results,'List<TechStackDetails>',context!)
     };
 
+    getTypeName() => "GetUserFeedResponse";
     TypeContext? context = _ctx;
 }
 
 class GetUsersKarmaResponse implements IConvertible
 {
-    Map<int,int>? results;
+    Map<int,int?>? results;
     ResponseStatus? responseStatus;
 
     GetUsersKarmaResponse({this.results,this.responseStatus});
     GetUsersKarmaResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        results = JsonConverters.fromJson(json['results'],'Map<int,int>',context!);
+        results = JsonConverters.fromJson(json['results'],'Map<int,int?>',context!);
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'results': JsonConverters.toJson(results,'Map<int,int>',context!),
+        'results': JsonConverters.toJson(results,'Map<int,int?>',context!),
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetUsersKarmaResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2899,6 +3142,7 @@ class GetUserInfoResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "GetUserInfoResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2927,6 +3171,7 @@ class SyncDiscourseSiteResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "SyncDiscourseSiteResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2946,6 +3191,7 @@ class LogoUrlApprovalResponse implements IConvertible
         'result': JsonConverters.toJson(result,'Technology',context!)
     };
 
+    getTypeName() => "LogoUrlApprovalResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2958,6 +3204,7 @@ class LockStackResponse implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "LockStackResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2977,6 +3224,7 @@ class EmailTestRespoonse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "EmailTestRespoonse";
     TypeContext? context = _ctx;
 }
 
@@ -2999,6 +3247,7 @@ class ImportUserResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "ImportUserResponse";
     TypeContext? context = _ctx;
 }
 
@@ -3024,6 +3273,7 @@ class ImportUserVoiceSuggestionResponse implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
+    getTypeName() => "ImportUserVoiceSuggestionResponse";
     TypeContext? context = _ctx;
 }
 
@@ -3037,6 +3287,7 @@ class Ping implements IConvertible
     }
 
     Map<String, dynamic> toJson() => {};
+    getTypeName() => "Ping";
     TypeContext? context = _ctx;
 }
 
@@ -3056,6 +3307,7 @@ class DummyTypes implements IConvertible
         'post': JsonConverters.toJson(post,'List<Post>',context!)
     };
 
+    getTypeName() => "DummyTypes";
     TypeContext? context = _ctx;
 }
 
@@ -3777,7 +4029,7 @@ class QueryPosts extends QueryDb1<Post> implements IReturn<QueryResponse<Post>>,
     int? organizationId;
     List<int>? organizationIds;
     List<String>? types;
-    List<int?>? anyTechnologyIds;
+    List<int>? anyTechnologyIds;
     List<String>? Is;
 
     QueryPosts({this.ids,this.organizationId,this.organizationIds,this.types,this.anyTechnologyIds,this.Is});
@@ -4663,7 +4915,7 @@ class GetAllTechnologies implements IReturn<GetAllTechnologiesResponse>, IGet, I
 
 // @Route("/technology/search")
 // @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies")
-class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
+class FindTechnologies extends QueryDb2<Technology,TechnologyView> implements IReturn<QueryResponse<TechnologyView>>, IGet, IConvertible
 {
     List<int>? ids;
     String? name;
@@ -4695,14 +4947,14 @@ class FindTechnologies extends QueryDb1<Technology> implements IReturn<QueryResp
         'descriptionContains': descriptionContains
     });
 
-    createResponse() => QueryResponse<Technology>();
-    getResponseTypeName() => "QueryResponse<Technology>";
+    createResponse() => QueryResponse<TechnologyView>();
+    getResponseTypeName() => "QueryResponse<TechnologyView>";
     getTypeName() => "FindTechnologies";
     TypeContext? context = _ctx;
 }
 
 // @Route("/technology/query")
-class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IGet, IConvertible
+class QueryTechnology extends QueryDb2<Technology,TechnologyView> implements IReturn<QueryResponse<TechnologyView>>, IGet, IConvertible
 {
     List<int>? ids;
     String? name;
@@ -4734,8 +4986,8 @@ class QueryTechnology extends QueryDb1<Technology> implements IReturn<QueryRespo
         'descriptionContains': descriptionContains
     });
 
-    createResponse() => QueryResponse<Technology>();
-    getResponseTypeName() => "QueryResponse<Technology>";
+    createResponse() => QueryResponse<TechnologyView>();
+    getResponseTypeName() => "QueryResponse<TechnologyView>";
     getTypeName() => "QueryTechnology";
     TypeContext? context = _ctx;
 }
@@ -4996,7 +5248,7 @@ class HourlyTask implements IReturn<HourlyTaskResponse>, IGet, IConvertible
 
 // @Route("/techstacks/search")
 // @AutoQueryViewer(DefaultSearchField="Description", DefaultSearchText="ServiceStack", DefaultSearchType="Contains", Description="Explore different Technology Stacks", IconUrl="material-icons:cloud", Title="Find Technology Stacks")
-class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
+class FindTechStacks extends QueryDb2<TechnologyStack,TechnologyStackView> implements IReturn<QueryResponse<TechnologyStackView>>, IGet, IConvertible
 {
     List<int>? ids;
     String? name;
@@ -5028,14 +5280,14 @@ class FindTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryR
         'descriptionContains': descriptionContains
     });
 
-    createResponse() => QueryResponse<TechnologyStack>();
-    getResponseTypeName() => "QueryResponse<TechnologyStack>";
+    createResponse() => QueryResponse<TechnologyStackView>();
+    getResponseTypeName() => "QueryResponse<TechnologyStackView>";
     getTypeName() => "FindTechStacks";
     TypeContext? context = _ctx;
 }
 
 // @Route("/techstacks/query")
-class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<QueryResponse<TechnologyStack>>, IGet, IConvertible
+class QueryTechStacks extends QueryDb2<TechnologyStack,TechnologyStackView> implements IReturn<QueryResponse<TechnologyStackView>>, IGet, IConvertible
 {
     List<int>? ids;
     String? name;
@@ -5067,8 +5319,8 @@ class QueryTechStacks extends QueryDb1<TechnologyStack> implements IReturn<Query
         'descriptionContains': descriptionContains
     });
 
-    createResponse() => QueryResponse<TechnologyStack>();
-    getResponseTypeName() => "QueryResponse<TechnologyStack>";
+    createResponse() => QueryResponse<TechnologyStackView>();
+    getResponseTypeName() => "QueryResponse<TechnologyStackView>";
     getTypeName() => "QueryTechStacks";
     TypeContext? context = _ctx;
 }
@@ -5531,6 +5783,7 @@ class UserAvatar implements IGet, IConvertible
         'userName': userName
     };
 
+    getTypeName() => "UserAvatar";
     TypeContext? context = _ctx;
 }
 
@@ -5917,67 +6170,34 @@ class QueryPostComments extends QueryDb1<PostComment> implements IReturn<QueryRe
     TypeContext? context = _ctx;
 }
 
-// @Route("/admin/technology/search")
-// @AutoQueryViewer(DefaultSearchField="Tier", DefaultSearchText="Data", DefaultSearchType="=", Description="Explore different Technologies", IconUrl="octicon:database", Title="Find Technologies Admin")
-class FindTechnologiesAdmin extends QueryDb1<Technology> implements IReturn<QueryResponse<Technology>>, IConvertible
-{
-    int? id;
-    String? name;
-    String? vendorName;
-    String? nameContains;
-    String? vendorNameContains;
-
-    FindTechnologiesAdmin({this.id,this.name,this.vendorName,this.nameContains,this.vendorNameContains});
-    FindTechnologiesAdmin.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        super.fromMap(json);
-        id = json['id'];
-        name = json['name'];
-        vendorName = json['vendorName'];
-        nameContains = json['nameContains'];
-        vendorNameContains = json['vendorNameContains'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => super.toJson()..addAll({
-        'id': id,
-        'name': name,
-        'vendorName': vendorName,
-        'nameContains': nameContains,
-        'vendorNameContains': vendorNameContains
-    });
-
-    createResponse() => QueryResponse<Technology>();
-    getResponseTypeName() => "QueryResponse<Technology>";
-    getTypeName() => "FindTechnologiesAdmin";
-    get context => _ctx;
-}
-
-TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, TypeInfo> {
+TypeContext _ctx = TypeContext(library: 'techstacks.io', types: <String, TypeInfo> {
     'PostType': TypeInfo(TypeOf.Enum, enumValues:PostType.values),
     'Post': TypeInfo(TypeOf.Class, create:() => Post()),
+    'ReportAction': TypeInfo(TypeOf.Enum, enumValues:ReportAction.values),
+    'FlagType': TypeInfo(TypeOf.Enum, enumValues:FlagType.values),
+    'Frequency': TypeInfo(TypeOf.Enum, enumValues:Frequency.values),
+    'TechnologyTier': TypeInfo(TypeOf.Enum, enumValues:TechnologyTier.values),
+    'TechnologyBase': TypeInfo(TypeOf.AbstractClass),
+    'Technology': TypeInfo(TypeOf.Class, create:() => Technology()),
+    'TechnologyView': TypeInfo(TypeOf.Class, create:() => TechnologyView()),
+    'IRegisterStats': TypeInfo(TypeOf.Interface),
+    'TechnologyStackBase': TypeInfo(TypeOf.AbstractClass),
+    'TechnologyStack': TypeInfo(TypeOf.Class, create:() => TechnologyStack()),
+    'TechnologyStackView': TypeInfo(TypeOf.Class, create:() => TechnologyStackView()),
+    'UserVoiceUser': TypeInfo(TypeOf.Class, create:() => UserVoiceUser()),
+    'UserVoiceComment': TypeInfo(TypeOf.Class, create:() => UserVoiceComment()),
+    'PostComment': TypeInfo(TypeOf.Class, create:() => PostComment()),
     'Organization': TypeInfo(TypeOf.Class, create:() => Organization()),
     'OrganizationLabel': TypeInfo(TypeOf.Class, create:() => OrganizationLabel()),
     'Category': TypeInfo(TypeOf.Class, create:() => Category()),
     'OrganizationMember': TypeInfo(TypeOf.Class, create:() => OrganizationMember()),
     'OrganizationMemberInvite': TypeInfo(TypeOf.Class, create:() => OrganizationMemberInvite()),
-    'FlagType': TypeInfo(TypeOf.Enum, enumValues:FlagType.values),
     'PostReportInfo': TypeInfo(TypeOf.Class, create:() => PostReportInfo()),
     'PostCommentReportInfo': TypeInfo(TypeOf.Class, create:() => PostCommentReportInfo()),
-    'PostComment': TypeInfo(TypeOf.Class, create:() => PostComment()),
-    'ReportAction': TypeInfo(TypeOf.Enum, enumValues:ReportAction.values),
     'UserRef': TypeInfo(TypeOf.Class, create:() => UserRef()),
     'OrganizationSubscription': TypeInfo(TypeOf.Class, create:() => OrganizationSubscription()),
-    'TechnologyStackBase': TypeInfo(TypeOf.AbstractClass),
-    'TechnologyStack': TypeInfo(TypeOf.Class, create:() => TechnologyStack()),
-    'TechnologyTier': TypeInfo(TypeOf.Enum, enumValues:TechnologyTier.values),
-    'TechnologyBase': TypeInfo(TypeOf.AbstractClass),
-    'Technology': TypeInfo(TypeOf.Class, create:() => Technology()),
     'UserActivity': TypeInfo(TypeOf.Class, create:() => UserActivity()),
-    'Frequency': TypeInfo(TypeOf.Enum, enumValues:Frequency.values),
     'TechnologyHistory': TypeInfo(TypeOf.Class, create:() => TechnologyHistory()),
-    'IRegisterStats': TypeInfo(TypeOf.Interface),
     'TechnologyStackHistory': TypeInfo(TypeOf.Class, create:() => TechnologyStackHistory()),
     'UserInfo': TypeInfo(TypeOf.Class, create:() => UserInfo()),
     'TechnologyInfo': TypeInfo(TypeOf.Class, create:() => TechnologyInfo()),
@@ -5990,8 +6210,6 @@ TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, Typ
     'List<LabelInfo>': TypeInfo(TypeOf.Class, create:() => <LabelInfo>[]),
     'List<CategoryInfo>': TypeInfo(TypeOf.Class, create:() => <CategoryInfo>[]),
     'Option': TypeInfo(TypeOf.Class, create:() => Option()),
-    'UserVoiceUser': TypeInfo(TypeOf.Class, create:() => UserVoiceUser()),
-    'UserVoiceComment': TypeInfo(TypeOf.Class, create:() => UserVoiceComment()),
     'GetOrganizationResponse': TypeInfo(TypeOf.Class, create:() => GetOrganizationResponse()),
     'List<OrganizationLabel>': TypeInfo(TypeOf.Class, create:() => <OrganizationLabel>[]),
     'List<Category>': TypeInfo(TypeOf.Class, create:() => <Category>[]),
@@ -6053,7 +6271,7 @@ TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, Typ
     'List<TechnologyInfo>': TypeInfo(TypeOf.Class, create:() => <TechnologyInfo>[]),
     'List<TechStackDetails>': TypeInfo(TypeOf.Class, create:() => <TechStackDetails>[]),
     'List<OrganizationInfo>': TypeInfo(TypeOf.Class, create:() => <OrganizationInfo>[]),
-    'Map<String,List<TechnologyInfo>>': TypeInfo(TypeOf.Class, create:() => Map<String,List<TechnologyInfo>>()),
+    'Map<String,List<TechnologyInfo>?>': TypeInfo(TypeOf.Class, create:() => Map<String,List<TechnologyInfo>?>()),
     'AppOverviewResponse': TypeInfo(TypeOf.Class, create:() => AppOverviewResponse()),
     'List<Option>': TypeInfo(TypeOf.Class, create:() => <Option>[]),
     'GetAllTechnologyStacksResponse': TypeInfo(TypeOf.Class, create:() => GetAllTechnologyStacksResponse()),
@@ -6069,7 +6287,7 @@ TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, Typ
     'FavoriteTechnologyResponse': TypeInfo(TypeOf.Class, create:() => FavoriteTechnologyResponse()),
     'GetUserFeedResponse': TypeInfo(TypeOf.Class, create:() => GetUserFeedResponse()),
     'GetUsersKarmaResponse': TypeInfo(TypeOf.Class, create:() => GetUsersKarmaResponse()),
-    'Map<int,int>': TypeInfo(TypeOf.Class, create:() => Map<int,int>()),
+    'Map<int,int?>': TypeInfo(TypeOf.Class, create:() => Map<int,int?>()),
     'GetUserInfoResponse': TypeInfo(TypeOf.Class, create:() => GetUserInfoResponse()),
     'SyncDiscourseSiteResponse': TypeInfo(TypeOf.Class, create:() => SyncDiscourseSiteResponse()),
     'LogoUrlApprovalResponse': TypeInfo(TypeOf.Class, create:() => LogoUrlApprovalResponse()),
@@ -6136,8 +6354,9 @@ TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, Typ
     'DeletePostSubscription': TypeInfo(TypeOf.Class, create:() => DeletePostSubscription()),
     'GetTechnologyPreviousVersions': TypeInfo(TypeOf.Class, create:() => GetTechnologyPreviousVersions()),
     'GetAllTechnologies': TypeInfo(TypeOf.Class, create:() => GetAllTechnologies()),
-    'QueryResponse<Technology>': TypeInfo(TypeOf.Class, create:() => QueryResponse<Technology>()),
+    'QueryResponse<TechnologyView>': TypeInfo(TypeOf.Class, create:() => QueryResponse<TechnologyView>()),
     'FindTechnologies': TypeInfo(TypeOf.Class, create:() => FindTechnologies()),
+    'List<TechnologyView>': TypeInfo(TypeOf.Class, create:() => <TechnologyView>[]),
     'QueryTechnology': TypeInfo(TypeOf.Class, create:() => QueryTechnology()),
     'GetTechnology': TypeInfo(TypeOf.Class, create:() => GetTechnology()),
     'GetTechnologyFavoriteDetails': TypeInfo(TypeOf.Class, create:() => GetTechnologyFavoriteDetails()),
@@ -6148,8 +6367,9 @@ TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, Typ
     'GetPageStats': TypeInfo(TypeOf.Class, create:() => GetPageStats()),
     'ClearCache': TypeInfo(TypeOf.Class, create:() => ClearCache()),
     'HourlyTask': TypeInfo(TypeOf.Class, create:() => HourlyTask()),
-    'QueryResponse<TechnologyStack>': TypeInfo(TypeOf.Class, create:() => QueryResponse<TechnologyStack>()),
+    'QueryResponse<TechnologyStackView>': TypeInfo(TypeOf.Class, create:() => QueryResponse<TechnologyStackView>()),
     'FindTechStacks': TypeInfo(TypeOf.Class, create:() => FindTechStacks()),
+    'List<TechnologyStackView>': TypeInfo(TypeOf.Class, create:() => <TechnologyStackView>[]),
     'QueryTechStacks': TypeInfo(TypeOf.Class, create:() => QueryTechStacks()),
     'Overview': TypeInfo(TypeOf.Class, create:() => Overview()),
     'AppOverview': TypeInfo(TypeOf.Class, create:() => AppOverview()),
@@ -6183,6 +6403,5 @@ TypeContext _ctx = TypeContext(library: 'www.techstacks.io', types: <String, Typ
     'ImportUserVoiceSuggestion': TypeInfo(TypeOf.Class, create:() => ImportUserVoiceSuggestion()),
     'QueryResponse<PostComment>': TypeInfo(TypeOf.Class, create:() => QueryResponse<PostComment>()),
     'QueryPostComments': TypeInfo(TypeOf.Class, create:() => QueryPostComments()),
-    'FindTechnologiesAdmin': TypeInfo(TypeOf.Class, create:() => FindTechnologiesAdmin()),
 });
 

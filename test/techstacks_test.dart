@@ -80,7 +80,7 @@ void main() {
     var techs =
         await client.get(FindTechnologies(), args: {"slug": "flutter"});
     var posts = await client.get(QueryPosts(
-        anyTechnologyIds: [techs.results![0].id],
+        anyTechnologyIds: [techs.results![0].id!],
         types: ['Announcement', 'Showcase'])
       ..take = 1);
 
