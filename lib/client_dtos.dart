@@ -48,6 +48,7 @@ abstract class IDeleteDb<Table> implements ICrud {}
 
 abstract class ISaveDb<Table> implements ICrud {}
 
+// sync with DartGenerator.IgnoreTypeInfosFor
 Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
   'dynamic': TypeInfo(TypeOf.Class, create: () => {}),
   'String': TypeInfo(TypeOf.Class, create: () => ""),
