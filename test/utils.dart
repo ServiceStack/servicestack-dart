@@ -66,6 +66,7 @@ void assertAllTypes(AllTypes dto) {
   expect(dto.byte, equals(2));
   expect(dto.short, equals(3));
   expect(dto.Int, equals(4));
+  expect(dto.long, equals(5));
   expect(dto.uShort, equals(6));
   expect(dto.uInt, equals(7));
   expect(dto.uLong, equals(8));

@@ -335,7 +335,7 @@ class JsonServiceClient implements IServiceClient {
       res = await req.close();
       statusCode = res.statusCode;
     } on Exception catch (e) {
-      Log.debug("sendRequest() createResponse: $e");
+      Log.debug("sendRequest() createRequest: $e");
       return await handleError(null, e);
     }
 

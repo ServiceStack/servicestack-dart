@@ -30,5 +30,17 @@ main() {
   test('Can parse XSD Duration', () {
     var duration = fromTimeSpan("PT1H");
     expect(duration, Duration(hours: 1));
+
+    duration = fromTimeSpan("P1DT1H");
+    expect(duration, Duration(days: 1, hours: 1));
   });
+
+  test('Can format XSD Duration', () {
+    var xsd = "P11DT2H3M4.123S";
+    var duration = fromTimeSpan(xsd)!;
+    expect(duration, Duration(days: 11, hours: 2, minutes: 3, seconds: 4, milliseconds: 123));
+    var fmt = toTimeSpan(duration);
+    expect(fmt, xsd);
+  });
+
 }

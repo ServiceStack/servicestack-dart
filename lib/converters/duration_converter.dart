@@ -25,8 +25,13 @@ Duration? fromTimeSpan(String? str) {
   int seconds = 0;
   double ms = 0.0;
 
-  var t = splitOnFirst(str, 'T'); //strip P
+  if (str[0] != "P")
+    throw ArgumentError.value(str, "str", "not a valid XSD Duration");
+
+  str = str.substring(1); //strip P
+  var t = splitOnFirst(str, 'T');
   var hasTime = t.length == 2;
+
   var d = splitOnFirst(t[0], 'D');
   if (d.length == 2) {
     var day = int.tryParse(d[0]!) ?? null;
