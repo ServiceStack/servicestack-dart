@@ -329,9 +329,12 @@ class DateTimeConverter implements IConverter {
 DateTime fromDateTime(String jsonDate) {
   if (jsonDate.startsWith("\/Date(")) {
     var epochAndZone = leftPart(rightPart(jsonDate, "("), ")")!;
-    var epochStr = epochAndZone.indexOf('-', 1) >= 0
-        ? lastLeftPart(epochAndZone, "-")!
-        : epochAndZone;
+    var epochStr = epochAndZone;
+    if (epochAndZone.indexOf('-', 1) >= 0) {
+      epochStr = lastLeftPart(epochAndZone, "-")!;
+    } else if (epochAndZone.indexOf('+', 1) >= 0) {
+      epochStr = lastLeftPart(epochAndZone, "+")!;
+    }
     var epoch = int.parse(epochStr);
     return DateTime.fromMillisecondsSinceEpoch(epoch, isUtc: true);
   }
