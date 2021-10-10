@@ -1,5 +1,5 @@
 name: servicestack
-version: 2.0.0
+version: 2.0.1
 description: ServiceStack's convenience utils for developing Dart VM and flutter apps. Integrates with ServiceStack's Server features including ServiceClient, Error Handling and Validation
 homepage: https://github.com/ServiceStack/servicestack-dart
 environment:

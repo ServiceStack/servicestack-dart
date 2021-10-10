@@ -1,3 +1,7 @@
+## 2.0.1
+
+* Update to latest code-gen of existing built-in DTOs
+
 ## 2.0.0
 
 * Upgrade code base to null safety 

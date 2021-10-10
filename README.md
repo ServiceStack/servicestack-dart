@@ -31,7 +31,7 @@ To make API calls we need to use the `JsonServiceClient`, installed by adding th
 
 ```yaml
 dependencies:
-  servicestack: ^2.0.0
+  servicestack: ^2.0.1
 ```
 
 This requires Dart DTOs generated from ServiceStack **v5.11.1+** that's [now available on MyGet](https://docs.servicestack.net/myget).
