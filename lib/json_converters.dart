@@ -435,7 +435,10 @@ class ListConverter implements IConverter {
   static populate(List? target, String? listType, List from, TypeContext? context) {
     var elementType = getElementType(listType);
     List list = from;
-    list.forEach((x) => target!.add(convert(x, elementType, context)));
+    list.forEach((x) {
+      var item = convert(x, elementType, context);
+      target!.add(item);
+    });
     return target;
   }
 }

@@ -524,4 +524,17 @@ void main() {
 
     expect(response.length, equals(3));
   });
+
+  test('Can serialize custom ResponseStatus', () async {
+    var client = createTestClient();
+
+    var request = ReturnCustom400(message:"Custom");
+
+    var response = await client.get(request);
+
+    var status = response.responseStatus!;
+    print(status.toJson());
+    expect(status.message, equals("Custom"));
+  });
+
 }

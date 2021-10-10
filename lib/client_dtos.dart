@@ -131,6 +131,7 @@ class ResponseError implements IConvertible {
     fieldName = JsonConverters.getJson(json, 'fieldName');
     message = JsonConverters.getJson(json, 'message');
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
+    return this;
   }
 
   Map<String, dynamic> toJson() => {'errorCode': errorCode, 'fieldName': fieldName, 'message': message, 'meta': meta};
@@ -158,6 +159,7 @@ class ResponseStatus implements IConvertible {
     stackTrace = JsonConverters.getJson(json, 'stackTrace');
     errors = JsonConverters.fromJson(JsonConverters.getJson(json, 'errors'), 'List<ResponseError>', context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
+    return this;
   }
 
   Map<String, dynamic> toJson() => {
@@ -195,6 +197,7 @@ abstract class QueryBase implements IConvertible {
     include = JsonConverters.getJson(json, 'include');
     fields = JsonConverters.getJson(json, 'fields');
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
+    return this;
   }
 
   Map<String, dynamic> toJson() => {
@@ -216,7 +219,7 @@ abstract class QueryData<T> extends QueryBase {
 
   QueryData.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) {}
+  fromMap(Map<String, dynamic> json) { return this; }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -228,7 +231,7 @@ abstract class QueryDb<T> extends QueryBase {
 
   QueryDb.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) {}
+  fromMap(Map<String, dynamic> json) { return this; }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -240,7 +243,7 @@ abstract class QueryDb1<T> extends QueryBase {
 
   QueryDb1.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) {}
+  fromMap(Map<String, dynamic> json) { return this; }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -252,7 +255,7 @@ abstract class QueryDb2<From, Into> extends QueryBase {
 
   QueryDb2.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) {}
+  fromMap(Map<String, dynamic> json) { return this; }
 
   Map<String, dynamic> toJson() => super.toJson();
 
