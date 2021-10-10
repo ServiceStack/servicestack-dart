@@ -1,8 +1,8 @@
 /* Options:
-Date: 2021-06-29 13:47:02
-Version: 5.111
+Date: 2021-10-10 16:23:28
+Version: 5.121
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: https://localhost:5001
+BaseUrl: http://test.servicestack.net
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True
@@ -1863,6 +1863,26 @@ class Items implements IConvertible
     TypeContext? context = _ctx;
 }
 
+class ReturnCustom400Response implements IConvertible
+{
+    ResponseStatus? responseStatus;
+
+    ReturnCustom400Response({this.responseStatus});
+    ReturnCustom400Response.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
+    };
+
+    getTypeName() => "ReturnCustom400Response";
+    TypeContext? context = _ctx;
+}
+
 class ThrowTypeResponse implements IConvertible
 {
     ResponseStatus? responseStatus;
@@ -3443,6 +3463,27 @@ class GetNakedItems implements IReturn<List<Item>>, IConvertible
     TypeContext? context = _ctx;
 }
 
+// @ValidateRequest(Validator="IsAuthenticated")
+class DeclarativeValidationAuth implements IConvertible
+{
+    String? name;
+
+    DeclarativeValidationAuth({this.name});
+    DeclarativeValidationAuth.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    getTypeName() => "DeclarativeValidationAuth";
+    TypeContext? context = _ctx;
+}
+
 class DeclarativeCollectiveValidationTest implements IReturn<EmptyResponse>, IConvertible
 {
     // @Validate(Validator="NotEmpty")
@@ -3510,21 +3551,84 @@ class DummyTypes implements IConvertible
     List<HelloResponse>? helloResponses;
     List<ListResult>? listResult;
     List<ArrayResult>? arrayResult;
+    CancelRequest? cancelRequest;
+    CancelRequestResponse? cancelRequestResponse;
+    UpdateEventSubscriber? updateEventSubscriber;
+    UpdateEventSubscriberResponse? updateEventSubscriberResponse;
+    GetApiKeys? getApiKeys;
+    GetApiKeysResponse? getApiKeysResponse;
+    RegenerateApiKeys? regenerateApiKeys;
+    RegenerateApiKeysResponse? regenerateApiKeysResponse;
+    UserApiKey? userApiKey;
+    ConvertSessionToToken? convertSessionToToken;
+    ConvertSessionToTokenResponse? convertSessionToTokenResponse;
+    GetAccessToken? getAccessToken;
+    GetAccessTokenResponse? getAccessTokenResponse;
+    NavItem? navItem;
+    GetNavItems? getNavItems;
+    GetNavItemsResponse? getNavItemsResponse;
+    EmptyResponse? emptyResponse;
+    IdResponse? idResponse;
+    StringResponse? stringResponse;
+    StringsResponse? stringsResponse;
+    AuditBase? auditBase;
 
-    DummyTypes({this.helloResponses,this.listResult,this.arrayResult});
+    DummyTypes({this.helloResponses,this.listResult,this.arrayResult,this.cancelRequest,this.cancelRequestResponse,this.updateEventSubscriber,this.updateEventSubscriberResponse,this.getApiKeys,this.getApiKeysResponse,this.regenerateApiKeys,this.regenerateApiKeysResponse,this.userApiKey,this.convertSessionToToken,this.convertSessionToTokenResponse,this.getAccessToken,this.getAccessTokenResponse,this.navItem,this.getNavItems,this.getNavItemsResponse,this.emptyResponse,this.idResponse,this.stringResponse,this.stringsResponse,this.auditBase});
     DummyTypes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         helloResponses = JsonConverters.fromJson(json['helloResponses'],'List<HelloResponse>',context!);
         listResult = JsonConverters.fromJson(json['listResult'],'List<ListResult>',context!);
         arrayResult = JsonConverters.fromJson(json['arrayResult'],'List<ArrayResult>',context!);
+        cancelRequest = JsonConverters.fromJson(json['cancelRequest'],'CancelRequest',context!);
+        cancelRequestResponse = JsonConverters.fromJson(json['cancelRequestResponse'],'CancelRequestResponse',context!);
+        updateEventSubscriber = JsonConverters.fromJson(json['updateEventSubscriber'],'UpdateEventSubscriber',context!);
+        updateEventSubscriberResponse = JsonConverters.fromJson(json['updateEventSubscriberResponse'],'UpdateEventSubscriberResponse',context!);
+        getApiKeys = JsonConverters.fromJson(json['getApiKeys'],'GetApiKeys',context!);
+        getApiKeysResponse = JsonConverters.fromJson(json['getApiKeysResponse'],'GetApiKeysResponse',context!);
+        regenerateApiKeys = JsonConverters.fromJson(json['regenerateApiKeys'],'RegenerateApiKeys',context!);
+        regenerateApiKeysResponse = JsonConverters.fromJson(json['regenerateApiKeysResponse'],'RegenerateApiKeysResponse',context!);
+        userApiKey = JsonConverters.fromJson(json['userApiKey'],'UserApiKey',context!);
+        convertSessionToToken = JsonConverters.fromJson(json['convertSessionToToken'],'ConvertSessionToToken',context!);
+        convertSessionToTokenResponse = JsonConverters.fromJson(json['convertSessionToTokenResponse'],'ConvertSessionToTokenResponse',context!);
+        getAccessToken = JsonConverters.fromJson(json['getAccessToken'],'GetAccessToken',context!);
+        getAccessTokenResponse = JsonConverters.fromJson(json['getAccessTokenResponse'],'GetAccessTokenResponse',context!);
+        navItem = JsonConverters.fromJson(json['navItem'],'NavItem',context!);
+        getNavItems = JsonConverters.fromJson(json['getNavItems'],'GetNavItems',context!);
+        getNavItemsResponse = JsonConverters.fromJson(json['getNavItemsResponse'],'GetNavItemsResponse',context!);
+        emptyResponse = JsonConverters.fromJson(json['emptyResponse'],'EmptyResponse',context!);
+        idResponse = JsonConverters.fromJson(json['idResponse'],'IdResponse',context!);
+        stringResponse = JsonConverters.fromJson(json['stringResponse'],'StringResponse',context!);
+        stringsResponse = JsonConverters.fromJson(json['stringsResponse'],'StringsResponse',context!);
+        auditBase = JsonConverters.fromJson(json['auditBase'],'AuditBase',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'helloResponses': JsonConverters.toJson(helloResponses,'List<HelloResponse>',context!),
         'listResult': JsonConverters.toJson(listResult,'List<ListResult>',context!),
-        'arrayResult': JsonConverters.toJson(arrayResult,'List<ArrayResult>',context!)
+        'arrayResult': JsonConverters.toJson(arrayResult,'List<ArrayResult>',context!),
+        'cancelRequest': JsonConverters.toJson(cancelRequest,'CancelRequest',context!),
+        'cancelRequestResponse': JsonConverters.toJson(cancelRequestResponse,'CancelRequestResponse',context!),
+        'updateEventSubscriber': JsonConverters.toJson(updateEventSubscriber,'UpdateEventSubscriber',context!),
+        'updateEventSubscriberResponse': JsonConverters.toJson(updateEventSubscriberResponse,'UpdateEventSubscriberResponse',context!),
+        'getApiKeys': JsonConverters.toJson(getApiKeys,'GetApiKeys',context!),
+        'getApiKeysResponse': JsonConverters.toJson(getApiKeysResponse,'GetApiKeysResponse',context!),
+        'regenerateApiKeys': JsonConverters.toJson(regenerateApiKeys,'RegenerateApiKeys',context!),
+        'regenerateApiKeysResponse': JsonConverters.toJson(regenerateApiKeysResponse,'RegenerateApiKeysResponse',context!),
+        'userApiKey': JsonConverters.toJson(userApiKey,'UserApiKey',context!),
+        'convertSessionToToken': JsonConverters.toJson(convertSessionToToken,'ConvertSessionToToken',context!),
+        'convertSessionToTokenResponse': JsonConverters.toJson(convertSessionToTokenResponse,'ConvertSessionToTokenResponse',context!),
+        'getAccessToken': JsonConverters.toJson(getAccessToken,'GetAccessToken',context!),
+        'getAccessTokenResponse': JsonConverters.toJson(getAccessTokenResponse,'GetAccessTokenResponse',context!),
+        'navItem': JsonConverters.toJson(navItem,'NavItem',context!),
+        'getNavItems': JsonConverters.toJson(getNavItems,'GetNavItems',context!),
+        'getNavItemsResponse': JsonConverters.toJson(getNavItemsResponse,'GetNavItemsResponse',context!),
+        'emptyResponse': JsonConverters.toJson(emptyResponse,'EmptyResponse',context!),
+        'idResponse': JsonConverters.toJson(idResponse,'IdResponse',context!),
+        'stringResponse': JsonConverters.toJson(stringResponse,'StringResponse',context!),
+        'stringsResponse': JsonConverters.toJson(stringsResponse,'StringsResponse',context!),
+        'auditBase': JsonConverters.toJson(auditBase,'AuditBase',context!)
     };
 
     getTypeName() => "DummyTypes";
@@ -3596,6 +3700,30 @@ class ThrowCustom400 implements IConvertible
     };
 
     getTypeName() => "ThrowCustom400";
+    TypeContext? context = _ctx;
+}
+
+// @Route("/returncustom400")
+// @Route("/returncustom400/{Message}")
+class ReturnCustom400 implements IReturn<ReturnCustom400Response>, IConvertible
+{
+    String? message;
+
+    ReturnCustom400({this.message});
+    ReturnCustom400.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        message = json['message'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'message': message
+    };
+
+    createResponse() => ReturnCustom400Response();
+    getResponseTypeName() => "ReturnCustom400Response";
+    getTypeName() => "ReturnCustom400";
     TypeContext? context = _ctx;
 }
 
@@ -4228,6 +4356,30 @@ class Hello implements IReturn<HelloResponse>, IConvertible
     createResponse() => HelloResponse();
     getResponseTypeName() => "HelloResponse";
     getTypeName() => "Hello";
+    TypeContext? context = _ctx;
+}
+
+// @Route("/hello-secure/{Name}")
+// @ValidateRequest(Validator="IsAuthenticated")
+class HelloSecure implements IReturn<HelloResponse>, IConvertible
+{
+    String? name;
+
+    HelloSecure({this.name});
+    HelloSecure.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    createResponse() => HelloResponse();
+    getResponseTypeName() => "HelloResponse";
+    getTypeName() => "HelloSecure";
     TypeContext? context = _ctx;
 }
 
@@ -5123,6 +5275,48 @@ class ReturnStream implements IReturn<Uint8List>, IConvertible
     TypeContext? context = _ctx;
 }
 
+// @Route("/return/json")
+class ReturnJson implements IConvertible
+{
+    ReturnJson();
+    ReturnJson.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    getTypeName() => "ReturnJson";
+    TypeContext? context = _ctx;
+}
+
+// @Route("/return/json/header")
+class ReturnJsonHeader implements IConvertible
+{
+    ReturnJsonHeader();
+    ReturnJsonHeader.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    getTypeName() => "ReturnJsonHeader";
+    TypeContext? context = _ctx;
+}
+
+// @Route("/write/json")
+class WriteJson implements IConvertible
+{
+    WriteJson();
+    WriteJson.fromJson(Map<String, dynamic> json) : super();
+    fromMap(Map<String, dynamic> json) {
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {};
+    getTypeName() => "WriteJson";
+    TypeContext? context = _ctx;
+}
+
 // @Route("/Request1", "GET")
 class GetRequest1 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 {
@@ -5629,7 +5823,7 @@ class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto>
     TypeContext? context = _ctx;
 }
 
-class QueryPocoBase extends QueryDb1<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
+class QueryPocoBase extends QueryDb<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
 {
     int? id;
 
@@ -5676,7 +5870,7 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefine
 }
 
 // @Route("/message/query/{Id}", "GET")
-class MessageQuery extends QueryDb1<MessageQuery> implements IReturn<QueryResponse<MessageQuery>>, IConvertible
+class MessageQuery extends QueryDb<MessageQuery> implements IReturn<QueryResponse<MessageQuery>>, IConvertible
 {
     int? id;
 
@@ -5700,7 +5894,7 @@ class MessageQuery extends QueryDb1<MessageQuery> implements IReturn<QueryRespon
 }
 
 // @Route("/rockstars", "GET")
-class QueryRockstars extends QueryDb1<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
+class QueryRockstars extends QueryDb<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
 {
     QueryRockstars();
     QueryRockstars.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -5927,7 +6121,7 @@ class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWith
     TypeContext? context = _ctx;
 }
 
-TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
+TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
     'Item': TypeInfo(TypeOf.Class, create:() => Item()),
     'Poco': TypeInfo(TypeOf.Class, create:() => Poco()),
     'CustomType': TypeInfo(TypeOf.Class, create:() => CustomType()),
@@ -6008,6 +6202,7 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'QueryResponseAlt<T>': TypeInfo(TypeOf.GenericDef,create:() => QueryResponseAlt()),
     'Items': TypeInfo(TypeOf.Class, create:() => Items()),
     'List<Item>': TypeInfo(TypeOf.Class, create:() => <Item>[]),
+    'ReturnCustom400Response': TypeInfo(TypeOf.Class, create:() => ReturnCustom400Response()),
     'ThrowTypeResponse': TypeInfo(TypeOf.Class, create:() => ThrowTypeResponse()),
     'ThrowValidationResponse': TypeInfo(TypeOf.Class, create:() => ThrowValidationResponse()),
     'ThrowBusinessErrorResponse': TypeInfo(TypeOf.Class, create:() => ThrowBusinessErrorResponse()),
@@ -6080,6 +6275,7 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'AltQueryItems': TypeInfo(TypeOf.Class, create:() => AltQueryItems()),
     'GetItems': TypeInfo(TypeOf.Class, create:() => GetItems()),
     'GetNakedItems': TypeInfo(TypeOf.Class, create:() => GetNakedItems()),
+    'DeclarativeValidationAuth': TypeInfo(TypeOf.Class, create:() => DeclarativeValidationAuth()),
     'DeclarativeCollectiveValidationTest': TypeInfo(TypeOf.Class, create:() => DeclarativeCollectiveValidationTest()),
     'List<DeclarativeChildValidation>': TypeInfo(TypeOf.Class, create:() => <DeclarativeChildValidation>[]),
     'List<FluentChildValidation>': TypeInfo(TypeOf.Class, create:() => <FluentChildValidation>[]),
@@ -6091,6 +6287,7 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'ThrowHttpError': TypeInfo(TypeOf.Class, create:() => ThrowHttpError()),
     'Throw404': TypeInfo(TypeOf.Class, create:() => Throw404()),
     'ThrowCustom400': TypeInfo(TypeOf.Class, create:() => ThrowCustom400()),
+    'ReturnCustom400': TypeInfo(TypeOf.Class, create:() => ReturnCustom400()),
     'ThrowType': TypeInfo(TypeOf.Class, create:() => ThrowType()),
     'ThrowValidation': TypeInfo(TypeOf.Class, create:() => ThrowValidation()),
     'ThrowBusinessError': TypeInfo(TypeOf.Class, create:() => ThrowBusinessError()),
@@ -6118,6 +6315,7 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'ReturnText': TypeInfo(TypeOf.Class, create:() => ReturnText()),
     'ReturnHtml': TypeInfo(TypeOf.Class, create:() => ReturnHtml()),
     'Hello': TypeInfo(TypeOf.Class, create:() => Hello()),
+    'HelloSecure': TypeInfo(TypeOf.Class, create:() => HelloSecure()),
     'HelloAnnotated': TypeInfo(TypeOf.Class, create:() => HelloAnnotated()),
     'HelloWithNestedClass': TypeInfo(TypeOf.Class, create:() => HelloWithNestedClass()),
     'HelloList': TypeInfo(TypeOf.Class, create:() => HelloList()),
@@ -6164,6 +6362,9 @@ TypeContext _ctx = TypeContext(library: 'localhost', types: <String, TypeInfo> {
     'ReturnString': TypeInfo(TypeOf.Class, create:() => ReturnString()),
     'ReturnBytes': TypeInfo(TypeOf.Class, create:() => ReturnBytes()),
     'ReturnStream': TypeInfo(TypeOf.Class, create:() => ReturnStream()),
+    'ReturnJson': TypeInfo(TypeOf.Class, create:() => ReturnJson()),
+    'ReturnJsonHeader': TypeInfo(TypeOf.Class, create:() => ReturnJsonHeader()),
+    'WriteJson': TypeInfo(TypeOf.Class, create:() => WriteJson()),
     'GetRequest1': TypeInfo(TypeOf.Class, create:() => GetRequest1()),
     'GetRequest2': TypeInfo(TypeOf.Class, create:() => GetRequest2()),
     'SendJson': TypeInfo(TypeOf.Class, create:() => SendJson()),

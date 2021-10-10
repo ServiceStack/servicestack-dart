@@ -136,8 +136,6 @@ class Inspect {
     var nLen = str.length;
     var half = (len / 2 - nLen / 2).floor();
     var odds = ((nLen % 2) - (len % 2)).abs();
-    len = str.length;
-
     return (pad * (half + 1)) + str + (pad * (half + 1 + odds));
   }
 
