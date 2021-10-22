@@ -67,7 +67,7 @@ class JsonConverters {
     return converter.toJson(value, newContext);
   }
 
-  static double toDouble(dynamic value) {
+  static double? toDouble(dynamic value) {
     if (value == null || value is double) {
       return value;
     }
