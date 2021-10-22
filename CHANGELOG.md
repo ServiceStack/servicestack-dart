@@ -1,3 +1,7 @@
+## 2.0.2
+
+* Fix nullable toDouble method signature
+
 ## 2.0.1
 
 * Update to latest code-gen of existing built-in DTOs
