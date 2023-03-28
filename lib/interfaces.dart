@@ -86,7 +86,8 @@ class TypeContext {
               }
             }
           }
-          Log.debug("Found TypeInfo for Minified Type: '${useTypeName}'${originalType}");
+          Log.debug(
+              "Found TypeInfo for Minified Type: '${useTypeName}'${originalType}");
           return minifiedTypeInfo;
         }
       }
@@ -103,10 +104,12 @@ class TypeContext {
       if (sb.length > 0) sb.write(',');
       sb.write(useTypeName);
     }
-    var genericType = leftPart(typeName,'<'); //only supports 1 level generic types
+    var genericType =
+        leftPart(typeName, '<'); //only supports 1 level generic types
     var resolvedTypeName = "$genericType<${sb.toString()}>";
     if (containsMinified(resolvedTypeName)) {
-      Log.warn("deminifyTypeName(): Failed to deminify '$typeName' => '$resolvedTypeName'");
+      Log.warn(
+          "deminifyTypeName(): Failed to deminify '$typeName' => '$resolvedTypeName'");
     } else {
       Log.debug("deminifyTypeName(): '$typeName' => '$resolvedTypeName'");
     }
@@ -197,9 +200,16 @@ abstract class IServiceClient {
 
   void clearCookies();
 
+  Future<ApiResult<T>> api<T>(IReturn<T> request,
+      {Map<String, dynamic>? args, String? method});
+
+  Future<ApiResult<EmptyResponse>> apiVoid(IReturnVoid request,
+      {Map<String, dynamic>? args, String? method});
+
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args});
 
-  Future<Map<String, dynamic>> getUrl(String path, {Map<String, dynamic>? args});
+  Future<Map<String, dynamic>> getUrl(String path,
+      {Map<String, dynamic>? args});
 
   Future<T> getAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
 
@@ -217,7 +227,8 @@ abstract class IServiceClient {
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic>? args});
 
-  Future<T> deleteAs<T>(String path, {Map<String, dynamic>? args, T? responseAs});
+  Future<T> deleteAs<T>(String path,
+      {Map<String, dynamic>? args, T? responseAs});
 
   Future<T> put<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args});
@@ -293,5 +304,84 @@ extension ServiceClientExtensions on IServiceClient {
             relativeOrAbsoluteUrl.startsWith("https://")
         ? relativeOrAbsoluteUrl
         : combinePaths([this.baseUrl, relativeOrAbsoluteUrl]);
+  }
+}
+
+abstract class ApiResponse {
+  ResponseStatus? get error;
+  Object? get responseObject;
+  bool get completed;
+  bool get failed;
+  bool get succeeded;
+
+  String? get errorMessage;
+  String? get errorCode;
+  List<ResponseError>? get errors;
+  String? get errorSummary;
+}
+
+class ApiResult<TResponse> implements ApiResponse {
+  final TResponse? response;
+  ResponseStatus? error;
+
+  ApiResult({this.response, this.error});
+
+  ApiResult.copy([ApiResult<TResponse>? init])
+      : error = init?.error,
+        response = init?.response;
+
+  Object? get responseObject => response;
+
+  bool get completed => response != null || error != null;
+  bool get failed => error?.errorCode != null || error?.message != null;
+  bool get succeeded => !failed && response != null;
+
+  String? get errorMessage => error?.message;
+  String? get errorCode => error?.errorCode;
+  List<ResponseError> get errors => error?.errors ?? [];
+  String? get errorSummary =>
+      error != null && errors.length == 0 ? errorMessage : null;
+
+  fieldError(String fieldName) {
+    var matchField = fieldName.toLowerCase();
+    return errors
+        .firstWhereOrNull((x) => x.fieldName?.toLowerCase() == matchField);
+  }
+
+  fieldErrorMessage(String fieldName) => fieldError(fieldName)?.message;
+
+  hasFieldError(String fieldName) => fieldError(fieldName) != null;
+
+  showSummary([List<String> exceptFields = const []]) {
+    if (!failed) return false;
+    return exceptFields.every((x) => !hasFieldError(x));
+  }
+
+  summaryMessage([List<String> exceptFields = const []]) {
+    if (showSummary(exceptFields)) {
+      // Return first field error that's not visible
+      var fieldSet = exceptFields.map((x) => x.toLowerCase()).toList();
+      var fieldError = fieldSet
+          .firstWhereOrNull((x) => fieldSet.indexOf(x.toLowerCase()) == -1);
+      return fieldError ?? errorMessage;
+    }
+  }
+
+  addFieldError(String fieldName, String message,
+      [String errorCode = 'Exception']) {
+    if (error == null) this.error = ResponseStatus();
+    var f = fieldError(fieldName);
+    if (f != null) {
+      f.errorCode = errorCode;
+      f.message = message;
+    } else {
+      var newError = ResponseError();
+      newError.fieldName = fieldName;
+      newError.errorCode = errorCode;
+      newError.message = message;
+
+      error?.errors ??= <ResponseError>[];
+      error?.errors!.add(newError);
+    }
   }
 }

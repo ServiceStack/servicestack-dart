@@ -20,6 +20,15 @@ class ClientFactory {
     return client;
   }
 
+  static IServiceClient api(
+      [String baseUrl = "/", ClientOptions? options = null]) {
+    var client = JsonServiceClient.api(baseUrl);
+    if (ClientConfig.initClient != null) {
+      ClientConfig.initClient!(client);
+    }
+    return client;
+  }
+
   static IServiceClient createWith(ClientOptions options) {
     var client = create(options.baseUrl);
     if (client is JsonServiceClient) {
@@ -49,14 +58,13 @@ class SendContext {
   ResponseFilter? responseFilter;
   dynamic responseAs;
   String assertUrl() {
-    if (this.url != null)
-      return this.url!;
-    if (this.uri != null)
-      return this.uri!.toString();
+    if (this.url != null) return this.url!;
+    if (this.uri != null) return this.uri!.toString();
     throw StateError('no url');
   }
+
   SendContext(
-      {this.method='GET',
+      {this.method = 'GET',
       this.request,
       this.body,
       this.args,
@@ -105,6 +113,7 @@ class JsonServiceClient implements IServiceClient {
   String? getTokenCookie() {
     return cookies?.firstWhereOrNull((x) => x.name == 'ss-tok')?.value;
   }
+
   String? getRefreshTokenCookie() {
     return cookies?.firstWhereOrNull((x) => x.name == 'ss-reftok')?.value;
   }
@@ -124,8 +133,51 @@ class JsonServiceClient implements IServiceClient {
     useTokenCookie = false;
   }
 
+  JsonServiceClient.api([this.baseUrl = "/"]) {
+    replyBaseUrl = combinePaths([baseUrl, "api"]) + "/";
+    oneWayBaseUrl = combinePaths([baseUrl, "api"]) + "/";
+    headers = {};
+    cookies = <Cookie>[];
+    maxRetries = 5;
+    useTokenCookie = false;
+  }
+
   void clearCookies() {
     this.cookies?.clear();
+  }
+
+  @override
+  Future<ApiResult<T>> api<T>(IReturn<T> request,
+      {Map<String, dynamic>? args, String? method}) async {
+    try {
+      var result =
+          await fetch<T>(method ?? resolveHttpMethod(request), request, args);
+      return ApiResult<T>(response: result);
+    } on Exception catch (e) {
+      return new ApiResult<T>(error: getResponseStatus(e));
+    }
+  }
+
+  @override
+  Future<ApiResult<EmptyResponse>> apiVoid(IReturnVoid request,
+      {Map<String, dynamic>? args, String? method}) async {
+    try {
+      var result = await this.fetch<EmptyResponse>(
+          method ?? resolveHttpMethod(request), request, args);
+      return ApiResult<EmptyResponse>(response: result);
+    } on Exception catch (e) {
+      return ApiResult<EmptyResponse>(error: getResponseStatus(e));
+    }
+  }
+
+  Future<T> fetch<T>(String method, dynamic request,
+      [Map<String, dynamic>? args, String? url]) {
+    return this.sendRequest<T>(SendContext(
+      method: method,
+      request: request,
+      args: args,
+      url: url,
+    ));
   }
 
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args}) {
@@ -184,8 +236,8 @@ class JsonServiceClient implements IServiceClient {
 
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic>? args}) {
-    return sendRequest<Map<String, dynamic>>(SendContext(
-        method: "DELETE", url: toAbsoluteUrl(path), args: args));
+    return sendRequest<Map<String, dynamic>>(
+        SendContext(method: "DELETE", url: toAbsoluteUrl(path), args: args));
   }
 
   Future<T> deleteAs<T>(String path,
@@ -356,7 +408,8 @@ class JsonServiceClient implements IServiceClient {
           try {
             var jwtReq = await createRequest(jwtInfo);
             var jwtRes = await jwtReq.close();
-            var jwtResponse = await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
+            var jwtResponse =
+                await createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo);
             bearerToken = jwtResponse!.accessToken;
             if (debug) Log.debug("sendRequest(): bearerToken refreshed");
             return await _resendRequest<T>(info);
@@ -402,11 +455,9 @@ class JsonServiceClient implements IServiceClient {
         url = createUrlFromDto(method, request);
       }
     }
-    if (url == null)
-      throw ArgumentError.notNull('url');
+    if (url == null) throw ArgumentError.notNull('url');
 
-    if (args != null)
-      url = appendQueryString(url, args);
+    if (args != null) url = appendQueryString(url, args);
 
     String? bodyStr;
     if (hasRequestBody(method)) {
@@ -425,7 +476,7 @@ class JsonServiceClient implements IServiceClient {
       try {
         req = await client.openUrl(method, uri!);
         break;
-      } on Exception catch (e,trace) {
+      } on Exception catch (e, trace) {
         Log.debug("createRequest(): $e\n$trace");
         if (firstEx == null) {
           firstEx = e;
@@ -435,7 +486,8 @@ class JsonServiceClient implements IServiceClient {
     if (req == null) throw firstEx!;
 
     if (bearerToken != null)
-      req.headers.add(HttpHeaders.authorizationHeader, 'Bearer ' + bearerToken!);
+      req.headers
+          .add(HttpHeaders.authorizationHeader, 'Bearer ' + bearerToken!);
     else if (userName != null)
       req.headers.add(HttpHeaders.authorizationHeader,
           'Basic ' + base64.encode(utf8.encode('$userName:$password')));
@@ -494,8 +546,8 @@ class JsonServiceClient implements IServiceClient {
     }
 
     var request = info.request;
-    var responseAs = info.responseAs ??
-        (request != null ? request.createResponse() : null);
+    var responseAs =
+        info.responseAs ?? (request != null ? request.createResponse() : null);
 
     res.headers.forEach((key, value) {
       if (key.toLowerCase() == "x-cookies") {
@@ -580,7 +632,7 @@ class JsonServiceClient implements IServiceClient {
         var jsonObj = json.decode(str);
         webEx.responseStatus = createResponseStatus(jsonObj);
       }
-    } on Exception catch (e,trace) {
+    } on Exception catch (e, trace) {
       Log.warn("handleError(): $e\n$trace");
       webEx.innerException = e;
     }

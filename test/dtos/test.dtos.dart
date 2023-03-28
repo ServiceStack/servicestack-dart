@@ -1,8 +1,8 @@
 /* Options:
-Date: 2021-10-10 16:23:28
-Version: 5.121
+Date: 2023-03-28 11:48:00
+Version: 6.71
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: http://test.servicestack.net
+BaseUrl: https://test.servicestack.net
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True
@@ -391,7 +391,16 @@ class AuthUserSession implements IConvertible
     // @DataMember(Order=58)
     String? type;
 
-    AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta,this.audiences,this.scopes,this.dns,this.rsa,this.sid,this.hash,this.homePhone,this.mobilePhone,this.webpage,this.emailConfirmed,this.phoneNumberConfirmed,this.twoFactorEnabled,this.securityStamp,this.type});
+    // @DataMember(Order=59)
+    String? recoveryToken;
+
+    // @DataMember(Order=60)
+    int? refId;
+
+    // @DataMember(Order=61)
+    String? refIdStr;
+
+    AuthUserSession({this.referrerUrl,this.id,this.userAuthId,this.userAuthName,this.userName,this.twitterUserId,this.twitterScreenName,this.facebookUserId,this.facebookUserName,this.firstName,this.lastName,this.displayName,this.company,this.email,this.primaryEmail,this.phoneNumber,this.birthDate,this.birthDateRaw,this.address,this.address2,this.city,this.state,this.country,this.culture,this.fullName,this.gender,this.language,this.mailAddress,this.nickname,this.postalCode,this.timeZone,this.requestTokenSecret,this.createdAt,this.lastModified,this.roles,this.permissions,this.isAuthenticated,this.fromToken,this.profileUrl,this.sequence,this.tag,this.authProvider,this.providerOAuthAccess,this.meta,this.audiences,this.scopes,this.dns,this.rsa,this.sid,this.hash,this.homePhone,this.mobilePhone,this.webpage,this.emailConfirmed,this.phoneNumberConfirmed,this.twoFactorEnabled,this.securityStamp,this.type,this.recoveryToken,this.refId,this.refIdStr});
     AuthUserSession.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
@@ -453,6 +462,9 @@ class AuthUserSession implements IConvertible
         twoFactorEnabled = json['twoFactorEnabled'];
         securityStamp = json['securityStamp'];
         type = json['type'];
+        recoveryToken = json['recoveryToken'];
+        refId = json['refId'];
+        refIdStr = json['refIdStr'];
         return this;
     }
 
@@ -514,7 +526,10 @@ class AuthUserSession implements IConvertible
         'phoneNumberConfirmed': phoneNumberConfirmed,
         'twoFactorEnabled': twoFactorEnabled,
         'securityStamp': securityStamp,
-        'type': type
+        'type': type,
+        'recoveryToken': recoveryToken,
+        'refId': refId,
+        'refIdStr': refIdStr
     };
 
     getTypeName() => "AuthUserSession";
@@ -1287,7 +1302,7 @@ class RockstarVersion extends RockstarBase implements IConvertible
 }
 
 // @Route("/messages/crud/{Id}", "PUT")
-class MessageCrud implements IReturnVoid, ISaveDb<MessageCrud>, IConvertible
+class MessageCrud implements IReturnVoid, ISaveDb<MessageCrud>, IConvertible, IPut
 {
     int? id;
     String? name;
@@ -1811,11 +1826,11 @@ class CustomHttpErrorResponse implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class QueryResponseAlt<T> implements IConvertible
+class QueryResponseAlt<Item> implements IConvertible
 {
     int? offset;
     int? total;
-    List<T>? results;
+    List<Item>? results;
     Map<String,String?>? meta;
     ResponseStatus? responseStatus;
 
@@ -1834,12 +1849,12 @@ class QueryResponseAlt<T> implements IConvertible
     Map<String, dynamic> toJson() => {
         'offset': offset,
         'total': total,
-        'results': JsonConverters.toJson(results,'List<T>',context!),
+        'results': JsonConverters.toJson(results,'List<Item>',context!),
         'meta': meta,
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    getTypeName() => "QueryResponseAlt<$T>";
+    getTypeName() => "QueryResponseAlt<$Item>";
     TypeContext? context = _ctx;
 }
 
@@ -1906,16 +1921,16 @@ class ThrowTypeResponse implements IConvertible
 class ThrowValidationResponse implements IConvertible
 {
     int? age;
-    String? required;
+    String? Required;
     String? email;
     ResponseStatus? responseStatus;
 
-    ThrowValidationResponse({this.age,this.required,this.email,this.responseStatus});
+    ThrowValidationResponse({this.age,this.Required,this.email,this.responseStatus});
     ThrowValidationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         age = json['age'];
-        required = json['required'];
+        Required = json['required'];
         email = json['email'];
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
@@ -1923,7 +1938,7 @@ class ThrowValidationResponse implements IConvertible
 
     Map<String, dynamic> toJson() => {
         'age': age,
-        'required': required,
+        'required': Required,
         'email': email,
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
@@ -2116,7 +2131,7 @@ class GetExampleResponse implements IConvertible
 }
 
 // @Route("/messages/{Id}", "PUT")
-class Message implements IReturn<Message>, IConvertible
+class Message implements IReturn<Message>, IConvertible, IPut
 {
     int? id;
     String? name;
@@ -2181,32 +2196,7 @@ class HelloResponse implements IConvertible
     TypeContext? context = _ctx;
 }
 
-/**
-* Description on HelloAllResponse type
-*/
-// @DataContract
-class HelloAnnotatedResponse implements IConvertible
-{
-    // @DataMember
-    String? result;
-
-    HelloAnnotatedResponse({this.result});
-    HelloAnnotatedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
-
-    getTypeName() => "HelloAnnotatedResponse";
-    TypeContext? context = _ctx;
-}
-
-class AllTypes implements IReturn<AllTypes>, IConvertible
+class AllTypes implements IReturn<AllTypes>, IConvertible, IPost
 {
     int? id;
     int? nullableId;
@@ -2303,7 +2293,7 @@ class AllTypes implements IReturn<AllTypes>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
+class AllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible, IPost
 {
     List<int>? intArray;
     List<int>? intList;
@@ -2408,7 +2398,7 @@ class SubAllTypes extends AllTypesBase implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloDateTime implements IReturn<HelloDateTime>, IConvertible
+class HelloDateTime implements IReturn<HelloDateTime>, IConvertible, IPost
 {
     DateTime? dateTime;
 
@@ -2621,7 +2611,7 @@ class EnumResponse implements IConvertible
 }
 
 // @Route("/hellotypes/{Name}")
-class HelloTypes implements IReturn<HelloTypes>, IConvertible
+class HelloTypes implements IReturn<HelloTypes>, IConvertible, IPost
 {
     String? string;
     bool? Bool;
@@ -2866,7 +2856,7 @@ class TestAuthResponse implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
+class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible, IPost
 {
     int? id;
 
@@ -2890,7 +2880,7 @@ class RequiresAdmin implements IReturn<RequiresAdmin>, IConvertible
 
 // @Route("/custom")
 // @Route("/custom/{Data}")
-class CustomRoute implements IReturn<CustomRoute>, IConvertible
+class CustomRoute implements IReturn<CustomRoute>, IConvertible, IPost
 {
     String? data;
 
@@ -2913,7 +2903,7 @@ class CustomRoute implements IReturn<CustomRoute>, IConvertible
 }
 
 // @Route("/wait/{ForMs}")
-class Wait implements IReturn<Wait>, IConvertible
+class Wait implements IReturn<Wait>, IConvertible, IPost
 {
     int? forMs;
 
@@ -2936,7 +2926,7 @@ class Wait implements IReturn<Wait>, IConvertible
 }
 
 // @Route("/echo/types")
-class EchoTypes implements IReturn<EchoTypes>, IConvertible
+class EchoTypes implements IReturn<EchoTypes>, IConvertible, IPost
 {
     int? byte;
     int? short;
@@ -3004,7 +2994,7 @@ class EchoTypes implements IReturn<EchoTypes>, IConvertible
 }
 
 // @Route("/echo/collections")
-class EchoCollections implements IReturn<EchoCollections>, IConvertible
+class EchoCollections implements IReturn<EchoCollections>, IConvertible, IPost
 {
     List<String>? stringList;
     List<String>? stringArray;
@@ -3036,7 +3026,7 @@ class EchoCollections implements IReturn<EchoCollections>, IConvertible
 }
 
 // @Route("/echo/complex")
-class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
+class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible, IPost
 {
     SubType? subType;
     List<SubType>? subTypes;
@@ -3071,7 +3061,7 @@ class EchoComplexTypes implements IReturn<EchoComplexTypes>, IConvertible
 }
 
 // @Route("/rockstars", "POST")
-class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstars>, IConvertible
+class StoreRockstars extends ListBase<Rockstar> implements IReturn<StoreRockstars>, IConvertible, IPost
 {
     final List<Rockstar> l = [];
     set length(int newLength) { l.length = newLength; }
@@ -3192,7 +3182,7 @@ class RockstarWithIdAndRowVersionResponse implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class QueryItems extends QueryDb2<Item,Poco> implements IReturn<QueryResponse<Poco>>, IConvertible
+class QueryItems extends QueryDb2<Item,Poco> implements IReturn<QueryResponse<Poco>>, IConvertible, IGet
 {
     QueryItems();
     QueryItems.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -3209,7 +3199,7 @@ class QueryItems extends QueryDb2<Item,Poco> implements IReturn<QueryResponse<Po
 }
 
 // @Route("/channels/{Channel}/raw")
-class PostRawToChannel implements IReturnVoid, IConvertible
+class PostRawToChannel implements IReturnVoid, IConvertible, IPost
 {
     String? from;
     String? toUserId;
@@ -3243,7 +3233,7 @@ class PostRawToChannel implements IReturnVoid, IConvertible
 }
 
 // @Route("/channels/{Channel}/chat")
-class PostChatToChannel implements IReturn<ChatMessage>, IConvertible
+class PostChatToChannel implements IReturn<ChatMessage>, IConvertible, IPost
 {
     String? from;
     String? toUserId;
@@ -3278,7 +3268,7 @@ class PostChatToChannel implements IReturn<ChatMessage>, IConvertible
 }
 
 // @Route("/chathistory")
-class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible
+class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible, IPost
 {
     List<String>? channels;
     int? afterId;
@@ -3307,7 +3297,7 @@ class GetChatHistory implements IReturn<GetChatHistoryResponse>, IConvertible
 }
 
 // @Route("/reset")
-class ClearChatHistory implements IReturnVoid, IConvertible
+class ClearChatHistory implements IReturnVoid, IConvertible, IPost
 {
     ClearChatHistory();
     ClearChatHistory.fromJson(Map<String, dynamic> json) : super();
@@ -3322,7 +3312,7 @@ class ClearChatHistory implements IReturnVoid, IConvertible
 }
 
 // @Route("/reset-serverevents")
-class ResetServerEvents implements IReturnVoid, IConvertible
+class ResetServerEvents implements IReturnVoid, IConvertible, IPost
 {
     ResetServerEvents();
     ResetServerEvents.fromJson(Map<String, dynamic> json) : super();
@@ -3337,7 +3327,7 @@ class ResetServerEvents implements IReturnVoid, IConvertible
 }
 
 // @Route("/channels/{Channel}/object")
-class PostObjectToChannel implements IReturnVoid, IConvertible
+class PostObjectToChannel implements IReturnVoid, IConvertible, IPost
 {
     String? toUserId;
     String? channel;
@@ -3371,7 +3361,7 @@ class PostObjectToChannel implements IReturnVoid, IConvertible
 }
 
 // @Route("/account")
-class GetUserDetails implements IReturn<GetUserDetailsResponse>, IConvertible
+class GetUserDetails implements IReturn<GetUserDetailsResponse>, IConvertible, IGet
 {
     GetUserDetails();
     GetUserDetails.fromJson(Map<String, dynamic> json) : super();
@@ -3386,7 +3376,7 @@ class GetUserDetails implements IReturn<GetUserDetailsResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
+class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible, IPost
 {
     int? statusCode;
     String? statusDescription;
@@ -3411,7 +3401,7 @@ class CustomHttpError implements IReturn<CustomHttpErrorResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible
+class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible, IPost
 {
     String? name;
 
@@ -3433,7 +3423,7 @@ class AltQueryItems implements IReturn<QueryResponseAlt<Item>>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class GetItems implements IReturn<Items>, IConvertible
+class GetItems implements IReturn<Items>, IConvertible, IGet
 {
     GetItems();
     GetItems.fromJson(Map<String, dynamic> json) : super();
@@ -3448,7 +3438,7 @@ class GetItems implements IReturn<Items>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class GetNakedItems implements IReturn<List<Item>>, IConvertible
+class GetNakedItems implements IReturn<List<Item>>, IConvertible, IGet
 {
     GetNakedItems();
     GetNakedItems.fromJson(Map<String, dynamic> json) : super();
@@ -3464,7 +3454,7 @@ class GetNakedItems implements IReturn<List<Item>>, IConvertible
 }
 
 // @ValidateRequest(Validator="IsAuthenticated")
-class DeclarativeValidationAuth implements IConvertible
+class DeclarativeValidationAuth implements IConvertible, IPost
 {
     String? name;
 
@@ -3484,7 +3474,7 @@ class DeclarativeValidationAuth implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class DeclarativeCollectiveValidationTest implements IReturn<EmptyResponse>, IConvertible
+class DeclarativeCollectiveValidationTest implements IReturn<EmptyResponse>, IConvertible, IPost
 {
     // @Validate(Validator="NotEmpty")
     // @Validate(Validator="MaximumLength(20)")
@@ -3515,7 +3505,7 @@ class DeclarativeCollectiveValidationTest implements IReturn<EmptyResponse>, ICo
     TypeContext? context = _ctx;
 }
 
-class DeclarativeSingleValidationTest implements IReturn<EmptyResponse>, IConvertible
+class DeclarativeSingleValidationTest implements IReturn<EmptyResponse>, IConvertible, IPost
 {
     // @Validate(Validator="NotEmpty")
     // @Validate(Validator="MaximumLength(20)")
@@ -3546,7 +3536,7 @@ class DeclarativeSingleValidationTest implements IReturn<EmptyResponse>, IConver
     TypeContext? context = _ctx;
 }
 
-class DummyTypes implements IConvertible
+class DummyTypes implements IConvertible, IPost
 {
     List<HelloResponse>? helloResponses;
     List<ListResult>? listResult;
@@ -3636,7 +3626,7 @@ class DummyTypes implements IConvertible
 }
 
 // @Route("/throwhttperror/{Status}")
-class ThrowHttpError implements IConvertible
+class ThrowHttpError implements IConvertible, IPost
 {
     int? status;
     String? message;
@@ -3661,7 +3651,7 @@ class ThrowHttpError implements IConvertible
 
 // @Route("/throw404")
 // @Route("/throw404/{Message}")
-class Throw404 implements IConvertible
+class Throw404 implements IConvertible, IPost
 {
     String? message;
 
@@ -3683,7 +3673,7 @@ class Throw404 implements IConvertible
 
 // @Route("/throwcustom400")
 // @Route("/throwcustom400/{Message}")
-class ThrowCustom400 implements IConvertible
+class ThrowCustom400 implements IConvertible, IPost
 {
     String? message;
 
@@ -3705,7 +3695,7 @@ class ThrowCustom400 implements IConvertible
 
 // @Route("/returncustom400")
 // @Route("/returncustom400/{Message}")
-class ReturnCustom400 implements IReturn<ReturnCustom400Response>, IConvertible
+class ReturnCustom400 implements IReturn<ReturnCustom400Response>, IConvertible, IPost
 {
     String? message;
 
@@ -3728,7 +3718,7 @@ class ReturnCustom400 implements IReturn<ReturnCustom400Response>, IConvertible
 }
 
 // @Route("/throw/{Type}")
-class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
+class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible, IPost
 {
     String? type;
     String? message;
@@ -3754,25 +3744,25 @@ class ThrowType implements IReturn<ThrowTypeResponse>, IConvertible
 }
 
 // @Route("/throwvalidation")
-class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
+class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible, IPost
 {
     int? age;
-    String? required;
+    String? Required;
     String? email;
 
-    ThrowValidation({this.age,this.required,this.email});
+    ThrowValidation({this.age,this.Required,this.email});
     ThrowValidation.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         age = json['age'];
-        required = json['required'];
+        Required = json['required'];
         email = json['email'];
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'age': age,
-        'required': required,
+        'required': Required,
         'email': email
     };
 
@@ -3783,7 +3773,7 @@ class ThrowValidation implements IReturn<ThrowValidationResponse>, IConvertible
 }
 
 // @Route("/throwbusinesserror")
-class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConvertible
+class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConvertible, IPost
 {
     ThrowBusinessError();
     ThrowBusinessError.fromJson(Map<String, dynamic> json) : super();
@@ -3798,7 +3788,7 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
     TypeContext? context = _ctx;
 }
 
-class RootPathRoutes implements IConvertible
+class RootPathRoutes implements IConvertible, IPost
 {
     String? path;
 
@@ -3818,7 +3808,7 @@ class RootPathRoutes implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class GetAccount implements IReturn<Account>, IConvertible
+class GetAccount implements IReturn<Account>, IConvertible, IPost
 {
     String? account;
 
@@ -3840,7 +3830,7 @@ class GetAccount implements IReturn<Account>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class GetProject implements IReturn<Project>, IConvertible
+class GetProject implements IReturn<Project>, IConvertible, IPost
 {
     String? account;
     String? project;
@@ -3866,7 +3856,7 @@ class GetProject implements IReturn<Project>, IConvertible
 }
 
 // @Route("/image-stream")
-class ImageAsStream implements IReturn<Uint8List>, IConvertible
+class ImageAsStream implements IReturn<Uint8List>, IConvertible, IPost
 {
     String? format;
 
@@ -3889,7 +3879,7 @@ class ImageAsStream implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/image-bytes")
-class ImageAsBytes implements IReturn<Uint8List>, IConvertible
+class ImageAsBytes implements IReturn<Uint8List>, IConvertible, IPost
 {
     String? format;
 
@@ -3912,7 +3902,7 @@ class ImageAsBytes implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/image-custom")
-class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
+class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible, IPost
 {
     String? format;
 
@@ -3935,7 +3925,7 @@ class ImageAsCustomResult implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/image-response")
-class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
+class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible, IPost
 {
     String? format;
 
@@ -3958,7 +3948,7 @@ class ImageWriteToResponse implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/image-file")
-class ImageAsFile implements IReturn<Uint8List>, IConvertible
+class ImageAsFile implements IReturn<Uint8List>, IConvertible, IPost
 {
     String? format;
 
@@ -3981,7 +3971,7 @@ class ImageAsFile implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/image-redirect")
-class ImageAsRedirect implements IConvertible
+class ImageAsRedirect implements IConvertible, IPost
 {
     String? format;
 
@@ -4002,7 +3992,7 @@ class ImageAsRedirect implements IConvertible
 }
 
 // @Route("/hello-image/{Name}")
-class HelloImage implements IReturn<Uint8List>, IConvertible
+class HelloImage implements IReturn<Uint8List>, IConvertible, IGet
 {
     String? name;
     String? format;
@@ -4047,7 +4037,7 @@ class HelloImage implements IReturn<Uint8List>, IConvertible
 
 // @Route("/secured")
 // @ValidateRequest(Validator="IsAuthenticated")
-class Secured implements IReturn<SecuredResponse>, IConvertible
+class Secured implements IReturn<SecuredResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4070,7 +4060,7 @@ class Secured implements IReturn<SecuredResponse>, IConvertible
 }
 
 // @Route("/jwt")
-class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IConvertible
+class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, IConvertible, IPost
 {
     DateTime? jwtExpiry;
 
@@ -4094,7 +4084,7 @@ class CreateJwt extends AuthUserSession implements IReturn<CreateJwtResponse>, I
 }
 
 // @Route("/jwt-refresh")
-class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertible
+class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertible, IPost
 {
     String? userAuthId;
     DateTime? jwtExpiry;
@@ -4120,7 +4110,7 @@ class CreateRefreshJwt implements IReturn<CreateRefreshJwtResponse>, IConvertibl
 }
 
 // @Route("/jwt-invalidate")
-class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible
+class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible, IPost
 {
     InvalidateLastAccessToken();
     InvalidateLastAccessToken.fromJson(Map<String, dynamic> json) : super();
@@ -4136,7 +4126,7 @@ class InvalidateLastAccessToken implements IReturn<EmptyResponse>, IConvertible
 }
 
 // @Route("/logs")
-class ViewLogs implements IReturn<String>, IConvertible
+class ViewLogs implements IReturn<String>, IConvertible, IPost
 {
     bool? clear;
 
@@ -4159,7 +4149,7 @@ class ViewLogs implements IReturn<String>, IConvertible
 }
 
 // @Route("/metadatatest")
-class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
+class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible, IPost
 {
     int? id;
 
@@ -4182,7 +4172,7 @@ class MetadataTest implements IReturn<MetadataTestResponse>, IConvertible
 }
 
 // @Route("/metadatatest-array")
-class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertible
+class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertible, IPost
 {
     int? id;
 
@@ -4206,7 +4196,7 @@ class MetadataTestArray implements IReturn<List<MetadataTestChild>>, IConvertibl
 
 // @Route("/example", "GET")
 // @DataContract
-class GetExample implements IReturn<GetExampleResponse>, IConvertible
+class GetExample implements IReturn<GetExampleResponse>, IConvertible, IGet
 {
     GetExample();
     GetExample.fromJson(Map<String, dynamic> json) : super();
@@ -4222,7 +4212,7 @@ class GetExample implements IReturn<GetExampleResponse>, IConvertible
 }
 
 // @Route("/messages/{Id}", "GET")
-class RequestMessage implements IReturn<Message>, IConvertible
+class RequestMessage implements IReturn<Message>, IConvertible, IGet
 {
     int? id;
 
@@ -4245,7 +4235,7 @@ class RequestMessage implements IReturn<Message>, IConvertible
 }
 
 // @Route("/randomids")
-class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
+class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible, IPost
 {
     int? take;
 
@@ -4268,7 +4258,7 @@ class GetRandomIds implements IReturn<GetRandomIdsResponse>, IConvertible
 }
 
 // @Route("/textfile-test")
-class TextFileTest implements IConvertible
+class TextFileTest implements IConvertible, IPost
 {
     bool? asAttachment;
 
@@ -4289,7 +4279,7 @@ class TextFileTest implements IConvertible
 }
 
 // @Route("/return/text")
-class ReturnText implements IConvertible
+class ReturnText implements IConvertible, IPost
 {
     String? text;
 
@@ -4310,7 +4300,7 @@ class ReturnText implements IConvertible
 }
 
 // @Route("/return/html")
-class ReturnHtml implements IConvertible
+class ReturnHtml implements IConvertible, IPost
 {
     String? text;
 
@@ -4332,7 +4322,7 @@ class ReturnHtml implements IConvertible
 
 // @Route("/hello")
 // @Route("/hello/{Name}")
-class Hello implements IReturn<HelloResponse>, IConvertible
+class Hello implements IReturn<HelloResponse>, IConvertible, IPost
 {
     // @required()
     String? name;
@@ -4361,7 +4351,7 @@ class Hello implements IReturn<HelloResponse>, IConvertible
 
 // @Route("/hello-secure/{Name}")
 // @ValidateRequest(Validator="IsAuthenticated")
-class HelloSecure implements IReturn<HelloResponse>, IConvertible
+class HelloSecure implements IReturn<HelloResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4383,34 +4373,7 @@ class HelloSecure implements IReturn<HelloResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-/**
-* Description on HelloAll type
-*/
-// @DataContract
-class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible
-{
-    // @DataMember
-    String? name;
-
-    HelloAnnotated({this.name});
-    HelloAnnotated.fromJson(Map<String, dynamic> json) { fromMap(json); }
-
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {
-        'name': name
-    };
-
-    createResponse() => HelloAnnotatedResponse();
-    getResponseTypeName() => "HelloAnnotatedResponse";
-    getTypeName() => "HelloAnnotated";
-    TypeContext? context = _ctx;
-}
-
-class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
+class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible, IGet
 {
     String? name;
     NestedClass? nestedClassProp;
@@ -4435,7 +4398,7 @@ class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloList implements IReturn<List<ListResult>>, IConvertible
+class HelloList implements IReturn<List<ListResult>>, IConvertible, IPost
 {
     List<String>? names;
 
@@ -4457,7 +4420,7 @@ class HelloList implements IReturn<List<ListResult>>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
+class HelloArray implements IReturn<List<ArrayResult>>, IConvertible, IPost
 {
     List<String>? names;
 
@@ -4479,7 +4442,51 @@ class HelloArray implements IReturn<List<ArrayResult>>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloWithEnum implements IConvertible
+class HelloMap implements IReturn<Map<String,ArrayResult?>>, IConvertible, IPost
+{
+    List<String>? names;
+
+    HelloMap({this.names});
+    HelloMap.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'names': JsonConverters.toJson(names,'List<String>',context!)
+    };
+
+    createResponse() => Map<String,ArrayResult?>();
+    getResponseTypeName() => "Map<String,ArrayResult?>";
+    getTypeName() => "HelloMap";
+    TypeContext? context = _ctx;
+}
+
+class HelloQueryResponse implements IReturn<QueryResponse<String>>, IConvertible, IPost
+{
+    List<String>? names;
+
+    HelloQueryResponse({this.names});
+    HelloQueryResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        names = JsonConverters.fromJson(json['names'],'List<String>',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'names': JsonConverters.toJson(names,'List<String>',context!)
+    };
+
+    createResponse() => QueryResponse<String>();
+    getResponseTypeName() => "QueryResponse<String>";
+    getTypeName() => "HelloQueryResponse";
+    TypeContext? context = _ctx;
+}
+
+class HelloWithEnum implements IConvertible, IPost
 {
     EnumType? enumProp;
     EnumTypeFlags? enumTypeFlags;
@@ -4520,7 +4527,7 @@ class HelloWithEnum implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloWithEnumList implements IConvertible
+class HelloWithEnumList implements IConvertible, IPost
 {
     List<EnumType>? enumProp;
     List<EnumWithValues>? enumWithValues;
@@ -4552,7 +4559,7 @@ class HelloWithEnumList implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloWithEnumMap implements IConvertible
+class HelloWithEnumMap implements IConvertible, IPost
 {
     Map<EnumType,EnumType?>? enumProp;
     Map<EnumWithValues,EnumWithValues?>? enumWithValues;
@@ -4584,29 +4591,23 @@ class HelloWithEnumMap implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class RestrictedAttributes implements IConvertible
+class HelloExternal implements IConvertible, IPost
 {
-    int? id;
     String? name;
-    Hello? hello;
 
-    RestrictedAttributes({this.id,this.name,this.hello});
-    RestrictedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    HelloExternal({this.name});
+    HelloExternal.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        id = json['id'];
         name = json['name'];
-        hello = JsonConverters.fromJson(json['hello'],'Hello',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'hello': JsonConverters.toJson(hello,'Hello',context!)
+        'name': name
     };
 
-    getTypeName() => "RestrictedAttributes";
+    getTypeName() => "HelloExternal";
     TypeContext? context = _ctx;
 }
 
@@ -4617,25 +4618,25 @@ class RestrictedAttributes implements IConvertible
 // @Api(Description="AllowedAttributes Description")
 // @ApiResponse(Description="Your request was not understood", StatusCode=400)
 // @DataContract
-class AllowedAttributes implements IConvertible
+class AllowedAttributes implements IConvertible, IGet
 {
     /**
     * Range Description
     */
     // @DataMember(Name="Aliased")
     // @ApiMember(DataType="double", Description="Range Description", IsRequired=true, ParameterType="path")
-    double? range;
+    double? Aliased;
 
-    AllowedAttributes({this.range});
+    AllowedAttributes({this.Aliased});
     AllowedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
-        range = JsonConverters.toDouble(json['range']);
+        Aliased = JsonConverters.toDouble(json['range']);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'range': range
+        'aliased': Aliased
     };
 
     getTypeName() => "AllowedAttributes";
@@ -4643,7 +4644,7 @@ class AllowedAttributes implements IConvertible
 }
 
 // @Route("/all-types")
-class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
+class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible, IPost
 {
     String? name;
     AllTypes? allTypes;
@@ -4671,7 +4672,7 @@ class HelloAllTypes implements IReturn<HelloAllTypesResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, IConvertible
+class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, IConvertible, IPost
 {
     int? hierarchy;
 
@@ -4694,7 +4695,7 @@ class HelloSubAllTypes extends AllTypesBase implements IReturn<SubAllTypes>, ICo
     TypeContext? context = _ctx;
 }
 
-class HelloString implements IReturn<String>, IConvertible
+class HelloString implements IReturn<String>, IConvertible, IPost
 {
     String? name;
 
@@ -4716,7 +4717,7 @@ class HelloString implements IReturn<String>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloVoid implements IConvertible
+class HelloVoid implements IConvertible, IPost
 {
     String? name;
 
@@ -4737,7 +4738,7 @@ class HelloVoid implements IConvertible
 }
 
 // @DataContract
-class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, IConvertible
+class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, IConvertible, IPost
 {
     // @DataMember(Name="name", Order=1, IsRequired=true, EmitDefaultValue=false)
     String? name;
@@ -4768,7 +4769,7 @@ class HelloWithDataContract implements IReturn<HelloWithDataContractResponse>, I
 /**
 * Description on HelloWithDescription type
 */
-class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible
+class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4790,7 +4791,7 @@ class HelloWithDescription implements IReturn<HelloWithDescriptionResponse>, ICo
     TypeContext? context = _ctx;
 }
 
-class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>, IConvertible
+class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInheritanceResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4813,7 +4814,7 @@ class HelloWithInheritance extends HelloBase implements IReturn<HelloWithInherit
     TypeContext? context = _ctx;
 }
 
-class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertible
+class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertible, IPost
 {
     String? result;
 
@@ -4834,7 +4835,7 @@ class HelloWithGenericInheritance extends HelloBase1<Poco> implements IConvertib
     TypeContext? context = _ctx;
 }
 
-class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvertible
+class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvertible, IPost
 {
     String? result;
 
@@ -4855,7 +4856,7 @@ class HelloWithGenericInheritance2 extends HelloBase1<Hello> implements IConvert
     TypeContext? context = _ctx;
 }
 
-class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, IConvertible
+class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4878,7 +4879,7 @@ class HelloWithReturn implements IReturn<HelloWithAlternateReturnResponse>, ICon
 }
 
 // @Route("/helloroute")
-class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
+class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4900,7 +4901,7 @@ class HelloWithRoute implements IReturn<HelloWithRouteResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
+class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -4922,7 +4923,7 @@ class HelloWithType implements IReturn<HelloWithTypeResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloInterface implements IConvertible
+class HelloInterface implements IConvertible, IPost
 {
     IPoco? poco;
     IEmptyInterface? emptyInterface;
@@ -4948,7 +4949,7 @@ class HelloInterface implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
+class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible, IPost
 {
     HelloInnerTypes();
     HelloInnerTypes.fromJson(Map<String, dynamic> json) : super();
@@ -4963,7 +4964,7 @@ class HelloInnerTypes implements IReturn<HelloInnerTypesResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloBuiltin implements IConvertible
+class HelloBuiltin implements IConvertible, IPost
 {
     DayOfWeek? dayOfWeek;
 
@@ -5087,7 +5088,7 @@ class HelloPatch implements IReturn<HelloVerbResponse>, IPatch, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloReturnVoid implements IReturnVoid, IConvertible
+class HelloReturnVoid implements IReturnVoid, IConvertible, IPost
 {
     int? id;
 
@@ -5132,7 +5133,7 @@ class EnumRequest implements IReturn<EnumResponse>, IPut, IConvertible
 
 // @Route("/hellozip")
 // @DataContract
-class HelloZip implements IReturn<HelloZipResponse>, IConvertible
+class HelloZip implements IReturn<HelloZipResponse>, IConvertible, IPost
 {
     // @DataMember
     String? name;
@@ -5161,7 +5162,7 @@ class HelloZip implements IReturn<HelloZipResponse>, IConvertible
 }
 
 // @Route("/ping")
-class Ping implements IReturn<PingResponse>, IConvertible
+class Ping implements IReturn<PingResponse>, IConvertible, IPost
 {
     Ping();
     Ping.fromJson(Map<String, dynamic> json) : super();
@@ -5177,7 +5178,7 @@ class Ping implements IReturn<PingResponse>, IConvertible
 }
 
 // @Route("/reset-connections")
-class ResetConnections implements IConvertible
+class ResetConnections implements IConvertible, IPost
 {
     ResetConnections();
     ResetConnections.fromJson(Map<String, dynamic> json) : super();
@@ -5191,7 +5192,7 @@ class ResetConnections implements IConvertible
 }
 
 // @Route("/requires-role")
-class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
+class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible, IPost
 {
     RequiresRole();
     RequiresRole.fromJson(Map<String, dynamic> json) : super();
@@ -5207,7 +5208,7 @@ class RequiresRole implements IReturn<RequiresRoleResponse>, IConvertible
 }
 
 // @Route("/return/string")
-class ReturnString implements IReturn<String>, IConvertible
+class ReturnString implements IReturn<String>, IConvertible, IPost
 {
     String? data;
 
@@ -5230,7 +5231,7 @@ class ReturnString implements IReturn<String>, IConvertible
 }
 
 // @Route("/return/bytes")
-class ReturnBytes implements IReturn<Uint8List>, IConvertible
+class ReturnBytes implements IReturn<Uint8List>, IConvertible, IPost
 {
     Uint8List? data;
 
@@ -5253,7 +5254,7 @@ class ReturnBytes implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/return/stream")
-class ReturnStream implements IReturn<Uint8List>, IConvertible
+class ReturnStream implements IReturn<Uint8List>, IConvertible, IPost
 {
     Uint8List? data;
 
@@ -5276,7 +5277,7 @@ class ReturnStream implements IReturn<Uint8List>, IConvertible
 }
 
 // @Route("/return/json")
-class ReturnJson implements IConvertible
+class ReturnJson implements IConvertible, IPost
 {
     ReturnJson();
     ReturnJson.fromJson(Map<String, dynamic> json) : super();
@@ -5290,7 +5291,7 @@ class ReturnJson implements IConvertible
 }
 
 // @Route("/return/json/header")
-class ReturnJsonHeader implements IConvertible
+class ReturnJsonHeader implements IConvertible, IPost
 {
     ReturnJsonHeader();
     ReturnJsonHeader.fromJson(Map<String, dynamic> json) : super();
@@ -5304,7 +5305,7 @@ class ReturnJsonHeader implements IConvertible
 }
 
 // @Route("/write/json")
-class WriteJson implements IConvertible
+class WriteJson implements IConvertible, IPost
 {
     WriteJson();
     WriteJson.fromJson(Map<String, dynamic> json) : super();
@@ -5350,23 +5351,26 @@ class GetRequest2 implements IReturn<List<ReturnedDto>>, IGet, IConvertible
 }
 
 // @Route("/sendjson")
-class SendJson implements IReturn<String>, IConvertible
+class SendJson implements IReturn<String>, IConvertible, IPost
 {
     int? id;
     String? name;
+    Uint8List? requestStream;
 
-    SendJson({this.id,this.name});
+    SendJson({this.id,this.name,this.requestStream});
     SendJson.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
+        requestStream = JsonConverters.fromJson(json['requestStream'],'Uint8List',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
-        'name': name
+        'name': name,
+        'requestStream': JsonConverters.toJson(requestStream,'Uint8List',context!)
     };
 
     createResponse() => "";
@@ -5376,26 +5380,29 @@ class SendJson implements IReturn<String>, IConvertible
 }
 
 // @Route("/sendtext")
-class SendText implements IReturn<String>, IConvertible
+class SendText implements IReturn<String>, IConvertible, IPost
 {
     int? id;
     String? name;
     String? contentType;
+    Uint8List? requestStream;
 
-    SendText({this.id,this.name,this.contentType});
+    SendText({this.id,this.name,this.contentType,this.requestStream});
     SendText.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
         contentType = json['contentType'];
+        requestStream = JsonConverters.fromJson(json['requestStream'],'Uint8List',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'contentType': contentType
+        'contentType': contentType,
+        'requestStream': JsonConverters.toJson(requestStream,'Uint8List',context!)
     };
 
     createResponse() => "";
@@ -5405,26 +5412,29 @@ class SendText implements IReturn<String>, IConvertible
 }
 
 // @Route("/sendraw")
-class SendRaw implements IReturn<Uint8List>, IConvertible
+class SendRaw implements IReturn<Uint8List>, IConvertible, IPost
 {
     int? id;
     String? name;
     String? contentType;
+    Uint8List? requestStream;
 
-    SendRaw({this.id,this.name,this.contentType});
+    SendRaw({this.id,this.name,this.contentType,this.requestStream});
     SendRaw.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
         id = json['id'];
         name = json['name'];
         contentType = json['contentType'];
+        requestStream = JsonConverters.fromJson(json['requestStream'],'Uint8List',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'contentType': contentType
+        'contentType': contentType,
+        'requestStream': JsonConverters.toJson(requestStream,'Uint8List',context!)
     };
 
     createResponse() => Uint8List(0);
@@ -5433,7 +5443,7 @@ class SendRaw implements IReturn<Uint8List>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class SendDefault implements IReturn<SendVerbResponse>, IConvertible
+class SendDefault implements IReturn<SendVerbResponse>, IConvertible, IPost
 {
     int? id;
 
@@ -5544,7 +5554,7 @@ class SendPut implements IReturn<SendVerbResponse>, IPut, IConvertible
     TypeContext? context = _ctx;
 }
 
-class SendReturnVoid implements IReturnVoid, IConvertible
+class SendReturnVoid implements IReturnVoid, IConvertible, IPost
 {
     int? id;
 
@@ -5566,7 +5576,7 @@ class SendReturnVoid implements IReturnVoid, IConvertible
 }
 
 // @Route("/session")
-class GetSession implements IReturn<GetSessionResponse>, IConvertible
+class GetSession implements IReturn<GetSessionResponse>, IConvertible, IPost
 {
     GetSession();
     GetSession.fromJson(Map<String, dynamic> json) : super();
@@ -5582,7 +5592,7 @@ class GetSession implements IReturn<GetSessionResponse>, IConvertible
 }
 
 // @Route("/session/edit/{CustomName}")
-class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
+class UpdateSession implements IReturn<GetSessionResponse>, IConvertible, IPost
 {
     String? customName;
 
@@ -5606,7 +5616,7 @@ class UpdateSession implements IReturn<GetSessionResponse>, IConvertible
 
 // @Route("/Stuff")
 // @DataContract(Namespace="http://schemas.servicestack.net/types")
-class GetStuff implements IReturn<GetStuffResponse>, IConvertible
+class GetStuff implements IReturn<GetStuffResponse>, IConvertible, IPost
 {
     // @DataMember
     // @ApiMember(DataType="DateTime", Name="Summary Date")
@@ -5654,7 +5664,7 @@ class GetStuff implements IReturn<GetStuffResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
+class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible, IPost
 {
     List<Logger>? loggers;
 
@@ -5676,7 +5686,7 @@ class StoreLogs implements IReturn<StoreLogsResponse>, IConvertible
     TypeContext? context = _ctx;
 }
 
-class HelloAuth implements IReturn<HelloResponse>, IConvertible
+class HelloAuth implements IReturn<HelloResponse>, IConvertible, IPost
 {
     String? name;
 
@@ -5699,7 +5709,7 @@ class HelloAuth implements IReturn<HelloResponse>, IConvertible
 }
 
 // @Route("/testauth")
-class TestAuth implements IReturn<TestAuthResponse>, IConvertible
+class TestAuth implements IReturn<TestAuthResponse>, IConvertible, IPost
 {
     TestAuth();
     TestAuth.fromJson(Map<String, dynamic> json) : super();
@@ -5715,7 +5725,7 @@ class TestAuth implements IReturn<TestAuthResponse>, IConvertible
 }
 
 // @Route("/testdata/AllTypes")
-class TestDataAllTypes implements IReturn<AllTypes>, IConvertible
+class TestDataAllTypes implements IReturn<AllTypes>, IConvertible, IPost
 {
     TestDataAllTypes();
     TestDataAllTypes.fromJson(Map<String, dynamic> json) : super();
@@ -5731,7 +5741,7 @@ class TestDataAllTypes implements IReturn<AllTypes>, IConvertible
 }
 
 // @Route("/testdata/AllCollectionTypes")
-class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible
+class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConvertible, IPost
 {
     TestDataAllCollectionTypes();
     TestDataAllCollectionTypes.fromJson(Map<String, dynamic> json) : super();
@@ -5747,7 +5757,7 @@ class TestDataAllCollectionTypes implements IReturn<AllCollectionTypes>, IConver
 }
 
 // @Route("/void-response")
-class TestVoidResponse implements IConvertible
+class TestVoidResponse implements IConvertible, IPost
 {
     TestVoidResponse();
     TestVoidResponse.fromJson(Map<String, dynamic> json) : super();
@@ -5761,7 +5771,7 @@ class TestVoidResponse implements IConvertible
 }
 
 // @Route("/null-response")
-class TestNullResponse implements IConvertible
+class TestNullResponse implements IConvertible, IPost
 {
     TestNullResponse();
     TestNullResponse.fromJson(Map<String, dynamic> json) : super();
@@ -5774,7 +5784,7 @@ class TestNullResponse implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
+class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible, IGet
 {
     int? id;
 
@@ -5797,7 +5807,7 @@ class QueryRockstarAudit extends QueryDbTenant<RockstarAuditTenant,RockstarAuto>
     TypeContext? context = _ctx;
 }
 
-class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible
+class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto> implements IReturn<QueryResponse<RockstarAuto>>, IConvertible, IGet
 {
     String? firstNameStartsWith;
     int? ageOlderThan;
@@ -5823,7 +5833,7 @@ class QueryRockstarAuditSubOr extends QueryDb2<RockstarAuditTenant,RockstarAuto>
     TypeContext? context = _ctx;
 }
 
-class QueryPocoBase extends QueryDb<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible
+class QueryPocoBase extends QueryDb<OnlyDefinedInGenericType> implements IReturn<QueryResponse<OnlyDefinedInGenericType>>, IConvertible, IGet
 {
     int? id;
 
@@ -5846,7 +5856,7 @@ class QueryPocoBase extends QueryDb<OnlyDefinedInGenericType> implements IReturn
     TypeContext? context = _ctx;
 }
 
-class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IConvertible
+class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefinedInGenericTypeInto> implements IReturn<QueryResponse<OnlyDefinedInGenericTypeInto>>, IConvertible, IGet
 {
     int? id;
 
@@ -5870,7 +5880,7 @@ class QueryPocoIntoBase extends QueryDb2<OnlyDefinedInGenericTypeFrom,OnlyDefine
 }
 
 // @Route("/message/query/{Id}", "GET")
-class MessageQuery extends QueryDb<MessageQuery> implements IReturn<QueryResponse<MessageQuery>>, IConvertible
+class MessageQuery extends QueryDb<MessageQuery> implements IReturn<QueryResponse<MessageQuery>>, IConvertible, IGet
 {
     int? id;
 
@@ -5894,7 +5904,7 @@ class MessageQuery extends QueryDb<MessageQuery> implements IReturn<QueryRespons
 }
 
 // @Route("/rockstars", "GET")
-class QueryRockstars extends QueryDb<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible
+class QueryRockstars extends QueryDb<Rockstar> implements IReturn<QueryResponse<Rockstar>>, IConvertible, IGet
 {
     QueryRockstars();
     QueryRockstars.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -5910,7 +5920,7 @@ class QueryRockstars extends QueryDb<Rockstar> implements IReturn<QueryResponse<
     TypeContext? context = _ctx;
 }
 
-class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IConvertible
+class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IConvertible, IPost
 {
     CreateRockstarAudit();
     CreateRockstarAudit.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -5926,7 +5936,7 @@ class CreateRockstarAudit extends RockstarBase implements IReturn<RockstarWithId
     TypeContext? context = _ctx;
 }
 
-class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
+class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible, IPost
 {
     String? sessionId;
     String? firstName;
@@ -5967,7 +5977,7 @@ class CreateRockstarAuditTenant extends CreateAuditTenantBase<RockstarAuditTenan
     TypeContext? context = _ctx;
 }
 
-class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
+class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible, IPut
 {
     String? sessionId;
     int? id;
@@ -5999,7 +6009,7 @@ class UpdateRockstarAuditTenant extends UpdateAuditTenantBase<RockstarAuditTenan
     TypeContext? context = _ctx;
 }
 
-class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible
+class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IHasSessionId, IConvertible, IPatch
 {
     String? sessionId;
     int? id;
@@ -6031,7 +6041,7 @@ class PatchRockstarAuditTenant extends PatchAuditTenantBase<RockstarAuditTenant,
     TypeContext? context = _ctx;
 }
 
-class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IConvertible
+class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenant,RockstarWithIdAndResultResponse> implements IReturn<RockstarWithIdAndResultResponse>, IConvertible, IPut
 {
     int? id;
 
@@ -6054,7 +6064,7 @@ class SoftDeleteAuditTenant extends SoftDeleteAuditTenantBase<RockstarAuditTenan
     TypeContext? context = _ctx;
 }
 
-class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IHasBearerToken, IConvertible
+class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<RockstarWithIdResponse>, ICreateDb<RockstarAudit>, IHasBearerToken, IConvertible, IPost
 {
     String? bearerToken;
 
@@ -6077,7 +6087,7 @@ class CreateRockstarAuditMqToken extends RockstarBase implements IReturn<Rocksta
     TypeContext? context = _ctx;
 }
 
-class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, IDeleteDb<RockstarAuditTenant>, IHasSessionId, IConvertible
+class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, IDeleteDb<RockstarAuditTenant>, IHasSessionId, IConvertible, IDelete
 {
     String? sessionId;
     int? id;
@@ -6105,7 +6115,7 @@ class RealDeleteAuditTenant implements IReturn<RockstarWithIdAndCountResponse>, 
     TypeContext? context = _ctx;
 }
 
-class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWithIdAndRowVersionResponse>, ICreateDb<RockstarVersion>, IConvertible
+class CreateRockstarVersion extends RockstarBase implements IReturn<RockstarWithIdAndRowVersionResponse>, ICreateDb<RockstarVersion>, IConvertible, IPost
 {
     CreateRockstarVersion();
     CreateRockstarVersion.fromJson(Map<String, dynamic> json) : super.fromJson(json);
@@ -6199,7 +6209,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'List<ChatMessage>': TypeInfo(TypeOf.Class, create:() => <ChatMessage>[]),
     'GetUserDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetUserDetailsResponse()),
     'CustomHttpErrorResponse': TypeInfo(TypeOf.Class, create:() => CustomHttpErrorResponse()),
-    'QueryResponseAlt<T>': TypeInfo(TypeOf.GenericDef,create:() => QueryResponseAlt()),
+    'QueryResponseAlt<Item>': TypeInfo(TypeOf.Class, create:() => QueryResponseAlt<Item>()),
     'Items': TypeInfo(TypeOf.Class, create:() => Items()),
     'List<Item>': TypeInfo(TypeOf.Class, create:() => <Item>[]),
     'ReturnCustom400Response': TypeInfo(TypeOf.Class, create:() => ReturnCustom400Response()),
@@ -6217,7 +6227,6 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'Message': TypeInfo(TypeOf.Class, create:() => Message()),
     'GetRandomIdsResponse': TypeInfo(TypeOf.Class, create:() => GetRandomIdsResponse()),
     'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
-    'HelloAnnotatedResponse': TypeInfo(TypeOf.Class, create:() => HelloAnnotatedResponse()),
     'AllTypes': TypeInfo(TypeOf.Class, create:() => AllTypes()),
     'AllCollectionTypes': TypeInfo(TypeOf.Class, create:() => AllCollectionTypes()),
     'Uint8List': TypeInfo(TypeOf.Class, create:() => Uint8List(0)),
@@ -6316,10 +6325,11 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'ReturnHtml': TypeInfo(TypeOf.Class, create:() => ReturnHtml()),
     'Hello': TypeInfo(TypeOf.Class, create:() => Hello()),
     'HelloSecure': TypeInfo(TypeOf.Class, create:() => HelloSecure()),
-    'HelloAnnotated': TypeInfo(TypeOf.Class, create:() => HelloAnnotated()),
     'HelloWithNestedClass': TypeInfo(TypeOf.Class, create:() => HelloWithNestedClass()),
     'HelloList': TypeInfo(TypeOf.Class, create:() => HelloList()),
     'HelloArray': TypeInfo(TypeOf.Class, create:() => HelloArray()),
+    'HelloMap': TypeInfo(TypeOf.Class, create:() => HelloMap()),
+    'HelloQueryResponse': TypeInfo(TypeOf.Class, create:() => HelloQueryResponse()),
     'HelloWithEnum': TypeInfo(TypeOf.Class, create:() => HelloWithEnum()),
     'HelloWithEnumList': TypeInfo(TypeOf.Class, create:() => HelloWithEnumList()),
     'List<EnumType>': TypeInfo(TypeOf.Class, create:() => <EnumType>[]),
@@ -6331,7 +6341,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'Map<EnumWithValues,EnumWithValues?>': TypeInfo(TypeOf.Class, create:() => Map<EnumWithValues,EnumWithValues?>()),
     'Map<EnumFlags,EnumFlags?>': TypeInfo(TypeOf.Class, create:() => Map<EnumFlags,EnumFlags?>()),
     'Map<EnumStyle,EnumStyle?>': TypeInfo(TypeOf.Class, create:() => Map<EnumStyle,EnumStyle?>()),
-    'RestrictedAttributes': TypeInfo(TypeOf.Class, create:() => RestrictedAttributes()),
+    'HelloExternal': TypeInfo(TypeOf.Class, create:() => HelloExternal()),
     'AllowedAttributes': TypeInfo(TypeOf.Class, create:() => AllowedAttributes()),
     'HelloAllTypes': TypeInfo(TypeOf.Class, create:() => HelloAllTypes()),
     'HelloSubAllTypes': TypeInfo(TypeOf.Class, create:() => HelloSubAllTypes()),

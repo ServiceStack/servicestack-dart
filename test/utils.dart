@@ -14,6 +14,12 @@ JsonServiceClient createTestClient() =>
         }
       };
 
+JsonServiceClient createApiTestClient() =>
+    JsonServiceClient.api("https://test.servicestack.net")
+      ..exceptionFilter = (res, e) {
+        if (e is WebServiceException) {}
+      };
+
 JsonServiceClient createTechStacksClient() =>
     JsonServiceClient("https://techstacks.io")
       ..exceptionFilter = (res, e) {

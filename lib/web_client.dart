@@ -20,6 +20,14 @@ class ClientFactory {
     return client;
   }
 
+  static IServiceClient api([String baseUrl = "/"]) {
+    var client = JsonWebClient.api(baseUrl);
+    if (ClientConfig.initClient != null) {
+      ClientConfig.initClient!(client);
+    }
+    return client;
+  }
+
   static IServiceClient createWith(ClientOptions options) {
     var client = create(options.baseUrl);
     return client;
@@ -37,7 +45,7 @@ class SendWebContext {
   WebResponseFilter? responseFilter;
   dynamic responseAs;
   SendWebContext(
-      {this.method='GET',
+      {this.method = 'GET',
       this.request,
       this.body,
       this.args,
@@ -93,11 +101,20 @@ class JsonWebClient implements IServiceClient {
     useTokenCookie = false;
   }
 
+  JsonWebClient.api([this.baseUrl = "/"]) {
+    replyBaseUrl = combinePaths([baseUrl, "api"]) + "/";
+    oneWayBaseUrl = combinePaths([baseUrl, "api"]) + "/";
+    headers = {};
+    client = BrowserClient()..withCredentials = true;
+    maxRetries = 5;
+    useTokenCookie = false;
+  }
+
   String? getTokenCookie() => cookies['ss-tok'];
   String? getRefreshTokenCookie() => cookies['ss-reftok'];
 
   get cookies {
-    var map = Map<String,String>();
+    var map = Map<String, String>();
     (document.cookie?.split(';') ?? []).forEach((x) {
       var parts = x.split('=');
       map[parts[0].trim()] = Uri.decodeComponent(parts[1].trim());
@@ -115,14 +132,48 @@ class JsonWebClient implements IServiceClient {
     }
   }
 
+  @override
+  Future<ApiResult<T>> api<T>(IReturn<T> request,
+      {Map<String, dynamic>? args, String? method}) async {
+    try {
+      var result =
+          await fetch<T>(method ?? resolveHttpMethod(request), request, args);
+      return ApiResult<T>(response: result);
+    } on Exception catch (e) {
+      return new ApiResult<T>(error: getResponseStatus(e));
+    }
+  }
+
+  @override
+  Future<ApiResult<EmptyResponse>> apiVoid(IReturnVoid request,
+      {Map<String, dynamic>? args, String? method}) async {
+    try {
+      var result = await this.fetch<EmptyResponse>(
+          method ?? resolveHttpMethod(request), request, args);
+      return ApiResult<EmptyResponse>(response: result);
+    } on Exception catch (e) {
+      return ApiResult<EmptyResponse>(error: getResponseStatus(e));
+    }
+  }
+
+  Future<T> fetch<T>(String method, dynamic request,
+      [Map<String, dynamic>? args, String? url]) {
+    return this.sendRequest<T>(SendWebContext(
+      method: method,
+      request: request,
+      args: args,
+      url: url,
+    ));
+  }
+
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args}) {
     return send<T>(request, method: "GET", args: args);
   }
 
   Future<Map<String, dynamic>> getUrl(String path,
       {Map<String, dynamic>? args}) {
-    return sendRequest<Map<String, dynamic>>(SendWebContext(
-        method: "GET", url: toAbsoluteUrl(path), args: args));
+    return sendRequest<Map<String, dynamic>>(
+        SendWebContext(method: "GET", url: toAbsoluteUrl(path), args: args));
   }
 
   Future<T> getAs<T>(String path,
@@ -171,8 +222,8 @@ class JsonWebClient implements IServiceClient {
 
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic>? args}) {
-    return sendRequest<Map<String, dynamic>>(SendWebContext(
-        method: "DELETE", url: toAbsoluteUrl(path), args: args));
+    return sendRequest<Map<String, dynamic>>(
+        SendWebContext(method: "DELETE", url: toAbsoluteUrl(path), args: args));
   }
 
   Future<T> deleteAs<T>(String path,
@@ -346,7 +397,8 @@ class JsonWebClient implements IServiceClient {
             var jwtStreamedRes = await client.send(jwtReq);
             var jwtRes = await Response.fromStream(jwtStreamedRes);
             var jwtResponse =
-                await (createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo) as FutureOr<GetAccessTokenResponse>);
+                await (createResponse<GetAccessTokenResponse>(jwtRes, jwtInfo)
+                    as FutureOr<GetAccessTokenResponse>);
             bearerToken = jwtResponse.accessToken;
             if (debug) Log.debug("sendRequest(): bearerToken refreshed");
             return await _resendRequest<T>(info);
@@ -393,11 +445,9 @@ class JsonWebClient implements IServiceClient {
         url = createUrlFromDto(method, request);
       }
     }
-    if (url == null)
-      throw ArgumentError.notNull('url');
+    if (url == null) throw ArgumentError.notNull('url');
 
-    if (args != null)
-      url = appendQueryString(url, args);
+    if (args != null) url = appendQueryString(url, args);
 
     String? bodyStr = null;
     if (hasRequestBody(method)) {
@@ -467,8 +517,8 @@ class JsonWebClient implements IServiceClient {
     }
 
     var request = info.request;
-    var responseAs = info.responseAs ??
-        (request != null ? request.createResponse() : null);
+    var responseAs =
+        info.responseAs ?? (request != null ? request.createResponse() : null);
 
     res.headers.forEach((key, value) {
       if (key.toLowerCase() == "x-cookies") {
@@ -532,8 +582,8 @@ class JsonWebClient implements IServiceClient {
     try {
       String str = res.body;
       if (!isJsonObject(str)) {
-        webEx.responseStatus = createErrorResponse(
-                res.statusCode.toString(), res.reasonPhrase ?? res.statusCode.toString(), type)
+        webEx.responseStatus = createErrorResponse(res.statusCode.toString(),
+                res.reasonPhrase ?? res.statusCode.toString(), type)
             .responseStatus;
       } else {
         var jsonObj = json.decode(str);

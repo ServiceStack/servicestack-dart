@@ -184,8 +184,8 @@ void main() {
       expect(errors[1].fieldName, equals("Required"));
 
       expect(errors[2].errorCode, equals("Email"));
-      expect(errors[2].message,
-          equals("'Email' is not a valid email address."));
+      expect(
+          errors[2].message, equals("'Email' is not a valid email address."));
       expect(errors[2].fieldName, equals("Email"));
     }
   });
@@ -193,10 +193,10 @@ void main() {
   test('Can POST valid ThrowValidation request', () async {
     var client = createTestClient();
     var request =
-        ThrowValidation(age: 21, required: "foo", email: "my@gmail.com");
+        ThrowValidation(age: 21, Required: "foo", email: "my@gmail.com");
     var response = await client.put(request);
     expect(response.age, equals(request.age));
-    expect(response.required, equals(request.required));
+    expect(response.Required, equals(request.Required));
     expect(response.email, equals(request.email));
   });
 
@@ -307,7 +307,8 @@ void main() {
     var response = await client.get(GetItems());
     expect(response.results!.length, equals(2));
 
-    expect(response.runtimeType.toString(), equals(GetItems().getResponseTypeName()));
+    expect(response.runtimeType.toString(),
+        equals(GetItems().getResponseTypeName()));
     expect(response.results!.first.runtimeType.toString(), equals("Item"));
     var allNames = response.results!.map((x) => x.name);
     expect(allNames, equals(["bar item 1", "bar item 2"]));
@@ -318,7 +319,8 @@ void main() {
     var response = await client.get(GetNakedItems());
     expect(response.length, equals(2));
 
-    expect(response.runtimeType.toString(), equals(GetNakedItems().getResponseTypeName()));
+    expect(response.runtimeType.toString(),
+        equals(GetNakedItems().getResponseTypeName()));
     expect(response.first.runtimeType.toString(), equals("Item"));
     var allNames = response.map((x) => x.name);
     expect(allNames, equals(["item 1", "item 2"]));
@@ -329,7 +331,8 @@ void main() {
     var response = await client.get(AltQueryItems());
     expect(response.results!.length, equals(2));
 
-    expect(response.runtimeType.toString(), equals(AltQueryItems().getResponseTypeName()));
+    expect(response.runtimeType.toString(),
+        equals(AltQueryItems().getResponseTypeName()));
     expect(response.results!.first.runtimeType.toString(), equals("Item"));
     var allNames = response.results!.map((x) => x.name);
     expect(allNames, equals(["item 1", "item 2"]));
@@ -528,7 +531,7 @@ void main() {
   test('Can serialize custom ResponseStatus', () async {
     var client = createTestClient();
 
-    var request = ReturnCustom400(message:"Custom");
+    var request = ReturnCustom400(message: "Custom");
 
     var response = await client.get(request);
 
@@ -536,5 +539,4 @@ void main() {
     print(status.toJson());
     expect(status.message, equals("Custom"));
   });
-
 }

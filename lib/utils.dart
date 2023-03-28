@@ -68,17 +68,17 @@ List<String> getGenericArgs(String? type) {
 List<String> splitGenericArgs(String argsString) {
   var to = <String>[];
   var lastPos = 0;
-  var inBrackes = 0;
+  var inBrackets = 0;
   for (var i = 0; i < argsString.length; i++) {
     var c = argsString[i];
-    if (inBrackes > 0) {
+    if (inBrackets > 0) {
       if (c == '<')
-        inBrackes++;
-      else if (c == '>') inBrackes--;
+        inBrackets++;
+      else if (c == '>') inBrackets--;
       continue;
     }
     if (c == '<') {
-      inBrackes++;
+      inBrackets++;
       continue;
     }
     if (c == ',') {
@@ -129,7 +129,8 @@ String combinePaths(List<String?> paths) {
 }
 
 bool isMinified(String type) => type.startsWith("minified:");
-bool containsMinified(String type) => type.indexOf("minified:") >= 0; //e.g. List<minified:...>
+bool containsMinified(String type) =>
+    type.indexOf("minified:") >= 0; //e.g. List<minified:...>
 
 String? nameOf(dynamic o) {
   if (o == null) return "null";
@@ -140,15 +141,15 @@ String? nameOf(dynamic o) {
       if (first != null) {
         var elementType = nameOf(first)!;
         Log.debug("nameOf: List<$elementType>");
-        if (!isMinified(elementType))
-          return "List<$elementType>";
+        if (!isMinified(elementType)) return "List<$elementType>";
       }
     } else {
       Function? getTypeName = o.getTypeName;
       if (getTypeName != null) return getTypeName();
     }
   } catch (e) {
-    Log.debug("ignored nameOf error: $e, falling back to o.runtimeType: ${o.runtimeType}");
+    Log.debug(
+        "ignored nameOf error: $e, falling back to o.runtimeType: ${o.runtimeType}");
   }
 
   return o.runtimeType.toString();
@@ -199,7 +200,27 @@ String resolveHttpMethod(request) {
               ? "DELETE"
               : request is IPatch
                   ? "PATCH"
-                  : request is IOptions ? "OPTIONS" : "POST";
+                  : request is IOptions
+                      ? "OPTIONS"
+                      : "POST";
+}
+
+ResponseStatus? getResponseStatus(Exception e) {
+  if (e is WebServiceException) {
+    if (e.responseStatus != null) {
+      return e.responseStatus;
+    }
+    return ResponseStatus(
+        errorCode: "${e.statusCode}",
+        message: e.message ?? e.statusDescription);
+  }
+  String exStr = "$e";
+  bool hasExType = exStr.indexOf(':') >= 0;
+  String exType = hasExType
+      ? leftPart(exStr, ':')!
+      : trimStart(e.runtimeType.toString(), '_');
+  String exMsg = hasExType ? rightPart(exStr, ':')! : exStr;
+  return ResponseStatus(errorCode: exType, message: exMsg);
 }
 
 WebServiceException createErrorResponse(String errorCode, String message,
@@ -331,8 +352,8 @@ String docsUrl(String suffix) {
   return "https://docs.servicestack.net/${suffix}";
 }
 
-Map<String,int?> toHostsMap(List<String> urls) {
-  var to = Map<String,int?>();
+Map<String, int?> toHostsMap(List<String> urls) {
+  var to = Map<String, int?>();
   urls.forEach((hostname) {
     var host = hostname;
     int? port = null;
@@ -359,7 +380,6 @@ String fromGuid(String guid) => guid;
 
 // From Guid string to .NET Guid
 String toGuid(String guid) => guid;
-
 
 //https://github.com/dart-lang/collection/blob/master/lib/src/iterable_extensions.dart
 extension IterableExtensions<T> on Iterable<T> {
