@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:servicestack/client.dart';
 
 import './host.dart';
 
@@ -20,16 +19,20 @@ class Inspect {
   }
 
   static dynamic _toEncodable(o) {
-    if (o == null || o is num || identical(o, true) || identical(o, false) || o is String) {
+    if (o == null ||
+        o is num ||
+        identical(o, true) ||
+        identical(o, false) ||
+        o is String) {
       return o;
     } else if (o is List) {
       var list = o;
-      for (var i=0; i<list.length; i++) {
+      for (var i = 0; i < list.length; i++) {
         list[i] = _toEncodable(list[i]);
       }
       return list;
     } else if (o is Map) {
-      var keys = o.keys.toList(growable:false);
+      var keys = o.keys.toList(growable: false);
       var keysToRemove = [];
       keys.forEach((k) {
         var value = _toEncodable(o[k]);
@@ -117,10 +120,10 @@ class Inspect {
   static List<String> _allKeys(List<Map<String, dynamic>?> rows) {
     var to = <String>[];
     rows.forEach((o) => o!.keys.forEach((k) {
-      if (!to.contains(k)) {
-        to.add(k);
-      }
-    }));
+          if (!to.contains(k)) {
+            to.add(k);
+          }
+        }));
     return to;
   }
 
@@ -157,5 +160,4 @@ class Inspect {
     }
     return str;
   }
-
 }

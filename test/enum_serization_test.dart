@@ -1,14 +1,12 @@
 library client_test;
+
 import 'package:test/test.dart';
 
 import 'dtos/test.dtos.dart';
-import 'utils.dart';
 
 import 'dart:convert';
-import '../lib/servicestack.dart';
 
 void main() {
-
   void assertHelloWithEnum(HelloWithEnum actual, HelloWithEnum expected) {
     expect(actual.enumProp, equals(expected.enumProp));
     expect(actual.enumWithValues, equals(expected.enumWithValues));
@@ -26,8 +24,7 @@ void main() {
   });
 
   test('Does serialize HelloWithEnum EnumFlags', () {
-    var dto = HelloWithEnum()
-      ..enumFlags = EnumFlags.Value1;
+    var dto = HelloWithEnum()..enumFlags = EnumFlags.Value1;
 
     var json = jsonEncode(dto);
     Map jsonObj = jsonDecode(json);
@@ -37,8 +34,8 @@ void main() {
 
   test('Does serialize HelloWithEnum All', () {
     var dto = HelloWithEnum()
-      ..enumProp  = EnumType.Value2
-      ..enumWithValues =  EnumWithValues.Value1
+      ..enumProp = EnumType.Value2
+      ..enumWithValues = EnumWithValues.Value1
       ..enumFlags = EnumFlags.Value1
       ..enumStyle = EnumStyle.UPPER;
 
@@ -48,7 +45,8 @@ void main() {
     assertHelloWithEnum(fromJson, dto);
   });
 
-  void assertHelloWithEnumList(HelloWithEnumList actual, HelloWithEnumList expected) {
+  void assertHelloWithEnumList(
+      HelloWithEnumList actual, HelloWithEnumList expected) {
     expect(actual.enumProp, equals(expected.enumProp));
     expect(actual.enumWithValues, equals(expected.enumWithValues));
     expect(actual.nullableEnumProp, equals(expected.nullableEnumProp));
@@ -66,8 +64,8 @@ void main() {
 
   test('Does serialize HelloWithEnumList All', () {
     var dto = HelloWithEnumList()
-      ..enumProp  = [EnumType.Value2]
-      ..enumWithValues =  [EnumWithValues.Value1]
+      ..enumProp = [EnumType.Value2]
+      ..enumWithValues = [EnumWithValues.Value1]
       ..enumFlags = [EnumFlags.Value1]
       ..enumStyle = [EnumStyle.UPPER];
 
@@ -78,7 +76,8 @@ void main() {
     assertHelloWithEnumList(fromJson, dto);
   });
 
-  void assertHelloWithEnumMap(HelloWithEnumMap actual, HelloWithEnumMap expected) {
+  void assertHelloWithEnumMap(
+      HelloWithEnumMap actual, HelloWithEnumMap expected) {
     expect(actual.enumProp, equals(expected.enumProp));
     expect(actual.enumWithValues, equals(expected.enumWithValues));
     expect(actual.nullableEnumProp, equals(expected.nullableEnumProp));
@@ -96,10 +95,10 @@ void main() {
 
   test('Does serialize HelloWithEnumMap All', () {
     var dto = HelloWithEnumMap()
-      ..enumProp  = {EnumType.Value2:EnumType.Value2}
-      ..enumWithValues =  {EnumWithValues.Value1:EnumWithValues.Value1}
-      ..enumFlags = {EnumFlags.Value1:EnumFlags.Value1}
-      ..enumStyle = {EnumStyle.UPPER:EnumStyle.UPPER};
+      ..enumProp = {EnumType.Value2: EnumType.Value2}
+      ..enumWithValues = {EnumWithValues.Value1: EnumWithValues.Value1}
+      ..enumFlags = {EnumFlags.Value1: EnumFlags.Value1}
+      ..enumStyle = {EnumStyle.UPPER: EnumStyle.UPPER};
 
     var json = jsonEncode(dto);
     print("JSON: ${json}");
@@ -107,5 +106,4 @@ void main() {
     var fromJson = HelloWithEnumMap.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumMap(fromJson, dto);
   });
-
 }

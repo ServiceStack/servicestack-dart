@@ -510,9 +510,12 @@ void main() {
       ..connectionTimeout = Duration(seconds: 1);
 
     try {
-      var res = await client.get(EchoTypes(Int: 1, string: "foo"));
+      await client.get(EchoTypes(Int: 1, string: "foo"));
       fail("should throw");
     } on WebServiceException catch (e) {
+      expect(e.statusCode, 500);
+      expect(e.statusDescription, startsWith("SocketException: "));
+
       expect(handledEx.statusCode, 500);
       expect(handledEx.statusDescription, startsWith("SocketException: "));
     }

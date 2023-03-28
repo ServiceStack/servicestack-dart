@@ -1,6 +1,4 @@
 import 'package:test/test.dart';
-import 'dart:convert';
-import 'dart:typed_data';
 
 import '../lib/client.dart';
 import 'utils.dart';
@@ -309,6 +307,9 @@ void main() {
     var status = api.error!;
     expect(status.errorCode, '500');
     expect(status.message, startsWith("SocketException: "));
+
+    expect(handledEx.statusCode, 500);
+    expect(handledEx.statusDescription, startsWith("SocketException: "));
   });
 
   test('API Can handle naked List', () async {

@@ -1,3 +1,9 @@
+## 2.0.3
+
+* Add new `ClientFactory.api()` and `ClientFactory.apiWith()` methods for calling `.api()` ServiceClient constructors
+* Add new `JsonServiceClient.api()` and `JsonWebClient.api()` constructors configured to call ServiceStack pre-defined `/api` JSON route
+* Add new `api` and `apiVoid` methods which return an `ApiResult<T>` value that encapsulates an API Response or Error
+
 ## 2.0.2
 
 * Fix nullable toDouble method signature
