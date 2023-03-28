@@ -45,6 +45,23 @@ class ClientFactory {
     }
     return client;
   }
+
+  static IServiceClient apiWith(ClientOptions options) {
+    var client = api(options.baseUrl);
+    if (client is JsonServiceClient) {
+      if (options.ignoreCertificatesFor.isNotEmpty) {
+        var ignoreCerts = toHostsMap(options.ignoreCertificatesFor);
+        client.client.badCertificateCallback = (cert, host, port) {
+          if (ignoreCerts.containsKey(host)) {
+            var ignorePort = ignoreCerts[host];
+            return ignorePort == null || ignorePort == port;
+          }
+          return false;
+        };
+      }
+    }
+    return client;
+  }
 }
 
 class SendContext {

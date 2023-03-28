@@ -32,6 +32,11 @@ class ClientFactory {
     var client = create(options.baseUrl);
     return client;
   }
+
+  static IServiceClient apiWith(ClientOptions options) {
+    var client = api(options.baseUrl);
+    return client;
+  }
 }
 
 class SendWebContext {

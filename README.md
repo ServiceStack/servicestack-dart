@@ -31,7 +31,7 @@ To make API calls we need to use the `JsonServiceClient`, installed by adding th
 
 ```yaml
 dependencies:
-  servicestack: ^2.0.2
+  servicestack: ^2.0.3
 ```
 
 This requires Dart DTOs generated from ServiceStack **v5.11.1+** that's [now available on MyGet](https://docs.servicestack.net/myget).
@@ -52,7 +52,7 @@ import 'package:servicestack/client.dart';
 
 import 'dtos.dart';
 
-var client = JsonServiceClient("https://techstacks.io");
+var client = JsonServiceClient.api("https://techstacks.io");
 
 main() async {
   var response = await client.get(GetTechnology(slug: "flutter"));
@@ -75,7 +75,7 @@ Both **dart:io** `JsonServiceClient` and **dart:html** `JsonWebClient` implement
 import 'package:servicestack/web_client.dart' if (dart.library.io) 'package:servicestack/client.dart';
 
 main() async {
-  var client = ClientFactory.create('https://techstacks.io');
+  var client = ClientFactory.api('https://techstacks.io');
   var response = await client.get(GetTechnology(slug: "flutter"));
   print("${response.technology.name}: ${response.technology.vendorUrl}");
 }
@@ -93,8 +93,8 @@ import 'package:flutter/foundation.dart';
 
 main() async {
   var client = kDebugMode
-    ? ClientFactory.createWith(ClientOptions(baseUrl:'https://dev.servicestack.com:5001', ignoreCert:true))
-    : ClientFactory.create('https://techstacks.io');
+    ? ClientFactory.apiWith(ClientOptions(baseUrl:'https://dev.servicestack.com:5001', ignoreCert:true))
+    : ClientFactory.api('https://techstacks.io');
 }
 ```
 
@@ -127,7 +127,7 @@ Future<void> main() async {
       ? AuthenticateResponse.fromJson(jsonDecode(json))
       : null;
 
-  client = ClientFactory.createWith(ClientOptions(
+  client = ClientFactory.apiWith(ClientOptions(
       baseUrl:'https://dev.servicestack.com:5001', ignoreCert:kDebugMode));
 }
 ```
@@ -139,7 +139,7 @@ For browser projects you can use the `JsonWebClient` from `web_client.dart` dire
 ```dart
 import 'package:servicestack/web_client.dart';
 
-var client = JsonWebClient("https://techstacks.io");
+var client = JsonWebClient.api("https://techstacks.io");
 ```
 
 The `JsonWebClient` performs HTTP Requests using [dart:html BrowserClient](https://webdev.dartlang.org/angular/guide/server-communication) to use the browsers built-in `XMLHttpRequest` object. Despite their implementation differences `JsonWebClient` also supports the same feature-set as the Dart VM's `JsonServiceClient` above. 
@@ -150,10 +150,10 @@ In addition to implementing the `IServiceClient` above, each Service Client incl
 e.g. as the Request/Response filters have different Type signatures (dart:io's `HttpClientResponse` vs Browser's `Response`) they can't be declared in the shared `IServiceClient` interface, but thanks to Dart's type inference many of the extended concrete APIs are still source-compatible, e.g:
 
 ```dart
-var vmClient = JsonServiceClient(baseUrl)
+var vmClient = JsonServiceClient.api(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 
-var webClient = JsonWebClient(baseUrl)
+var webClient = JsonWebClient.api(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 ```
 
@@ -234,6 +234,12 @@ abstract class IServiceClient {
   String userName;
   String password;
 
+  Future<ApiResult<T>> api<T>(IReturn<T> request,
+      {Map<String, dynamic>? args, String? method});
+
+  Future<ApiResult<EmptyResponse>> apiVoid(IReturnVoid request,
+      {Map<String, dynamic>? args, String? method});
+
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic> args});
   Future<Map<String, dynamic>> getUrl(String path, {Map<String, dynamic> args});
   Future<T> getAs<T>(String path, {Map<String, dynamic> args, T responseAs});
@@ -266,10 +272,10 @@ abstract class IServiceClient {
 In addition to implementing the `IServiceClient` above, each Service Client includes additional concrete specific functionality allowing for finer-grained access to their underlying HTTP Clients, e.g. as the Request/Response filters have different Type signatures (dart:io's `HttpClientResponse` vs Browser's `Response`) they can't be declared in the shared `IServiceClient` interface, but thanks to Dart's type inference many of the extended concrete APIs are still source-compatible, e.g:
 
 ```dart
-var vmClient = JsonServiceClient(baseUrl)
+var vmClient = JsonServiceClient.api(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 
-var webClient = JsonWebClient(baseUrl)
+var webClient = JsonWebClient.api(baseUrl)
     ..responseFilter = (res) => print(res.headers["X-Args"]);
 ```
 
@@ -298,7 +304,7 @@ Our App will be making API calls to 2 different ServiceStack instances which we'
 
     $ cd lib
     $ x dart https://techstacks.io
-    $ x dart http://test.servicestack.net test
+    $ x dart https://test.servicestack.net test
 
 Which will save the DTOs for each endpoint in different files:
 
@@ -324,11 +330,11 @@ import 'package:servicestack/client.dart';
 import 'test.dtos.dart';
 import 'dtos.dart';
 
-const TestBaseUrl = "http://test.servicestack.net";
+const TestBaseUrl = "https://test.servicestack.net";
 const TechStacksBaseUrl = "https://techstacks.io";
 
-var testClient = JsonServiceClient(TestBaseUrl);
-var techstacksClient = JsonServiceClient(TechStacksBaseUrl);
+var testClient = JsonServiceClient.api(TestBaseUrl);
+var techstacksClient = JsonServiceClient.api(TechStacksBaseUrl);
 ```
 
 ### HelloFlutter UI
@@ -436,7 +442,7 @@ RaisedButton(
         userName: "test",
         password: "test"));
 
-    var newClient = JsonServiceClient(TestBaseUrl)
+    var newClient = JsonServiceClient.api(TestBaseUrl)
       ..refreshToken = auth.refreshToken;
     
     var r = await newClient.get(HelloAuth(name: "JWT"));
@@ -586,8 +592,8 @@ import 'package:servicestack/web_client.dart';
 and changing the clients to use the `JsonWebClient` instead, e.g:
 
 ```dart
-var testClient = JsonWebClient(TestBaseUrl);
-var techstacksClient = JsonWebClient(TechStacksBaseUrl);
+var testClient = JsonWebClient.api(TestBaseUrl);
+var techstacksClient = JsonWebClient.api(TechStacksBaseUrl);
 ```
 
 But otherwise the actual client source code for all of the Typed API requests remains exactly the same. 
@@ -614,10 +620,10 @@ import '../dtos/dtos.dart';
 class HelloWorldComponent {
   var result = "";
   var imageSrc = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="; // 1x1 pixel
-  static const TestBaseUrl = "http://test.servicestack.net";
+  static const TestBaseUrl = "https://test.servicestack.net";
   static const TechStacksBaseUrl = "https://techstacks.io";
-  var testClient = JsonWebClient(TestBaseUrl);
-  var techstacksClient = JsonWebClient(TechStacksBaseUrl);
+  var testClient = JsonWebClient.api(TestBaseUrl);
+  var techstacksClient = JsonWebClient.api(TechStacksBaseUrl);
 
   doAsync() async {
     var r = await testClient.get(Hello(name: "Async"));
@@ -635,7 +641,7 @@ class HelloWorldComponent {
     var auth = await testClient.post(Authenticate(
         provider: "credentials", userName: "test", password: "test"));
 
-    var newClient = JsonWebClient(TestBaseUrl)
+    var newClient = JsonWebClient.api(TestBaseUrl)
       ..refreshToken = auth.refreshToken;
     var r = await newClient.get(HelloAuth(name: "JWT"));
     result = "${r.result} your RefreshToken is: ${auth.refreshToken}";

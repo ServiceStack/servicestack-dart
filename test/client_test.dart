@@ -452,7 +452,7 @@ void main() {
     var client = createTestClient();
 
     var jsonObj =
-        await client.getUrl("http://test.servicestack.net/hello/World");
+        await client.getUrl("https://test.servicestack.net/hello/World");
     var response = HelloResponse.fromJson(jsonObj);
 
     expect(response.result, equals("Hello, World!"));
