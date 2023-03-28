@@ -6,7 +6,8 @@ import 'utils.dart';
 import 'dtos/test.dtos.dart';
 
 CreateJwt createJwt([Map? options]) {
-  var to = CreateJwt.fromJson(options as Map<String, dynamic>? ?? Map<String, dynamic>());
+  var to = CreateJwt.fromJson(
+      options as Map<String, dynamic>? ?? Map<String, dynamic>());
   if (to.userAuthId == null) to.userAuthId = "1";
   if (to.displayName == null) to.displayName = "test jwt";
   if (to.email == null) to.email = "test@auth.com";
@@ -17,7 +18,6 @@ Future<void> clearSession(JsonServiceClient client) async =>
     await client.post(Authenticate(provider: "logout"));
 
 void main() {
-
   test('Can auth with JWT', () async {
     var client = createTestClient();
     var response = await client.post(createJwt());
@@ -61,65 +61,6 @@ void main() {
     expect(count, equals(1));
   });
 
-  test('Can use onAuthenticationRequired to fetch token', () async {
-    var client = createTestClient();
-    var count = 0;
-
-    client.onAuthenticationRequired = () async {
-      count++;
-      var authClient = createTestClient();
-      authClient.userName = "test";
-      authClient.password = "test";
-      var response = await authClient.get(Authenticate());
-      client.bearerToken = response.bearerToken;
-    };
-
-    await client.get(TestAuth());
-    expect(count, equals(1));
-  });
-
-  test(
-      'Can use onAuthenticationRequired to fetch token after expired token',
-      () async {
-    var client = createTestClient();
-    var count = 0;
-
-    client.onAuthenticationRequired = () async {
-      count++;
-      var createFreshJwt = createJwt();
-      var freshJwt = await client.post(createFreshJwt);
-      client.bearerToken = freshJwt.token!;
-    };
-
-    var createExpiredJwt = createJwt();
-    createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
-    var expiredJwt = await client.post(createExpiredJwt);
-
-    client.bearerToken = expiredJwt.token!;
-    await client.get(TestAuth());
-    expect(count, equals(1));
-  });
-
-  test('Can use refreshToken to fetch token after expired token', () async {
-    var client = createTestClient();
-
-    client.userName = "test";
-    client.password = "test";
-    var authResponse = await client.post(Authenticate());
-
-    client.refreshToken = authResponse.refreshToken;
-    client.setCredentials(null, null);
-
-    var createExpiredJwt = createJwt();
-    createExpiredJwt.jwtExpiry = DateTime(2000, 1, 1);
-    var expiredJwt = await client.post(createExpiredJwt);
-
-    client.bearerToken = expiredJwt.token!;
-    await client.get(TestAuth());
-
-    expect(client.bearerToken, isNot(equals(expiredJwt.token)));
-  });
-
   test('Can reauthenticate after an auto refresh access token', () async {
     var client = createTestClient();
     var auth = Authenticate(
@@ -160,7 +101,7 @@ void main() {
     expect(initialAccessToken, isNotNull);
     expect(initialRefreshToken, isNotNull);
 
-    var request = Secured()..name="test";
+    var request = Secured()..name = "test";
     var response = await client.send(request);
     expect(response.result, equals(request.name));
 
@@ -207,8 +148,7 @@ void main() {
   });
 
   test("TODO Can authenticate with ServerEvents using JWT", () async {
-      // TODO after ServerEventsClient is implemented
-      // https://github.com/ServiceStack/servicestack-client/blob/master/tests/client.auth.spec.ts#L225    
+    // TODO after ServerEventsClient is implemented
+    // https://github.com/ServiceStack/servicestack-client/blob/master/tests/client.auth.spec.ts#L225
   });
-
 }

@@ -7,7 +7,7 @@ import 'dtos/test.dtos.dart';
 
 JsonServiceClient createTestClient() =>
     //JsonServiceClient("http://localhost:5000")
-    JsonServiceClient("http://test.servicestack.net")
+    JsonServiceClient("https://test.servicestack.net")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
           // print("ERROR: " + json.encode(e.responseStatus));
@@ -92,31 +92,18 @@ void assertAllTypes(AllTypes dto) {
   expect(dto.subType!.name, equals("name"));
 }
 
-AllCollectionTypes createAllCollectionTypes() =>
-    AllCollectionTypes(intArray: [
-      1,
-      2,
-      3
-    ], intList: [
-      4,
-      5,
-      6
-    ], stringArray: [
-      "A",
-      "B",
-      "C"
-    ], stringList: [
-      "D",
-      "E",
-      "F"
-    ], byteArray: fromByteArray("QUJD"), //base64(ABC)
-        pocoArray: [
-      createPoco("pocoArray")
-    ], pocoList: [
-      createPoco("pocoList")
-    ], pocoLookup: {
+AllCollectionTypes createAllCollectionTypes() => AllCollectionTypes(
+    intArray: [1, 2, 3],
+    intList: [4, 5, 6],
+    stringArray: ["A", "B", "C"],
+    stringList: ["D", "E", "F"],
+    byteArray: fromByteArray("QUJD"), //base64(ABC)
+    pocoArray: [createPoco("pocoArray")],
+    pocoList: [createPoco("pocoList")],
+    pocoLookup: {
       "A": [createPoco("B"), createPoco("C")]
-    }, pocoLookupMap: {
+    },
+    pocoLookupMap: {
       "A": [
         {"B": createPoco("C"), "D": createPoco("E")}
       ]
@@ -127,7 +114,7 @@ void assertAllCollectionTypes(AllCollectionTypes dto) {
   expect(dto.intList, equals([4, 5, 6]));
   expect(dto.stringArray, equals(["A", "B", "C"]));
   expect(dto.stringList, equals(["D", "E", "F"]));
-  expect(dto.byteArray, equals([65,66,67])); //ABC
+  expect(dto.byteArray, equals([65, 66, 67])); //ABC
 
   expect(dto.pocoArray!.length, equals(1));
   expect(dto.pocoArray![0].name, equals("pocoArray"));

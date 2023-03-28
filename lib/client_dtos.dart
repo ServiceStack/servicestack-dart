@@ -55,8 +55,10 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
   'int': TypeInfo(TypeOf.Class, create: () => 0),
   'double': TypeInfo(TypeOf.Class, create: () => 0.toDouble()),
   'bool': TypeInfo(TypeOf.Class, create: () => true),
-  'Map<String,dynamic>': TypeInfo(TypeOf.Class, create: () => Map<String, dynamic>()),
-  'Map<String,String>': TypeInfo(TypeOf.Class, create: () => Map<String, String>()),
+  'Map<String,dynamic>':
+      TypeInfo(TypeOf.Class, create: () => Map<String, dynamic>()),
+  'Map<String,String>':
+      TypeInfo(TypeOf.Class, create: () => Map<String, String>()),
   'List<String>': TypeInfo(TypeOf.Class, create: () => <String>[]),
   'List<int>': TypeInfo(TypeOf.Class, create: () => <int>[]),
   'List<double>': TypeInfo(TypeOf.Class, create: () => <double>[]),
@@ -66,45 +68,64 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
   'Tuple2<T1,T2>': TypeInfo(TypeOf.GenericDef, create: () => Tuple2()),
   'Tuple3<T1,T2,T3>': TypeInfo(TypeOf.GenericDef, create: () => Tuple3()),
   'Tuple4<T1,T2,T3,T4>': TypeInfo(TypeOf.GenericDef, create: () => Tuple4()),
-  'KeyValuePair<K,V>': TypeInfo(TypeOf.GenericDef, create: () => KeyValuePair()),
-  'KeyValuePair<String,String>': TypeInfo(TypeOf.Class, create: () => KeyValuePair<String, String>()),
+  'KeyValuePair<K,V>':
+      TypeInfo(TypeOf.GenericDef, create: () => KeyValuePair()),
+  'KeyValuePair<String,String>':
+      TypeInfo(TypeOf.Class, create: () => KeyValuePair<String, String>()),
   'ResponseStatus': TypeInfo(TypeOf.Class, create: () => ResponseStatus()),
   'ResponseError': TypeInfo(TypeOf.Class, create: () => ResponseError()),
-  'List<ResponseError>': TypeInfo(TypeOf.Class, create: () => <ResponseError>[]),
+  'List<ResponseError>':
+      TypeInfo(TypeOf.Class, create: () => <ResponseError>[]),
   'QueryBase': TypeInfo(TypeOf.AbstractClass),
   'QueryData<T>': TypeInfo(TypeOf.AbstractClass),
   'QueryDb<T>': TypeInfo(TypeOf.AbstractClass),
   'QueryDb1<T>': TypeInfo(TypeOf.AbstractClass),
   'QueryDb2<From,Into>': TypeInfo(TypeOf.AbstractClass),
-  'QueryResponse<T>': TypeInfo(TypeOf.GenericDef, create: () => QueryResponse()),
+  'QueryResponse<T>':
+      TypeInfo(TypeOf.GenericDef, create: () => QueryResponse()),
   'List<UserApiKey>': TypeInfo(TypeOf.Class, create: () => <UserApiKey>[]),
   'Authenticate': TypeInfo(TypeOf.Class, create: () => Authenticate()),
-  'AuthenticateResponse': TypeInfo(TypeOf.Class, create: () => AuthenticateResponse()),
+  'AuthenticateResponse':
+      TypeInfo(TypeOf.Class, create: () => AuthenticateResponse()),
   'Register': TypeInfo(TypeOf.Class, create: () => Register()),
   'RegisterResponse': TypeInfo(TypeOf.Class, create: () => RegisterResponse()),
   'AssignRoles': TypeInfo(TypeOf.Class, create: () => AssignRoles()),
-  'AssignRolesResponse': TypeInfo(TypeOf.Class, create: () => AssignRolesResponse()),
+  'AssignRolesResponse':
+      TypeInfo(TypeOf.Class, create: () => AssignRolesResponse()),
   'UnAssignRoles': TypeInfo(TypeOf.Class, create: () => UnAssignRoles()),
-  'UnAssignRolesResponse': TypeInfo(TypeOf.Class, create: () => UnAssignRolesResponse()),
+  'UnAssignRolesResponse':
+      TypeInfo(TypeOf.Class, create: () => UnAssignRolesResponse()),
   'CancelRequest': TypeInfo(TypeOf.Class, create: () => CancelRequest()),
-  'CancelRequestResponse': TypeInfo(TypeOf.Class, create: () => CancelRequestResponse()),
-  'UpdateEventSubscriber': TypeInfo(TypeOf.Class, create: () => UpdateEventSubscriber()),
-  'UpdateEventSubscriberResponse': TypeInfo(TypeOf.Class, create: () => UpdateEventSubscriberResponse()),
-  'GetEventSubscribers': TypeInfo(TypeOf.Class, create: () => GetEventSubscribers()),
+  'CancelRequestResponse':
+      TypeInfo(TypeOf.Class, create: () => CancelRequestResponse()),
+  'UpdateEventSubscriber':
+      TypeInfo(TypeOf.Class, create: () => UpdateEventSubscriber()),
+  'UpdateEventSubscriberResponse':
+      TypeInfo(TypeOf.Class, create: () => UpdateEventSubscriberResponse()),
+  'GetEventSubscribers':
+      TypeInfo(TypeOf.Class, create: () => GetEventSubscribers()),
   'GetApiKeys': TypeInfo(TypeOf.Class, create: () => GetApiKeys()),
-  'GetApiKeysResponse': TypeInfo(TypeOf.Class, create: () => GetApiKeysResponse()),
-  'RegenerateApiKeys': TypeInfo(TypeOf.Class, create: () => RegenerateApiKeys()),
-  'RegenerateApiKeysResponse': TypeInfo(TypeOf.Class, create: () => RegenerateApiKeysResponse()),
+  'GetApiKeysResponse':
+      TypeInfo(TypeOf.Class, create: () => GetApiKeysResponse()),
+  'RegenerateApiKeys':
+      TypeInfo(TypeOf.Class, create: () => RegenerateApiKeys()),
+  'RegenerateApiKeysResponse':
+      TypeInfo(TypeOf.Class, create: () => RegenerateApiKeysResponse()),
   'UserApiKey': TypeInfo(TypeOf.Class, create: () => UserApiKey()),
-  'ConvertSessionToToken': TypeInfo(TypeOf.Class, create: () => ConvertSessionToToken()),
-  'ConvertSessionToTokenResponse': TypeInfo(TypeOf.Class, create: () => ConvertSessionToTokenResponse()),
+  'ConvertSessionToToken':
+      TypeInfo(TypeOf.Class, create: () => ConvertSessionToToken()),
+  'ConvertSessionToTokenResponse':
+      TypeInfo(TypeOf.Class, create: () => ConvertSessionToTokenResponse()),
   'GetAccessToken': TypeInfo(TypeOf.Class, create: () => GetAccessToken()),
-  'GetAccessTokenResponse': TypeInfo(TypeOf.Class, create: () => GetAccessTokenResponse()),
+  'GetAccessTokenResponse':
+      TypeInfo(TypeOf.Class, create: () => GetAccessTokenResponse()),
   'List<NavItem>': TypeInfo(TypeOf.Class, create: () => <NavItem>[]),
-  'Map<String,List<NavItem>>': TypeInfo(TypeOf.Class, create: () => Map<String, List<NavItem>>()),
+  'Map<String,List<NavItem>>':
+      TypeInfo(TypeOf.Class, create: () => Map<String, List<NavItem>>()),
   'NavItem': TypeInfo(TypeOf.Class, create: () => NavItem()),
   'GetNavItems': TypeInfo(TypeOf.Class, create: () => GetNavItems()),
-  'GetNavItemsResponse': TypeInfo(TypeOf.Class, create: () => GetNavItemsResponse()),
+  'GetNavItemsResponse':
+      TypeInfo(TypeOf.Class, create: () => GetNavItemsResponse()),
   'EmptyResponse': TypeInfo(TypeOf.Class, create: () => EmptyResponse()),
   'IdResponse': TypeInfo(TypeOf.Class, create: () => IdResponse()),
   'StringResponse': TypeInfo(TypeOf.Class, create: () => StringResponse()),
@@ -134,7 +155,12 @@ class ResponseError implements IConvertible {
     return this;
   }
 
-  Map<String, dynamic> toJson() => {'errorCode': errorCode, 'fieldName': fieldName, 'message': message, 'meta': meta};
+  Map<String, dynamic> toJson() => {
+        'errorCode': errorCode,
+        'fieldName': fieldName,
+        'message': message,
+        'meta': meta
+      };
 
   getTypeName() => "ResponseError";
   TypeContext? context = _ctx;
@@ -147,7 +173,8 @@ class ResponseStatus implements IConvertible {
   List<ResponseError>? errors;
   Map<String, String?>? meta;
 
-  ResponseStatus({this.errorCode, this.message, this.stackTrace, this.errors, this.meta});
+  ResponseStatus(
+      {this.errorCode, this.message, this.stackTrace, this.errors, this.meta});
 
   ResponseStatus.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -157,7 +184,8 @@ class ResponseStatus implements IConvertible {
     errorCode = JsonConverters.getJson(json, 'errorCode');
     message = JsonConverters.getJson(json, 'message');
     stackTrace = JsonConverters.getJson(json, 'stackTrace');
-    errors = JsonConverters.fromJson(JsonConverters.getJson(json, 'errors'), 'List<ResponseError>', context!);
+    errors = JsonConverters.fromJson(JsonConverters.getJson(json, 'errors'),
+        'List<ResponseError>', context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
     return this;
   }
@@ -166,7 +194,8 @@ class ResponseStatus implements IConvertible {
         'errorCode': errorCode,
         'message': message,
         'stackTrace': stackTrace,
-        'errors': JsonConverters.toJson(errors, 'List<ResponseError>', context!),
+        'errors':
+            JsonConverters.toJson(errors, 'List<ResponseError>', context!),
         'meta': meta
       };
 
@@ -183,7 +212,14 @@ abstract class QueryBase implements IConvertible {
   String? fields;
   Map<String, String?>? meta;
 
-  QueryBase({this.skip, this.take, this.orderBy, this.orderByDesc, this.include, this.fields, this.meta});
+  QueryBase(
+      {this.skip,
+      this.take,
+      this.orderBy,
+      this.orderByDesc,
+      this.include,
+      this.fields,
+      this.meta});
 
   QueryBase.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -219,7 +255,9 @@ abstract class QueryData<T> extends QueryBase {
 
   QueryData.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) { return this; }
+  fromMap(Map<String, dynamic> json) {
+    return this;
+  }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -231,7 +269,9 @@ abstract class QueryDb<T> extends QueryBase {
 
   QueryDb.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) { return this; }
+  fromMap(Map<String, dynamic> json) {
+    return this;
+  }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -243,7 +283,9 @@ abstract class QueryDb1<T> extends QueryBase {
 
   QueryDb1.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) { return this; }
+  fromMap(Map<String, dynamic> json) {
+    return this;
+  }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -255,7 +297,9 @@ abstract class QueryDb2<From, Into> extends QueryBase {
 
   QueryDb2.fromJson(Map<String, dynamic> json) : super.fromJson(json);
 
-  fromMap(Map<String, dynamic> json) { return this; }
+  fromMap(Map<String, dynamic> json) {
+    return this;
+  }
 
   Map<String, dynamic> toJson() => super.toJson();
 
@@ -269,7 +313,8 @@ class QueryResponse<T> implements IConvertible {
   Map<String, String?>? meta;
   ResponseStatus? responseStatus;
 
-  QueryResponse({this.offset, this.total, this.results, this.meta, this.responseStatus});
+  QueryResponse(
+      {this.offset, this.total, this.results, this.meta, this.responseStatus});
 
   QueryResponse.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -278,10 +323,13 @@ class QueryResponse<T> implements IConvertible {
   fromMap(Map<String, dynamic> json) {
     offset = JsonConverters.getJson(json, 'offset');
     total = JsonConverters.getJson(json, 'total');
-    results = JsonConverters.fromJson(
-        JsonConverters.getJson(json, 'results'), 'List<${runtimeGenericTypeDefs(this, [0]).join(",")}>', context!);
+    results = JsonConverters.fromJson(JsonConverters.getJson(json, 'results'),
+        'List<${runtimeGenericTypeDefs(this, [0]).join(",")}>', context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
@@ -290,14 +338,16 @@ class QueryResponse<T> implements IConvertible {
         'total': total,
         'results': JsonConverters.toJson(results, 'List<T>', context!),
         'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "QueryResponse<$T>";
   TypeContext? context = _ctx;
 }
 
-class Authenticate implements IReturn<AuthenticateResponse>, IPost, IConvertible {
+class Authenticate
+    implements IReturn<AuthenticateResponse>, IPost, IConvertible {
   String? provider;
   String? state;
   String? oauth_token;
@@ -427,9 +477,14 @@ class AuthenticateResponse implements IConvertible {
     referrerUrl = JsonConverters.getJson(json, 'referrerUrl');
     bearerToken = JsonConverters.getJson(json, 'bearerToken');
     refreshToken = JsonConverters.getJson(json, 'refreshToken');
-    roles = JsonConverters.fromJson(JsonConverters.getJson(json, 'roles'), 'List<String>', context!);
-    permissions = JsonConverters.fromJson(JsonConverters.getJson(json, 'permissions'), 'List<String>', context!);
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    roles = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'roles'), 'List<String>', context!);
+    permissions = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'permissions'), 'List<String>', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
     return this;
   }
@@ -443,8 +498,10 @@ class AuthenticateResponse implements IConvertible {
         'bearerToken': bearerToken,
         'refreshToken': refreshToken,
         'roles': JsonConverters.toJson(roles, 'List<String>', context!),
-        'permissions': JsonConverters.toJson(permissions, 'List<String>', context!),
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!),
+        'permissions':
+            JsonConverters.toJson(permissions, 'List<String>', context!),
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!),
         'meta': meta
       };
 
@@ -535,7 +592,10 @@ class RegisterResponse implements IConvertible {
     referrerUrl = JsonConverters.getJson(json, 'referrerUrl');
     bearerToken = JsonConverters.getJson(json, 'bearerToken');
     refreshToken = JsonConverters.getJson(json, 'refreshToken');
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
     return this;
   }
@@ -547,7 +607,8 @@ class RegisterResponse implements IConvertible {
         'referrerUrl': referrerUrl,
         'bearerToken': bearerToken,
         'refreshToken': refreshToken,
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!),
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!),
         'meta': meta
       };
 
@@ -568,14 +629,17 @@ class AssignRoles implements IReturn<AssignRolesResponse>, IPost, IConvertible {
 
   fromMap(Map<String, dynamic> json) {
     userName = JsonConverters.getJson(json, 'userName');
-    permissions = JsonConverters.fromJson(JsonConverters.getJson(json, 'permissions'), 'List<String>', context!);
-    roles = JsonConverters.fromJson(JsonConverters.getJson(json, 'roles'), 'List<String>', context!);
+    permissions = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'permissions'), 'List<String>', context!);
+    roles = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'roles'), 'List<String>', context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'userName': userName,
-        'permissions': JsonConverters.toJson(permissions, 'List<String>', context!),
+        'permissions':
+            JsonConverters.toJson(permissions, 'List<String>', context!),
         'roles': JsonConverters.toJson(roles, 'List<String>', context!)
       };
 
@@ -589,30 +653,41 @@ class AssignRolesResponse implements IConvertible {
   List<String>? allPermissions;
   ResponseStatus? responseStatus;
 
-  AssignRolesResponse({this.allRoles, this.allPermissions, this.responseStatus});
+  AssignRolesResponse(
+      {this.allRoles, this.allPermissions, this.responseStatus});
 
   AssignRolesResponse.fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
   fromMap(Map<String, dynamic> json) {
-    allRoles = JsonConverters.fromJson(JsonConverters.getJson(json, 'allRoles'), 'List<String>', context!);
-    allPermissions = JsonConverters.fromJson(JsonConverters.getJson(json, 'allPermissions'), 'List<String>', context!);
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    allRoles = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'allRoles'), 'List<String>', context!);
+    allPermissions = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'allPermissions'),
+        'List<String>',
+        context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'allRoles': JsonConverters.toJson(allRoles, 'List<String>', context!),
-        'allPermissions': JsonConverters.toJson(allPermissions, 'List<String>', context!),
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'allPermissions':
+            JsonConverters.toJson(allPermissions, 'List<String>', context!),
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "AssignRolesResponse";
   TypeContext? context = _ctx;
 }
 
-class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost, IConvertible {
+class UnAssignRoles
+    implements IReturn<UnAssignRolesResponse>, IPost, IConvertible {
   String? userName;
   List<String>? permissions;
   List<String>? roles;
@@ -625,14 +700,17 @@ class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost, IConvertib
 
   fromMap(Map<String, dynamic> json) {
     userName = JsonConverters.getJson(json, 'userName');
-    permissions = JsonConverters.fromJson(JsonConverters.getJson(json, 'permissions'), 'List<String>', context!);
-    roles = JsonConverters.fromJson(JsonConverters.getJson(json, 'roles'), 'List<String>', context!);
+    permissions = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'permissions'), 'List<String>', context!);
+    roles = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'roles'), 'List<String>', context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'userName': userName,
-        'permissions': JsonConverters.toJson(permissions, 'List<String>', context!),
+        'permissions':
+            JsonConverters.toJson(permissions, 'List<String>', context!),
         'roles': JsonConverters.toJson(roles, 'List<String>', context!)
       };
 
@@ -646,23 +724,33 @@ class UnAssignRolesResponse implements IConvertible {
   List<String>? allPermissions;
   ResponseStatus? responseStatus;
 
-  UnAssignRolesResponse({this.allRoles, this.allPermissions, this.responseStatus});
+  UnAssignRolesResponse(
+      {this.allRoles, this.allPermissions, this.responseStatus});
 
   UnAssignRolesResponse.fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
   fromMap(Map<String, dynamic> json) {
-    allRoles = JsonConverters.fromJson(JsonConverters.getJson(json, 'allRoles'), 'List<String>', context!);
-    allPermissions = JsonConverters.fromJson(JsonConverters.getJson(json, 'allPermissions'), 'List<String>', context!);
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    allRoles = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'allRoles'), 'List<String>', context!);
+    allPermissions = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'allPermissions'),
+        'List<String>',
+        context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'allRoles': JsonConverters.toJson(allRoles, 'List<String>', context!),
-        'allPermissions': JsonConverters.toJson(allPermissions, 'List<String>', context!),
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'allPermissions':
+            JsonConverters.toJson(allPermissions, 'List<String>', context!),
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "UnAssignRolesResponse";
@@ -703,15 +791,20 @@ class CancelRequestResponse implements IConvertible {
 
   fromMap(Map<String, dynamic> json) {
     tag = JsonConverters.getJson(json, 'tag');
-    elapsed = JsonConverters.fromJson(JsonConverters.getJson(json, 'elapsed'), 'Duration', context!);
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    elapsed = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'elapsed'), 'Duration', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'tag': tag,
         'elapsed': JsonConverters.toJson(elapsed, 'Duration', context!),
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "CancelRequestResponse";
@@ -723,7 +816,8 @@ class UpdateEventSubscriber implements IConvertible {
   List<String>? subscribeChannels;
   List<String>? unsubscribeChannels;
 
-  UpdateEventSubscriber({this.id, this.subscribeChannels, this.unsubscribeChannels});
+  UpdateEventSubscriber(
+      {this.id, this.subscribeChannels, this.unsubscribeChannels});
 
   UpdateEventSubscriber.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -731,17 +825,23 @@ class UpdateEventSubscriber implements IConvertible {
 
   fromMap(Map<String, dynamic> json) {
     id = JsonConverters.getJson(json, 'id');
-    subscribeChannels =
-        JsonConverters.fromJson(JsonConverters.getJson(json, 'subscribeChannels'), 'List<String>', context!);
-    unsubscribeChannels =
-        JsonConverters.fromJson(JsonConverters.getJson(json, 'unsubscribeChannels'), 'List<String>', context!);
+    subscribeChannels = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'subscribeChannels'),
+        'List<String>',
+        context!);
+    unsubscribeChannels = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'unsubscribeChannels'),
+        'List<String>',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'subscribeChannels': JsonConverters.toJson(subscribeChannels, 'List<String>', context!),
-        'unsubscribeChannels': JsonConverters.toJson(unsubscribeChannels, 'List<String>', context!)
+        'subscribeChannels':
+            JsonConverters.toJson(subscribeChannels, 'List<String>', context!),
+        'unsubscribeChannels':
+            JsonConverters.toJson(unsubscribeChannels, 'List<String>', context!)
       };
 
   createResponse() => UpdateEventSubscriberResponse();
@@ -759,11 +859,17 @@ class UpdateEventSubscriberResponse implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
-  Map<String, dynamic> toJson() => {'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)};
+  Map<String, dynamic> toJson() => {
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+      };
 
   getTypeName() => "UpdateEventSubscriberResponse";
   TypeContext? context = _ctx;
@@ -779,13 +885,15 @@ class GetEventSubscribers implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    channels = JsonConverters.fromJson(JsonConverters.getJson(json, 'channels'), 'List<String>', context!);
+    channels = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'channels'), 'List<String>', context!);
     return this;
   }
 
-  Map<String, dynamic> toJson() => {'channels': JsonConverters.toJson(channels, 'List<String>', context!)};
+  Map<String, dynamic> toJson() =>
+      {'channels': JsonConverters.toJson(channels, 'List<String>', context!)};
 
-  createResponse() => <Map<String,String>>[];
+  createResponse() => <Map<String, String>>[];
   getTypeName() => "GetEventSubscribers";
   TypeContext? context = _ctx;
 }
@@ -822,21 +930,27 @@ class GetApiKeysResponse implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    results = JsonConverters.fromJson(JsonConverters.getJson(json, 'results'), 'List<UserApiKey>', context!);
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    results = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'results'), 'List<UserApiKey>', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'results': JsonConverters.toJson(results, 'List<UserApiKey>', context!),
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "GetApiKeysResponse";
   TypeContext? context = _ctx;
 }
 
-class RegenerateApiKeys implements IReturn<RegenerateApiKeysResponse>, IPost, IConvertible {
+class RegenerateApiKeys
+    implements IReturn<RegenerateApiKeysResponse>, IPost, IConvertible {
   String? environment;
 
   RegenerateApiKeys({this.environment});
@@ -868,14 +982,19 @@ class RegenerateApiKeysResponse implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    results = JsonConverters.fromJson(JsonConverters.getJson(json, 'results'), 'Duration', context!);
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    results = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'results'), 'Duration', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'results': JsonConverters.toJson(results, 'Duration', context!),
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "RegenerateApiKeysResponse";
@@ -896,18 +1015,23 @@ class UserApiKey implements IConvertible {
   fromMap(Map<String, dynamic> json) {
     key = JsonConverters.getJson(json, 'key');
     keyType = JsonConverters.getJson(json, 'keyType');
-    expiryDate = JsonConverters.fromJson(JsonConverters.getJson(json, 'expiryDate'), 'DateTime', context!);
+    expiryDate = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'expiryDate'), 'DateTime', context!);
     return this;
   }
 
-  Map<String, dynamic> toJson() =>
-      {'key': key, 'keyType': keyType, 'expiryDate': JsonConverters.toJson(expiryDate, 'DateTime', context!)};
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'keyType': keyType,
+        'expiryDate': JsonConverters.toJson(expiryDate, 'DateTime', context!)
+      };
 
   getTypeName() => "UserApiKey";
   TypeContext? context = _ctx;
 }
 
-class ConvertSessionToToken implements IReturn<ConvertSessionToTokenResponse>, IPost, IConvertible {
+class ConvertSessionToToken
+    implements IReturn<ConvertSessionToTokenResponse>, IPost, IConvertible {
   bool? preserveSession;
 
   ConvertSessionToToken({this.preserveSession});
@@ -933,7 +1057,8 @@ class ConvertSessionToTokenResponse implements IConvertible {
   String? accessToken;
   ResponseStatus? responseStatus;
 
-  ConvertSessionToTokenResponse({this.meta, this.accessToken, this.responseStatus});
+  ConvertSessionToTokenResponse(
+      {this.meta, this.accessToken, this.responseStatus});
 
   ConvertSessionToTokenResponse.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -942,21 +1067,26 @@ class ConvertSessionToTokenResponse implements IConvertible {
   fromMap(Map<String, dynamic> json) {
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
     accessToken = JsonConverters.getJson(json, 'accessToken');
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'meta': meta,
         'accessToken': accessToken,
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "ConvertSessionToTokenResponse";
   TypeContext? context = _ctx;
 }
 
-class GetAccessToken implements IReturn<GetAccessTokenResponse>, IPost, IConvertible {
+class GetAccessToken
+    implements IReturn<GetAccessTokenResponse>, IPost, IConvertible {
   String? refreshToken;
 
   GetAccessToken({this.refreshToken});
@@ -989,12 +1119,18 @@ class GetAccessTokenResponse implements IConvertible {
 
   fromMap(Map<String, dynamic> json) {
     accessToken = JsonConverters.getJson(json, 'accessToken');
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
-  Map<String, dynamic> toJson() =>
-      {'accessToken': accessToken, 'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)};
+  Map<String, dynamic> toJson() => {
+        'accessToken': accessToken,
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+      };
 
   getTypeName() => "GetAccessTokenResponse";
   TypeContext? context = _ctx;
@@ -1037,7 +1173,8 @@ class NavItem implements IConvertible {
     iconHtml = JsonConverters.getJson(json, 'iconHtml');
     show = JsonConverters.getJson(json, 'show');
     hide = JsonConverters.getJson(json, 'hide');
-    children = JsonConverters.fromJson(JsonConverters.getJson(json, 'children'), 'List<NavItem>', context!);
+    children = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'children'), 'List<NavItem>', context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
     return this;
   }
@@ -1059,7 +1196,7 @@ class NavItem implements IConvertible {
   TypeContext? context = _ctx;
 }
 
-class GetNavItems implements IReturn<GetNavItemsResponse>, IConvertible {
+class GetNavItems implements IReturn<GetNavItemsResponse>, IGet, IConvertible {
   GetNavItems();
 
   GetNavItems.fromJson(Map<String, dynamic> json) : super();
@@ -1082,7 +1219,12 @@ class GetNavItemsResponse implements IConvertible {
   Map<String, String?>? meta;
   ResponseStatus? responseStatus;
 
-  GetNavItemsResponse({this.baseUrl, this.results, this.navItemsMap, this.meta, this.responseStatus});
+  GetNavItemsResponse(
+      {this.baseUrl,
+      this.results,
+      this.navItemsMap,
+      this.meta,
+      this.responseStatus});
 
   GetNavItemsResponse.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -1090,20 +1232,28 @@ class GetNavItemsResponse implements IConvertible {
 
   fromMap(Map<String, dynamic> json) {
     baseUrl = JsonConverters.getJson(json, 'baseUrl');
-    results = JsonConverters.fromJson(JsonConverters.getJson(json, 'results'), 'List<NavItem>', context!);
-    navItemsMap =
-        JsonConverters.fromJson(JsonConverters.getJson(json, 'navItemsMap'), 'Map<String,List<NavItem>>', context!);
+    results = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'results'), 'List<NavItem>', context!);
+    navItemsMap = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'navItemsMap'),
+        'Map<String,List<NavItem>>',
+        context!);
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
-    responseStatus = JsonConverters.fromJson(JsonConverters.getJson(json, 'responseStatus'), 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        JsonConverters.getJson(json, 'responseStatus'),
+        'ResponseStatus',
+        context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'baseUrl': baseUrl,
         'results': JsonConverters.toJson(results, 'List<NavItem>', context!),
-        'navItemsMap': JsonConverters.toJson(navItemsMap, 'Map<String,List<NavItem>>', context!),
+        'navItemsMap': JsonConverters.toJson(
+            navItemsMap, 'Map<String,List<NavItem>>', context!),
         'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "GetNavItemsResponse";
@@ -1156,7 +1306,8 @@ class Tuple3<T1, T2, T3> implements IConvertible {
     return this;
   }
 
-  Map<String, dynamic> toJson() => {'item1': item1, 'item2': item2, 'item3': item3};
+  Map<String, dynamic> toJson() =>
+      {'item1': item1, 'item2': item2, 'item3': item3};
 
   getTypeName() => "Tuple3<T1,T2,T3>";
   TypeContext? context = _ctx;
@@ -1182,7 +1333,8 @@ class Tuple4<T1, T2, T3, T4> implements IConvertible {
     return this;
   }
 
-  Map<String, dynamic> toJson() => {'item1': item1, 'item2': item2, 'item3': item3, 'item4': item4};
+  Map<String, dynamic> toJson() =>
+      {'item1': item1, 'item2': item2, 'item3': item3, 'item4': item4};
 
   getTypeName() => "Tuple4<T1,T2,T3,T4>";
   TypeContext? context = _ctx;
@@ -1222,11 +1374,15 @@ class EmptyResponse implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    responseStatus = JsonConverters.fromJson(json['responseStatus'], 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        json['responseStatus'], 'ResponseStatus', context!);
     return this;
   }
 
-  Map<String, dynamic> toJson() => {'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)};
+  Map<String, dynamic> toJson() => {
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+      };
 
   getTypeName() => "EmptyResponse";
   TypeContext? context = _ctx;
@@ -1248,12 +1404,16 @@ class IdResponse implements IConvertible {
 
   fromMap(Map<String, dynamic> json) {
     id = json['id'];
-    responseStatus = JsonConverters.fromJson(json['responseStatus'], 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        json['responseStatus'], 'ResponseStatus', context!);
     return this;
   }
 
-  Map<String, dynamic> toJson() =>
-      {'id': id, 'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)};
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+      };
 
   getTypeName() => "IdResponse";
   TypeContext? context = _ctx;
@@ -1279,14 +1439,16 @@ class StringResponse implements IConvertible {
   fromMap(Map<String, dynamic> json) {
     results = json['results'];
     meta = JsonConverters.toStringMap(json['meta']);
-    responseStatus = JsonConverters.fromJson(json['responseStatus'], 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        json['responseStatus'], 'ResponseStatus', context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'results': results,
         'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "StringResponse";
@@ -1311,16 +1473,19 @@ class StringsResponse implements IConvertible {
   }
 
   fromMap(Map<String, dynamic> json) {
-    results = JsonConverters.fromJson(json['results'], 'List<String>', context!);
+    results =
+        JsonConverters.fromJson(json['results'], 'List<String>', context!);
     meta = JsonConverters.toStringMap(json['meta']);
-    responseStatus = JsonConverters.fromJson(json['responseStatus'], 'ResponseStatus', context!);
+    responseStatus = JsonConverters.fromJson(
+        json['responseStatus'], 'ResponseStatus', context!);
     return this;
   }
 
   Map<String, dynamic> toJson() => {
         'results': JsonConverters.toJson(results, 'List<String>', context!),
         'meta': meta,
-        'responseStatus': JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
+        'responseStatus':
+            JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
   getTypeName() => "StringsResponse";
@@ -1348,18 +1513,27 @@ abstract class AuditBase {
   // @DataMember(Order=6)
   String? deletedBy;
 
-  AuditBase({this.createdDate, this.createdBy, this.modifiedDate, this.modifiedBy, this.deletedDate, this.deletedBy});
+  AuditBase(
+      {this.createdDate,
+      this.createdBy,
+      this.modifiedDate,
+      this.modifiedBy,
+      this.deletedDate,
+      this.deletedBy});
 
   AuditBase.fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
   fromMap(Map<String, dynamic> json) {
-    createdDate = JsonConverters.fromJson(json['createdDate'], 'DateTime', context!);
+    createdDate =
+        JsonConverters.fromJson(json['createdDate'], 'DateTime', context!);
     createdBy = json['createdBy'];
-    modifiedDate = JsonConverters.fromJson(json['modifiedDate'], 'DateTime', context!);
+    modifiedDate =
+        JsonConverters.fromJson(json['modifiedDate'], 'DateTime', context!);
     modifiedBy = json['modifiedBy'];
-    deletedDate = JsonConverters.fromJson(json['deletedDate'], 'DateTime', context!);
+    deletedDate =
+        JsonConverters.fromJson(json['deletedDate'], 'DateTime', context!);
     deletedBy = json['deletedBy'];
     return this;
   }
@@ -1367,7 +1541,8 @@ abstract class AuditBase {
   Map<String, dynamic> toJson() => {
         'createdDate': JsonConverters.toJson(createdDate, 'DateTime', context!),
         'createdBy': createdBy,
-        'modifiedDate': JsonConverters.toJson(modifiedDate, 'DateTime', context!),
+        'modifiedDate':
+            JsonConverters.toJson(modifiedDate, 'DateTime', context!),
         'modifiedBy': modifiedBy,
         'deletedDate': JsonConverters.toJson(deletedDate, 'DateTime', context!),
         'deletedBy': deletedBy
