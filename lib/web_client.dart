@@ -28,6 +28,14 @@ class ClientFactory {
     return client;
   }
 
+  static IServiceClient legacy([String baseUrl = "/"]) {
+    var client = JsonWebClient.legacy(baseUrl);
+    if (ClientConfig.initClient != null) {
+      ClientConfig.initClient!(client);
+    }
+    return client;
+  }
+
   static IServiceClient createWith(ClientOptions options) {
     var client = create(options.baseUrl);
     return client;
@@ -96,8 +104,7 @@ class JsonWebClient implements IServiceClient {
   bool get withCredentials => client.withCredentials;
 
   JsonWebClient([this.baseUrl = "/"]) {
-    replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
-    oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
+    basePath = "api";
     headers = {
       "Accept": "application/json",
     };
@@ -107,12 +114,31 @@ class JsonWebClient implements IServiceClient {
   }
 
   JsonWebClient.api([this.baseUrl = "/"]) {
-    replyBaseUrl = combinePaths([baseUrl, "api"]) + "/";
-    oneWayBaseUrl = combinePaths([baseUrl, "api"]) + "/";
+    basePath = "api";
     headers = {};
     client = BrowserClient()..withCredentials = true;
     maxRetries = 5;
     useTokenCookie = false;
+  }
+
+  JsonWebClient.legacy([this.baseUrl = "/"]) {
+    basePath = null;
+    headers = {
+      "Accept": "application/json",
+    };
+    client = BrowserClient()..withCredentials = true;
+    maxRetries = 5;
+    useTokenCookie = false;
+  }
+
+  void set basePath(String? path) {
+    if (path == null) {
+      replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
+      oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
+    } else {
+      replyBaseUrl = combinePaths([baseUrl, path]) + "/";
+      oneWayBaseUrl = combinePaths([baseUrl, path]) + "/";
+    }
   }
 
   String? getTokenCookie() => cookies['ss-tok'];

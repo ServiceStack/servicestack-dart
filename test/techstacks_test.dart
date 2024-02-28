@@ -1,3 +1,5 @@
+// import 'dart:convert';
+
 import 'package:test/test.dart';
 
 import '../lib/client.dart';
@@ -40,7 +42,7 @@ void main() {
   test('Should throw 401', () async {
     var client = createTechStacksClient();
     try {
-      await client.get(CreateTechnology());
+      await client.post(CreateTechnology());
       fail("should throw");
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(401));
@@ -67,8 +69,7 @@ void main() {
 
     var response = await client.getAs("/technology/search",
         args: args,
-        responseAs: QueryResponse<Technology>()
-          ..context = techstacksContext);
+        responseAs: QueryResponse<Technology>()..context = techstacksContext);
 
     expect(response.results!.length, equals(3));
     expect(response.results!.map((x) => x.vendorName),
@@ -77,8 +78,7 @@ void main() {
 
   test('Can query with args and base class property', () async {
     var client = createTechStacksClient();
-    var techs =
-        await client.get(FindTechnologies(), args: {"slug": "flutter"});
+    var techs = await client.get(FindTechnologies(), args: {"slug": "flutter"});
     var posts = await client.get(QueryPosts(
         anyTechnologyIds: [techs.results![0].id!],
         types: ['Announcement', 'Showcase'])

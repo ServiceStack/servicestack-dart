@@ -1,3 +1,10 @@
+## 3.0.0
+
+* Upgraded environment to `sdk: '>=3.0.0 <4.0.0'`
+* Upgraded dependency to `http: ^1.2.1`
+* Changed default base route to use [JSON /api predefined route](https://docs.servicestack.net/endpoint-routing#api-pre-defined-route)
+* Add new `ClientFactory.legacy()` to create Clients configured with previous `/json/reply` Route
+
 ## 2.0.3
 
 * Add new `ClientFactory.api()` and `ClientFactory.apiWith()` methods for calling `.api()` ServiceClient constructors

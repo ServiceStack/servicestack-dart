@@ -1,10 +1,9 @@
 name: servicestack_example
 version: 0.0.1
-author: ServiceStack, Inc <team@servicestack.net>
 description: ServiceStack Dart Test
 homepage: https://github.com/ServiceStack/servicestack-dart
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=3.0.0 <4.0.0'
 dependencies:
-  http: ^0.12.0
-  servicestack: ^1.0.15
+  http: ^1.2.1
+  servicestack: ^3.0.0

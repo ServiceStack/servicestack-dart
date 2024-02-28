@@ -31,17 +31,10 @@ To make API calls we need to use the `JsonServiceClient`, installed by adding th
 
 ```yaml
 dependencies:
-  servicestack: ^2.0.3
+  servicestack: ^3.0.0
 ```
 
 This requires Dart DTOs generated from ServiceStack **v5.11.1+** that's [now available on MyGet](https://docs.servicestack.net/myget).
-
-To reference the previous non null-safe library reference **1.x** instead: 
-
-```yaml
-dependencies:
-  servicestack: ^1.0.32
-```
 
 Saving `pubspec.yaml` in VS Code with the [Dart Code Extension](https://dartcode.org) automatically calls `pub get` or `flutter packages get` (in Flutter projects) to add any new dependencies to your project.
 

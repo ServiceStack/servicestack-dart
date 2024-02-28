@@ -354,8 +354,7 @@ void main() {
 
   test('Can sendAllOneWay IReturn<T> batch request', () async {
     var client = createTestClient();
-    client.urlFilter =
-        (url) => expect(url, endsWith("/json/oneway/Hello%5B%5D"));
+    client.urlFilter = (url) => expect(url, endsWith("/api/Hello%5B%5D"));
 
     var requests = ["foo", "bar", "baz"].map((name) => Hello(name: name));
 
@@ -365,7 +364,7 @@ void main() {
   test('Can sendAllOneWay IReturnVoid batch request', () async {
     var client = createTestClient();
     client.urlFilter =
-        (url) => expect(url, endsWith("/json/oneway/HelloReturnVoid%5B%5D"));
+        (url) => expect(url, endsWith("/api/HelloReturnVoid%5B%5D"));
 
     var requests = [1, 2, 3].map((id) => HelloReturnVoid(id: id));
 
@@ -541,5 +540,22 @@ void main() {
     var status = response.responseStatus!;
     print(status.toJson());
     expect(status.message, equals("Custom"));
+  });
+
+  test('Should change base path', () async {
+    var client = new JsonServiceClient("https://test.servicestack.net");
+
+    expect(client.replyBaseUrl, equals("https://test.servicestack.net/api/"));
+    expect(client.oneWayBaseUrl, equals("https://test.servicestack.net/api/"));
+
+    client.basePath = null;
+    expect(client.replyBaseUrl,
+        equals("https://test.servicestack.net/json/reply/"));
+    expect(client.oneWayBaseUrl,
+        equals("https://test.servicestack.net/json/oneway/"));
+
+    client.basePath = "api";
+    expect(client.replyBaseUrl, equals("https://test.servicestack.net/api/"));
+    expect(client.oneWayBaseUrl, equals("https://test.servicestack.net/api/"));
   });
 }

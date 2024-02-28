@@ -29,6 +29,15 @@ class ClientFactory {
     return client;
   }
 
+  static IServiceClient legacy(
+      [String baseUrl = "/", ClientOptions? options = null]) {
+    var client = JsonServiceClient.legacy(baseUrl);
+    if (ClientConfig.initClient != null) {
+      ClientConfig.initClient!(client);
+    }
+    return client;
+  }
+
   static IServiceClient createWith(ClientOptions options) {
     var client = create(options.baseUrl);
     if (client is JsonServiceClient) {
@@ -140,8 +149,7 @@ class JsonServiceClient implements IServiceClient {
   Duration? get connectionTimeout => client.connectionTimeout;
 
   JsonServiceClient([this.baseUrl = "/"]) {
-    replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
-    oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
+    basePath = "api";
     headers = {
       HttpHeaders.acceptHeader: "application/json",
     };
@@ -151,12 +159,31 @@ class JsonServiceClient implements IServiceClient {
   }
 
   JsonServiceClient.api([this.baseUrl = "/"]) {
-    replyBaseUrl = combinePaths([baseUrl, "api"]) + "/";
-    oneWayBaseUrl = combinePaths([baseUrl, "api"]) + "/";
+    basePath = "api";
+    headers = {
+      HttpHeaders.acceptHeader: "application/json",
+    };
+    cookies = <Cookie>[];
+    maxRetries = 5;
+    useTokenCookie = false;
+  }
+
+  JsonServiceClient.legacy([this.baseUrl = "/"]) {
+    basePath = null;
     headers = {};
     cookies = <Cookie>[];
     maxRetries = 5;
     useTokenCookie = false;
+  }
+
+  void set basePath(String? path) {
+    if (path == null) {
+      replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
+      oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
+    } else {
+      replyBaseUrl = combinePaths([baseUrl, path]) + "/";
+      oneWayBaseUrl = combinePaths([baseUrl, path]) + "/";
+    }
   }
 
   void clearCookies() {

@@ -1,6 +1,6 @@
 /* Options:
-Date: 2023-03-28 11:48:00
-Version: 6.71
+Date: 2024-02-28 03:18:33
+Version: 8.13
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://test.servicestack.net
 
@@ -824,19 +824,6 @@ enum ScopeType
 {
     Global,
     Sale,
-}
-
-class PingService implements IConvertible
-{
-    PingService();
-    PingService.fromJson(Map<String, dynamic> json) : super();
-    fromMap(Map<String, dynamic> json) {
-        return this;
-    }
-
-    Map<String, dynamic> toJson() => {};
-    getTypeName() => "PingService";
-    TypeContext? context = _ctx;
 }
 
 class Channel implements IConvertible
@@ -6161,7 +6148,6 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'EmptyClass': TypeInfo(TypeOf.Class, create:() => EmptyClass()),
     'DayOfWeek': TypeInfo(TypeOf.Enum, enumValues:DayOfWeek.values),
     'ScopeType': TypeInfo(TypeOf.Enum, enumValues:ScopeType.values),
-    'PingService': TypeInfo(TypeOf.Class, create:() => PingService()),
     'Channel': TypeInfo(TypeOf.Class, create:() => Channel()),
     'Device': TypeInfo(TypeOf.Class, create:() => Device()),
     'List<Channel>': TypeInfo(TypeOf.Class, create:() => <Channel>[]),
