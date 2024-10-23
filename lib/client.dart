@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:io';
 import 'dart:convert';
@@ -697,6 +698,100 @@ class JsonServiceClient implements IServiceClient {
     _client!.close(force: force);
     _client = null;
   }
+
+  /// Posts files with a request DTO using multipart/form-data
+  ///
+  /// [requestUri] The request URI
+  /// [request] The request DTO
+  /// [files] List of file upload entries. Each entry should be a Map with:
+  ///   - 'fieldName': String (optional, defaults to 'upload')
+  ///   - 'fileName': String
+  ///   - 'stream': List<int> or Stream<List<int>>
+  ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
+  /// [responseAs] Optional type to deserialize response as
+  Future<T> postFilesWithRequest<T>(
+      String requestUri,
+      dynamic request,
+      List<Map<String, dynamic>> files, {
+        T? responseAs,
+        RequestFilter? requestFilter,
+        ResponseFilter? responseFilter,
+      }) async {
+    var uri = createUri(toAbsoluteUrl(requestUri))!;
+    var req = await client.postUrl(uri);
+
+    // Set up multipart request
+    var boundary = _generateBoundary();
+    req.headers.set(HttpHeaders.contentTypeHeader,
+        'multipart/form-data; boundary=$boundary');
+
+    if (bearerToken != null) {
+      req.headers.add(HttpHeaders.authorizationHeader, 'Bearer $bearerToken');
+    }
+
+    // Add other headers
+    headers.forEach((key, val) {
+      if (key != HttpHeaders.contentTypeHeader) {
+        req.headers.add(key, val);
+      }
+    });
+
+    // Create multipart output stream
+    var output = BytesBuilder();
+
+    // Add the request DTO as JSON
+    var requestMap = toMap(request);
+    _writeMultipartField(output, boundary, 'request',
+        utf8.encode(json.encode(requestMap)), 'application/json');
+
+    // Add each file
+    for (var file in files) {
+      var fieldName = file['fieldName'] as String? ?? 'upload';
+      var fileName = file['fileName'] as String;
+      var contentType = file['contentType'] as String? ?? 'application/octet-stream';
+      var fileData = file['stream'];
+
+      if (fileData is List<int>) {
+        _writeMultipartFile(output, boundary, fieldName, fileName, fileData,
+            contentType);
+      } else if (fileData is Stream<List<int>>) {
+        var bytes = await fileData.expand((x) => x).toList();
+        _writeMultipartFile(
+            output, boundary, fieldName, fileName, bytes, contentType);
+      } else {
+        throw ArgumentError('File stream must be List<int> or Stream<List<int>>');
+      }
+    }
+
+    // Write final boundary
+    output.add(utf8.encode('\r\n--$boundary--\r\n'));
+
+    // Set content length and write body
+    var body = output.takeBytes();
+    req.contentLength = body.length;
+    req.add(body);
+
+    // Apply request filters
+    if (requestFilter != null) requestFilter(req);
+    if (this.requestFilter != null) this.requestFilter!(req);
+    if (globalRequestFilter != null) globalRequestFilter!(req);
+
+    // Send request and handle response
+    try {
+      var res = await req.close();
+      var response = await createResponse<T>(
+          res,
+          SendContext(
+              method: 'POST',
+              request: request,
+              responseAs: responseAs,
+              responseFilter: responseFilter));
+      return response!;
+    } on Exception catch (e) {
+      return await handleError(null, e);
+    }
+  }
+
 }
 
 Future<String> readFully(HttpClientResponse response) async {
@@ -738,4 +833,34 @@ Future<Uint8List> readFullyAsBytes(HttpClientResponse response) {
         cancelOnError: true);
   }
   return completer.future;
+}
+
+// Helper to generate a unique boundary
+String _generateBoundary() {
+  var random = Random();
+  var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  return List.generate(32, (index) => chars[random.nextInt(chars.length)])
+      .join();
+}
+
+// Helper to write a multipart field
+void _writeMultipartField(BytesBuilder output, String boundary, String name,
+    List<int> value, String contentType) {
+  output.add(utf8.encode('--$boundary\r\n'));
+  output.add(utf8.encode(
+      'Content-Disposition: form-data; name="$name"\r\n'));
+  output.add(utf8.encode('Content-Type: $contentType\r\n\r\n'));
+  output.add(value);
+  output.add(utf8.encode('\r\n'));
+}
+
+// Helper to write a multipart file
+void _writeMultipartFile(BytesBuilder output, String boundary, String fieldName,
+    String fileName, List<int> fileData, String contentType) {
+  output.add(utf8.encode('--$boundary\r\n'));
+  output.add(utf8.encode(
+      'Content-Disposition: form-data; name="$fieldName"; filename="$fileName"\r\n'));
+  output.add(utf8.encode('Content-Type: $contentType\r\n\r\n'));
+  output.add(fileData);
+  output.add(utf8.encode('\r\n'));
 }

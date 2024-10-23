@@ -1551,3 +1551,590 @@ abstract class AuditBase {
   getTypeName() => "AuditBase";
   TypeContext? context = _ctx;
 }
+
+enum BackgroundJobState {
+  QUEUED,
+  STARTED,
+  EXECUTED,
+  COMPLETED,
+  FAILED,
+  CANCELLED
+}
+
+class JobStatSummary implements IConvertible {
+  String? name;
+  int total;
+  int completed;
+  int retries;
+  int failed;
+  int cancelled;
+
+  JobStatSummary({
+    this.name,
+    this.total = 0,
+    this.completed = 0,
+    this.retries = 0,
+    this.failed = 0,
+    this.cancelled = 0
+  });
+
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    name = json['name'];
+    total = json['total'] ?? 0;
+    completed = json['completed'] ?? 0;
+    retries = json['retries'] ?? 0;
+    failed = json['failed'] ?? 0;
+    cancelled = json['cancelled'] ?? 0;
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'total': total,
+    'completed': completed,
+    'retries': retries,
+    'failed': failed,
+    'cancelled': cancelled
+  };
+
+  getTypeName() => "JobStatSummary";
+  TypeContext? context = _ctx;
+}
+
+class HourSummary implements IConvertible {
+  String? hour;
+  int total;
+  int completed;
+  int failed;
+  int cancelled;
+
+  HourSummary({
+    this.hour,
+    this.total = 0,
+    this.completed = 0,
+    this.failed = 0,
+    this.cancelled = 0
+  });
+
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    hour = json['hour'];
+    total = json['total'] ?? 0;
+    completed = json['completed'] ?? 0;
+    failed = json['failed'] ?? 0;
+    cancelled = json['cancelled'] ?? 0;
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'hour': hour,
+    'total': total,
+    'completed': completed,
+    'failed': failed,
+    'cancelled': cancelled
+  };
+
+  getTypeName() => "HourSummary";
+  TypeContext? context = _ctx;
+}
+
+class WorkerStats implements IConvertible {
+  String? name;
+  int queued;
+  int received;
+  int completed;
+  int retries;
+  int failed;
+  int? runningJob;
+  Duration? runningTime;
+
+  WorkerStats({
+    this.name,
+    this.queued = 0,
+    this.received = 0,
+    this.completed = 0,
+    this.retries = 0,
+    this.failed = 0,
+    this.runningJob,
+    this.runningTime
+  });
+
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    name = json['name'];
+    queued = json['queued'] ?? 0;
+    received = json['received'] ?? 0;
+    completed = json['completed'] ?? 0;
+    retries = json['retries'] ?? 0;
+    failed = json['failed'] ?? 0;
+    runningJob = json['runningJob'];
+    runningTime = JsonConverters.fromJson(json['runningTime'], 'Duration', context!);
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'queued': queued,
+    'received': received,
+    'completed': completed,
+    'retries': retries,
+    'failed': failed,
+    'runningJob': runningJob,
+    'runningTime': JsonConverters.toJson(runningTime, 'Duration', context!)
+  };
+
+  getTypeName() => "WorkerStats";
+  TypeContext? context = _ctx;
+}
+
+class BackgroundJobBase implements IConvertible {
+  int id;
+  int? parentId;
+  String? refId;
+  String? worker;
+  String? tag;
+  String? batchId;
+  String? callback;
+  int? dependsOn;
+  DateTime? runAfter;
+  DateTime createdDate;
+  String? createdBy;
+  String? requestId;
+  String? requestType;
+  String? command;
+  String? request;
+  String? requestBody;
+  String? userId;
+  String? response;
+  String? responseBody;
+  BackgroundJobState? state;
+  DateTime? startedDate;
+  DateTime? completedDate;
+  DateTime? notifiedDate;
+  int? retryLimit;
+  int attempts;
+  int durationMs;
+  int? timeoutSecs;
+  double? progress;
+  String? status;
+  String? logs;
+  DateTime? lastActivityDate;
+  String? replyTo;
+  String? errorCode;
+  ResponseStatus? error;
+  Map<String, String>? args;
+  Map<String, String>? meta;
+
+  BackgroundJobBase({
+    this.id = 0,
+    this.parentId,
+    this.refId,
+    this.worker,
+    this.tag,
+    this.batchId,
+    this.callback,
+    this.dependsOn,
+    this.runAfter,
+    DateTime? createdDate,
+    this.createdBy,
+    this.requestId,
+    this.requestType,
+    this.command,
+    this.request,
+    this.requestBody,
+    this.userId,
+    this.response,
+    this.responseBody,
+    this.state,
+    this.startedDate,
+    this.completedDate,
+    this.notifiedDate,
+    this.retryLimit,
+    this.attempts = 0,
+    this.durationMs = 0,
+    this.timeoutSecs,
+    this.progress,
+    this.status,
+    this.logs,
+    this.lastActivityDate,
+    this.replyTo,
+    this.errorCode,
+    this.error,
+    this.args,
+    this.meta
+  }) : createdDate = createdDate ?? DateTime(1, 1, 1);
+
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    parentId = json['parentId'];
+    refId = json['refId'];
+    worker = json['worker'];
+    tag = json['tag'];
+    batchId = json['batchId'];
+    callback = json['callback'];
+    dependsOn = json['dependsOn'];
+    runAfter = JsonConverters.fromJson(json['runAfter'], 'DateTime', context!);
+    createdDate = JsonConverters.fromJson(json['createdDate'], 'DateTime', context!) ?? DateTime(1, 1, 1);
+    createdBy = json['createdBy'];
+    requestId = json['requestId'];
+    requestType = json['requestType'];
+    command = json['command'];
+    request = json['request'];
+    requestBody = json['requestBody'];
+    userId = json['userId'];
+    response = json['response'];
+    responseBody = json['responseBody'];
+    state = json['state'] != null ? BackgroundJobState.values.firstWhere((e) => e.toString().split('.').last == json['state']) : null;
+    startedDate = JsonConverters.fromJson(json['startedDate'], 'DateTime', context!);
+    completedDate = JsonConverters.fromJson(json['completedDate'], 'DateTime', context!);
+    notifiedDate = JsonConverters.fromJson(json['notifiedDate'], 'DateTime', context!);
+    retryLimit = json['retryLimit'];
+    attempts = json['attempts'] ?? 0;
+    durationMs = json['durationMs'] ?? 0;
+    timeoutSecs = json['timeoutSecs'];
+    progress = json['progress'];
+    status = json['status'];
+    logs = json['logs'];
+    lastActivityDate = JsonConverters.fromJson(json['lastActivityDate'], 'DateTime', context!);
+    replyTo = json['replyTo'];
+    errorCode = json['errorCode'];
+    error = JsonConverters.fromJson(json['error'], 'ResponseStatus', context!);
+    args = JsonConverters.toStringMap(json['args'])?.cast<String, String>();
+    meta = JsonConverters.toStringMap(json['meta'])?.cast<String, String>();
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'parentId': parentId,
+    'refId': refId,
+    'worker': worker,
+    'tag': tag,
+    'batchId': batchId,
+    'callback': callback,
+    'dependsOn': dependsOn,
+    'runAfter': JsonConverters.toJson(runAfter, 'DateTime', context!),
+    'createdDate': JsonConverters.toJson(createdDate, 'DateTime', context!),
+    'createdBy': createdBy,
+    'requestId': requestId,
+    'requestType': requestType,
+    'command': command,
+    'request': request,
+    'requestBody': requestBody,
+    'userId': userId,
+    'response': response,
+    'responseBody': responseBody,
+    'state': state?.toString().split('.').last,
+    'startedDate': JsonConverters.toJson(startedDate, 'DateTime', context!),
+    'completedDate': JsonConverters.toJson(completedDate, 'DateTime', context!),
+    'notifiedDate': JsonConverters.toJson(notifiedDate, 'DateTime', context!),
+    'retryLimit': retryLimit,
+    'attempts': attempts,
+    'durationMs': durationMs,
+    'timeoutSecs': timeoutSecs,
+    'progress': progress,
+    'status': status,
+    'logs': logs,
+    'lastActivityDate': JsonConverters.toJson(lastActivityDate, 'DateTime', context!),
+    'replyTo': replyTo,
+    'errorCode': errorCode,
+    'error': JsonConverters.toJson(error, 'ResponseStatus', context!),
+    'args': args,
+    'meta': meta
+  };
+
+  getTypeName() => "BackgroundJobBase";
+  TypeContext? context = _ctx;
+}
+
+class BackgroundJob extends BackgroundJobBase {
+  BackgroundJob({int id = 0}) : super(id: id);
+
+  BackgroundJob.fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+}
+
+class JobSummary implements IConvertible {
+  int id;
+  int? parentId;
+  String? refId;
+  String? worker;
+  String? tag;
+  String? batchId;
+  DateTime createdDate;
+  String? createdBy;
+  String? requestType;
+  String? command;
+  String? request;
+  String? response;
+  String? userId;
+  String? callback;
+  DateTime? startedDate;
+  DateTime? completedDate;
+  BackgroundJobState? state;
+  int durationMs;
+  int attempts;
+  String? errorCode;
+  String? errorMessage;
+
+  JobSummary({
+    this.id = 0,
+    this.parentId,
+    this.refId,
+    this.worker,
+    this.tag,
+    this.batchId,
+    DateTime? createdDate,
+    this.createdBy,
+    this.requestType,
+    this.command,
+    this.request,
+    this.response,
+    this.userId,
+    this.callback,
+    this.startedDate,
+    this.completedDate,
+    this.state,
+    this.durationMs = 0,
+    this.attempts = 0,
+    this.errorCode,
+    this.errorMessage
+  }) : createdDate = createdDate ?? DateTime(1, 1, 1);
+
+  fromJson(Map<String, dynamic> json){
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    parentId = json['parentId'];
+    refId = json['refId'];
+    worker = json['worker'];
+    tag = json['tag'];
+    batchId = json['batchId'];
+    createdDate = JsonConverters.fromJson(json['createdDate'], 'DateTime', context!) ?? DateTime(1, 1, 1);
+    createdBy = json['createdBy'];
+    requestType = json['requestType'];
+    command = json['command'];
+    request = json['request'];
+    response = json['response'];
+    userId = json['userId'];
+    callback = json['callback'];
+    startedDate = JsonConverters.fromJson(json['startedDate'], 'DateTime', context!);
+    completedDate = JsonConverters.fromJson(json['completedDate'], 'DateTime', context!);
+    state = json['state'] != null ? BackgroundJobState.values.firstWhere((e) => e.toString().split('.').last == json['state']) : null;
+    durationMs = json['durationMs'] ?? 0;
+    attempts = json['attempts'] ?? 0;
+    errorCode = json['errorCode'];
+    errorMessage = json['errorMessage'];
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'parentId': parentId,
+    'refId': refId,
+    'worker': worker,
+    'tag': tag,
+    'batchId': batchId,
+    'createdDate': JsonConverters.toJson(createdDate, 'DateTime', context!),
+    'createdBy': createdBy,
+    'requestType': requestType,
+    'command': command,
+    'request': request,
+    'response': response,
+    'userId': userId,
+    'callback': callback,
+    'startedDate': JsonConverters.toJson(startedDate, 'DateTime', context!),
+    'completedDate': JsonConverters.toJson(completedDate, 'DateTime', context!),
+    'state': state?.toString().split('.').last,
+    'durationMs': durationMs,
+    'attempts': attempts,
+    'errorCode': errorCode,
+    'errorMessage': errorMessage
+  };
+
+  getTypeName() => "JobSummary";
+  TypeContext? context = _ctx;
+}
+
+class BackgroundJobOptions implements IConvertible {
+  String? refId;
+  int? parentId;
+  String? worker;
+  DateTime? runAfter;
+  String? callback;
+  int? dependsOn;
+  String? userId;
+  int? retryLimit;
+  String? replyTo;
+  String? tag;
+  String? batchId;
+  String? createdBy;
+  int? timeoutSecs;
+  Duration? timeout;
+  Map<String, String>? args;
+  bool? runCommand;
+
+  BackgroundJobOptions({
+    this.refId,
+    this.parentId,
+    this.worker,
+    this.runAfter,
+    this.callback,
+    this.dependsOn,
+    this.userId,
+    this.retryLimit,
+    this.replyTo,
+    this.tag,
+    this.batchId,
+    this.createdBy,
+    this.timeoutSecs,
+    this.timeout,
+    this.args,
+    this.runCommand
+  });
+
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    refId = json['refId'];
+    parentId = json['parentId'];
+    worker = json['worker'];
+    runAfter = JsonConverters.fromJson(json['runAfter'], 'DateTime', context!);
+    callback = json['callback'];
+    dependsOn = json['dependsOn'];
+    userId = json['userId'];
+    retryLimit = json['retryLimit'];
+    replyTo = json['replyTo'];
+    tag = json['tag'];
+    batchId = json['batchId'];
+    createdBy = json['createdBy'];
+    timeoutSecs = json['timeoutSecs'];
+    timeout = JsonConverters.fromJson(json['timeout'], 'Duration', context!);
+    args = JsonConverters.toStringMap(json['args'])?.cast<String, String>();
+    runCommand = json['runCommand'];
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'refId': refId,
+    'parentId': parentId,
+    'worker': worker,
+    'runAfter': JsonConverters.toJson(runAfter, 'DateTime', context!),
+    'callback': callback,
+    'dependsOn': dependsOn,
+    'userId': userId,
+    'retryLimit': retryLimit,
+    'replyTo': replyTo,
+    'tag': tag,
+    'batchId': batchId,
+    'createdBy': createdBy,
+    'timeoutSecs': timeoutSecs,
+    'timeout': JsonConverters.toJson(timeout, 'Duration', context!),
+    'args': args,
+    'runCommand': runCommand
+  };
+
+  getTypeName() => "BackgroundJobOptions";
+  TypeContext? context = _ctx;
+}
+
+class ScheduledTask implements IConvertible {
+  int id;
+  String? name;
+  Duration? interval;
+  String? cronExpression;
+  String? requestType;
+  String? command;
+  String? request;
+  String? requestBody;
+  BackgroundJobOptions? options;
+  DateTime? lastRun;
+  int? lastJobId;
+
+  ScheduledTask({
+    this.id = 0,
+    this.name,
+    this.interval,
+    this.cronExpression,
+    this.requestType,
+    this.command,
+    this.request,
+    this.requestBody,
+    this.options,
+    this.lastRun,
+    this.lastJobId
+  });
+
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+
+  fromMap(Map<String, dynamic> json) {
+    id = json['id'] ?? 0;
+    name = json['name'];
+    interval = JsonConverters.fromJson(json['interval'], 'Duration', context!);
+    cronExpression = json['cronExpression'];
+    requestType = json['requestType'];
+    command = json['command'];
+    request = json['request'];
+    requestBody = json['requestBody'];
+    options = JsonConverters.fromJson(json['options'], 'BackgroundJobOptions', context!);
+    lastRun = JsonConverters.fromJson(json['lastRun'], 'DateTime', context!);
+    lastJobId = json['lastJobId'];
+    return this;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'interval': JsonConverters.toJson(interval, 'Duration', context!),
+    'cronExpression': cronExpression,
+    'requestType': requestType,
+    'command': command,
+    'request': request,
+    'requestBody': requestBody,
+    'options': JsonConverters.toJson(options, 'BackgroundJobOptions', context!),
+    'lastRun': JsonConverters.toJson(lastRun, 'DateTime', context!),
+    'lastJobId': lastJobId
+  };
+
+  getTypeName() => "ScheduledTask";
+  TypeContext? context = _ctx;
+}
+
+class CompletedJob extends BackgroundJobBase {
+  CompletedJob() : super();
+
+  @override
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+}
+
+class FailedJob extends BackgroundJobBase {
+  FailedJob() : super();
+
+  @override
+  fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
+}
