@@ -64,8 +64,8 @@ void main() {
     expect(response.textOutputs!.length, equals(2));
 
     // Get both text outputs
-    var textWithTimestamps = response.textOutputs![0].text;
-    var textOnly = response.textOutputs![1].text;
+    var textWithTimestamps = response.textOutputs![1].text;
+    var textOnly = response.textOutputs![0].text;
 
     // Basic validation of outputs
     expect(textWithTimestamps, isNotNull);
