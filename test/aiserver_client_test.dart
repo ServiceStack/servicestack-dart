@@ -1,6 +1,7 @@
 import 'package:test/test.dart';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:http/http.dart' as http;
 
 import '../lib/client.dart';
 import 'utils.dart';
@@ -77,7 +78,6 @@ void main() {
     print('Text only: $textOnly');
   });
 
-
   test('Should handle errors when file upload fails', () async {
     var request = SpeechToText();
 
@@ -95,7 +95,6 @@ void main() {
       expect(e.statusCode, equals(400));
     }
   });
-
 
   test('Should handle request filters', () async {
     var file = File('test_resources/files/test_audio.wav');
@@ -124,5 +123,60 @@ void main() {
     expect(response, isNotNull);
     expect(filtersCalled, contains('requestFilter'));
     expect(filtersCalled, contains('responseFilter'));
+  });
+
+  test('Can perform image to image transformation', () async {
+    var file = File('test_resources/files/test_image.png');
+    var request = ImageToImage()
+      ..positivePrompt = "A beautiful landscape painting"
+      ..negativePrompt = "A pixelated image"
+      ..model = "sdxl-lightning";
+
+    var bytes = await file.readAsBytes();
+    var files = [
+      {
+        'fieldName': 'image',
+        'fileName': 'test_image.png',
+        'contentType': 'image/png',
+        'stream': bytes
+      }
+    ];
+
+    GenerationResponse? response = null;
+    try{
+
+      response = await client.postFilesWithRequest<GenerationResponse>(
+          '/api/ImageToImage',
+          request,
+          files
+      );
+    }
+    // Catch WebServiceException and print error message
+    on WebServiceException catch (e) {
+      print('Error: ${e.responseStatus?.message}');
+    }
+
+
+    // Verify response is not null
+    expect(response, isNotNull);
+
+    // Verify outputs exists and has correct length
+    expect(response?.outputs, isNotNull);
+    expect(response?.outputs!.length, equals(1));
+
+    // Get image output URL
+    var imageOutputUrl = response?.outputs![0].url;
+    expect(imageOutputUrl, isNotNull);
+
+    // Download the image output
+    var imageResponse = await http.get(Uri.parse(imageOutputUrl!));
+    expect(imageResponse.statusCode, equals(200));
+
+    // Save the output image
+    var outputFile = File('test_resources/files/image_output.webp');
+    await outputFile.writeAsBytes(imageResponse.bodyBytes);
+
+    // Verify the file was created
+    expect(await outputFile.exists(), isTrue);
   });
 }

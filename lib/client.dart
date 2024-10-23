@@ -739,10 +739,27 @@ class JsonServiceClient implements IServiceClient {
     // Create multipart output stream
     var output = BytesBuilder();
 
-    // Add the request DTO as JSON
+    // Convert request to map and add each field as a separate multipart field
     var requestMap = toMap(request);
-    _writeMultipartField(output, boundary, 'request',
-        utf8.encode(json.encode(requestMap)), 'application/json');
+    if (requestMap != null && requestMap.isNotEmpty) {
+      for (var entry in requestMap.entries) {
+        if (entry.value != null) {
+          // Convert value to JSON string and remove quotes for simple values
+          var valueJson = json.encode(entry.value);
+          var value = entry.value is String || entry.value is num || entry.value is bool
+              ? valueJson.substring(1, valueJson.length - 1)  // Remove quotes for simple types
+              : valueJson;  // Keep full JSON for complex types
+
+          _writeMultipartField(
+              output,
+              boundary,
+              entry.key,
+              utf8.encode(value),
+              'text/plain; charset=utf-8'
+          );
+        }
+      }
+    }
 
     // Add each file
     for (var file in files) {

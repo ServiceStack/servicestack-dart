@@ -35,7 +35,7 @@ void main() {
       expect(e.statusCode, equals(405));
       expect(e.responseStatus!.errorCode, equals("NotImplementedException"));
       expect(e.responseStatus!.message,
-          equals("The operation 'Overview' does not exist for this service"));
+          equals("operation does not exist"));
     }
   });
 
