@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:test/test.dart';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -557,5 +559,57 @@ void main() {
     client.basePath = "api";
     expect(client.replyBaseUrl, equals("https://test.servicestack.net/api/"));
     expect(client.oneWayBaseUrl, equals("https://test.servicestack.net/api/"));
+  });
+
+  test('Can Post Multiple files with Request', () async {
+    var client = createTestClient();
+    var request = TestFileUploads()
+      ..id = 1
+      ..refId = "zid";
+
+    var textFileBytes = utf8.encode("Hello World");
+    var markdownFileBytes = utf8.encode("## Heading");
+
+    var files = [
+      {
+        'fieldName': 'audio',
+        'fileName': 'test.txt',
+        'contentType': 'text/plain',
+        'stream': textFileBytes
+      },
+      {
+        'fieldName': 'content',
+        'fileName': 'test.md',
+        'contentType': 'text/markdown',
+        'stream': markdownFileBytes
+      }
+    ];
+
+    var response = await client.postFilesWithRequest<TestFileUploadsResponse>(
+        '/api/TestFileUploads',
+        request,
+        files
+    );
+
+    print('File2 content length: ${response.files?[1].contentLength}');
+
+    expect(response, isNotNull);
+    expect(response.id, equals(1));
+    expect(response.refId, equals("zid"));
+    expect(response.files?.length, equals(2));
+
+    // Verify first file
+    var file1 = response.files?[0];
+    expect(file1?.name, equals("audio"));
+    expect(file1?.fileName, equals("test.txt"));
+    expect(file1?.contentLength, equals("Hello World".length));
+    expect(file1?.contentType, equals("text/plain"));
+
+    // Verify second file
+    var file2 = response.files?[1];
+    expect(file2?.name, equals("content"));
+    expect(file2?.fileName, equals("test.md"));
+    expect(file2?.contentLength, equals("## Heading".length));
+    expect(file2?.contentType, equals("text/markdown"));
   });
 }

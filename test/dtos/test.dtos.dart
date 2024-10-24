@@ -1,6 +1,6 @@
 /* Options:
-Date: 2024-02-28 03:18:33
-Version: 8.13
+Date: 2024-10-24 03:34:40
+Version: 8.41
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://test.servicestack.net
 
@@ -199,6 +199,12 @@ class FluentSingleValidation implements IConvertible
 
     getTypeName() => "FluentSingleValidation";
     TypeContext? context = _ctx;
+}
+
+abstract class IGeneration
+{
+    String? refId;
+    String? tag;
 }
 
 abstract class IAuthTokens
@@ -1313,6 +1319,105 @@ class MessageCrud implements IReturnVoid, ISaveDb<MessageCrud>, IConvertible, IP
     TypeContext? context = _ctx;
 }
 
+/**
+* Output object for generated artifacts
+*/
+class ArtifactOutput implements IConvertible
+{
+    /**
+    * URL to access the generated image
+    */
+    // @ApiMember(Description="URL to access the generated image")
+    String? url;
+
+    /**
+    * Filename of the generated image
+    */
+    // @ApiMember(Description="Filename of the generated image")
+    String? fileName;
+
+    /**
+    * Provider used for image generation
+    */
+    // @ApiMember(Description="Provider used for image generation")
+    String? provider;
+
+    ArtifactOutput({this.url,this.fileName,this.provider});
+    ArtifactOutput.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        url = json['url'];
+        fileName = json['fileName'];
+        provider = json['provider'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'url': url,
+        'fileName': fileName,
+        'provider': provider
+    };
+
+    getTypeName() => "ArtifactOutput";
+    TypeContext? context = _ctx;
+}
+
+/**
+* Output object for generated text
+*/
+class TextOutput implements IConvertible
+{
+    /**
+    * The generated text
+    */
+    // @ApiMember(Description="The generated text")
+    String? text;
+
+    TextOutput({this.text});
+    TextOutput.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        text = json['text'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'text': text
+    };
+
+    getTypeName() => "TextOutput";
+    TypeContext? context = _ctx;
+}
+
+class UploadInfo implements IConvertible
+{
+    String? name;
+    String? fileName;
+    int? contentLength;
+    String? contentType;
+
+    UploadInfo({this.name,this.fileName,this.contentLength,this.contentType});
+    UploadInfo.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        fileName = json['fileName'];
+        contentLength = json['contentLength'];
+        contentType = json['contentType'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name,
+        'fileName': fileName,
+        'contentLength': contentLength,
+        'contentType': contentType
+    };
+
+    getTypeName() => "UploadInfo";
+    TypeContext? context = _ctx;
+}
+
 class MetadataTestNestedChild implements IConvertible
 {
     String? name;
@@ -1813,7 +1918,7 @@ class CustomHttpErrorResponse implements IConvertible
     TypeContext? context = _ctx;
 }
 
-class QueryResponseAlt<Item> implements IConvertible
+class QueryResponseAlt<T> implements IConvertible
 {
     int? offset;
     int? total;
@@ -1827,7 +1932,7 @@ class QueryResponseAlt<Item> implements IConvertible
     fromMap(Map<String, dynamic> json) {
         offset = json['offset'];
         total = json['total'];
-        results = JsonConverters.fromJson(json['results'],'List<${runtimeGenericTypeDefs(this,[0]).join(",")}>',context!);
+        results = JsonConverters.fromJson(json['results'],'List<Item>',context!);
         meta = JsonConverters.toStringMap(json['meta']);
         responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
         return this;
@@ -1841,7 +1946,7 @@ class QueryResponseAlt<Item> implements IConvertible
         'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
     };
 
-    getTypeName() => "QueryResponseAlt<$Item>";
+    getTypeName() => "QueryResponseAlt<$T>";
     TypeContext? context = _ctx;
 }
 
@@ -1951,6 +2056,78 @@ class ThrowBusinessErrorResponse implements IConvertible
     };
 
     getTypeName() => "ThrowBusinessErrorResponse";
+    TypeContext? context = _ctx;
+}
+
+/**
+* Response object for generation requests
+*/
+class GenerationResponse implements IConvertible
+{
+    /**
+    * List of generated outputs
+    */
+    // @ApiMember(Description="List of generated outputs")
+    List<ArtifactOutput>? outputs;
+
+    /**
+    * List of generated text outputs
+    */
+    // @ApiMember(Description="List of generated text outputs")
+    List<TextOutput>? textOutputs;
+
+    /**
+    * Detailed response status information
+    */
+    // @ApiMember(Description="Detailed response status information")
+    ResponseStatus? responseStatus;
+
+    GenerationResponse({this.outputs,this.textOutputs,this.responseStatus});
+    GenerationResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        outputs = JsonConverters.fromJson(json['outputs'],'List<ArtifactOutput>',context!);
+        textOutputs = JsonConverters.fromJson(json['textOutputs'],'List<TextOutput>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'outputs': JsonConverters.toJson(outputs,'List<ArtifactOutput>',context!),
+        'textOutputs': JsonConverters.toJson(textOutputs,'List<TextOutput>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
+    };
+
+    getTypeName() => "GenerationResponse";
+    TypeContext? context = _ctx;
+}
+
+class TestFileUploadsResponse implements IConvertible
+{
+    int? id;
+    String? refId;
+    List<UploadInfo>? files;
+    ResponseStatus? responseStatus;
+
+    TestFileUploadsResponse({this.id,this.refId,this.files,this.responseStatus});
+    TestFileUploadsResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        refId = json['refId'];
+        files = JsonConverters.fromJson(json['files'],'List<UploadInfo>',context!);
+        responseStatus = JsonConverters.fromJson(json['responseStatus'],'ResponseStatus',context!);
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'refId': refId,
+        'files': JsonConverters.toJson(files,'List<UploadInfo>',context!),
+        'responseStatus': JsonConverters.toJson(responseStatus,'ResponseStatus',context!)
+    };
+
+    getTypeName() => "TestFileUploadsResponse";
     TypeContext? context = _ctx;
 }
 
@@ -2180,6 +2357,31 @@ class HelloResponse implements IConvertible
     };
 
     getTypeName() => "HelloResponse";
+    TypeContext? context = _ctx;
+}
+
+/**
+* Description on HelloAllResponse type
+*/
+// @DataContract
+class HelloAnnotatedResponse implements IConvertible
+{
+    // @DataMember
+    String? result;
+
+    HelloAnnotatedResponse({this.result});
+    HelloAnnotatedResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        result = json['result'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'result': result
+    };
+
+    getTypeName() => "HelloAnnotatedResponse";
     TypeContext? context = _ctx;
 }
 
@@ -3775,6 +3977,78 @@ class ThrowBusinessError implements IReturn<ThrowBusinessErrorResponse>, IConver
     TypeContext? context = _ctx;
 }
 
+/**
+* Convert speech to text
+*/
+// @Api(Description="Convert speech to text")
+class SpeechToText implements IReturn<GenerationResponse>, IGeneration, IConvertible, IPost
+{
+    /**
+    * The audio stream containing the speech to be transcribed
+    */
+    // @ApiMember(Description="The audio stream containing the speech to be transcribed")
+    // @required()
+    Uint8List? audio;
+
+    /**
+    * Optional client-provided identifier for the request
+    */
+    // @ApiMember(Description="Optional client-provided identifier for the request")
+    String? refId;
+
+    /**
+    * Tag to identify the request
+    */
+    // @ApiMember(Description="Tag to identify the request")
+    String? tag;
+
+    SpeechToText({this.audio,this.refId,this.tag});
+    SpeechToText.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        audio = JsonConverters.fromJson(json['audio'],'Uint8List',context!);
+        refId = json['refId'];
+        tag = json['tag'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'audio': JsonConverters.toJson(audio,'Uint8List',context!),
+        'refId': refId,
+        'tag': tag
+    };
+
+    createResponse() => GenerationResponse();
+    getResponseTypeName() => "GenerationResponse";
+    getTypeName() => "SpeechToText";
+    TypeContext? context = _ctx;
+}
+
+class TestFileUploads implements IReturn<TestFileUploadsResponse>, IConvertible, IPost
+{
+    int? id;
+    String? refId;
+
+    TestFileUploads({this.id,this.refId});
+    TestFileUploads.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        id = json['id'];
+        refId = json['refId'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'id': id,
+        'refId': refId
+    };
+
+    createResponse() => TestFileUploadsResponse();
+    getResponseTypeName() => "TestFileUploadsResponse";
+    getTypeName() => "TestFileUploads";
+    TypeContext? context = _ctx;
+}
+
 class RootPathRoutes implements IConvertible, IPost
 {
     String? path;
@@ -4360,6 +4634,33 @@ class HelloSecure implements IReturn<HelloResponse>, IConvertible, IPost
     TypeContext? context = _ctx;
 }
 
+/**
+* Description on HelloAll type
+*/
+// @DataContract
+class HelloAnnotated implements IReturn<HelloAnnotatedResponse>, IConvertible, IPost
+{
+    // @DataMember
+    String? name;
+
+    HelloAnnotated({this.name});
+    HelloAnnotated.fromJson(Map<String, dynamic> json) { fromMap(json); }
+
+    fromMap(Map<String, dynamic> json) {
+        name = json['name'];
+        return this;
+    }
+
+    Map<String, dynamic> toJson() => {
+        'name': name
+    };
+
+    createResponse() => HelloAnnotatedResponse();
+    getResponseTypeName() => "HelloAnnotatedResponse";
+    getTypeName() => "HelloAnnotated";
+    TypeContext? context = _ctx;
+}
+
 class HelloWithNestedClass implements IReturn<HelloResponse>, IConvertible, IGet
 {
     String? name;
@@ -4578,23 +4879,29 @@ class HelloWithEnumMap implements IConvertible, IPost
     TypeContext? context = _ctx;
 }
 
-class HelloExternal implements IConvertible, IPost
+class RestrictedAttributes implements IConvertible, IPost
 {
+    int? id;
     String? name;
+    Hello? hello;
 
-    HelloExternal({this.name});
-    HelloExternal.fromJson(Map<String, dynamic> json) { fromMap(json); }
+    RestrictedAttributes({this.id,this.name,this.hello});
+    RestrictedAttributes.fromJson(Map<String, dynamic> json) { fromMap(json); }
 
     fromMap(Map<String, dynamic> json) {
+        id = json['id'];
         name = json['name'];
+        hello = JsonConverters.fromJson(json['hello'],'Hello',context!);
         return this;
     }
 
     Map<String, dynamic> toJson() => {
-        'name': name
+        'id': id,
+        'name': name,
+        'hello': JsonConverters.toJson(hello,'Hello',context!)
     };
 
-    getTypeName() => "HelloExternal";
+    getTypeName() => "RestrictedAttributes";
     TypeContext? context = _ctx;
 }
 
@@ -6127,6 +6434,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'FluentChildValidation': TypeInfo(TypeOf.Class, create:() => FluentChildValidation()),
     'DeclarativeSingleValidation': TypeInfo(TypeOf.Class, create:() => DeclarativeSingleValidation()),
     'FluentSingleValidation': TypeInfo(TypeOf.Class, create:() => FluentSingleValidation()),
+    'IGeneration': TypeInfo(TypeOf.Interface),
     'IAuthTokens': TypeInfo(TypeOf.Interface),
     'AuthUserSession': TypeInfo(TypeOf.Class, create:() => AuthUserSession()),
     'List<IAuthTokens>': TypeInfo(TypeOf.Class, create:() => <IAuthTokens>[]),
@@ -6173,6 +6481,9 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'SoftDeleteAuditTenantBase<Table,TResponse>': TypeInfo(TypeOf.AbstractClass),
     'RockstarVersion': TypeInfo(TypeOf.Class, create:() => RockstarVersion()),
     'MessageCrud': TypeInfo(TypeOf.Class, create:() => MessageCrud()),
+    'ArtifactOutput': TypeInfo(TypeOf.Class, create:() => ArtifactOutput()),
+    'TextOutput': TypeInfo(TypeOf.Class, create:() => TextOutput()),
+    'UploadInfo': TypeInfo(TypeOf.Class, create:() => UploadInfo()),
     'MetadataTestNestedChild': TypeInfo(TypeOf.Class, create:() => MetadataTestNestedChild()),
     'MetadataTestChild': TypeInfo(TypeOf.Class, create:() => MetadataTestChild()),
     'List<MetadataTestNestedChild>': TypeInfo(TypeOf.Class, create:() => <MetadataTestNestedChild>[]),
@@ -6195,13 +6506,18 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'List<ChatMessage>': TypeInfo(TypeOf.Class, create:() => <ChatMessage>[]),
     'GetUserDetailsResponse': TypeInfo(TypeOf.Class, create:() => GetUserDetailsResponse()),
     'CustomHttpErrorResponse': TypeInfo(TypeOf.Class, create:() => CustomHttpErrorResponse()),
-    'QueryResponseAlt<Item>': TypeInfo(TypeOf.Class, create:() => QueryResponseAlt<Item>()),
-    'Items': TypeInfo(TypeOf.Class, create:() => Items()),
+    //'QueryResponseAlt<T>': TypeInfo(TypeOf.Class, create:() => QueryResponseAlt<T>()),
     'List<Item>': TypeInfo(TypeOf.Class, create:() => <Item>[]),
+    'Items': TypeInfo(TypeOf.Class, create:() => Items()),
     'ReturnCustom400Response': TypeInfo(TypeOf.Class, create:() => ReturnCustom400Response()),
     'ThrowTypeResponse': TypeInfo(TypeOf.Class, create:() => ThrowTypeResponse()),
     'ThrowValidationResponse': TypeInfo(TypeOf.Class, create:() => ThrowValidationResponse()),
     'ThrowBusinessErrorResponse': TypeInfo(TypeOf.Class, create:() => ThrowBusinessErrorResponse()),
+    'GenerationResponse': TypeInfo(TypeOf.Class, create:() => GenerationResponse()),
+    'List<ArtifactOutput>': TypeInfo(TypeOf.Class, create:() => <ArtifactOutput>[]),
+    'List<TextOutput>': TypeInfo(TypeOf.Class, create:() => <TextOutput>[]),
+    'TestFileUploadsResponse': TypeInfo(TypeOf.Class, create:() => TestFileUploadsResponse()),
+    'List<UploadInfo>': TypeInfo(TypeOf.Class, create:() => <UploadInfo>[]),
     'Account': TypeInfo(TypeOf.Class, create:() => Account()),
     'Project': TypeInfo(TypeOf.Class, create:() => Project()),
     'SecuredResponse': TypeInfo(TypeOf.Class, create:() => SecuredResponse()),
@@ -6213,6 +6529,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'Message': TypeInfo(TypeOf.Class, create:() => Message()),
     'GetRandomIdsResponse': TypeInfo(TypeOf.Class, create:() => GetRandomIdsResponse()),
     'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
+    'HelloAnnotatedResponse': TypeInfo(TypeOf.Class, create:() => HelloAnnotatedResponse()),
     'AllTypes': TypeInfo(TypeOf.Class, create:() => AllTypes()),
     'AllCollectionTypes': TypeInfo(TypeOf.Class, create:() => AllCollectionTypes()),
     'Uint8List': TypeInfo(TypeOf.Class, create:() => Uint8List(0)),
@@ -6286,6 +6603,8 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'ThrowType': TypeInfo(TypeOf.Class, create:() => ThrowType()),
     'ThrowValidation': TypeInfo(TypeOf.Class, create:() => ThrowValidation()),
     'ThrowBusinessError': TypeInfo(TypeOf.Class, create:() => ThrowBusinessError()),
+    'SpeechToText': TypeInfo(TypeOf.Class, create:() => SpeechToText()),
+    'TestFileUploads': TypeInfo(TypeOf.Class, create:() => TestFileUploads()),
     'RootPathRoutes': TypeInfo(TypeOf.Class, create:() => RootPathRoutes()),
     'GetAccount': TypeInfo(TypeOf.Class, create:() => GetAccount()),
     'GetProject': TypeInfo(TypeOf.Class, create:() => GetProject()),
@@ -6311,6 +6630,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'ReturnHtml': TypeInfo(TypeOf.Class, create:() => ReturnHtml()),
     'Hello': TypeInfo(TypeOf.Class, create:() => Hello()),
     'HelloSecure': TypeInfo(TypeOf.Class, create:() => HelloSecure()),
+    'HelloAnnotated': TypeInfo(TypeOf.Class, create:() => HelloAnnotated()),
     'HelloWithNestedClass': TypeInfo(TypeOf.Class, create:() => HelloWithNestedClass()),
     'HelloList': TypeInfo(TypeOf.Class, create:() => HelloList()),
     'HelloArray': TypeInfo(TypeOf.Class, create:() => HelloArray()),
@@ -6327,7 +6647,7 @@ TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String,
     'Map<EnumWithValues,EnumWithValues?>': TypeInfo(TypeOf.Class, create:() => Map<EnumWithValues,EnumWithValues?>()),
     'Map<EnumFlags,EnumFlags?>': TypeInfo(TypeOf.Class, create:() => Map<EnumFlags,EnumFlags?>()),
     'Map<EnumStyle,EnumStyle?>': TypeInfo(TypeOf.Class, create:() => Map<EnumStyle,EnumStyle?>()),
-    'HelloExternal': TypeInfo(TypeOf.Class, create:() => HelloExternal()),
+    'RestrictedAttributes': TypeInfo(TypeOf.Class, create:() => RestrictedAttributes()),
     'AllowedAttributes': TypeInfo(TypeOf.Class, create:() => AllowedAttributes()),
     'HelloAllTypes': TypeInfo(TypeOf.Class, create:() => HelloAllTypes()),
     'HelloSubAllTypes': TypeInfo(TypeOf.Class, create:() => HelloSubAllTypes()),

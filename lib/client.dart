@@ -746,7 +746,7 @@ class JsonServiceClient implements IServiceClient {
         if (entry.value != null) {
           // Convert value to JSON string and remove quotes for simple values
           var valueJson = json.encode(entry.value);
-          var value = entry.value is String || entry.value is num || entry.value is bool
+          var value = (entry.value is String || entry.value is num || entry.value is bool) && valueJson.contains('"')
               ? valueJson.substring(1, valueJson.length - 1)  // Remove quotes for simple types
               : valueJson;  // Keep full JSON for complex types
 
@@ -781,7 +781,7 @@ class JsonServiceClient implements IServiceClient {
     }
 
     // Write final boundary
-    output.add(utf8.encode('\r\n--$boundary--\r\n'));
+    output.add(utf8.encode('--$boundary--\r\n'));
 
     // Set content length and write body
     var body = output.takeBytes();
@@ -871,13 +871,18 @@ void _writeMultipartField(BytesBuilder output, String boundary, String name,
   output.add(utf8.encode('\r\n'));
 }
 
-// Helper to write a multipart file
 void _writeMultipartFile(BytesBuilder output, String boundary, String fieldName,
     String fileName, List<int> fileData, String contentType) {
+  // Start boundary
   output.add(utf8.encode('--$boundary\r\n'));
+  // Headers
   output.add(utf8.encode(
       'Content-Disposition: form-data; name="$fieldName"; filename="$fileName"\r\n'));
-  output.add(utf8.encode('Content-Type: $contentType\r\n\r\n'));
+  output.add(utf8.encode('Content-Type: $contentType\r\n'));
+  // Empty line to separate headers from content
+  output.add(utf8.encode('\r\n'));
+  // File data without extra line ending
   output.add(fileData);
+  // Boundary separator
   output.add(utf8.encode('\r\n'));
 }
