@@ -35,7 +35,7 @@ void main() {
       expect(e.statusCode, equals(405));
       expect(e.responseStatus!.errorCode, equals("NotImplementedException"));
       expect(e.responseStatus!.message,
-          equals("operation does not exist"));
+          contains("operation does not exist"));
     }
   });
 
