@@ -82,7 +82,7 @@ void main() {
     var files = <UploadFile>[];
 
     try {
-      await client.postFilesWithRequest<GenerationResponse>(request, files);
+      await client.postFilesWithRequest(request, files);
       fail('Expected exception was not thrown');
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(400));
