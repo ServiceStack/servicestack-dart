@@ -46,6 +46,14 @@ class TypeInfo {
   }
 }
 
+class UploadFile {
+  String? fieldName;
+  String? fileName;
+  String? contentType;
+  Uint8List? contents;
+  UploadFile({this.fieldName, this.fileName, this.contentType, this.contents});
+}
+
 class TypeContext {
   String? library;
   Map<String, TypeInfo>? types;

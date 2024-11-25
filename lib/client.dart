@@ -701,7 +701,26 @@ class JsonServiceClient implements IServiceClient {
 
   /// Posts files with a request DTO using multipart/form-data
   ///
-  /// [requestUri] The request URI
+  /// [request] The request DTO
+  /// [files] List of file upload entries. Each entry should be a Map with:
+  ///   - 'fieldName': String (optional, defaults to 'upload')
+  ///   - 'fileName': String
+  ///   - 'stream': List<int> or Stream<List<int>>
+  ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
+  /// [responseAs] Optional type to deserialize response as
+  Future<T> postFileWithRequest<T>(
+      IReturn<T> request,
+      UploadFile file, {
+        RequestFilter? requestFilter,
+        ResponseFilter? responseFilter,
+      }) async {
+
+      return await postFilesWithRequestAs<T>(combinePaths([this.replyBaseUrl, nameOf(request)]), 
+        request, [file], responseAs: request.createResponse(), requestFilter: requestFilter, responseFilter: responseFilter);
+  }
+
+  /// Posts files with a request DTO using multipart/form-data
+  ///
   /// [request] The request DTO
   /// [files] List of file upload entries. Each entry should be a Map with:
   ///   - 'fieldName': String (optional, defaults to 'upload')
@@ -710,9 +729,30 @@ class JsonServiceClient implements IServiceClient {
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFilesWithRequest<T>(
+      IReturn<T> request,
+      List<UploadFile> files, {
+        RequestFilter? requestFilter,
+        ResponseFilter? responseFilter,
+      }) async {
+
+      return await postFilesWithRequestAs<T>(combinePaths([this.replyBaseUrl, nameOf(request)]), 
+        request, files, responseAs: request.createResponse(), requestFilter: requestFilter, responseFilter: responseFilter);
+  }
+
+  /// Posts files with a request DTO using multipart/form-data
+  ///
+  /// [requestUri] The request URI
+  /// [request] The request DTO
+  /// [files] List of file upload entries. Each entry should be a Map with:
+  ///   - 'fieldName': String (optional, defaults to 'upload')
+  ///   - 'fileName': String
+  ///   - 'stream': List<int> or Stream<List<int>>
+  ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
+  /// [responseAs] Optional type to deserialize response as
+  Future<T> postFilesWithRequestAs<T>(
       String requestUri,
       dynamic request,
-      List<Map<String, dynamic>> files, {
+      List<UploadFile> files, {
         T? responseAs,
         RequestFilter? requestFilter,
         ResponseFilter? responseFilter,
@@ -763,21 +803,12 @@ class JsonServiceClient implements IServiceClient {
 
     // Add each file
     for (var file in files) {
-      var fieldName = file['fieldName'] as String? ?? 'upload';
-      var fileName = file['fileName'] as String;
-      var contentType = file['contentType'] as String? ?? 'application/octet-stream';
-      var fileData = file['stream'];
+      var fieldName = file.fieldName ?? 'upload';
+      var fileName = file.fileName!;
+      var contentType = file.contentType ?? 'application/octet-stream';
+      var fileData = file.contents ?? Uint8List(0);
 
-      if (fileData is List<int>) {
-        _writeMultipartFile(output, boundary, fieldName, fileName, fileData,
-            contentType);
-      } else if (fileData is Stream<List<int>>) {
-        var bytes = await fileData.expand((x) => x).toList();
-        _writeMultipartFile(
-            output, boundary, fieldName, fileName, bytes, contentType);
-      } else {
-        throw ArgumentError('File stream must be List<int> or Stream<List<int>>');
-      }
+      _writeMultipartFile(output, boundary, fieldName, fileName, fileData, contentType);
     }
 
     // Write final boundary

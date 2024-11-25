@@ -42,20 +42,17 @@ void main() {
     var request = SpeechToText();
 
     var bytes = await file.readAsBytes();
+    
     var files = [
-      {
-        'fieldName': 'audio',
-        'fileName': 'test_audio.wav',
-        'contentType': 'audio/wav',
-        'stream': bytes
-      }
+      UploadFile(
+        fieldName: 'audio',
+        fileName: 'test_audio.wav',
+        contentType: 'audio/wav',
+        contents: bytes
+      ),
     ];
 
-    var response = await client.postFilesWithRequest<GenerationResponse>(
-        '/api/SpeechToText',
-        request,
-        files
-    );
+    var response = await client.postFilesWithRequest(request, files);
 
     // Verify response is not null
     expect(response, isNotNull);
@@ -82,14 +79,10 @@ void main() {
     var request = SpeechToText();
 
     // Empty file list should throw error
-    var files = <Map<String, dynamic>>[];
+    var files = <UploadFile>[];
 
     try {
-      await client.postFilesWithRequest<GenerationResponse>(
-          '/api/SpeechToText',
-          request,
-          files
-      );
+      await client.postFilesWithRequest<GenerationResponse>(request, files);
       fail('Expected exception was not thrown');
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(400));
@@ -103,22 +96,18 @@ void main() {
 
     var bytes = await file.readAsBytes();
     var files = [
-      {
-        'fieldName': 'audio',
-        'fileName': 'test_audio.wav',
-        'contentType': 'audio/wav',
-        'stream': bytes
-      }
+      UploadFile(
+        fieldName: 'audio',
+        fileName: 'test_audio.wav',
+        contentType: 'audio/wav',
+        contents: bytes
+      ),
     ];
 
     client.requestFilter = (req) => filtersCalled.add('requestFilter');
     client.responseFilter = (res) => filtersCalled.add('responseFilter');
 
-    var response = await client.postFilesWithRequest<GenerationResponse>(
-        '/api/SpeechToText',
-        request,
-        files
-    );
+    var response = await client.postFilesWithRequest(request, files);
 
     expect(response, isNotNull);
     expect(filtersCalled, contains('requestFilter'));
@@ -134,28 +123,23 @@ void main() {
 
     var bytes = await file.readAsBytes();
     var files = [
-      {
-        'fieldName': 'image',
-        'fileName': 'test_image.png',
-        'contentType': 'image/png',
-        'stream': bytes
-      }
+      UploadFile(
+        fieldName: 'image',
+        fileName: 'test_image.png',
+        contentType: 'image/png',
+        contents: bytes
+      ),
     ];
 
     GenerationResponse? response = null;
     try{
 
-      response = await client.postFilesWithRequest<GenerationResponse>(
-          '/api/ImageToImage',
-          request,
-          files
-      );
+      response = await client.postFilesWithRequest(request, files);
     }
     // Catch WebServiceException and print error message
     on WebServiceException catch (e) {
       print('Error: ${e.responseStatus?.message}');
     }
-
 
     // Verify response is not null
     expect(response, isNotNull);

@@ -571,25 +571,17 @@ void main() {
     var markdownFileBytes = utf8.encode("## Heading");
 
     var files = [
-      {
-        'fieldName': 'audio',
-        'fileName': 'test.txt',
-        'contentType': 'text/plain',
-        'stream': textFileBytes
-      },
-      {
-        'fieldName': 'content',
-        'fileName': 'test.md',
-        'contentType': 'text/markdown',
-        'stream': markdownFileBytes
-      }
+      UploadFile(fieldName:'audio', 
+        fileName:'test.txt', 
+        contentType:'text/plain',
+        contents: textFileBytes),
+      UploadFile(fieldName:'content', 
+        fileName:'test.md', 
+        contentType:'text/markdown',
+        contents: markdownFileBytes),
     ];
 
-    var response = await client.postFilesWithRequest<TestFileUploadsResponse>(
-        '/api/TestFileUploads',
-        request,
-        files
-    );
+    var response = await client.postFilesWithRequest(request,files);
 
     print('File2 content length: ${response.files?[1].contentLength}');
 
