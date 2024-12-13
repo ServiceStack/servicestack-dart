@@ -30,4 +30,17 @@ void main() {
             as List<int>;
     expect(intList.length, equals(3));
   });
+
+  test('Can serialize PagedResult', () {
+    var pagedResult = PagedResult<Item>();
+    pagedResult.results = [Item(id: "A"), Item(id: "B"), Item(id: "C")];
+    pagedResult.totalResults = 3;
+
+    var json = jsonEncode(pagedResult);
+    expect(json, equals('{"page":null,"pageSize":null,"totalResults":3,"results":[{"id":"A"},{"id":"B"},{"id":"C"}]}'));
+    // print(pagedResult.runtimeType.toString());
+    // var fromJson = JsonConverters.fromJson(
+    //     jsonDecode(json), pagedResult.runtimeType.toString(), pagedResult.context!);
+    // expect(fromJson, equals(pagedResult));
+  });
 }

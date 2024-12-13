@@ -1,10 +1,8 @@
 import 'package:test/test.dart';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 
 import '../lib/client.dart';
-import 'utils.dart';
 import 'dtos/aiserver.dtos.dart';
 
 // Helper function to create AI server test client

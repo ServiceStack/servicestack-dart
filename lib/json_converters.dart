@@ -37,8 +37,12 @@ class JsonConverters {
 
   static IConverter? get(String? typeName) {
     var converter = Converters[typeName] ?? Converters[leftPart(typeName, "<")];
-    if (converter == null && typeName!.endsWith("[]"))
-      converter = Converters["List"];
+    if (converter == null && typeName != null) {
+      if (typeName.endsWith("[]")) {
+        converter = Converters["List"];
+      }
+    }
+
     return converter;
   }
 
