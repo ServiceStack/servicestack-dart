@@ -106,15 +106,15 @@ jobs:
       
       - name: Run tests
         run: dart test
-      
-      - name: Dry run publish
-        run: dart pub publish --dry-run
-      
+
       - name: Commit version bump
         run: |
           git add pubspec.yaml CHANGELOG.md pubspec.lock
           git commit -m "Bump version to ${{ steps.new_version.outputs.version }}"
           git push origin master
+
+      - name: Dry run publish
+        run: dart pub publish --dry-run
       
       - name: Create and push tag
         run: |
