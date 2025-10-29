@@ -9,4 +9,4 @@ dependencies:
   web: ^1.1.1
 dev_dependencies:
   test: ^1.26.3
-  lints: ^3.0.0
+  lints: ^6.0.0
