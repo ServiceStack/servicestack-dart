@@ -109,7 +109,7 @@ jobs:
 
       - name: Commit version bump
         run: |
-          git add pubspec.yaml CHANGELOG.md pubspec.lock
+          git add pubspec.yaml CHANGELOG.md
           git commit -m "Bump version to ${{ steps.new_version.outputs.version }}"
           git push origin master
 
