@@ -121,10 +121,13 @@ jobs:
           git tag "v${{ steps.new_version.outputs.version }}"
           git push origin "v${{ steps.new_version.outputs.version }}"
       
+      - name: Setup pub credentials
+        run: |
+          mkdir -p ~/.pub-cache
+          echo '${{ secrets.PUB_CREDENTIALS }}' > ~/.pub-cache/credentials.json
+
       - name: Publish to pub.dev
         run: dart pub publish --force
-        env:
-          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
       
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
