@@ -16,8 +16,7 @@ class DurationConverter implements IConverter {
 
 // From .NET TimeSpan (XSD Duration) to Dart Duration
 Duration? fromTimeSpan(String? str) {
-  if (str == null)
-    return null;
+  if (str == null) return null;
 
   int days = 0;
   int hours = 0;
@@ -104,7 +103,8 @@ String toTimeSpan(Duration duration) {
       secFmt = trimEnd(secFmt, '.');
       sb.write(secFmt);
       sb.write("S");
-    } else if (sb.length == 2) { //PT
+    } else if (sb.length == 2) {
+      //PT
       sb.write("0S");
     }
   }

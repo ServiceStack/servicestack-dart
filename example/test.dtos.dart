@@ -16,57 +16,54 @@ IncludeTypes: Hello.*
 
 import 'package:servicestack/servicestack.dart';
 
-class HelloResponse implements IConvertible
-{
-    String? result;
+class HelloResponse implements IConvertible {
+  String? result;
 
-    HelloResponse({this.result});
-    HelloResponse.fromJson(Map<String, dynamic> json) { fromMap(json); }
+  HelloResponse({this.result});
+  HelloResponse.fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
 
-    fromMap(Map<String, dynamic> json) {
-        result = json['result'];
-        return this;
-    }
+  fromMap(Map<String, dynamic> json) {
+    result = json['result'];
+    return this;
+  }
 
-    Map<String, dynamic> toJson() => {
-        'result': result
-    };
+  Map<String, dynamic> toJson() => {'result': result};
 
-    getTypeName() => "HelloResponse";
-    TypeContext? context = _ctx;
+  getTypeName() => "HelloResponse";
+  TypeContext? context = _ctx;
 }
 
 // @Route("/hello")
 // @Route("/hello/{Name}")
-class Hello implements IReturn<HelloResponse>, IConvertible, IPost
-{
-    // @required()
-    String? name;
+class Hello implements IReturn<HelloResponse>, IConvertible, IPost {
+  // @required()
+  String? name;
 
-    String? title;
+  String? title;
 
-    Hello({this.name,this.title});
-    Hello.fromJson(Map<String, dynamic> json) { fromMap(json); }
+  Hello({this.name, this.title});
+  Hello.fromJson(Map<String, dynamic> json) {
+    fromMap(json);
+  }
 
-    fromMap(Map<String, dynamic> json) {
-        name = json['name'];
-        title = json['title'];
-        return this;
-    }
+  fromMap(Map<String, dynamic> json) {
+    name = json['name'];
+    title = json['title'];
+    return this;
+  }
 
-    Map<String, dynamic> toJson() => {
-        'name': name,
-        'title': title
-    };
+  Map<String, dynamic> toJson() => {'name': name, 'title': title};
 
-    createResponse() => HelloResponse();
-    getResponseTypeName() => "HelloResponse";
-    getTypeName() => "Hello";
-    TypeContext? context = _ctx;
+  createResponse() => HelloResponse();
+  getResponseTypeName() => "HelloResponse";
+  getTypeName() => "Hello";
+  TypeContext? context = _ctx;
 }
 
-TypeContext _ctx = TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo> {
-    'HelloResponse': TypeInfo(TypeOf.Class, create:() => HelloResponse()),
-    'Hello': TypeInfo(TypeOf.Class, create:() => Hello()),
+TypeContext _ctx =
+    TypeContext(library: 'test.servicestack.net', types: <String, TypeInfo>{
+  'HelloResponse': TypeInfo(TypeOf.Class, create: () => HelloResponse()),
+  'Hello': TypeInfo(TypeOf.Class, create: () => Hello()),
 });
-

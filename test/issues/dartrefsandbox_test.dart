@@ -37,7 +37,10 @@ void main() {
     pagedResult.totalResults = 3;
 
     var json = jsonEncode(pagedResult);
-    expect(json, equals('{"page":null,"pageSize":null,"totalResults":3,"results":[{"id":"A"},{"id":"B"},{"id":"C"}]}'));
+    expect(
+        json,
+        equals(
+            '{"page":null,"pageSize":null,"totalResults":3,"results":[{"id":"A"},{"id":"B"},{"id":"C"}]}'));
     // print(pagedResult.runtimeType.toString());
     // var fromJson = JsonConverters.fromJson(
     //     jsonDecode(json), pagedResult.runtimeType.toString(), pagedResult.context!);

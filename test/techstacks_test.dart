@@ -34,8 +34,7 @@ void main() {
     } on WebServiceException catch (e) {
       expect(e.statusCode, equals(405));
       expect(e.responseStatus!.errorCode, equals("NotImplementedException"));
-      expect(e.responseStatus!.message,
-          contains("operation does not exist"));
+      expect(e.responseStatus!.message, contains("operation does not exist"));
     }
   });
 

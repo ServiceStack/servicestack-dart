@@ -5,7 +5,7 @@ void main() {
   test('Can configure client with kDebugMode', () async {
     // debug
     var client = ClientFactory.createWith(ClientOptions(
-            baseUrl: 'https://dev.servicestack.com:5001', ignoreCert: true));
+        baseUrl: 'https://dev.servicestack.com:5001', ignoreCert: true));
     // var client = ClientFactory.create('https://techstacks.io');
     expect(client, isNotNull);
   });

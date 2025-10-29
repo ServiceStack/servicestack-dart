@@ -709,14 +709,16 @@ class JsonServiceClient implements IServiceClient {
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFileWithRequest<T>(
-      IReturn<T> request,
-      UploadFile file, {
-        RequestFilter? requestFilter,
-        ResponseFilter? responseFilter,
-      }) async {
-
-      return await postFilesWithRequestAs<T>(combinePaths([this.replyBaseUrl, nameOf(request)]), 
-        request, [file], responseAs: request.createResponse(), requestFilter: requestFilter, responseFilter: responseFilter);
+    IReturn<T> request,
+    UploadFile file, {
+    RequestFilter? requestFilter,
+    ResponseFilter? responseFilter,
+  }) async {
+    return await postFilesWithRequestAs<T>(
+        combinePaths([this.replyBaseUrl, nameOf(request)]), request, [file],
+        responseAs: request.createResponse(),
+        requestFilter: requestFilter,
+        responseFilter: responseFilter);
   }
 
   /// Posts files with a request DTO using multipart/form-data
@@ -729,14 +731,16 @@ class JsonServiceClient implements IServiceClient {
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFilesWithRequest<T>(
-      IReturn<T> request,
-      List<UploadFile> files, {
-        RequestFilter? requestFilter,
-        ResponseFilter? responseFilter,
-      }) async {
-
-      return await postFilesWithRequestAs<T>(combinePaths([this.replyBaseUrl, nameOf(request)]), 
-        request, files, responseAs: request.createResponse(), requestFilter: requestFilter, responseFilter: responseFilter);
+    IReturn<T> request,
+    List<UploadFile> files, {
+    RequestFilter? requestFilter,
+    ResponseFilter? responseFilter,
+  }) async {
+    return await postFilesWithRequestAs<T>(
+        combinePaths([this.replyBaseUrl, nameOf(request)]), request, files,
+        responseAs: request.createResponse(),
+        requestFilter: requestFilter,
+        responseFilter: responseFilter);
   }
 
   /// Posts files with a request DTO using multipart/form-data
@@ -750,13 +754,13 @@ class JsonServiceClient implements IServiceClient {
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFilesWithRequestAs<T>(
-      String requestUri,
-      dynamic request,
-      List<UploadFile> files, {
-        T? responseAs,
-        RequestFilter? requestFilter,
-        ResponseFilter? responseFilter,
-      }) async {
+    String requestUri,
+    dynamic request,
+    List<UploadFile> files, {
+    T? responseAs,
+    RequestFilter? requestFilter,
+    ResponseFilter? responseFilter,
+  }) async {
     var uri = createUri(toAbsoluteUrl(requestUri))!;
     var req = await client.postUrl(uri);
 
@@ -786,17 +790,16 @@ class JsonServiceClient implements IServiceClient {
         if (entry.value != null) {
           // Convert value to JSON string and remove quotes for simple values
           var valueJson = json.encode(entry.value);
-          var value = (entry.value is String || entry.value is num || entry.value is bool) && valueJson.contains('"')
-              ? valueJson.substring(1, valueJson.length - 1)  // Remove quotes for simple types
-              : valueJson;  // Keep full JSON for complex types
+          var value = (entry.value is String ||
+                      entry.value is num ||
+                      entry.value is bool) &&
+                  valueJson.contains('"')
+              ? valueJson.substring(
+                  1, valueJson.length - 1) // Remove quotes for simple types
+              : valueJson; // Keep full JSON for complex types
 
-          _writeMultipartField(
-              output,
-              boundary,
-              entry.key,
-              utf8.encode(value),
-              'text/plain; charset=utf-8'
-          );
+          _writeMultipartField(output, boundary, entry.key, utf8.encode(value),
+              'text/plain; charset=utf-8');
         }
       }
     }
@@ -808,7 +811,8 @@ class JsonServiceClient implements IServiceClient {
       var contentType = file.contentType ?? 'application/octet-stream';
       var fileData = file.contents ?? Uint8List(0);
 
-      _writeMultipartFile(output, boundary, fieldName, fileName, fileData, contentType);
+      _writeMultipartFile(
+          output, boundary, fieldName, fileName, fileData, contentType);
     }
 
     // Write final boundary
@@ -839,7 +843,6 @@ class JsonServiceClient implements IServiceClient {
       return await handleError(null, e);
     }
   }
-
 }
 
 Future<String> readFully(HttpClientResponse response) async {
@@ -895,8 +898,7 @@ String _generateBoundary() {
 void _writeMultipartField(BytesBuilder output, String boundary, String name,
     List<int> value, String contentType) {
   output.add(utf8.encode('--$boundary\r\n'));
-  output.add(utf8.encode(
-      'Content-Disposition: form-data; name="$name"\r\n'));
+  output.add(utf8.encode('Content-Disposition: form-data; name="$name"\r\n'));
   output.add(utf8.encode('Content-Type: $contentType\r\n\r\n'));
   output.add(value);
   output.add(utf8.encode('\r\n'));

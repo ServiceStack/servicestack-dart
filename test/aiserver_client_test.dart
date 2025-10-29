@@ -13,7 +13,7 @@ JsonServiceClient createAiServerTestClient() {
   if (url == null || apiKey == null) {
     throw StateError(
         'AI_SERVER_URL and AI_SERVER_API_KEY environment variables are required. '
-            'Please set these before running the AI server tests.');
+        'Please set these before running the AI server tests.');
   }
 
   var client = JsonServiceClient(url);
@@ -40,14 +40,13 @@ void main() {
     var request = SpeechToText();
 
     var bytes = await file.readAsBytes();
-    
+
     var files = [
       UploadFile(
-        fieldName: 'audio',
-        fileName: 'test_audio.wav',
-        contentType: 'audio/wav',
-        contents: bytes
-      ),
+          fieldName: 'audio',
+          fileName: 'test_audio.wav',
+          contentType: 'audio/wav',
+          contents: bytes),
     ];
 
     var response = await client.postFilesWithRequest(request, files);
@@ -95,11 +94,10 @@ void main() {
     var bytes = await file.readAsBytes();
     var files = [
       UploadFile(
-        fieldName: 'audio',
-        fileName: 'test_audio.wav',
-        contentType: 'audio/wav',
-        contents: bytes
-      ),
+          fieldName: 'audio',
+          fileName: 'test_audio.wav',
+          contentType: 'audio/wav',
+          contents: bytes),
     ];
 
     client.requestFilter = (req) => filtersCalled.add('requestFilter');
@@ -122,16 +120,14 @@ void main() {
     var bytes = await file.readAsBytes();
     var files = [
       UploadFile(
-        fieldName: 'image',
-        fileName: 'test_image.png',
-        contentType: 'image/png',
-        contents: bytes
-      ),
+          fieldName: 'image',
+          fileName: 'test_image.png',
+          contentType: 'image/png',
+          contents: bytes),
     ];
 
     GenerationResponse? response = null;
-    try{
-
+    try {
       response = await client.postFilesWithRequest(request, files);
     }
     // Catch WebServiceException and print error message

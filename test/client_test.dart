@@ -1,4 +1,3 @@
-
 import 'package:test/test.dart';
 import 'dart:convert';
 import 'dart:typed_data';
@@ -570,17 +569,19 @@ void main() {
     var markdownFileBytes = utf8.encode("## Heading");
 
     var files = [
-      UploadFile(fieldName:'audio', 
-        fileName:'test.txt', 
-        contentType:'text/plain',
-        contents: textFileBytes),
-      UploadFile(fieldName:'content', 
-        fileName:'test.md', 
-        contentType:'text/markdown',
-        contents: markdownFileBytes),
+      UploadFile(
+          fieldName: 'audio',
+          fileName: 'test.txt',
+          contentType: 'text/plain',
+          contents: textFileBytes),
+      UploadFile(
+          fieldName: 'content',
+          fileName: 'test.md',
+          contentType: 'text/markdown',
+          contents: markdownFileBytes),
     ];
 
-    var response = await client.postFilesWithRequest(request,files);
+    var response = await client.postFilesWithRequest(request, files);
 
     print('File2 content length: ${response.files?[1].contentLength}');
 
