@@ -259,7 +259,7 @@ class EnumConverter implements IConverter {
     return toEnumValue(enumValue);
   }
 
-  String? toEnumValue(dynamic enumValue) {
+  dynamic toEnumValue(dynamic enumValue) {
     if (enumValue == null) return null;
     try {
       return enumValue.value;
