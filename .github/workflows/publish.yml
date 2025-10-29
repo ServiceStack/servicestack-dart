@@ -121,27 +121,33 @@ jobs:
           git tag "v${{ steps.new_version.outputs.version }}"
           git push origin "v${{ steps.new_version.outputs.version }}"
       
+# ... (Steps before this are fine)
+
       - name: Setup credentials and Publish to pub.dev 🚀
         shell: bash
         run: |
-          # Define the temporary cache location
-          PUB_CACHE_DIR="${{ runner.temp }}/.pub-cache"
+          # 1. Define the PUB_CACHE location and ensure it's exported for all sub-commands.
+          # Use the GITHUB_ENV file to set the variable for subsequent steps, 
+          # but export it immediately for use in this step.
+          export PUB_CACHE="${{ runner.temp }}/.pub-cache"
+          echo "PUB_CACHE=${PUB_CACHE}" >> $GITHUB_ENV
           
-          # Create the necessary directory structure
-          mkdir -p "$PUB_CACHE_DIR"
+          # 2. Create the necessary directory structure
+          mkdir -p "$PUB_CACHE"
           
-          # Write the credentials.json file
-          # The file must be named 'credentials.json' and be inside a 'pub-cache' directory.
-          echo "Writing credentials to $PUB_CACHE_DIR/credentials.json"
-          cat <<EOF > "$PUB_CACHE_DIR/credentials.json"
+          # 3. Write the credentials.json file
+          CREDENTIALS_PATH="$PUB_CACHE/credentials.json"
+          echo "Writing credentials to $CREDENTIALS_PATH"
+          cat <<EOF > "$CREDENTIALS_PATH"
           ${{ secrets.PUB_CREDENTIALS }}
           EOF
           
-          # Now publish, ensuring we use the correct PUB_CACHE location
+          # 4. Verify the file was written (Optional sanity check)
+          ls -la "$PUB_CACHE"
+          
+          # 5. Publish using the configured PUB_CACHE
+          echo "Attempting to publish..."
           dart pub publish --force
-        env:
-          # Set PUB_CACHE for the entire run block
-          PUB_CACHE: ${{ runner.temp }}/.pub-cache
                 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
