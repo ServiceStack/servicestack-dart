@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Needed to push commits and tags
+      id-token: write  # Required for OIDC authentication with pub.dev
     
     steps:
       - uses: actions/checkout@v4
@@ -121,31 +122,8 @@ jobs:
       #     git tag "v${{ steps.new_version.outputs.version }}"
       #     git push origin "v${{ steps.new_version.outputs.version }}"
       
-      - name: Setup credentials and Publish to pub.dev 🚀
-        shell: bash
-        run: |
-          # 1. Define the PUB_CACHE location and ensure it's exported for all sub-commands.
-          # Use the GITHUB_ENV file to set the variable for subsequent steps, 
-          # but export it immediately for use in this step.
-          export PUB_CACHE="${{ runner.temp }}/.pub-cache"
-          echo "PUB_CACHE=${PUB_CACHE}" >> $GITHUB_ENV
-          
-          # 2. Create the necessary directory structure
-          mkdir -p "$PUB_CACHE"
-          
-          # 3. Write the credentials.json file
-          CREDENTIALS_PATH="$PUB_CACHE/credentials.json"
-          echo "Writing credentials to $CREDENTIALS_PATH"
-          cat <<EOF > "$CREDENTIALS_PATH"
-          ${{ secrets.PUB_CREDENTIALS }}
-          EOF
-          
-          # 4. Verify the file was written (Optional sanity check)
-          ls -la "$PUB_CACHE"
-          
-          # 5. Publish using the configured PUB_CACHE
-          echo "Attempting to publish..."
-          dart pub publish --force
+      - name: Publish to pub.dev
+        run: dart pub publish --force
                 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
