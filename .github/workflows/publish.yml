@@ -121,14 +121,28 @@ jobs:
           git tag "v${{ steps.new_version.outputs.version }}"
           git push origin "v${{ steps.new_version.outputs.version }}"
       
-      - name: Setup pub credentials
+      - name: Setup credentials and Publish to pub.dev 🚀
+        shell: bash
         run: |
-          mkdir -p ~/.pub-cache
-          echo '${{ secrets.PUB_CREDENTIALS }}' > ~/.pub-cache/credentials.json
-
-      - name: Publish to pub.dev
-        run: dart pub publish --force
-      
+          # Define the temporary cache location
+          PUB_CACHE_DIR="${{ runner.temp }}/.pub-cache"
+          
+          # Create the necessary directory structure
+          mkdir -p "$PUB_CACHE_DIR"
+          
+          # Write the credentials.json file
+          # The file must be named 'credentials.json' and be inside a 'pub-cache' directory.
+          echo "Writing credentials to $PUB_CACHE_DIR/credentials.json"
+          cat <<EOF > "$PUB_CACHE_DIR/credentials.json"
+          ${{ secrets.PUB_CREDENTIALS }}
+          EOF
+          
+          # Now publish, ensuring we use the correct PUB_CACHE location
+          dart pub publish --force
+        env:
+          # Set PUB_CACHE for the entire run block
+          PUB_CACHE: ${{ runner.temp }}/.pub-cache
+                
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
