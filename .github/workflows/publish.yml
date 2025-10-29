@@ -21,10 +21,12 @@ on:
 jobs:
   bump-and-publish:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.new_version.outputs.version }}
     permissions:
       contents: write  # Needed to push commits and tags
       id-token: write  # Required for OIDC authentication with pub.dev
-    
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -80,21 +82,21 @@ jobs:
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "New version: $NEW_VERSION"
       
-      # - name: Update pubspec.yaml
-      #   run: |
-      #     sed -i "s/^version: .*/version: ${{ steps.new_version.outputs.version }}/" pubspec.yaml
-      #     cat pubspec.yaml
-      
-      # - name: Update CHANGELOG.md
-      #   run: |
-      #     NEW_VERSION="${{ steps.new_version.outputs.version }}"
-      #     DATE=$(date +%Y-%m-%d)
-          
-      #     # Create new changelog entry
-      #     echo -e "## $NEW_VERSION ($DATE)\n\n* Release $NEW_VERSION\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
-          
-      #     echo "Updated CHANGELOG.md:"
-      #     head -n 10 CHANGELOG.md
+      - name: Update pubspec.yaml
+        run: |
+          sed -i "s/^version: .*/version: ${{ steps.new_version.outputs.version }}/" pubspec.yaml
+          cat pubspec.yaml
+
+      - name: Update CHANGELOG.md
+        run: |
+          NEW_VERSION="${{ steps.new_version.outputs.version }}"
+          DATE=$(date +%Y-%m-%d)
+
+          # Create new changelog entry
+          echo -e "## $NEW_VERSION ($DATE)\n\n* Release $NEW_VERSION\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+
+          echo "Updated CHANGELOG.md:"
+          head -n 10 CHANGELOG.md
       
       - name: Install dependencies
         run: dart pub get
@@ -108,31 +110,57 @@ jobs:
       - name: Run tests
         run: dart test
 
-      # - name: Commit version bump
-      #   run: |
-      #     git add pubspec.yaml CHANGELOG.md
-      #     git commit -m "Bump version to ${{ steps.new_version.outputs.version }}"
-      #     git push origin master
+      - name: Commit version bump
+        run: |
+          git add pubspec.yaml CHANGELOG.md
+          git commit -m "Bump version to ${{ steps.new_version.outputs.version }}"
+          git push origin master
 
       - name: Dry run publish
         run: dart pub publish --dry-run
-      
-      # - name: Create and push tag
-      #   run: |
-      #     git tag "v${{ steps.new_version.outputs.version }}"
-      #     git push origin "v${{ steps.new_version.outputs.version }}"
-      
+
+      - name: Create and push tag
+        run: |
+          git tag "v${{ steps.new_version.outputs.version }}"
+          git push origin "v${{ steps.new_version.outputs.version }}"
+
+  publish:
+    needs: bump-and-publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write  # Required for OIDC authentication with pub.dev
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v${{ needs.bump-and-publish.outputs.version }}
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
       - name: Publish to pub.dev
         run: dart pub publish --force
-                
+
+  release:
+    needs: [bump-and-publish, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.new_version.outputs.version }}
-          name: Release ${{ steps.new_version.outputs.version }}
+          tag_name: v${{ needs.bump-and-publish.outputs.version }}
+          name: Release ${{ needs.bump-and-publish.outputs.version }}
           body: |
-            ## Changes in ${{ steps.new_version.outputs.version }}
-            
+            ## Changes in ${{ needs.bump-and-publish.outputs.version }}
+
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/master/CHANGELOG.md) for details.
           generate_release_notes: true
         env:
