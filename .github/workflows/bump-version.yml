@@ -1,0 +1,125 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - custom
+      custom_version:
+        description: 'Custom version (if bump type is custom)'
+        required: false
+        type: string
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to push commits and tags
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper tagging
+      
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Get current version
+        id: current_version
+        run: |
+          CURRENT_VERSION=$(grep '^version:' pubspec.yaml | sed 's/version: //')
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "Current version: $CURRENT_VERSION"
+      
+      - name: Calculate new version
+        id: new_version
+        run: |
+          CURRENT="${{ steps.current_version.outputs.version }}"
+          BUMP_TYPE="${{ github.event.inputs.version_bump }}"
+          
+          if [ "$BUMP_TYPE" = "custom" ]; then
+            NEW_VERSION="${{ github.event.inputs.custom_version }}"
+          else
+            # Parse current version (handles x.y.z and x.y.z-prerelease)
+            IFS='.' read -r MAJOR MINOR PATCH_FULL <<< "$CURRENT"
+            PATCH=$(echo $PATCH_FULL | cut -d'-' -f1)
+            
+            case $BUMP_TYPE in
+              major)
+                MAJOR=$((MAJOR + 1))
+                MINOR=0
+                PATCH=0
+                ;;
+              minor)
+                MINOR=$((MINOR + 1))
+                PATCH=0
+                ;;
+              patch)
+                PATCH=$((PATCH + 1))
+                ;;
+            esac
+            
+            NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          fi
+          
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+      
+      - name: Update pubspec.yaml
+        run: |
+          sed -i "s/^version: .*/version: ${{ steps.new_version.outputs.version }}/" pubspec.yaml
+          cat pubspec.yaml
+      
+      - name: Update CHANGELOG.md
+        run: |
+          NEW_VERSION="${{ steps.new_version.outputs.version }}"
+          DATE=$(date +%Y-%m-%d)
+          
+          # Create new changelog entry
+          echo -e "## $NEW_VERSION ($DATE)\n\n* Release $NEW_VERSION\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+          
+          echo "Updated CHANGELOG.md:"
+          head -n 10 CHANGELOG.md
+      
+      - name: Install dependencies
+        run: dart pub get
+      
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+      
+      - name: Analyze project
+        run: dart analyze
+      
+      - name: Run tests
+        run: dart test
+
+      - name: Commit version bump
+        run: |
+          git add pubspec.yaml CHANGELOG.md
+          git commit -m "Bump version to ${{ steps.new_version.outputs.version }}"
+          git push origin master
+
+      - name: Dry run publish
+        run: dart pub publish --dry-run
+
+      - name: Create and push tag
+        run: |
+          git tag "v${{ steps.new_version.outputs.version }}"
+          git push origin "v${{ steps.new_version.outputs.version }}"
+          echo "✅ Tag v${{ steps.new_version.outputs.version }} created and pushed!"
+          echo "🚀 The publish workflow will now automatically publish to pub.dev"
+
