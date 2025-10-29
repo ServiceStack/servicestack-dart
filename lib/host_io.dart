@@ -25,7 +25,7 @@ class IOHost extends HostBase {
   }
 
   String dirname(String path) {
-    if (path.length == 0) return '.';
+    if (path.isEmpty) return '.';
     var hasRoot = path[0] == '/';
     var end = -1;
     var matchedSlash = true;

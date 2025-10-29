@@ -1,10 +1,8 @@
-library client_test;
-
 import 'package:test/test.dart';
-import '../lib/inspect.dart';
+import 'package:servicestack/inspect.dart';
 import 'dart:convert';
 import 'dart:io';
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 import 'dtos/techstacks.dtos.dart';
 
 class GithubRepo {
@@ -47,11 +45,11 @@ void main() {
       var dump = Inspect.dump(orgRepos.take(3));
       expect(dump, isNotEmpty);
       var orgName = 'dart-lang';
-      print('Top 3 ${orgName} Github Repos:');
+      print('Top 3 $orgName Github Repos:');
       print(dump);
 
       var table = Inspect.dumpTable(orgRepos.take(10));
-      print('\nTop 10 ${orgName} Github Repos:');
+      print('\nTop 10 $orgName Github Repos:');
       expect(table, isNotEmpty);
       print(table);
 

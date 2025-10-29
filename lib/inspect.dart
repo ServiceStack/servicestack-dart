@@ -7,7 +7,7 @@ class Inspect {
     Host.instance.vars(obj);
   }
 
-  static T? cast<T>(x) => x is T ? x : null;
+  static T? cast<T>(dynamic x) => x is T ? x : null;
 
   static String dump(dynamic obj) {
     if (cast<Iterable>(obj) != null) {
@@ -18,7 +18,7 @@ class Inspect {
     return json.replaceAll('"', '');
   }
 
-  static dynamic _toEncodable(o) {
+  static dynamic _toEncodable(dynamic o) {
     if (o == null ||
         o is num ||
         identical(o, true) ||
@@ -34,16 +34,17 @@ class Inspect {
     } else if (o is Map) {
       var keys = o.keys.toList(growable: false);
       var keysToRemove = [];
-      keys.forEach((k) {
+      for (var k in keys) {
         var value = _toEncodable(o[k]);
         if (value != null) {
           o[k] = value;
         } else {
           keysToRemove.add(k);
         }
-      });
-      if (keysToRemove.length > 0)
+      }
+      if (keysToRemove.isNotEmpty) {
         o.removeWhere((key, value) => keysToRemove.contains(key));
+      }
       return o;
     }
     return _toEncodable(o.toJson());
@@ -55,21 +56,21 @@ class Inspect {
     rows = _asList(rows);
     var mapRows = _asListMap(rows as List<dynamic>);
     var keys = _allKeys(mapRows);
-    var colSizes = Map<String, int>();
+    var colSizes = <String, int>{};
 
-    keys.forEach((k) {
+    for (var k in keys) {
       var max = k.length;
-      mapRows.forEach((row) {
+      for (var row in mapRows) {
         var col = row![k];
         if (col != null) {
-          var valSize = "${col}".length;
+          var valSize = "$col".length;
           if (valSize > max) {
             max = valSize;
           }
         }
-      });
+      }
       colSizes[k] = max;
-    });
+    }
 
     // sum + ' padding ' + |
     int rowWidth = colSizes.values.fold(0, (dynamic p, c) => p + c) +
@@ -78,19 +79,19 @@ class Inspect {
     var sb = <String>[];
     sb.add("+${'-' * (rowWidth - 2)}+");
     var head = '|';
-    keys.forEach((k) {
-      head += _alignCenter(k, colSizes[k]!) + '|';
-    });
+    for (var k in keys) {
+      head += '${_alignCenter(k, colSizes[k]!)}|';
+    }
     sb.add(head);
     sb.add("|${'-' * (rowWidth - 2)}|");
 
-    mapRows.forEach((row) {
+    for (var row in mapRows) {
       var to = '|';
-      keys.forEach((k) {
-        to += '' + _alignAuto(row![k], colSizes[k]!) + '|';
-      });
+      for (var k in keys) {
+        to += '${_alignAuto(row![k], colSizes[k]!)}|';
+      }
       sb.add(to);
-    });
+    }
 
     sb.add("+${'-' * (rowWidth - 2)}+");
 
@@ -100,7 +101,7 @@ class Inspect {
   static void printDumpTable(Iterable rows) => print(dumpTable(rows));
 
   static List _asList(dynamic obj) {
-    if (obj is Iterable && !(obj is List)) {
+    if (obj is Iterable && obj is! List) {
       return obj.toList();
     }
     return obj;
@@ -119,11 +120,13 @@ class Inspect {
 
   static List<String> _allKeys(List<Map<String, dynamic>?> rows) {
     var to = <String>[];
-    rows.forEach((o) => o!.keys.forEach((k) {
-          if (!to.contains(k)) {
-            to.add(k);
-          }
-        }));
+    for (var o in rows) {
+      for (var k in o!.keys) {
+        if (!to.contains(k)) {
+          to.add(k);
+        }
+      }
+    }
     return to;
   }
 
@@ -150,7 +153,7 @@ class Inspect {
   }
 
   static String _alignAuto(dynamic obj, int len, [String pad = ' ']) {
-    var str = '${obj}';
+    var str = '$obj';
 
     if (str.length <= len) {
       if (obj is int || obj is double) {

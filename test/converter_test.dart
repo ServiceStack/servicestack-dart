@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 
-main() {
+void main() {
   test('Can parse ISO 8601 DateTime', () {
     var converter = DateTimeConverter();
 

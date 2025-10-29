@@ -7,13 +7,13 @@ import 'dart:convert';
 import './servicestack.dart';
 export './servicestack.dart';
 
-typedef void RequestFilter(HttpClientRequest req);
-typedef void ResponseFilter(HttpClientResponse res);
-typedef void ResponseExceptionFilter(HttpClientResponse? res, Exception e);
+typedef RequestFilter = void Function(HttpClientRequest req);
+typedef ResponseFilter = void Function(HttpClientResponse res);
+typedef ResponseExceptionFilter = void Function(
+    HttpClientResponse? res, Exception e);
 
 class ClientFactory {
-  static IServiceClient create(
-      [String baseUrl = "/", ClientOptions? options = null]) {
+  static IServiceClient create([String baseUrl = "/", ClientOptions? options]) {
     var client = JsonServiceClient(baseUrl);
     if (ClientConfig.initClient != null) {
       ClientConfig.initClient!(client);
@@ -21,8 +21,7 @@ class ClientFactory {
     return client;
   }
 
-  static IServiceClient api(
-      [String baseUrl = "/", ClientOptions? options = null]) {
+  static IServiceClient api([String baseUrl = "/", ClientOptions? options]) {
     var client = JsonServiceClient.api(baseUrl);
     if (ClientConfig.initClient != null) {
       ClientConfig.initClient!(client);
@@ -30,8 +29,7 @@ class ClientFactory {
     return client;
   }
 
-  static IServiceClient legacy(
-      [String baseUrl = "/", ClientOptions? options = null]) {
+  static IServiceClient legacy([String baseUrl = "/", ClientOptions? options]) {
     var client = JsonServiceClient.legacy(baseUrl);
     if (ClientConfig.initClient != null) {
       ClientConfig.initClient!(client);
@@ -85,8 +83,8 @@ class SendContext {
   ResponseFilter? responseFilter;
   dynamic responseAs;
   String assertUrl() {
-    if (this.url != null) return this.url!;
-    if (this.uri != null) return this.uri!.toString();
+    if (url != null) return url!;
+    if (uri != null) return uri!.toString();
     throw StateError('no url');
   }
 
@@ -112,15 +110,22 @@ class HttpResponseException implements Exception {
 }
 
 class JsonServiceClient implements IServiceClient {
+  @override
   String? baseUrl;
+  @override
   String? replyBaseUrl;
+  @override
   String? oneWayBaseUrl;
   late Map<String, String> headers;
+  @override
   String? bearerToken;
+  @override
   String? refreshToken;
   String? refreshTokenUri;
   late bool useTokenCookie;
+  @override
   String? userName;
+  @override
   String? password;
   HttpClient? _client;
   List<Cookie>? cookies;
@@ -131,21 +136,24 @@ class JsonServiceClient implements IServiceClient {
   UrlFilter? urlFilter;
   ResponseExceptionFilter? exceptionFilter;
   static ResponseExceptionFilter? globalExceptionFilter;
+  @override
   AsyncCallbackFunction? onAuthenticationRequired;
   late int maxRetries;
 
-  void set client(HttpClient client) => _client = client;
+  set client(HttpClient client) => _client = client;
   HttpClient get client => _client ??= HttpClient();
 
+  @override
   String? getTokenCookie() {
     return cookies?.firstWhereOrNull((x) => x.name == 'ss-tok')?.value;
   }
 
+  @override
   String? getRefreshTokenCookie() {
     return cookies?.firstWhereOrNull((x) => x.name == 'ss-reftok')?.value;
   }
 
-  void set connectionTimeout(Duration? duration) =>
+  set connectionTimeout(Duration? duration) =>
       client.connectionTimeout = duration;
   Duration? get connectionTimeout => client.connectionTimeout;
 
@@ -177,18 +185,19 @@ class JsonServiceClient implements IServiceClient {
     useTokenCookie = false;
   }
 
-  void set basePath(String? path) {
+  set basePath(String? path) {
     if (path == null) {
-      replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
-      oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
+      replyBaseUrl = "${combinePaths([baseUrl, "json", "reply"])}/";
+      oneWayBaseUrl = "${combinePaths([baseUrl, "json", "oneway"])}/";
     } else {
-      replyBaseUrl = combinePaths([baseUrl, path]) + "/";
-      oneWayBaseUrl = combinePaths([baseUrl, path]) + "/";
+      replyBaseUrl = "${combinePaths([baseUrl, path])}/";
+      oneWayBaseUrl = "${combinePaths([baseUrl, path])}/";
     }
   }
 
+  @override
   void clearCookies() {
-    this.cookies?.clear();
+    cookies?.clear();
   }
 
   @override
@@ -199,7 +208,7 @@ class JsonServiceClient implements IServiceClient {
           await fetch<T>(method ?? resolveHttpMethod(request), request, args);
       return ApiResult<T>(response: result);
     } on Exception catch (e) {
-      return new ApiResult<T>(error: getResponseStatus(e));
+      return ApiResult<T>(error: getResponseStatus(e));
     }
   }
 
@@ -207,7 +216,7 @@ class JsonServiceClient implements IServiceClient {
   Future<ApiResult<EmptyResponse>> apiVoid(IReturnVoid request,
       {Map<String, dynamic>? args, String? method}) async {
     try {
-      var result = await this.fetch<EmptyResponse>(
+      var result = await fetch<EmptyResponse>(
           method ?? resolveHttpMethod(request), request, args);
       return ApiResult<EmptyResponse>(response: result);
     } on Exception catch (e) {
@@ -217,7 +226,7 @@ class JsonServiceClient implements IServiceClient {
 
   Future<T> fetch<T>(String method, dynamic request,
       [Map<String, dynamic>? args, String? url]) {
-    return this.sendRequest<T>(SendContext(
+    return sendRequest<T>(SendContext(
       method: method,
       request: request,
       args: args,
@@ -225,16 +234,19 @@ class JsonServiceClient implements IServiceClient {
     ));
   }
 
+  @override
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args}) {
     return send<T>(request, method: "GET", args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> getUrl(String path,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(
         SendContext(method: "GET", url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> getAs<T>(String path,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -249,17 +261,20 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> post<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args}) {
     return send<T>(request, method: "POST", body: body, args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(SendContext(
         method: "POST", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> postAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -275,16 +290,19 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> delete<T>(IReturn<T> request, {Map<String, dynamic>? args}) {
     return send<T>(request, method: "DELETE", args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(
         SendContext(method: "DELETE", url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> deleteAs<T>(String path,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -299,17 +317,20 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> put<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args}) {
     return send<T>(request, method: "PUT", body: body, args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(SendContext(
         method: "PUT", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> putAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -325,17 +346,20 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> patch<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args}) {
     return send<T>(request, method: "PATCH", body: body, args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(SendContext(
         method: "PATCH", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> patchAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -351,12 +375,13 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
       {RequestFilter? requestFilter, ResponseFilter? responseFilter}) async {
-    if (requests.length == 0) return <T>[];
-    var url = combinePaths([replyBaseUrl, nameOf(requests.first)! + "[]"]);
+    if (requests.isEmpty) return <T>[];
+    var url = combinePaths([replyBaseUrl, "${nameOf(requests.first)!}[]"]);
 
-    return this.sendRequest<List<T>>(SendContext(
+    return sendRequest<List<T>>(SendContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
@@ -365,12 +390,13 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {RequestFilter? requestFilter, ResponseFilter? responseFilter}) async {
-    if (requests.length == 0) return;
-    var url = combinePaths([oneWayBaseUrl, nameOf(requests.first)! + "[]"]);
+    if (requests.isEmpty) return;
+    var url = combinePaths([oneWayBaseUrl, "${nameOf(requests.first)!}[]"]);
 
-    await this.sendRequest<List<T>>(SendContext(
+    await sendRequest<List<T>>(SendContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
@@ -379,6 +405,7 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> send<T>(IReturn<T> request,
       {String? method,
       dynamic body,
@@ -396,7 +423,7 @@ class JsonServiceClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
-  Future<T> _resendRequest<T>(info) async {
+  Future<T> _resendRequest<T>(SendContext info) async {
     HttpClientResponse res;
     try {
       var req = await createRequest(info);
@@ -445,7 +472,7 @@ class JsonServiceClient implements IServiceClient {
       if (statusCode == 401) {
         var hasRefreshTokenCookie = cookies!.any((x) => x.name == "ss-reftok");
         if (refreshToken != null || useTokenCookie || hasRefreshTokenCookie) {
-          var jwtRequest = GetAccessToken(refreshToken: this.refreshToken);
+          var jwtRequest = GetAccessToken(refreshToken: refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
 
           var jwtInfo = SendContext(
@@ -474,7 +501,7 @@ class JsonServiceClient implements IServiceClient {
     }
   }
 
-  raiseError(HttpClientResponse? res, Exception error) {
+  Exception raiseError(HttpClientResponse? res, Exception error) {
     if (exceptionFilter != null) {
       exceptionFilter!(res, error);
     }
@@ -494,7 +521,7 @@ class JsonServiceClient implements IServiceClient {
     if (url == null || url == '') {
       var bodyNotRequestDto = info.request != null && info.body != null;
       if (bodyNotRequestDto) {
-        url = combinePaths([this.replyBaseUrl, nameOf(request)]);
+        url = combinePaths([replyBaseUrl, nameOf(request)]);
         url = appendQueryString(url, toMap(request));
       } else {
         url = createUrlFromDto(method, request);
@@ -523,21 +550,19 @@ class JsonServiceClient implements IServiceClient {
         break;
       } on Exception catch (e, trace) {
         Log.debug("createRequest(): $e\n$trace");
-        if (firstEx == null) {
-          firstEx = e;
-        }
+        firstEx ??= e;
       }
     }
     if (req == null) throw firstEx!;
 
-    if (bearerToken != null)
-      req.headers
-          .add(HttpHeaders.authorizationHeader, 'Bearer ' + bearerToken!);
-    else if (userName != null)
+    if (bearerToken != null) {
+      req.headers.add(HttpHeaders.authorizationHeader, 'Bearer $bearerToken');
+    } else if (userName != null) {
       req.headers.add(HttpHeaders.authorizationHeader,
-          'Basic ' + base64.encode(utf8.encode('$userName:$password')));
+          'Basic ${base64.encode(utf8.encode('$userName:$password'))}');
+    }
 
-    req.cookies.addAll(this.cookies!);
+    req.cookies.addAll(cookies!);
 
     req.headers.chunkedTransferEncoding = false;
     headers.forEach((key, val) {
@@ -576,7 +601,7 @@ class JsonServiceClient implements IServiceClient {
     try {
       mergeCookies(res.cookies);
     } on RangeError catch (e) {
-      Log.debug("[RangeError] createResponse(): " + e.toString());
+      Log.debug("[RangeError] createResponse(): $e");
       //ignore https://github.com/dart-lang/sdk/issues/34220
     }
 
@@ -591,12 +616,11 @@ class JsonServiceClient implements IServiceClient {
     }
 
     var request = info.request;
-    var responseAs =
-        info.responseAs ?? (request != null ? request.createResponse() : null);
+    var responseAs = info.responseAs ?? request?.createResponse();
 
     res.headers.forEach((key, value) {
       if (key.toLowerCase() == "x-cookies") {
-        if (value.any((v) => v.split(',').indexOf('ss-reftok') >= 0)) {
+        if (value.any((v) => v.split(',').contains('ss-reftok'))) {
           useTokenCookie = true;
         }
       }
@@ -616,7 +640,7 @@ class JsonServiceClient implements IServiceClient {
     }
 
     var contentType = res.headers.contentType.toString();
-    var isJson = contentType.indexOf("application/json") != -1;
+    var isJson = contentType.contains("application/json");
     if (isJson) {
       var jsonStr = await readFully(res);
       var jsonObj = json.decode(jsonStr);
@@ -645,7 +669,7 @@ class JsonServiceClient implements IServiceClient {
     return json.decode(await readFully(res));
   }
 
-  handleError(HttpClientResponse? holdRes, Exception e,
+  Future<T> handleError<T>(HttpClientResponse? holdRes, Exception e,
       [WebServiceExceptionType? type]) async {
     if (e is WebServiceException) throw raiseError(holdRes, e);
 
@@ -654,13 +678,14 @@ class JsonServiceClient implements IServiceClient {
     // if (res.bodyUsed)
     //     throw this.raiseError(res, createErrorResponse(res.status, res.statusText, type));
 
-    if (res == null)
+    if (res == null) {
       throw raiseError(
           null,
           WebServiceException()
             ..innerException = e
             ..statusCode = 500
             ..statusDescription = e.toString());
+    }
 
     var webEx = WebServiceException()
       ..statusCode = res.statusCode
@@ -705,7 +730,7 @@ class JsonServiceClient implements IServiceClient {
   /// [files] List of file upload entries. Each entry should be a Map with:
   ///   - 'fieldName': String (optional, defaults to 'upload')
   ///   - 'fileName': String
-  ///   - 'stream': List<int> or Stream<List<int>>
+  ///   - 'stream': `List<int>` or `Stream<List<int>>`
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFileWithRequest<T>(
@@ -715,7 +740,7 @@ class JsonServiceClient implements IServiceClient {
     ResponseFilter? responseFilter,
   }) async {
     return await postFilesWithRequestAs<T>(
-        combinePaths([this.replyBaseUrl, nameOf(request)]), request, [file],
+        combinePaths([replyBaseUrl, nameOf(request)]), request, [file],
         responseAs: request.createResponse(),
         requestFilter: requestFilter,
         responseFilter: responseFilter);
@@ -727,7 +752,7 @@ class JsonServiceClient implements IServiceClient {
   /// [files] List of file upload entries. Each entry should be a Map with:
   ///   - 'fieldName': String (optional, defaults to 'upload')
   ///   - 'fileName': String
-  ///   - 'stream': List<int> or Stream<List<int>>
+  ///   - 'stream': `List<int>` or `Stream<List<int>>`
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFilesWithRequest<T>(
@@ -737,7 +762,7 @@ class JsonServiceClient implements IServiceClient {
     ResponseFilter? responseFilter,
   }) async {
     return await postFilesWithRequestAs<T>(
-        combinePaths([this.replyBaseUrl, nameOf(request)]), request, files,
+        combinePaths([replyBaseUrl, nameOf(request)]), request, files,
         responseAs: request.createResponse(),
         requestFilter: requestFilter,
         responseFilter: responseFilter);
@@ -750,7 +775,7 @@ class JsonServiceClient implements IServiceClient {
   /// [files] List of file upload entries. Each entry should be a Map with:
   ///   - 'fieldName': String (optional, defaults to 'upload')
   ///   - 'fileName': String
-  ///   - 'stream': List<int> or Stream<List<int>>
+  ///   - 'stream': `List<int>` or `Stream<List<int>>`
   ///   - 'contentType': String (optional, defaults to 'application/octet-stream')
   /// [responseAs] Optional type to deserialize response as
   Future<T> postFilesWithRequestAs<T>(

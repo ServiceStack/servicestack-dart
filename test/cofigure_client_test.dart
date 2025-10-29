@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
-import '../lib/web_client.dart' if (dart.library.io) '../lib/client.dart';
+import 'package:servicestack/web_client.dart'
+    if (dart.library.io) 'package:servicestack/client.dart';
 
 void main() {
   test('Can configure client with kDebugMode', () async {

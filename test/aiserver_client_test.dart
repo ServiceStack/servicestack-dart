@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 import 'dtos/aiserver.dtos.dart';
 
 // Helper function to create AI server test client
@@ -126,7 +126,7 @@ void main() {
           contents: bytes),
     ];
 
-    GenerationResponse? response = null;
+    GenerationResponse? response;
     try {
       response = await client.postFilesWithRequest(request, files);
     }

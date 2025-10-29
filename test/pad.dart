@@ -1,4 +1,4 @@
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 
 JsonServiceClient createTestClient() =>
     JsonServiceClient("https://test.servicestack.net")
@@ -12,7 +12,7 @@ List<T> createList<T>() {
   return <T>[];
 }
 
-main() async {
+void main() async {
   List<String> strList = createList<String>();
   List<String> strList2 = <String>[];
 

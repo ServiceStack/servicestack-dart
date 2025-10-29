@@ -1,13 +1,15 @@
-part of servicestack;
+part of '../servicestack.dart';
 
 class DurationConverter implements IConverter {
-  dynamic fromJson(value, TypeContext context) {
+  @override
+  dynamic fromJson(dynamic value, TypeContext context) {
     Duration? duration = value is Duration ? value : null;
     if (duration != null) return duration;
     return fromTimeSpan(value as String?);
   }
 
-  toJson(dynamic value, TypeContext context) {
+  @override
+  String? toJson(dynamic value, TypeContext context) {
     Duration? duration = value is Duration ? value : null;
     if (duration == null) return null;
     return toTimeSpan(duration);
@@ -24,8 +26,9 @@ Duration? fromTimeSpan(String? str) {
   int seconds = 0;
   double ms = 0.0;
 
-  if (str[0] != "P")
+  if (str[0] != "P") {
     throw ArgumentError.value(str, "str", "not a valid XSD Duration");
+  }
 
   str = str.substring(1); //strip P
   var t = splitOnFirst(str, 'T');
@@ -33,7 +36,7 @@ Duration? fromTimeSpan(String? str) {
 
   var d = splitOnFirst(t[0], 'D');
   if (d.length == 2) {
-    var day = int.tryParse(d[0]!) ?? null;
+    var day = int.tryParse(d[0]!);
     if (day != null) {
       days = day;
     }
@@ -42,7 +45,7 @@ Duration? fromTimeSpan(String? str) {
   if (hasTime) {
     var h = splitOnFirst(t[1], 'H');
     if (h.length == 2) {
-      var hour = int.tryParse(h[0]!) ?? null;
+      var hour = int.tryParse(h[0]!);
       if (hour != null) {
         hours = hour;
       }
@@ -50,7 +53,7 @@ Duration? fromTimeSpan(String? str) {
 
     var m = splitOnFirst(h[h.length - 1], 'M');
     if (m.length == 2) {
-      var min = int.tryParse(m[0]!) ?? null;
+      var min = int.tryParse(m[0]!);
       if (min != null) {
         minutes = min;
       }
@@ -58,7 +61,7 @@ Duration? fromTimeSpan(String? str) {
 
     var s = splitOnFirst(m[m.length - 1], 'S');
     if (s.length == 2) {
-      var millis = double.tryParse(s[0]!) ?? null;
+      var millis = double.tryParse(s[0]!);
       if (millis != null) {
         ms = millis;
       }

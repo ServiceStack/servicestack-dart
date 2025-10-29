@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'dart:convert';
 
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 
 import 'dtos/test.dtos.dart';
 
@@ -24,7 +24,7 @@ JsonServiceClient createTechStacksClient() =>
     JsonServiceClient("https://techstacks.io")
       ..exceptionFilter = (res, e) {
         if (e is WebServiceException) {
-          print("ERROR: " + json.encode(e.responseStatus));
+          print("ERROR: ${json.encode(e.responseStatus)}");
         }
       };
 

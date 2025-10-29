@@ -1,4 +1,4 @@
-part of servicestack;
+part of 'servicestack.dart';
 
 abstract class IConverter {
   dynamic toJson(dynamic value, TypeContext context);
@@ -7,15 +7,20 @@ abstract class IConverter {
 
 abstract class IConvertible {
   TypeContext? context;
-  fromMap(Map<String, dynamic> map);
+  dynamic fromMap(Map<String, dynamic> map);
   Map<String, dynamic> toJson();
 }
 
 enum TypeOf {
+// ignore: constant_identifier_names
   Interface,
+// ignore: constant_identifier_names
   Class,
+// ignore: constant_identifier_names
   AbstractClass,
+// ignore: constant_identifier_names
   GenericDef,
+// ignore: constant_identifier_names
   Enum,
 }
 
@@ -28,7 +33,7 @@ class ClientOptions {
   List<String> ignoreCertificatesFor = [];
   ClientOptions({this.baseUrl = "/", bool ignoreCert = false}) {
     if (ignoreCert) {
-      ignoreCertificatesFor = [this.baseUrl];
+      ignoreCertificatesFor = [baseUrl];
     }
   }
 }
@@ -38,10 +43,10 @@ class TypeInfo {
   TypeOf type;
   List? enumValues;
   TypeInfo(this.type, {this.create, this.enumValues});
-  createInstance() => this.create!();
+  dynamic createInstance() => create!();
   bool get canCreate => create != null;
   dynamic _instance;
-  defaultInstance() {
+  dynamic defaultInstance() {
     return _instance ?? (canCreate ? _instance = createInstance() : null);
   }
 }
@@ -59,13 +64,17 @@ class TypeContext {
   Map<String, TypeInfo>? types;
   String? typeName;
   TypeContext? childContext;
+  // ignore: non_constant_identifier_names
   static TypeContext Default = _ctx;
 
+  // ignore: non_constant_identifier_names
   static Map<String?, TypeInfo>? MinifiedTypes;
+  // ignore: non_constant_identifier_names
   static late Map<String?, String> MinifiedTypeNames;
+  // ignore: non_constant_identifier_names
   static bool EnableMinifiedTypes = true;
 
-  TypeContext({this.library, this.types, this.typeName, this.childContext}) {}
+  TypeContext({this.library, this.types, this.typeName, this.childContext});
 
   List<String> get genericArgs => getGenericArgs(typeName);
 
@@ -95,16 +104,16 @@ class TypeContext {
             }
           }
           Log.debug(
-              "Found TypeInfo for Minified Type: '${useTypeName}'${originalType}");
+              "Found TypeInfo for Minified Type: '$useTypeName'$originalType");
           return minifiedTypeInfo;
         }
       }
     }
-    Log.error("Could not find TypeInfo for Minified Type: ${typeName}");
+    Log.error("Could not find TypeInfo for Minified Type: $typeName");
     return null;
   }
 
-  deminifyTypeName(String typeName) {
+  String deminifyTypeName(String typeName) {
     var args = getGenericArgs(typeName);
     var sb = StringBuffer();
     for (var arg in args) {
@@ -124,10 +133,10 @@ class TypeContext {
     return resolvedTypeName;
   }
 
-  initMinified() {
+  void initMinified() {
     if (MinifiedTypes == null) {
-      var to = Map<String?, TypeInfo>();
-      var toNames = Map<String?, String>();
+      var to = <String?, TypeInfo>{};
+      var toNames = <String?, String>{};
       for (var entry in types!.entries) {
         var instance = entry.value.defaultInstance();
         if (instance != null) {
@@ -142,8 +151,9 @@ class TypeContext {
   }
 
   TypeInfo? resolveMinifiedType(String typeName) {
-    if (!isMinified(typeName))
+    if (!isMinified(typeName)) {
       throw ArgumentError("$typeName is not a minified type");
+    }
 
     initMinified();
     var originalType = MinifiedTypes![typeName];
@@ -152,8 +162,9 @@ class TypeContext {
   }
 
   String? resolveMinifiedTypeName(String typeName) {
-    if (!isMinified(typeName))
+    if (!isMinified(typeName)) {
       throw ArgumentError("$typeName is not a minified type");
+    }
 
     initMinified();
     var originalType = MinifiedTypeNames[typeName];
@@ -165,7 +176,7 @@ class TypeContext {
     var ret = getTypeInfo(typeName!);
     if (ret == null) {
       throw ArgumentError(
-          "Unknown Type '${typeName}', see: ${docsDartUrl("#generating-unknown-types")}");
+          "Unknown Type '$typeName', see: ${docsDartUrl("#generating-unknown-types")}");
     }
     return ret;
   }
@@ -271,12 +282,14 @@ class TypeAs {
   static Uint8List bytes = Uint8List(0);
 }
 
-typedef void UrlFilter(String url);
-typedef Future AsyncCallbackFunction();
-typedef void ClientFilter(IServiceClient client);
-typedef dynamic GetJson(Map<String, dynamic> map, String propertyName);
+typedef UrlFilter = void Function(String url);
+typedef AsyncCallbackFunction = Future Function();
+typedef ClientFilter = void Function(IServiceClient client);
+typedef GetJson = dynamic Function(
+    Map<String, dynamic> map, String propertyName);
 
 enum WebServiceExceptionType {
+  // ignore: constant_identifier_names
   RefreshTokenException,
 }
 
@@ -298,7 +311,7 @@ extension ServiceClientExtensions on IServiceClient {
   }
 
   String? createUrlFromDto<T>(String method, dynamic request) {
-    String? url = combinePaths([this.replyBaseUrl, nameOf(request)]);
+    String? url = combinePaths([replyBaseUrl, nameOf(request)]);
 
     if (!hasRequestBody(method)) {
       url = appendQueryString(url, toMap(request));
@@ -311,7 +324,7 @@ extension ServiceClientExtensions on IServiceClient {
     return relativeOrAbsoluteUrl.startsWith("http://") ||
             relativeOrAbsoluteUrl.startsWith("https://")
         ? relativeOrAbsoluteUrl
-        : combinePaths([this.baseUrl, relativeOrAbsoluteUrl]);
+        : combinePaths([baseUrl, relativeOrAbsoluteUrl]);
   }
 }
 
@@ -330,6 +343,7 @@ abstract class ApiResponse {
 
 class ApiResult<TResponse> implements ApiResponse {
   final TResponse? response;
+  @override
   ResponseStatus? error;
 
   ApiResult({this.response, this.error});
@@ -338,46 +352,55 @@ class ApiResult<TResponse> implements ApiResponse {
       : error = init?.error,
         response = init?.response;
 
+  @override
   Object? get responseObject => response;
 
+  @override
   bool get completed => response != null || error != null;
+  @override
   bool get failed => error?.errorCode != null || error?.message != null;
+  @override
   bool get succeeded => !failed && response != null;
 
+  @override
   String? get errorMessage => error?.message;
+  @override
   String? get errorCode => error?.errorCode;
+  @override
   List<ResponseError> get errors => error?.errors ?? [];
+  @override
   String? get errorSummary =>
-      error != null && errors.length == 0 ? errorMessage : null;
+      error != null && errors.isEmpty ? errorMessage : null;
 
-  fieldError(String fieldName) {
+  ResponseError? fieldError(String fieldName) {
     var matchField = fieldName.toLowerCase();
     return errors
         .firstWhereOrNull((x) => x.fieldName?.toLowerCase() == matchField);
   }
 
-  fieldErrorMessage(String fieldName) => fieldError(fieldName)?.message;
+  String? fieldErrorMessage(String fieldName) => fieldError(fieldName)?.message;
 
-  hasFieldError(String fieldName) => fieldError(fieldName) != null;
+  bool hasFieldError(String fieldName) => fieldError(fieldName) != null;
 
-  showSummary([List<String> exceptFields = const []]) {
+  bool showSummary([List<String> exceptFields = const []]) {
     if (!failed) return false;
     return exceptFields.every((x) => !hasFieldError(x));
   }
 
-  summaryMessage([List<String> exceptFields = const []]) {
+  String? summaryMessage([List<String> exceptFields = const []]) {
     if (showSummary(exceptFields)) {
       // Return first field error that's not visible
       var fieldSet = exceptFields.map((x) => x.toLowerCase()).toList();
-      var fieldError = fieldSet
-          .firstWhereOrNull((x) => fieldSet.indexOf(x.toLowerCase()) == -1);
+      var fieldError =
+          fieldSet.firstWhereOrNull((x) => !fieldSet.contains(x.toLowerCase()));
       return fieldError ?? errorMessage;
     }
+    return null;
   }
 
-  addFieldError(String fieldName, String message,
+  void addFieldError(String fieldName, String message,
       [String errorCode = 'Exception']) {
-    if (error == null) this.error = ResponseStatus();
+    error ??= ResponseStatus();
     var f = fieldError(fieldName);
     if (f != null) {
       f.errorCode = errorCode;

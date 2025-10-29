@@ -1,5 +1,3 @@
-library client_test;
-
 import 'package:test/test.dart';
 
 import 'dtos/test.dtos.dart';
@@ -70,7 +68,7 @@ void main() {
       ..enumStyle = [EnumStyle.UPPER];
 
     var json = jsonEncode(dto);
-    print("JSON: ${json}");
+    print("JSON: $json");
     Map jsonObj = jsonDecode(json);
     var fromJson = HelloWithEnumList.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumList(fromJson, dto);
@@ -101,7 +99,7 @@ void main() {
       ..enumStyle = {EnumStyle.UPPER: EnumStyle.UPPER};
 
     var json = jsonEncode(dto);
-    print("JSON: ${json}");
+    print("JSON: $json");
     Map jsonObj = jsonDecode(json);
     var fromJson = HelloWithEnumMap.fromJson(jsonObj as Map<String, dynamic>);
     assertHelloWithEnumMap(fromJson, dto);

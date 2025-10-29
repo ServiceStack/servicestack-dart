@@ -1,7 +1,7 @@
 import 'package:servicestack/client.dart';
 import 'test.dtos.dart';
 
-main() async {
+Future<void> main() async {
   var client = JsonServiceClient("https://test.servicestack.net");
 
   var request = Hello(name: "World");

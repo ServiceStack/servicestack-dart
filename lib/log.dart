@@ -1,5 +1,6 @@
-part of servicestack;
+part of 'servicestack.dart';
 
+// ignore: constant_identifier_names
 enum LogLevel { Debug, Info, Warn, Error }
 
 abstract class Logger {
@@ -16,47 +17,49 @@ abstract class Logger {
     }
   }
 
-  log(LogLevel level, String msg, [Exception? error = null]);
+  void log(LogLevel level, String msg, [Exception? error]);
 }
 
 class ConsoleLogger extends Logger {
-  log(LogLevel level, String msg, [Exception? error = null]) {
+  @override
+  void log(LogLevel level, String msg, [Exception? error]) {
     print("${label(level)}: $msg");
   }
 }
 
 class NullLogger extends Logger {
-  log(LogLevel level, String msg, [Exception? error = null]) {}
+  @override
+  void log(LogLevel level, String msg, [Exception? error]) {}
 }
 
 class Log {
   static List<LogLevel> levels = [LogLevel.Warn, LogLevel.Error];
   static Logger logger = ConsoleLogger();
 
-  static isDebugEnabled() => levels.contains(LogLevel.Debug);
-  static isInfoEnabled() => levels.contains(LogLevel.Info);
-  static isWarnEnabled() => levels.contains(LogLevel.Warn);
-  static isErrorEnabled() => levels.contains(LogLevel.Error);
+  static bool isDebugEnabled() => levels.contains(LogLevel.Debug);
+  static bool isInfoEnabled() => levels.contains(LogLevel.Info);
+  static bool isWarnEnabled() => levels.contains(LogLevel.Warn);
+  static bool isErrorEnabled() => levels.contains(LogLevel.Error);
 
-  static debug(String msg) {
+  static void debug(String msg) {
     if (isDebugEnabled()) {
       logger.log(LogLevel.Debug, msg);
     }
   }
 
-  static info(String msg) {
+  static void info(String msg) {
     if (isInfoEnabled()) {
       logger.log(LogLevel.Info, msg);
     }
   }
 
-  static warn(String msg, [Exception? error = null]) {
+  static void warn(String msg, [Exception? error]) {
     if (isWarnEnabled()) {
-      logger.log(LogLevel.Warn, msg);
+      logger.log(LogLevel.Warn, msg, error);
     }
   }
 
-  static error(String msg, [Exception? error = null]) {
+  static void error(String msg, [Exception? error]) {
     if (isErrorEnabled()) {
       logger.log(LogLevel.Error, msg, error);
     }

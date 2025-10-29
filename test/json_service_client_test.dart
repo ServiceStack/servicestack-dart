@@ -1,22 +1,25 @@
 import 'package:test/test.dart';
 
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 import 'utils.dart';
 
 import 'dtos/test.dtos.dart';
 
+// ignore: constant_identifier_names
 const TEST_URL = "https://test.servicestack.net";
 
 class NonExistingService implements IReturn<String> {
   NonExistingService();
   NonExistingService fromMap(Map<String, dynamic> map) =>
       NonExistingService.fromJson(map);
-  NonExistingService.fromJson(Map<String, dynamic> json) {}
+  NonExistingService.fromJson(Map<String, dynamic> json);
   Map<String, dynamic> toJson() => {};
+  @override
   createResponse() {
     return "";
   }
 
+  @override
   String getTypeName() {
     return "NonExistingService";
   }
@@ -48,6 +51,6 @@ void main() {
     request.Bool = false;
     request.Int = 0;
     var requestUrl = appendQueryString(TEST_URL, toMap(request));
-    expect(requestUrl, equals(TEST_URL + "?bool=false&int=0"));
+    expect(requestUrl, equals("$TEST_URL?bool=false&int=0"));
   });
 }

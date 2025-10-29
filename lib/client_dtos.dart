@@ -1,9 +1,9 @@
-part of servicestack;
+part of 'servicestack.dart';
 
 abstract class IReturn<T> {
   T createResponse();
 
-  getTypeName();
+  String getTypeName();
 }
 
 abstract class IReturnVoid implements IReturn<void> {}
@@ -49,6 +49,7 @@ abstract class IDeleteDb<Table> implements ICrud {}
 abstract class ISaveDb<Table> implements ICrud {}
 
 // sync with DartGenerator.IgnoreTypeInfosFor
+// ignore: non_constant_identifier_names
 Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
   'dynamic': TypeInfo(TypeOf.Class, create: () => {}),
   'String': TypeInfo(TypeOf.Class, create: () => ""),
@@ -56,9 +57,9 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
   'double': TypeInfo(TypeOf.Class, create: () => 0.toDouble()),
   'bool': TypeInfo(TypeOf.Class, create: () => true),
   'Map<String,dynamic>':
-      TypeInfo(TypeOf.Class, create: () => Map<String, dynamic>()),
+      TypeInfo(TypeOf.Class, create: () => <String, dynamic>{}),
   'Map<String,String>':
-      TypeInfo(TypeOf.Class, create: () => Map<String, String>()),
+      TypeInfo(TypeOf.Class, create: () => <String, String>{}),
   'List<String>': TypeInfo(TypeOf.Class, create: () => <String>[]),
   'List<int>': TypeInfo(TypeOf.Class, create: () => <int>[]),
   'List<double>': TypeInfo(TypeOf.Class, create: () => <double>[]),
@@ -121,7 +122,7 @@ Map<String, TypeInfo> TypeInfos = <String, TypeInfo>{
       TypeInfo(TypeOf.Class, create: () => GetAccessTokenResponse()),
   'List<NavItem>': TypeInfo(TypeOf.Class, create: () => <NavItem>[]),
   'Map<String,List<NavItem>>':
-      TypeInfo(TypeOf.Class, create: () => Map<String, List<NavItem>>()),
+      TypeInfo(TypeOf.Class, create: () => <String, List<NavItem>>{}),
   'NavItem': TypeInfo(TypeOf.Class, create: () => NavItem()),
   'GetNavItems': TypeInfo(TypeOf.Class, create: () => GetNavItems()),
   'GetNavItemsResponse':
@@ -147,6 +148,7 @@ class ResponseError implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     errorCode = JsonConverters.getJson(json, 'errorCode');
     fieldName = JsonConverters.getJson(json, 'fieldName');
@@ -155,6 +157,7 @@ class ResponseError implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'errorCode': errorCode,
         'fieldName': fieldName,
@@ -162,7 +165,8 @@ class ResponseError implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "ResponseError";
+  String getTypeName() => "ResponseError";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -180,6 +184,7 @@ class ResponseStatus implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     errorCode = JsonConverters.getJson(json, 'errorCode');
     message = JsonConverters.getJson(json, 'message');
@@ -190,6 +195,7 @@ class ResponseStatus implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'errorCode': errorCode,
         'message': message,
@@ -199,7 +205,8 @@ class ResponseStatus implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "ResponseStatus";
+  String getTypeName() => "ResponseStatus";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -225,6 +232,7 @@ abstract class QueryBase implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     skip = JsonConverters.getJson(json, 'skip');
     take = JsonConverters.getJson(json, 'take');
@@ -236,6 +244,7 @@ abstract class QueryBase implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'skip': skip,
         'take': take,
@@ -246,64 +255,65 @@ abstract class QueryBase implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "QueryBase";
+  String getTypeName() => "QueryBase";
+  @override
   TypeContext? context = _ctx;
 }
 
 abstract class QueryData<T> extends QueryBase {
   QueryData();
 
-  QueryData.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  QueryData.fromJson(super.json) : super.fromJson();
 
+  @override
   fromMap(Map<String, dynamic> json) {
     return this;
   }
 
-  Map<String, dynamic> toJson() => super.toJson();
-
-  getTypeName() => "QueryData<T>";
+  @override
+  String getTypeName() => "QueryData<T>";
 }
 
 abstract class QueryDb<T> extends QueryBase {
   QueryDb();
 
-  QueryDb.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  QueryDb.fromJson(super.json) : super.fromJson();
 
+  @override
   fromMap(Map<String, dynamic> json) {
     return this;
   }
 
-  Map<String, dynamic> toJson() => super.toJson();
-
-  getTypeName() => "QueryDb<T>";
+  @override
+  String getTypeName() => "QueryDb<T>";
 }
 
 abstract class QueryDb1<T> extends QueryBase {
   QueryDb1();
 
-  QueryDb1.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  QueryDb1.fromJson(super.json) : super.fromJson();
 
+  @override
   fromMap(Map<String, dynamic> json) {
     return this;
   }
 
-  Map<String, dynamic> toJson() => super.toJson();
-
-  getTypeName() => "QueryDb1<T>";
+  @override
+  String getTypeName() => "QueryDb1<T>";
 }
 
 abstract class QueryDb2<From, Into> extends QueryBase {
   QueryDb2();
 
-  QueryDb2.fromJson(Map<String, dynamic> json) : super.fromJson(json);
+  QueryDb2.fromJson(super.json) : super.fromJson();
 
+  @override
   fromMap(Map<String, dynamic> json) {
     return this;
   }
 
-  Map<String, dynamic> toJson() => super.toJson();
-
-  getTypeName() => "QueryDb2<From,Into>";
+  @override
+  String getTypeName() => "QueryDb2<From,Into>";
 }
 
 class QueryResponse<T> implements IConvertible {
@@ -320,6 +330,7 @@ class QueryResponse<T> implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     offset = JsonConverters.getJson(json, 'offset');
     total = JsonConverters.getJson(json, 'total');
@@ -333,6 +344,7 @@ class QueryResponse<T> implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'offset': offset,
         'total': total,
@@ -342,7 +354,8 @@ class QueryResponse<T> implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "QueryResponse<$T>";
+  String getTypeName() => "QueryResponse<$T>";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -350,11 +363,14 @@ class Authenticate
     implements IReturn<AuthenticateResponse>, IPost, IConvertible {
   String? provider;
   String? state;
+  // ignore: non_constant_identifier_names
   String? oauth_token;
+  // ignore: non_constant_identifier_names
   String? oauth_verifier;
   String? userName;
   String? password;
   bool? rememberMe;
+  // ignore: non_constant_identifier_names
   String? Continue;
   String? nonce;
   String? uri;
@@ -370,11 +386,14 @@ class Authenticate
   Authenticate(
       {this.provider,
       this.state,
+      // ignore: non_constant_identifier_names
       this.oauth_token,
+      // ignore: non_constant_identifier_names
       this.oauth_verifier,
       this.userName,
       this.password,
       this.rememberMe,
+      // ignore: non_constant_identifier_names
       this.Continue,
       this.nonce,
       this.uri,
@@ -391,6 +410,7 @@ class Authenticate
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     provider = JsonConverters.getJson(json, 'provider');
     state = JsonConverters.getJson(json, 'state');
@@ -413,6 +433,7 @@ class Authenticate
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'provider': provider,
         'state': state,
@@ -434,8 +455,11 @@ class Authenticate
         'meta': meta
       };
 
+  @override
   createResponse() => AuthenticateResponse();
-  getTypeName() => "Authenticate";
+  @override
+  String getTypeName() => "Authenticate";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -469,6 +493,7 @@ class AuthenticateResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     userId = JsonConverters.getJson(json, 'userId');
     sessionId = JsonConverters.getJson(json, 'sessionId');
@@ -489,6 +514,7 @@ class AuthenticateResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'userId': userId,
         'sessionId': sessionId,
@@ -505,7 +531,8 @@ class AuthenticateResponse implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "AuthenticateResponse";
+  String getTypeName() => "AuthenticateResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -517,6 +544,7 @@ class Register implements IReturn<RegisterResponse>, IPost, IConvertible {
   String? email;
   String? password;
   bool? autoLogin;
+  // ignore: non_constant_identifier_names
   String? Continue;
 
   Register(
@@ -527,12 +555,14 @@ class Register implements IReturn<RegisterResponse>, IPost, IConvertible {
       this.email,
       this.password,
       this.autoLogin,
+      // ignore: non_constant_identifier_names
       this.Continue});
 
   Register.fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     userName = JsonConverters.getJson(json, 'userName');
     firstName = JsonConverters.getJson(json, 'firstName');
@@ -545,6 +575,7 @@ class Register implements IReturn<RegisterResponse>, IPost, IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'userName': userName,
         'firstName': firstName,
@@ -556,8 +587,11 @@ class Register implements IReturn<RegisterResponse>, IPost, IConvertible {
         'continue': Continue
       };
 
+  @override
   createResponse() => RegisterResponse();
-  getTypeName() => "Register";
+  @override
+  String getTypeName() => "Register";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -585,6 +619,7 @@ class RegisterResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     userId = JsonConverters.getJson(json, 'userId');
     sessionId = JsonConverters.getJson(json, 'sessionId');
@@ -600,6 +635,7 @@ class RegisterResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'userId': userId,
         'sessionId': sessionId,
@@ -612,7 +648,8 @@ class RegisterResponse implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "RegisterResponse";
+  String getTypeName() => "RegisterResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -627,6 +664,7 @@ class AssignRoles implements IReturn<AssignRolesResponse>, IPost, IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     userName = JsonConverters.getJson(json, 'userName');
     permissions = JsonConverters.fromJson(
@@ -636,6 +674,7 @@ class AssignRoles implements IReturn<AssignRolesResponse>, IPost, IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'userName': userName,
         'permissions':
@@ -643,8 +682,11 @@ class AssignRoles implements IReturn<AssignRolesResponse>, IPost, IConvertible {
         'roles': JsonConverters.toJson(roles, 'List<String>', context!)
       };
 
+  @override
   createResponse() => AssignRolesResponse();
-  getTypeName() => "AssignRoles";
+  @override
+  String getTypeName() => "AssignRoles";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -660,6 +702,7 @@ class AssignRolesResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     allRoles = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'allRoles'), 'List<String>', context!);
@@ -674,6 +717,7 @@ class AssignRolesResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'allRoles': JsonConverters.toJson(allRoles, 'List<String>', context!),
         'allPermissions':
@@ -682,7 +726,8 @@ class AssignRolesResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "AssignRolesResponse";
+  String getTypeName() => "AssignRolesResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -698,6 +743,7 @@ class UnAssignRoles
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     userName = JsonConverters.getJson(json, 'userName');
     permissions = JsonConverters.fromJson(
@@ -707,6 +753,7 @@ class UnAssignRoles
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'userName': userName,
         'permissions':
@@ -714,8 +761,11 @@ class UnAssignRoles
         'roles': JsonConverters.toJson(roles, 'List<String>', context!)
       };
 
+  @override
   createResponse() => UnAssignRolesResponse();
-  getTypeName() => "UnAssignRoles";
+  @override
+  String getTypeName() => "UnAssignRoles";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -731,6 +781,7 @@ class UnAssignRolesResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     allRoles = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'allRoles'), 'List<String>', context!);
@@ -745,6 +796,7 @@ class UnAssignRolesResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'allRoles': JsonConverters.toJson(allRoles, 'List<String>', context!),
         'allPermissions':
@@ -753,7 +805,8 @@ class UnAssignRolesResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "UnAssignRolesResponse";
+  String getTypeName() => "UnAssignRolesResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -766,15 +819,18 @@ class CancelRequest implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     tag = JsonConverters.getJson(json, 'tag');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'tag': tag};
 
-  createResponse() => CancelRequestResponse();
-  getTypeName() => "CancelRequest";
+  dynamic createResponse() => CancelRequestResponse();
+  String getTypeName() => "CancelRequest";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -789,6 +845,7 @@ class CancelRequestResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     tag = JsonConverters.getJson(json, 'tag');
     elapsed = JsonConverters.fromJson(
@@ -800,6 +857,7 @@ class CancelRequestResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'tag': tag,
         'elapsed': JsonConverters.toJson(elapsed, 'Duration', context!),
@@ -807,7 +865,8 @@ class CancelRequestResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "CancelRequestResponse";
+  String getTypeName() => "CancelRequestResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -823,6 +882,7 @@ class UpdateEventSubscriber implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     id = JsonConverters.getJson(json, 'id');
     subscribeChannels = JsonConverters.fromJson(
@@ -836,6 +896,7 @@ class UpdateEventSubscriber implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'subscribeChannels':
@@ -844,8 +905,9 @@ class UpdateEventSubscriber implements IConvertible {
             JsonConverters.toJson(unsubscribeChannels, 'List<String>', context!)
       };
 
-  createResponse() => UpdateEventSubscriberResponse();
-  getTypeName() => "UpdateEventSubscriber";
+  dynamic createResponse() => UpdateEventSubscriberResponse();
+  String getTypeName() => "UpdateEventSubscriber";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -858,6 +920,7 @@ class UpdateEventSubscriberResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     responseStatus = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'responseStatus'),
@@ -866,12 +929,14 @@ class UpdateEventSubscriberResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "UpdateEventSubscriberResponse";
+  String getTypeName() => "UpdateEventSubscriberResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -884,17 +949,20 @@ class GetEventSubscribers implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     channels = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'channels'), 'List<String>', context!);
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() =>
       {'channels': JsonConverters.toJson(channels, 'List<String>', context!)};
 
-  createResponse() => <Map<String, String>>[];
-  getTypeName() => "GetEventSubscribers";
+  dynamic createResponse() => <Map<String, String>>[];
+  String getTypeName() => "GetEventSubscribers";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -907,15 +975,20 @@ class GetApiKeys implements IReturn<GetApiKeysResponse>, IGet, IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     environment = JsonConverters.getJson(json, 'environment');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'environment': environment};
 
+  @override
   createResponse() => GetApiKeysResponse();
-  getTypeName() => "GetEventSubscribers";
+  @override
+  String getTypeName() => "GetEventSubscribers";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -929,6 +1002,7 @@ class GetApiKeysResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     results = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'results'), 'List<UserApiKey>', context!);
@@ -939,13 +1013,15 @@ class GetApiKeysResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'results': JsonConverters.toJson(results, 'List<UserApiKey>', context!),
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "GetApiKeysResponse";
+  String getTypeName() => "GetApiKeysResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -959,15 +1035,20 @@ class RegenerateApiKeys
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     environment = JsonConverters.getJson(json, 'environment');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'environment': environment};
 
+  @override
   createResponse() => RegenerateApiKeysResponse();
-  getTypeName() => "RegenerateApiKeys";
+  @override
+  String getTypeName() => "RegenerateApiKeys";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -981,6 +1062,7 @@ class RegenerateApiKeysResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     results = JsonConverters.fromJson(
         JsonConverters.getJson(json, 'results'), 'Duration', context!);
@@ -991,13 +1073,15 @@ class RegenerateApiKeysResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'results': JsonConverters.toJson(results, 'Duration', context!),
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "RegenerateApiKeysResponse";
+  String getTypeName() => "RegenerateApiKeysResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1012,6 +1096,7 @@ class UserApiKey implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     key = JsonConverters.getJson(json, 'key');
     keyType = JsonConverters.getJson(json, 'keyType');
@@ -1020,13 +1105,15 @@ class UserApiKey implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'key': key,
         'keyType': keyType,
         'expiryDate': JsonConverters.toJson(expiryDate, 'DateTime', context!)
       };
 
-  getTypeName() => "UserApiKey";
+  String getTypeName() => "UserApiKey";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1040,15 +1127,20 @@ class ConvertSessionToToken
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     preserveSession = JsonConverters.getJson(json, 'preserveSession');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'preserveSession': preserveSession};
 
+  @override
   createResponse() => ConvertSessionToTokenResponse();
-  getTypeName() => "ConvertSessionToToken";
+  @override
+  String getTypeName() => "ConvertSessionToToken";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1064,6 +1156,7 @@ class ConvertSessionToTokenResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     meta = JsonConverters.toStringMap(JsonConverters.getJson(json, 'meta'));
     accessToken = JsonConverters.getJson(json, 'accessToken');
@@ -1074,6 +1167,7 @@ class ConvertSessionToTokenResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'meta': meta,
         'accessToken': accessToken,
@@ -1081,7 +1175,8 @@ class ConvertSessionToTokenResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "ConvertSessionToTokenResponse";
+  String getTypeName() => "ConvertSessionToTokenResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1095,15 +1190,20 @@ class GetAccessToken
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     refreshToken = JsonConverters.getJson(json, 'refreshToken');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'refreshToken': refreshToken};
 
+  @override
   createResponse() => GetAccessTokenResponse();
-  getTypeName() => "GetAccessToken";
+  @override
+  String getTypeName() => "GetAccessToken";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1117,6 +1217,7 @@ class GetAccessTokenResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     accessToken = JsonConverters.getJson(json, 'accessToken');
     responseStatus = JsonConverters.fromJson(
@@ -1126,13 +1227,15 @@ class GetAccessTokenResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'accessToken': accessToken,
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "GetAccessTokenResponse";
+  String getTypeName() => "GetAccessTokenResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1164,6 +1267,7 @@ class NavItem implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     label = JsonConverters.getJson(json, 'label');
     href = JsonConverters.getJson(json, 'href');
@@ -1179,6 +1283,7 @@ class NavItem implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'label': label,
         'href': href,
@@ -1192,7 +1297,8 @@ class NavItem implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "NavItem";
+  String getTypeName() => "NavItem";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1201,14 +1307,19 @@ class GetNavItems implements IReturn<GetNavItemsResponse>, IGet, IConvertible {
 
   GetNavItems.fromJson(Map<String, dynamic> json) : super();
 
+  @override
   fromMap(Map<String, dynamic> json) {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {};
 
+  @override
   createResponse() => GetNavItemsResponse();
+  @override
   getTypeName() => "GetNavItems";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1230,6 +1341,7 @@ class GetNavItemsResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     baseUrl = JsonConverters.getJson(json, 'baseUrl');
     results = JsonConverters.fromJson(
@@ -1246,6 +1358,7 @@ class GetNavItemsResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'baseUrl': baseUrl,
         'results': JsonConverters.toJson(results, 'List<NavItem>', context!),
@@ -1256,14 +1369,16 @@ class GetNavItemsResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "GetNavItemsResponse";
+  String getTypeName() => "GetNavItemsResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
 class Tuple<T1, T2> extends Tuple2<T1, T2> {
-  Tuple({T1? item1, T2? item2}) : super(item1: item1, item2: item2);
+  Tuple({super.item1, super.item2});
 
-  getTypeName() => "Tuple<T1,T2>";
+  @override
+  String getTypeName() => "Tuple<T1,T2>";
 }
 
 class Tuple2<T1, T2> implements IConvertible {
@@ -1276,15 +1391,18 @@ class Tuple2<T1, T2> implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     item1 = JsonConverters.getJson(json, 'item1');
     item2 = JsonConverters.getJson(json, 'item2');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'item1': item1, 'item2': item2};
 
-  getTypeName() => "Tuple<T1,T2>";
+  String getTypeName() => "Tuple<T1,T2>";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1299,6 +1417,7 @@ class Tuple3<T1, T2, T3> implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     item1 = JsonConverters.getJson(json, 'item1');
     item2 = JsonConverters.getJson(json, 'item2');
@@ -1306,10 +1425,12 @@ class Tuple3<T1, T2, T3> implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() =>
       {'item1': item1, 'item2': item2, 'item3': item3};
 
-  getTypeName() => "Tuple3<T1,T2,T3>";
+  String getTypeName() => "Tuple3<T1,T2,T3>";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1325,6 +1446,7 @@ class Tuple4<T1, T2, T3, T4> implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     item1 = JsonConverters.getJson(json, 'item1');
     item2 = JsonConverters.getJson(json, 'item2');
@@ -1333,10 +1455,12 @@ class Tuple4<T1, T2, T3, T4> implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() =>
       {'item1': item1, 'item2': item2, 'item3': item3, 'item4': item4};
 
-  getTypeName() => "Tuple4<T1,T2,T3,T4>";
+  String getTypeName() => "Tuple4<T1,T2,T3,T4>";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1344,21 +1468,24 @@ class KeyValuePair<K, V> implements IConvertible {
   K? key;
   V? value;
 
-  KeyValuePair({this.key, this.value}) {}
+  KeyValuePair({this.key, this.value});
 
   KeyValuePair.fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     key = JsonConverters.getJson(json, 'key');
     value = JsonConverters.getJson(json, 'value');
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {'key': key, 'value': value};
 
-  getTypeName() => "KeyValuePair<K,V>";
+  String getTypeName() => "KeyValuePair<K,V>";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1373,18 +1500,21 @@ class EmptyResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     responseStatus = JsonConverters.fromJson(
         json['responseStatus'], 'ResponseStatus', context!);
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "EmptyResponse";
+  String getTypeName() => "EmptyResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1402,6 +1532,7 @@ class IdResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     id = json['id'];
     responseStatus = JsonConverters.fromJson(
@@ -1409,13 +1540,15 @@ class IdResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'responseStatus':
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "IdResponse";
+  String getTypeName() => "IdResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1436,6 +1569,7 @@ class StringResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     results = json['results'];
     meta = JsonConverters.toStringMap(json['meta']);
@@ -1444,6 +1578,7 @@ class StringResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'results': results,
         'meta': meta,
@@ -1451,7 +1586,8 @@ class StringResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "StringResponse";
+  String getTypeName() => "StringResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1472,6 +1608,7 @@ class StringsResponse implements IConvertible {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     results =
         JsonConverters.fromJson(json['results'], 'List<String>', context!);
@@ -1481,6 +1618,7 @@ class StringsResponse implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'results': JsonConverters.toJson(results, 'List<String>', context!),
         'meta': meta,
@@ -1488,7 +1626,8 @@ class StringsResponse implements IConvertible {
             JsonConverters.toJson(responseStatus, 'ResponseStatus', context!)
       };
 
-  getTypeName() => "StringsResponse";
+  String getTypeName() => "StringsResponse";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1525,7 +1664,7 @@ abstract class AuditBase {
     fromMap(json);
   }
 
-  fromMap(Map<String, dynamic> json) {
+  dynamic fromMap(Map<String, dynamic> json) {
     createdDate =
         JsonConverters.fromJson(json['createdDate'], 'DateTime', context!);
     createdBy = json['createdBy'];
@@ -1548,16 +1687,22 @@ abstract class AuditBase {
         'deletedBy': deletedBy
       };
 
-  getTypeName() => "AuditBase";
+  String getTypeName() => "AuditBase";
   TypeContext? context = _ctx;
 }
 
 enum BackgroundJobState {
+  // ignore: constant_identifier_names
   QUEUED,
+  // ignore: constant_identifier_names
   STARTED,
+  // ignore: constant_identifier_names
   EXECUTED,
+  // ignore: constant_identifier_names
   COMPLETED,
+  // ignore: constant_identifier_names
   FAILED,
+  // ignore: constant_identifier_names
   CANCELLED
 }
 
@@ -1577,10 +1722,11 @@ class JobStatSummary implements IConvertible {
       this.failed = 0,
       this.cancelled = 0});
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     name = json['name'];
     total = json['total'] ?? 0;
@@ -1591,6 +1737,7 @@ class JobStatSummary implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'name': name,
         'total': total,
@@ -1600,7 +1747,8 @@ class JobStatSummary implements IConvertible {
         'cancelled': cancelled
       };
 
-  getTypeName() => "JobStatSummary";
+  String getTypeName() => "JobStatSummary";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1618,10 +1766,11 @@ class HourSummary implements IConvertible {
       this.failed = 0,
       this.cancelled = 0});
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     hour = json['hour'];
     total = json['total'] ?? 0;
@@ -1631,6 +1780,7 @@ class HourSummary implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'hour': hour,
         'total': total,
@@ -1639,7 +1789,8 @@ class HourSummary implements IConvertible {
         'cancelled': cancelled
       };
 
-  getTypeName() => "HourSummary";
+  String getTypeName() => "HourSummary";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1663,10 +1814,11 @@ class WorkerStats implements IConvertible {
       this.runningJob,
       this.runningTime});
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     name = json['name'];
     queued = json['queued'] ?? 0;
@@ -1680,6 +1832,7 @@ class WorkerStats implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'name': name,
         'queued': queued,
@@ -1691,7 +1844,8 @@ class WorkerStats implements IConvertible {
         'runningTime': JsonConverters.toJson(runningTime, 'Duration', context!)
       };
 
-  getTypeName() => "WorkerStats";
+  String getTypeName() => "WorkerStats";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -1772,10 +1926,11 @@ class BackgroundJobBase implements IConvertible {
       this.meta})
       : createdDate = createdDate ?? DateTime(1, 1, 1);
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     id = json['id'] ?? 0;
     parentId = json['parentId'];
@@ -1825,6 +1980,7 @@ class BackgroundJobBase implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'parentId': parentId,
@@ -1867,12 +2023,13 @@ class BackgroundJobBase implements IConvertible {
         'meta': meta
       };
 
-  getTypeName() => "BackgroundJobBase";
+  String getTypeName() => "BackgroundJobBase";
+  @override
   TypeContext? context = _ctx;
 }
 
 class BackgroundJob extends BackgroundJobBase {
-  BackgroundJob({int id = 0}) : super(id: id);
+  BackgroundJob({super.id = 0});
 
   BackgroundJob.fromJson(Map<String, dynamic> json) {
     fromMap(json);
@@ -1926,10 +2083,11 @@ class JobSummary implements IConvertible {
       this.errorMessage})
       : createdDate = createdDate ?? DateTime(1, 1, 1);
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     id = json['id'] ?? 0;
     parentId = json['parentId'];
@@ -1962,6 +2120,7 @@ class JobSummary implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'parentId': parentId,
@@ -1987,7 +2146,8 @@ class JobSummary implements IConvertible {
         'errorMessage': errorMessage
       };
 
-  getTypeName() => "JobSummary";
+  String getTypeName() => "JobSummary";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -2027,10 +2187,11 @@ class BackgroundJobOptions implements IConvertible {
       this.args,
       this.runCommand});
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     refId = json['refId'];
     parentId = json['parentId'];
@@ -2051,6 +2212,7 @@ class BackgroundJobOptions implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'refId': refId,
         'parentId': parentId,
@@ -2070,7 +2232,8 @@ class BackgroundJobOptions implements IConvertible {
         'runCommand': runCommand
       };
 
-  getTypeName() => "BackgroundJobOptions";
+  String getTypeName() => "BackgroundJobOptions";
+  @override
   TypeContext? context = _ctx;
 }
 
@@ -2100,10 +2263,11 @@ class ScheduledTask implements IConvertible {
       this.lastRun,
       this.lastJobId});
 
-  fromJson(Map<String, dynamic> json) {
+  dynamic fromJson(Map<String, dynamic> json) {
     fromMap(json);
   }
 
+  @override
   fromMap(Map<String, dynamic> json) {
     id = json['id'] ?? 0;
     name = json['name'];
@@ -2120,6 +2284,7 @@ class ScheduledTask implements IConvertible {
     return this;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
@@ -2135,7 +2300,8 @@ class ScheduledTask implements IConvertible {
         'lastJobId': lastJobId
       };
 
-  getTypeName() => "ScheduledTask";
+  String getTypeName() => "ScheduledTask";
+  @override
   TypeContext? context = _ctx;
 }
 

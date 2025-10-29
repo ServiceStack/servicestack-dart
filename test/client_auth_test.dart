@@ -1,16 +1,16 @@
 import 'package:test/test.dart';
 
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 import 'utils.dart';
 
 import 'dtos/test.dtos.dart';
 
 CreateJwt createJwt([Map? options]) {
   var to = CreateJwt.fromJson(
-      options as Map<String, dynamic>? ?? Map<String, dynamic>());
-  if (to.userAuthId == null) to.userAuthId = "1";
-  if (to.displayName == null) to.displayName = "test jwt";
-  if (to.email == null) to.email = "test@auth.com";
+      options as Map<String, dynamic>? ?? <String, dynamic>{});
+  to.userAuthId ??= "1";
+  to.displayName ??= "test jwt";
+  to.email ??= "test@auth.com";
   return to;
 }
 

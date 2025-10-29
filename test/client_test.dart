@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 import 'utils.dart';
 
 import 'dtos/test.dtos.dart';
@@ -543,7 +543,7 @@ void main() {
   });
 
   test('Should change base path', () async {
-    var client = new JsonServiceClient("https://test.servicestack.net");
+    var client = JsonServiceClient("https://test.servicestack.net");
 
     expect(client.replyBaseUrl, equals("https://test.servicestack.net/api/"));
     expect(client.oneWayBaseUrl, equals("https://test.servicestack.net/api/"));

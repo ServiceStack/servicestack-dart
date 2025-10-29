@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../lib/client.dart';
+import 'package:servicestack/client.dart';
 import 'utils.dart';
 
 import 'dtos/test.dtos.dart';

@@ -1,4 +1,4 @@
-part of servicestack;
+part of 'servicestack.dart';
 
 List<String?> splitOnFirst(String? s, String c) {
   if (s == null || s == "") return [s];
@@ -36,7 +36,7 @@ String lastRightPart(String strVal, String needle) {
 }
 
 String trimStart(String text, String character) {
-  if (text.length == 0) return "";
+  if (text.isEmpty) return "";
 
   int i = 0;
   while (text[i] == character) {
@@ -46,7 +46,7 @@ String trimStart(String text, String character) {
 }
 
 String trimEnd(String text, String character) {
-  if (text.length == 0) return "";
+  if (text.isEmpty) return "";
 
   int i = text.length - 1;
   while (text[i] == character) {
@@ -72,9 +72,11 @@ List<String> splitGenericArgs(String argsString) {
   for (var i = 0; i < argsString.length; i++) {
     var c = argsString[i];
     if (inBrackets > 0) {
-      if (c == '<')
+      if (c == '<') {
         inBrackets++;
-      else if (c == '>') inBrackets--;
+      } else if (c == '>') {
+        inBrackets--;
+      }
       continue;
     }
     if (c == '<') {
@@ -89,17 +91,18 @@ List<String> splitGenericArgs(String argsString) {
   }
 
   var lastArg = argsString.substring(lastPos).replaceAll(" ", "");
-  ;
   to.add(lastArg);
   return to;
 }
 
-List<String> runtimeGenericTypeDefs(instance, List<int> indexes) {
+List<String> runtimeGenericTypeDefs(dynamic instance, List<int> indexes) {
   var genericArgs = getGenericArgs(nameOf(instance));
   // Generic classes return QueryResponse<Reified> vs QueryResponse<T> if default getTypeName() => "QueryResponse<T>" is used
   // var genericArgs = getGenericArgs(instance.runtimeType.toString());
   var argTypes = <String>[];
-  indexes.forEach((i) => argTypes.add(genericArgs[i]));
+  for (var i in indexes) {
+    argTypes.add(genericArgs[i]);
+  }
   return argTypes;
 }
 
@@ -107,37 +110,39 @@ String combinePaths(List<String?> paths) {
   List<String> parts = [];
   for (int i = 0; i < paths.length; i++) {
     var arg = paths[i]!;
-    if (arg.indexOf("://") == -1)
+    if (!arg.contains("://")) {
       parts.addAll(arg.split("/"));
-    else
+    } else {
       parts.add(arg.lastIndexOf("/") == arg.length - 1
           ? arg.substring(0, arg.length - 1)
           : arg);
+    }
   }
   List<String> combinedPaths = [];
   for (int i = 0; i < parts.length; i++) {
     var part = parts[i];
     if (part == "" || part == ".") continue;
-    if (part == "..")
+    if (part == "..") {
       combinedPaths.removeLast();
-    else
+    } else {
       combinedPaths.add(part);
+    }
   }
   if (parts[0] == "") combinedPaths.insert(0, "");
   var ret = combinedPaths.join("/");
-  return ret.length > 0 ? ret : (combinedPaths.length == 0 ? "/" : ".");
+  return ret.isNotEmpty ? ret : (combinedPaths.isEmpty ? "/" : ".");
 }
 
 bool isMinified(String type) => type.startsWith("minified:");
 bool containsMinified(String type) =>
-    type.indexOf("minified:") >= 0; //e.g. List<minified:...>
+    type.contains("minified:"); //e.g. List<minified:...>
 
 String? nameOf(dynamic o) {
   if (o == null) return "null";
 
   try {
     if (o is List) {
-      var first = o.length > 0 ? o[0] : null;
+      var first = o.isNotEmpty ? o[0] : null;
       if (first != null) {
         var elementType = nameOf(first)!;
         Log.debug("nameOf: List<$elementType>");
@@ -156,7 +161,7 @@ String? nameOf(dynamic o) {
 }
 
 Uri? createUri(String? url) {
-  if (url == null || url.length == 0) return null;
+  if (url == null || url.isEmpty) return null;
 
   try {
     var uri = Uri.parse(url);
@@ -164,18 +169,18 @@ Uri? createUri(String? url) {
   } catch (e) {
     //sometimes Uri refuses to parse urls with encodable chars so need to manually parse + reconstruct
     var parts = url.split("://");
-    if (parts.length != 2) throw FormatException("Invalid URL: '${url}'");
+    if (parts.length != 2) throw FormatException("Invalid URL: '$url'");
 
     var urlParts = splitOnFirst(parts[1], "/");
-    var relativeUrl = urlParts.length == 1 ? "/" : "/" + urlParts[1]!;
+    var relativeUrl = urlParts.length == 1 ? "/" : "/${urlParts[1]!}";
 
     var relativeUrlParts = splitOnFirst(relativeUrl, "?");
     var path = relativeUrlParts[0];
 
-    Map<String?, String?>? query = null;
+    Map<String?, String?>? query;
 
     if (relativeUrlParts.length == 2) {
-      query = Map<String?, String?>();
+      query = <String?, String?>{};
       var qs = relativeUrlParts[1]!;
       var qsParts = qs.split("&");
       for (var qsPart in qsParts) {
@@ -191,7 +196,7 @@ Uri? createUri(String? url) {
   }
 }
 
-String resolveHttpMethod(request) {
+String resolveHttpMethod(dynamic request) {
   return request is IGet
       ? "GET"
       : request is IPut
@@ -215,7 +220,7 @@ ResponseStatus? getResponseStatus(Exception e) {
         message: e.message ?? e.statusDescription);
   }
   String exStr = "$e";
-  bool hasExType = exStr.indexOf(':') >= 0;
+  bool hasExType = exStr.contains(':');
   String exType = hasExType
       ? leftPart(exStr, ':')!
       : trimStart(e.runtimeType.toString(), '_');
@@ -244,14 +249,14 @@ String? appendQueryString(String url, Map<String, dynamic>? args) {
   if (args != null) {
     args.forEach((key, val) {
       if (val == null) return;
-      url += url.indexOf("?") >= 0 ? "&" : "?";
-      url += key + "=" + qsValue(val)!;
+      url += url.contains("?") ? "&" : "?";
+      url += "$key=${qsValue(val)}";
     });
   }
   return url;
 }
 
-String? qsValue(arg) {
+String? qsValue(dynamic arg) {
   if (arg == null) return "";
   if (arg is Uint8List) {
     return base64.encode(arg);
@@ -279,12 +284,12 @@ String? qsValue(arg) {
       sb.write(":");
       sb.write(qsValue(val));
     });
-    return "{" + sb.toString() + "}";
+    return "{${sb.toString()}}";
   }
   return arg.toString();
 }
 
-Map<String, dynamic>? toMap(request) {
+Map<String, dynamic>? toMap(dynamic request) {
   try {
     var ret = request.toJson();
     return ret;
@@ -345,33 +350,33 @@ dynamic findValue(Map<String, dynamic> map, String key) {
 }
 
 String docsDartUrl(String suffix) {
-  return docsUrl("dart-add-servicestack-reference${suffix}");
+  return docsUrl("dart-add-servicestack-reference$suffix");
 }
 
 String docsUrl(String suffix) {
-  return "https://docs.servicestack.net/${suffix}";
+  return "https://docs.servicestack.net/$suffix";
 }
 
 Map<String, int?> toHostsMap(List<String> urls) {
-  var to = Map<String, int?>();
-  urls.forEach((hostname) {
+  var to = <String, int?>{};
+  for (var hostname in urls) {
     var host = hostname;
-    int? port = null;
-    if (host.indexOf('://') >= 0) {
+    int? port;
+    if (host.contains('://')) {
       host = rightPart(host, '://')!;
     }
-    if (host.indexOf('/') >= 0) {
+    if (host.contains('/')) {
       host = leftPart(host, '/')!;
     }
-    if (host.indexOf('?') >= 0) {
+    if (host.contains('?')) {
       host = leftPart(host, '?')!;
     }
-    if (host.indexOf(':') >= 0) {
+    if (host.contains(':')) {
       port = int.parse(rightPart(host, ':')!);
       host = leftPart(host, ':')!;
     }
     to[host] = port;
-  });
+  }
   return to;
 }
 

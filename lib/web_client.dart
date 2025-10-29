@@ -7,9 +7,9 @@ import 'package:http/http.dart';
 import './servicestack.dart';
 export './servicestack.dart';
 
-typedef void WebRequestFilter(Request req);
-typedef void WebResponseFilter(Response res);
-typedef void WebResponseExceptionFilter(Response? res, Exception e);
+typedef WebRequestFilter = void Function(Request req);
+typedef WebResponseFilter = void Function(Response res);
+typedef WebResponseExceptionFilter = void Function(Response? res, Exception e);
 
 class ClientFactory {
   static IServiceClient create([String baseUrl = "/"]) {
@@ -79,14 +79,21 @@ class WebResponseException implements Exception {
 }
 
 class JsonWebClient implements IServiceClient {
+  @override
   String? baseUrl;
+  @override
   String? replyBaseUrl;
+  @override
   String? oneWayBaseUrl;
   late Map<String, String> headers;
+  @override
   String? bearerToken;
+  @override
   String? refreshToken;
   String? refreshTokenUri;
+  @override
   String? userName;
+  @override
   String? password;
   late bool useTokenCookie;
   WebRequestFilter? requestFilter;
@@ -96,6 +103,7 @@ class JsonWebClient implements IServiceClient {
   UrlFilter? urlFilter;
   WebResponseExceptionFilter? exceptionFilter;
   static WebResponseExceptionFilter? globalExceptionFilter;
+  @override
   AsyncCallbackFunction? onAuthenticationRequired;
   late BrowserClient client;
   late int maxRetries;
@@ -131,21 +139,23 @@ class JsonWebClient implements IServiceClient {
     useTokenCookie = false;
   }
 
-  void set basePath(String? path) {
+  set basePath(String? path) {
     if (path == null) {
-      replyBaseUrl = combinePaths([baseUrl, "json", "reply"]) + "/";
-      oneWayBaseUrl = combinePaths([baseUrl, "json", "oneway"]) + "/";
+      replyBaseUrl = "${combinePaths([baseUrl, "json", "reply"])}/";
+      oneWayBaseUrl = "${combinePaths([baseUrl, "json", "oneway"])}/";
     } else {
-      replyBaseUrl = combinePaths([baseUrl, path]) + "/";
-      oneWayBaseUrl = combinePaths([baseUrl, path]) + "/";
+      replyBaseUrl = "${combinePaths([baseUrl, path])}/";
+      oneWayBaseUrl = "${combinePaths([baseUrl, path])}/";
     }
   }
 
+  @override
   String? getTokenCookie() => cookies['ss-tok'];
+  @override
   String? getRefreshTokenCookie() => cookies['ss-reftok'];
 
-  get cookies {
-    var map = Map<String, String>();
+  Map<String, String> get cookies {
+    var map = <String, String>{};
     var cookieStr = web.document.cookie;
     if (cookieStr.isNotEmpty) {
       cookieStr.split(';').forEach((x) {
@@ -158,6 +168,7 @@ class JsonWebClient implements IServiceClient {
     return map;
   }
 
+  @override
   void clearCookies() {
     var cookieStr = web.document.cookie;
     if (cookieStr.isNotEmpty) {
@@ -179,7 +190,7 @@ class JsonWebClient implements IServiceClient {
           await fetch<T>(method ?? resolveHttpMethod(request), request, args);
       return ApiResult<T>(response: result);
     } on Exception catch (e) {
-      return new ApiResult<T>(error: getResponseStatus(e));
+      return ApiResult<T>(error: getResponseStatus(e));
     }
   }
 
@@ -187,7 +198,7 @@ class JsonWebClient implements IServiceClient {
   Future<ApiResult<EmptyResponse>> apiVoid(IReturnVoid request,
       {Map<String, dynamic>? args, String? method}) async {
     try {
-      var result = await this.fetch<EmptyResponse>(
+      var result = await fetch<EmptyResponse>(
           method ?? resolveHttpMethod(request), request, args);
       return ApiResult<EmptyResponse>(response: result);
     } on Exception catch (e) {
@@ -197,7 +208,7 @@ class JsonWebClient implements IServiceClient {
 
   Future<T> fetch<T>(String method, dynamic request,
       [Map<String, dynamic>? args, String? url]) {
-    return this.sendRequest<T>(SendWebContext(
+    return sendRequest<T>(SendWebContext(
       method: method,
       request: request,
       args: args,
@@ -205,16 +216,19 @@ class JsonWebClient implements IServiceClient {
     ));
   }
 
+  @override
   Future<T> get<T>(IReturn<T> request, {Map<String, dynamic>? args}) {
     return send<T>(request, method: "GET", args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> getUrl(String path,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(
         SendWebContext(method: "GET", url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> getAs<T>(String path,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -229,17 +243,20 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> post<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args}) {
     return send<T>(request, method: "POST", body: body, args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> postToUrl(String path, dynamic body,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "POST", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> postAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -255,16 +272,19 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> delete<T>(IReturn<T> request, {Map<String, dynamic>? args}) {
     return send<T>(request, method: "DELETE", args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> deleteUrl(String path,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(
         SendWebContext(method: "DELETE", url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> deleteAs<T>(String path,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -279,17 +299,20 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> put<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args}) {
     return send<T>(request, method: "PUT", body: body, args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> putToUrl(String path, dynamic body,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "PUT", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> putAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -305,17 +328,20 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> patch<T>(IReturn<T> request,
       {dynamic body, Map<String, dynamic>? args}) {
     return send<T>(request, method: "PATCH", body: body, args: args);
   }
 
+  @override
   Future<Map<String, dynamic>> patchToUrl(String path, dynamic body,
       {Map<String, dynamic>? args}) {
     return sendRequest<Map<String, dynamic>>(SendWebContext(
         method: "PATCH", body: body, url: toAbsoluteUrl(path), args: args));
   }
 
+  @override
   Future<T> patchAs<T>(String path, dynamic body,
       {Map<String, dynamic>? args,
       T? responseAs,
@@ -331,13 +357,14 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<List<T>> sendAll<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter? requestFilter,
       WebResponseFilter? responseFilter}) async {
-    if (requests.length == 0) return <T>[];
-    var url = combinePaths([replyBaseUrl, nameOf(requests.first)! + "[]"]);
+    if (requests.isEmpty) return <T>[];
+    var url = combinePaths([replyBaseUrl, "${nameOf(requests.first)!}[]"]);
 
-    return this.sendRequest<List<T>>(SendWebContext(
+    return sendRequest<List<T>>(SendWebContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
@@ -346,13 +373,14 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<void> sendAllOneWay<T>(Iterable<IReturn<T>> requests,
       {WebRequestFilter? requestFilter,
       WebResponseFilter? responseFilter}) async {
-    if (requests.length == 0) return;
-    var url = combinePaths([oneWayBaseUrl, nameOf(requests.first)! + "[]"]);
+    if (requests.isEmpty) return;
+    var url = combinePaths([oneWayBaseUrl, "${nameOf(requests.first)!}[]"]);
 
-    await this.sendRequest<List<T>>(SendWebContext(
+    await sendRequest<List<T>>(SendWebContext(
         method: "POST",
         request: requests.toList(),
         uri: createUri(url),
@@ -361,6 +389,7 @@ class JsonWebClient implements IServiceClient {
         responseFilter: responseFilter));
   }
 
+  @override
   Future<T> send<T>(IReturn<T> request,
       {String? method,
       dynamic body,
@@ -390,7 +419,7 @@ class JsonWebClient implements IServiceClient {
       res = await Response.fromStream(streamedRes);
     } on Exception catch (e) {
       Log.debug("_resendRequest() createRequest: $e");
-      return await handleError(null, e);
+      return handleError(null, e);
     }
 
     try {
@@ -398,12 +427,12 @@ class JsonWebClient implements IServiceClient {
       return response ?? EmptyResponse();
     } on Exception catch (e) {
       Log.debug("_resendRequest() createResponse: $e");
-      return await handleError(res, e);
+      return handleError(res, e);
     }
   }
 
   Future<T> sendRequest<T>(SendWebContext info) async {
-    Response? res = null;
+    Response? res;
     try {
       var req = await createRequest(info);
 
@@ -415,7 +444,7 @@ class JsonWebClient implements IServiceClient {
       res = await Response.fromStream(streamedRes);
     } on Exception catch (e) {
       Log.debug("sendRequest() createResponse: $e");
-      return await handleError(null, e);
+      handleError(null, e);
     }
 
     try {
@@ -426,7 +455,7 @@ class JsonWebClient implements IServiceClient {
       if (debug) Log.debug("sendRequest(): statusCode:${res.statusCode}, $e");
       if (res.statusCode == 401) {
         if (refreshToken != null || useTokenCookie) {
-          var jwtRequest = GetAccessToken(refreshToken: this.refreshToken);
+          var jwtRequest = GetAccessToken(refreshToken: refreshToken);
           var url = refreshTokenUri ?? createUrlFromDto("POST", jwtRequest);
 
           var jwtInfo = SendWebContext(
@@ -443,7 +472,7 @@ class JsonWebClient implements IServiceClient {
             return await _resendRequest<T>(info);
           } on Exception catch (jwtEx) {
             if (debug) Log.debug("sendRequest(): jwtEx: $jwtEx");
-            return await handleError(
+            handleError(
                 res, jwtEx, WebServiceExceptionType.RefreshTokenException);
           }
         }
@@ -454,11 +483,11 @@ class JsonWebClient implements IServiceClient {
         }
       }
 
-      return await handleError(res, e);
+      handleError(res, e);
     }
   }
 
-  raiseError(Response? res, Exception error) {
+  Exception raiseError(Response? res, Exception error) {
     if (exceptionFilter != null) {
       exceptionFilter!(res, error);
     }
@@ -478,7 +507,7 @@ class JsonWebClient implements IServiceClient {
     if (url == null || url == '') {
       var bodyNotRequestDto = info.request != null && info.body != null;
       if (bodyNotRequestDto) {
-        url = combinePaths([this.replyBaseUrl, nameOf(request)]);
+        url = combinePaths([replyBaseUrl, nameOf(request)]);
         url = appendQueryString(url, toMap(request));
       } else {
         url = createUrlFromDto(method, request);
@@ -488,7 +517,7 @@ class JsonWebClient implements IServiceClient {
 
     if (args != null) url = appendQueryString(url, args);
 
-    String? bodyStr = null;
+    String? bodyStr;
     if (hasRequestBody(method)) {
       if (body is String) {
         bodyStr = body;
@@ -507,18 +536,17 @@ class JsonWebClient implements IServiceClient {
         break;
       } on Exception catch (e, trace) {
         Log.debug("createRequest(): $e\n$trace");
-        if (firstEx == null) {
-          firstEx = e;
-        }
+        firstEx ??= e;
       }
     }
     if (req == null) throw firstEx!;
 
-    if (bearerToken != null)
-      req.headers["Authorization"] = 'Bearer ' + bearerToken!;
-    else if (userName != null)
+    if (bearerToken != null) {
+      req.headers["Authorization"] = 'Bearer $bearerToken';
+    } else if (userName != null) {
       req.headers["Authorization"] =
-          'Basic ' + base64.encode(utf8.encode('${userName}:${password}'));
+          'Basic ${base64.encode(utf8.encode('$userName:$password'))}';
+    }
 
     headers.forEach((key, val) {
       req!.headers[key] = val;
@@ -556,12 +584,11 @@ class JsonWebClient implements IServiceClient {
     }
 
     var request = info.request;
-    var responseAs =
-        info.responseAs ?? (request != null ? request.createResponse() : null);
+    var responseAs = info.responseAs ?? request?.createResponse();
 
     res.headers.forEach((key, value) {
       if (key.toLowerCase() == "x-cookies") {
-        if (value.split(',').indexOf('ss-reftok') >= 0) {
+        if (value.split(',').contains('ss-reftok')) {
           useTokenCookie = true;
         }
       }
@@ -582,7 +609,7 @@ class JsonWebClient implements IServiceClient {
 
     var contentType = res.headers["content-type"];
     var isJson =
-        contentType != null && contentType.indexOf("application/json") != -1;
+        contentType != null && contentType.contains("application/json");
     if (isJson) {
       var jsonObj = json.decode(res.body);
       if (responseAs == null) {
@@ -604,8 +631,8 @@ class JsonWebClient implements IServiceClient {
     return json.decode(res.body);
   }
 
-  handleError(Response? holdRes, Exception e,
-      [WebServiceExceptionType? type]) async {
+  Never handleError(Response? holdRes, Exception e,
+      [WebServiceExceptionType? type]) {
     if (e is WebServiceException) throw raiseError(holdRes, e);
 
     var res = e is WebResponseException ? e.response : holdRes!;
