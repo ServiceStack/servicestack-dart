@@ -1,0 +1,13 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - test/dtos/aiserver.dtos.dart
+    - test/dtos/techstacks.dtos.dart
+    - test/dtos/test.dtos.dart
+    - example/test.dtos.dart
+    - test/issues/dartrefsandbox.dtos.dart
+
+linter:
+  rules:
+    # Add any custom lint rules here if needed
