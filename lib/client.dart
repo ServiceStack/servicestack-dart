@@ -412,7 +412,7 @@ class JsonServiceClient implements IServiceClient {
 
     try {
       var response = await createResponse(res, info);
-      return response;
+      return response ?? EmptyResponse();
     } on Exception catch (e) {
       Log.debug("_resendRequest() createResponse: $e");
       return await handleError(res, e);
@@ -438,7 +438,7 @@ class JsonServiceClient implements IServiceClient {
 
     try {
       var response = await createResponse(res, info);
-      return response;
+      return response ?? EmptyResponse();
     } on Exception catch (e) {
       var debug = Log.isDebugEnabled();
       if (debug) Log.debug("sendRequest(): statusCode:$statusCode, $e");
