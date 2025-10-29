@@ -14,7 +14,7 @@ on:
           - major
           - custom
       custom_version:
-        description: 'Custom version (only used if version_bump is "custom")'
+        description: 'Custom version (if bump type is custom)'
         required: false
         type: string
 
