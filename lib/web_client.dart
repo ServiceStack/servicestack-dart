@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:html';
+import 'package:web/web.dart' as web;
 import 'package:http/browser_client.dart';
 import 'package:http/http.dart';
 import './servicestack.dart';
@@ -146,20 +146,28 @@ class JsonWebClient implements IServiceClient {
 
   get cookies {
     var map = Map<String, String>();
-    (document.cookie?.split(';') ?? []).forEach((x) {
-      var parts = x.split('=');
-      map[parts[0].trim()] = Uri.decodeComponent(parts[1].trim());
-    });
+    var cookieStr = web.document.cookie;
+    if (cookieStr.isNotEmpty) {
+      cookieStr.split(';').forEach((x) {
+        var parts = x.split('=');
+        if (parts.length >= 2) {
+          map[parts[0].trim()] = Uri.decodeComponent(parts[1].trim());
+        }
+      });
+    }
     return map;
   }
 
   void clearCookies() {
-    var cookies = document.cookie!.split(";");
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
-      var name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    var cookieStr = web.document.cookie;
+    if (cookieStr.isNotEmpty) {
+      var cookies = cookieStr.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+        web.document.cookie = "$name=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      }
     }
   }
 
