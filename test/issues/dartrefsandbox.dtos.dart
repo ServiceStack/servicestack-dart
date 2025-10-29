@@ -4,17 +4,17 @@ Version: 5.50
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: http://localhost:5000
 
-//GlobalNamespace: 
+//GlobalNamespace:
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion: 
+//AddImplicitVersion:
 //AddDescriptionAsComments: True
-//IncludeTypes: 
-//ExcludeTypes: 
-DefaultImports: ../../lib/servicestack.dart
+//IncludeTypes:
+//ExcludeTypes:
+DefaultImports: package:servicestack/servicestack.dart
 */
 
-import '../../lib/servicestack.dart';
+import 'package:servicestack/servicestack.dart';
 
 class FooListDto implements IConvertible {
   String? id;

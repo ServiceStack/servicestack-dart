@@ -4,18 +4,18 @@ Version: 8.13
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://techstacks.io
 
-//GlobalNamespace: 
+//GlobalNamespace:
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion: 
+//AddImplicitVersion:
 //AddDescriptionAsComments: True
-//IncludeTypes: 
-//ExcludeTypes: 
-DefaultImports: dart:typed_data,dart:collection,../../lib/servicestack.dart
+//IncludeTypes:
+//ExcludeTypes:
+DefaultImports: dart:typed_data,dart:collection,package:servicestack/servicestack.dart
 */
 
 import 'dart:typed_data';
-import '../../lib/servicestack.dart';
+import 'package:servicestack/servicestack.dart';
 
 enum PostType {
   Announcement,

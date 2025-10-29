@@ -4,17 +4,17 @@ Version: 8.41
 Tip: To override a DTO option, remove "//" prefix before updating
 BaseUrl: https://test.servicestack.net
 
-//GlobalNamespace: 
+//GlobalNamespace:
 //AddServiceStackTypes: True
 //AddResponseStatus: False
-//AddImplicitVersion: 
+//AddImplicitVersion:
 //AddDescriptionAsComments: True
-//IncludeTypes: 
-//ExcludeTypes: 
-DefaultImports: ../../lib/servicestack.dart
+//IncludeTypes:
+//ExcludeTypes:
+DefaultImports: package:servicestack/servicestack.dart
 */
 
-import '../../lib/servicestack.dart';
+import 'package:servicestack/servicestack.dart';
 import 'dart:collection';
 import 'dart:typed_data';
 

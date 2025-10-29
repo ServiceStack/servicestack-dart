@@ -15,7 +15,7 @@ BaseUrl: https://openai.servicestack.net
 */
 
 import 'dart:typed_data';
-import '../../lib/servicestack.dart';
+import 'package:servicestack/servicestack.dart';
 
 // @DataContract
 enum AudioFormat {
