@@ -1,9 +1,10 @@
 name: Publish to pub.dev
 
 on:
+  workflow_dispatch:  # Manual trigger
   push:
     tags:
-      - 'v*'  # Trigger on version tags like v1.0.0
+      - 'v*'  # Also trigger on version tags like v1.0.0
 
 jobs:
   publish:
