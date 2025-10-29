@@ -1,3 +1,7 @@
+## 3.0.8 (2025-10-29)
+
+* Release 3.0.8
+
 ## 3.0.0
 
 * Upgraded environment to `sdk: '>=3.0.0 <4.0.0'`
