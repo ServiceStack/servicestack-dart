@@ -79,21 +79,21 @@ jobs:
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "New version: $NEW_VERSION"
       
-      - name: Update pubspec.yaml
-        run: |
-          sed -i "s/^version: .*/version: ${{ steps.new_version.outputs.version }}/" pubspec.yaml
-          cat pubspec.yaml
+      # - name: Update pubspec.yaml
+      #   run: |
+      #     sed -i "s/^version: .*/version: ${{ steps.new_version.outputs.version }}/" pubspec.yaml
+      #     cat pubspec.yaml
       
-      - name: Update CHANGELOG.md
-        run: |
-          NEW_VERSION="${{ steps.new_version.outputs.version }}"
-          DATE=$(date +%Y-%m-%d)
+      # - name: Update CHANGELOG.md
+      #   run: |
+      #     NEW_VERSION="${{ steps.new_version.outputs.version }}"
+      #     DATE=$(date +%Y-%m-%d)
           
-          # Create new changelog entry
-          echo -e "## $NEW_VERSION ($DATE)\n\n* Release $NEW_VERSION\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
+      #     # Create new changelog entry
+      #     echo -e "## $NEW_VERSION ($DATE)\n\n* Release $NEW_VERSION\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
           
-          echo "Updated CHANGELOG.md:"
-          head -n 10 CHANGELOG.md
+      #     echo "Updated CHANGELOG.md:"
+      #     head -n 10 CHANGELOG.md
       
       - name: Install dependencies
         run: dart pub get
@@ -116,13 +116,11 @@ jobs:
       - name: Dry run publish
         run: dart pub publish --dry-run
       
-      - name: Create and push tag
-        run: |
-          git tag "v${{ steps.new_version.outputs.version }}"
-          git push origin "v${{ steps.new_version.outputs.version }}"
+      # - name: Create and push tag
+      #   run: |
+      #     git tag "v${{ steps.new_version.outputs.version }}"
+      #     git push origin "v${{ steps.new_version.outputs.version }}"
       
-# ... (Steps before this are fine)
-
       - name: Setup credentials and Publish to pub.dev 🚀
         shell: bash
         run: |
